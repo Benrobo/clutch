@@ -34,45 +34,54 @@ model users {
 }
 
 model teams {
-    id           Int      @id
+    id           Int    @id
     name         String
     abbreviation String
-    league       String
-    division     String
-    logo_url     String?
-    created_at   DateTime @default(now())
+    league       Json // check db-fields-structure.md
+
+    logo_url   String?
+    created_at DateTime @default(now())
 
     players    players[]
-    games      games[]      @relation("home_team")
-    away_games games[]      @relation("away_team")
-    highlights highlights[]
+    home_games games[]   @relation("home_team")
+    away_games games[]   @relation("away_team")
 }
 
 model players {
-    id         Int     @id
-    name       String
-    position   String
-    team_id    Int
-    team       teams   @relation(fields: [team_id], references: [id])
-    profilePic String?
-    stats      Json?
+    id          Int     @id
+    fullname    String
+    age         Int
+    height      String
+    gender      String
+    verified    Boolean
+    position    String // Pitcher, Catcher, etc
+    team_id     Int
+    profile_pic String?
+    stats       Json? // check db-fields-structure.md
 
-    highlights highlights[]
+    team teams @relation(fields: [team_id], references: [id])
 
     @@index([team_id])
 }
 
+enum GameType {
+    home
+    away
+}
+
 model games {
-    id           String   @id
-    date         DateTime
+    id           String @id
+    date         String
     home_team_id Int
     away_team_id Int
-    home_team    teams    @relation("home_team", fields: [home_team_id], references: [id])
-    away_team    teams    @relation("away_team", fields: [away_team_id], references: [id])
     status       String
     season       Int
     game_type    String
 
+    decisions Json // check db-fields-structure.md
+
+    home_team  teams        @relation("home_team", fields: [home_team_id], references: [id])
+    away_team  teams        @relation("away_team", fields: [away_team_id], references: [id])
     highlights highlights[]
     jobs       jobs[]
 
@@ -82,14 +91,11 @@ model games {
 }
 
 model highlights {
-    id        String   @id @default(cuid())
-    title     String
-    game_id   String
-    game      games    @relation(fields: [game_id], references: [id])
-    team_id   Int
-    team      teams    @relation(fields: [team_id], references: [id])
-    player_id Int?
-    player    players? @relation(fields: [player_id], references: [id])
+    id      String @id @default(cuid())
+    game_id String
+
+    title       String // check db-fields-structure.md
+    description String // check db-fields-structure.md
 
     mlb_video_url       String // Original MLB video
     processed_video_url String? // Our processed/generated video
@@ -113,16 +119,15 @@ model highlights {
     //   confidence: number
     // }
 
-    metadata   Json? // MLB API metadata
+    metadata   Json?
     created_at DateTime @default(now())
 
     job_id   String? // Reference to processing job
     job      jobs?              @relation(fields: [job_id], references: [id])
     saved_by saved_highlights[]
+    game     games              @relation(fields: [game_id], references: [id])
 
     @@index([game_id])
-    @@index([team_id])
-    @@index([player_id])
     @@index([job_id])
 }
 
