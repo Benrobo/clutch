@@ -1,0 +1,176 @@
+datasource db {
+    provider          = "postgresql"
+    url               = env("DATABASE_URL")
+    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+    relationMode      = "prisma"
+    extensions        = [pgvector(map: "vector")]
+}
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["postgresqlExtensions"]
+}
+
+enum VideoOrientation {
+    VERTICAL // 9:16 for TikTok-style
+    HORIZONTAL // 16:9 original MLB
+    SQUARE // 1:1 if needed
+}
+
+model users {
+    id               String  @id @default(cuid())
+    name             String
+    email            String  @unique
+    avatar           String
+    google_ref_token String?
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    preferences      Json? // { teams: number[], players: number[], highlightTypes: string[] }
+    saved_highlights saved_highlights[]
+
+    @@index([email])
+}
+
+model teams {
+    id           Int      @id
+    name         String
+    abbreviation String
+    league       String
+    division     String
+    logo_url     String?
+    created_at   DateTime @default(now())
+
+    players    players[]
+    games      games[]      @relation("home_team")
+    away_games games[]      @relation("away_team")
+    highlights highlights[]
+}
+
+model players {
+    id         Int     @id
+    name       String
+    position   String
+    team_id    Int
+    team       teams   @relation(fields: [team_id], references: [id])
+    profilePic String?
+    stats      Json?
+
+    highlights highlights[]
+
+    @@index([team_id])
+}
+
+model games {
+    id           String   @id
+    date         DateTime
+    home_team_id Int
+    away_team_id Int
+    home_team    teams    @relation("home_team", fields: [home_team_id], references: [id])
+    away_team    teams    @relation("away_team", fields: [away_team_id], references: [id])
+    status       String
+    season       Int
+    game_type    String
+
+    highlights highlights[]
+    jobs       jobs[]
+
+    @@index([date])
+    @@index([home_team_id])
+    @@index([away_team_id])
+}
+
+model highlights {
+    id        String   @id @default(cuid())
+    title     String
+    game_id   String
+    game      games    @relation(fields: [game_id], references: [id])
+    team_id   Int
+    team      teams    @relation(fields: [team_id], references: [id])
+    player_id Int?
+    player    players? @relation(fields: [player_id], references: [id])
+
+    mlb_video_url       String // Original MLB video
+    processed_video_url String? // Our processed/generated video
+    orientation         VideoOrientation @default(HORIZONTAL)
+
+    // transcript
+    transcript            Json?
+    translated_transcript Json?
+    subtitles             String?
+
+    summary String?
+
+    // Baseball Analytics
+    analytics Json? // {
+    //   pitch_speed: number,
+    //   exit_velocity: number,
+    //   launch_angle: number,
+    //   spin_rate: number,
+    //   distance: number,
+    //   trajectory: [x, y, z][],
+    //   confidence: number
+    // }
+
+    metadata   Json? // MLB API metadata
+    created_at DateTime @default(now())
+
+    job_id   String? // Reference to processing job
+    job      jobs?              @relation(fields: [job_id], references: [id])
+    saved_by saved_highlights[]
+
+    @@index([game_id])
+    @@index([team_id])
+    @@index([player_id])
+    @@index([job_id])
+}
+
+model saved_highlights {
+    id           String     @id @default(cuid())
+    user_id      String
+    highlight_id String
+    user         users      @relation(fields: [user_id], references: [id])
+    highlight    highlights @relation(fields: [highlight_id], references: [id])
+
+    @@unique([user_id, highlight_id])
+    @@index([user_id])
+    @@index([highlight_id])
+}
+
+enum JobType {
+    VIDEO_PROCESSING
+    HIGHLIGHT_GENERATION
+    STATS_ANALYSIS
+}
+
+enum JobStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+    CANCELLED
+}
+
+model jobs {
+    id     String    @id @default(cuid())
+    type   JobType
+    status JobStatus @default(PENDING)
+
+    input_data  Json? // Generic input data for the job
+    output_data Json? // Generic output/results
+    error       String?
+
+    created_at   DateTime  @default(now())
+    updated_at   DateTime  @updatedAt
+    started_at   DateTime?
+    completed_at DateTime?
+
+    highlights highlights[] // Optional relation to highlights
+    games      games?       @relation(fields: [gamesId], references: [id])
+    gamesId    String?
+
+    @@index([type])
+    @@index([status])
+    @@index([created_at])
+}
