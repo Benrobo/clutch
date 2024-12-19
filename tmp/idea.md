@@ -727,6 +727,13 @@ const storageStrategy = {
 }
 ```
 
+- Loop through each games,
+- select one that hasn't been processed
+- save game metadata in db
+- get live game data
+- for each teams within live game data (home and away), store the team info
+- for each teams within live game data (home and away), get team members/rosters and save info in DB. (account for duplicates)
+
 This optimized flow:
 
 1. Reduces API calls
