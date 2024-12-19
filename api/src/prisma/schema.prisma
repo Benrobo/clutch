@@ -83,7 +83,6 @@ model games {
     home_team  teams        @relation("home_team", fields: [home_team_id], references: [id])
     away_team  teams        @relation("away_team", fields: [away_team_id], references: [id])
     highlights highlights[]
-    jobs       jobs[]
 
     @@index([date])
     @@index([home_team_id])
@@ -122,13 +121,10 @@ model highlights {
     metadata   Json?
     created_at DateTime @default(now())
 
-    job_id   String? // Reference to processing job
-    job      jobs?              @relation(fields: [job_id], references: [id])
     saved_by saved_highlights[]
     game     games              @relation(fields: [game_id], references: [id])
 
     @@index([game_id])
-    @@index([job_id])
 }
 
 model saved_highlights {
@@ -170,10 +166,6 @@ model jobs {
     updated_at   DateTime  @updatedAt
     started_at   DateTime?
     completed_at DateTime?
-
-    highlights highlights[] // Optional relation to highlights
-    games      games?       @relation(fields: [gamesId], references: [id])
-    gamesId    String?
 
     @@index([type])
     @@index([status])
