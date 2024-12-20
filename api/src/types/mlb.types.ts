@@ -547,16 +547,106 @@ export interface MLBHighlight {
 /** Game videos and highlights */
 export interface MLBGameContent {
   copyright: string;
+  link: string;
   highlights: {
     highlights: {
       items: MLBHighlight[];
     };
   };
   editorial?: {
+    preview: Record<string, unknown>;
+    articles: null;
     recap?: {
       mlb?: {
-        title: string;
+        type: string;
+        state: string;
+        date: string;
+        title?: string;
         body: string;
+        headline: string;
+        seoTitle: string;
+        slug: string;
+        blurb: string;
+        keywordsAll: {
+          type?: string;
+          value: string;
+          displayName: string;
+        }[];
+        keywords?: string[];
+        keywordsDisplay: any[];
+        image: {
+          title: string;
+          altText: string | null;
+          templateUrl: string;
+          cuts: {
+            aspectRatio: string;
+            width: number;
+            height: number;
+            src: string;
+            at2x: string;
+            at3x: string;
+          }[];
+        };
+        seoKeywords: string;
+        url: string;
+        contributors?: {
+          name: string;
+        }[];
+        photo?: {
+          title: string;
+          altText: string | null;
+          templateUrl: string;
+          cuts: {
+            aspectRatio: string;
+            width: number;
+            height: number;
+            src: string;
+            at2x: string;
+            at3x: string;
+          }[];
+        };
+        media: {
+          type: "video" | "image";
+          state: string;
+          date: string;
+          id: string;
+          headline: string;
+          seoTitle: string;
+          slug: string;
+          blurb: string;
+          keywordsAll: {
+            type?: string;
+            value: string;
+            displayName: string;
+          }[];
+          keywordsDisplay: any[];
+          image: {
+            title: string;
+            altText: string | null;
+            templateUrl: string;
+            cuts: {
+              aspectRatio: string;
+              width: number;
+              height: number;
+              src: string;
+              at2x: string;
+              at3x: string;
+            }[];
+          };
+          noIndex: boolean;
+          mediaPlaybackId: string;
+          title: string;
+          description: string;
+          duration: string;
+          guid: string;
+          mediaPlaybackUrl: string;
+          playbacks: {
+            name: string;
+            url: string;
+            width: string;
+            height: string;
+          }[];
+        };
       };
     };
   };
