@@ -10,3 +10,14 @@ export const processGamesEvery30Minutes = inngestClient.createFunction(
     });
   }
 );
+
+export const processGameHighlightsVideo = inngestClient.createFunction(
+  { id: "process-highlights-video" },
+  { cron: "*/60 * * * *" }, // every 60 minutes
+  async ({ step }) => {
+    // process jobs every hour
+    inngestClient.send({
+      name: "generate-game-highlights-metadata",
+    });
+  }
+);
