@@ -42,9 +42,10 @@ model teams {
     logo_url   String?
     created_at DateTime @default(now())
 
-    players    players[]
-    home_games games[]   @relation("home_team")
-    away_games games[]   @relation("away_team")
+    player_refs      player_team_refs[] @relation("team_to_player_ref")
+    home_games       games[]            @relation("home_team")
+    away_games       games[]            @relation("away_team")
+    player_team_refs player_team_refs[]
 }
 
 model players {
@@ -54,19 +55,32 @@ model players {
     height      String
     gender      String
     verified    Boolean
-    position    String // Pitcher, Catcher, etc
-    team_id     Int
     profile_pic String?
-    stats       Json? // check db-fields-structure.md
 
-    team teams @relation(fields: [team_id], references: [id])
+    // Relation to team references
+    team_refs player_team_refs[]
 
-    @@index([team_id])
+    @@unique([fullname]) // Ensure player names are unique
 }
 
-enum GameType {
-    home
-    away
+model player_team_refs {
+    id         String   @id @default(cuid())
+    player_id  Int
+    team_id    Int
+    position   String // Position can change between teams
+    stats      Json? // Team-specific stats
+    created_at DateTime @default(now())
+
+    // Relations
+    player  players @relation(fields: [player_id], references: [id], onDelete: Cascade)
+    team    teams   @relation("team_to_player_ref", fields: [team_id], references: [id], onDelete: Cascade)
+    teams   teams?  @relation(fields: [teamsId], references: [id])
+    teamsId Int?
+
+    @@unique([player_id, team_id]) // A player can only have one active reference per team
+    @@index([player_id])
+    @@index([team_id])
+    @@index([teamsId])
 }
 
 model games {
@@ -80,8 +94,8 @@ model games {
 
     decisions Json // check db-fields-structure.md
 
-    home_team  teams        @relation("home_team", fields: [home_team_id], references: [id])
-    away_team  teams        @relation("away_team", fields: [away_team_id], references: [id])
+    home_team  teams        @relation("home_team", fields: [home_team_id], references: [id], onDelete: Cascade)
+    away_team  teams        @relation("away_team", fields: [away_team_id], references: [id], onDelete: Cascade)
     highlights highlights[]
 
     @@index([date])
@@ -96,7 +110,7 @@ model highlights {
     created_at DateTime @default(now())
 
     saved_by   saved_highlights[]
-    game       games                  @relation(fields: [game_id], references: [id])
+    game       games                  @relation(fields: [game_id], references: [id], onDelete: Cascade)
     content    highlights_content?
     highlights highlights_playbacks[] // max 5 videos
 
@@ -112,9 +126,11 @@ model highlights_playbacks {
 
     metadata Json?
 
-    mlb_video_url       String // Original MLB video
-    processed_video_url String? // Our processed/generated video
-    orientation         VideoOrientation @default(HORIZONTAL)
+    mlb_video_url            String // Original MLB video
+    mlb_video_duration       String
+    processed_video_url      String? // Our processed/generated video
+    processed_video_duration String?
+    orientation              VideoOrientation @default(HORIZONTAL)
 
     // transcript
     transcript            Json?
@@ -123,7 +139,7 @@ model highlights_playbacks {
 
     summary String?
 
-    highlight highlights @relation(fields: [highlight_id], references: [id])
+    highlight highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
     @@index([highlight_id])
 }
@@ -139,7 +155,7 @@ model highlights_content {
     body     String // markdown
     photos   String[] //max 5
 
-    highlight highlights @relation(fields: [highlight_id], references: [id])
+    highlight highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
     @@index([highlight_id])
 }
@@ -149,7 +165,7 @@ model saved_highlights {
     user_id      String
     highlight_id String
     user         users      @relation(fields: [user_id], references: [id])
-    highlight    highlights @relation(fields: [highlight_id], references: [id])
+    highlight    highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
     @@unique([user_id, highlight_id])
     @@index([user_id])
