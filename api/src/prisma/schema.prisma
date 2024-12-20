@@ -70,7 +70,7 @@ enum GameType {
 }
 
 model games {
-    id           String @id
+    id           Int    @id
     date         String
     home_team_id Int
     away_team_id Int
@@ -91,10 +91,26 @@ model games {
 
 model highlights {
     id      String @id @default(cuid())
-    game_id String
+    game_id Int
+
+    created_at DateTime @default(now())
+
+    saved_by   saved_highlights[]
+    game       games                  @relation(fields: [game_id], references: [id])
+    content    highlights_content?
+    highlights highlights_playbacks[] // max 5 videos
+
+    @@index([game_id])
+}
+
+model highlights_playbacks {
+    id           String @id @default(cuid())
+    highlight_id String
 
     title       String // check db-fields-structure.md
     description String // check db-fields-structure.md
+
+    metadata Json?
 
     mlb_video_url       String // Original MLB video
     processed_video_url String? // Our processed/generated video
@@ -107,24 +123,25 @@ model highlights {
 
     summary String?
 
-    // Baseball Analytics
-    analytics Json? // {
-    //   pitch_speed: number,
-    //   exit_velocity: number,
-    //   launch_angle: number,
-    //   spin_rate: number,
-    //   distance: number,
-    //   trajectory: [x, y, z][],
-    //   confidence: number
-    // }
+    highlight highlights @relation(fields: [highlight_id], references: [id])
 
-    metadata   Json?
-    created_at DateTime @default(now())
+    @@index([highlight_id])
+}
 
-    saved_by saved_highlights[]
-    game     games              @relation(fields: [game_id], references: [id])
+model highlights_content {
+    id           String @id @default(cuid())
+    highlight_id String @unique
 
-    @@index([game_id])
+    // recap
+    title    String
+    headline String
+    keywords String[]
+    body     String // markdown
+    photos   String[] //max 5
+
+    highlight highlights @relation(fields: [highlight_id], references: [id])
+
+    @@index([highlight_id])
 }
 
 model saved_highlights {
