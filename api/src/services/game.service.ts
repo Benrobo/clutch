@@ -46,8 +46,8 @@ export default class GameService {
   }
 
   async findPlayerByIdAndTeamId(id: number, teamId: number) {
-    return await prisma.players.findUnique({
-      where: { id, team_id: teamId },
+    return await prisma.player_team_refs.findFirst({
+      where: { player_id: id, team_id: teamId },
     });
   }
 
@@ -69,16 +69,6 @@ export default class GameService {
       data: {
         ...data,
         league: data?.league as any,
-      },
-    });
-  }
-
-  async createPlayers(data: CreatePlayersInput) {
-    const { stats, ...rest } = data;
-    return await prisma.players.create({
-      data: {
-        ...rest,
-        stats: stats as any,
       },
     });
   }
