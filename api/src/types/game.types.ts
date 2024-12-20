@@ -16,7 +16,7 @@ export interface DBGameDecision {
 }
 
 export interface CreateGameInput {
-  id: string;
+  id: number;
   date: string;
   home_team_id: number;
   away_team_id: number;
