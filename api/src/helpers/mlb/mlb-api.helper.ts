@@ -316,7 +316,7 @@ export default class MLBAPIHelper {
     }
   }
 
-  private getTeamLogo(teamId: number): string {
+  public getTeamLogo(teamId: number): string {
     return `https://www.mlbstatic.com/team-logos/${teamId}.svg`;
   }
 
@@ -345,7 +345,7 @@ export default class MLBAPIHelper {
    * Constructs profile picture URLs for a player in different sizes
    * @private
    */
-  private getPlayerProfilePictures(playerId: number): {
+  public getPlayerProfilePictures(playerId: number): {
     small: string;
     medium: string;
     large: string;
