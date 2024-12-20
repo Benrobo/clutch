@@ -5,3 +5,10 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
   { event: "process-highlights-video" },
   async ({ step }) => {}
 );
+
+async function processVideo() {
+  // get highlights videos sorted by processed_video_url in asc order
+  // check if a video is already in process
+  // store current processing highlight in cache
+  // process video
+}
