@@ -232,6 +232,211 @@ export interface MLBLiveGamePlay {
 }
 
 /** All live game information (score, plays, stats) */
+// Game Linescore Types
+interface MLBInningStats {
+  runs: number;
+  hits: number;
+  errors: number;
+  leftOnBase: number;
+}
+
+interface MLBInning {
+  num: number;
+  ordinalNum: string;
+  home: MLBInningStats;
+  away: MLBInningStats;
+}
+
+interface MLBTeamScore {
+  runs: number;
+  hits: number;
+  errors: number;
+  leftOnBase: number;
+}
+
+interface MLBDefensePlayer {
+  id: number;
+  fullName: string;
+  link: string;
+}
+
+interface MLBDefense {
+  pitcher: MLBDefensePlayer;
+  catcher: MLBDefensePlayer;
+  first: MLBDefensePlayer;
+  second: MLBDefensePlayer;
+  third: MLBDefensePlayer;
+  shortstop: MLBDefensePlayer;
+  left: MLBDefensePlayer;
+  center: MLBDefensePlayer;
+  right: MLBDefensePlayer;
+  batter: MLBDefensePlayer;
+  onDeck: MLBDefensePlayer;
+  inHole: MLBDefensePlayer;
+  battingOrder: number;
+  team: {
+    id: number;
+    name: string;
+    link: string;
+  };
+}
+
+interface MLBLinescore {
+  currentInning: number;
+  currentInningOrdinal: string;
+  inningState: string;
+  inningHalf: string;
+  isTopInning: boolean;
+  scheduledInnings: number;
+  innings: MLBInning[];
+  teams: {
+    home: MLBTeamScore;
+    away: MLBTeamScore;
+  };
+  defense: MLBDefense;
+  offense: {
+    batter: MLBDefensePlayer;
+    onDeck: MLBDefensePlayer;
+    inHole: MLBDefensePlayer;
+    pitcher: MLBDefensePlayer;
+    battingOrder: number;
+    team: {
+      id: number;
+      name: string;
+      link: string;
+    };
+  };
+  balls: number;
+  strikes: number;
+  outs: number;
+}
+
+// Boxscore Types
+interface MLBBattingStats {
+  flyOuts: number;
+  groundOuts: number;
+  runs: number;
+  doubles: number;
+  triples: number;
+  homeRuns: number;
+  strikeOuts: number;
+  baseOnBalls: number;
+  hits: number;
+  atBats: number;
+  avg: string;
+  obp: string;
+  slg: string;
+  ops: string;
+  stolenBases: number;
+  plateAppearances: number;
+  totalBases: number;
+  rbi: number;
+  leftOnBase: number;
+  sacBunts: number;
+  sacFlies: number;
+}
+
+interface MLBPitchingStats {
+  inningsPitched: string;
+  hits: number;
+  runs: number;
+  earnedRuns: number;
+  baseOnBalls: number;
+  strikeOuts: number;
+  homeRuns: number;
+  pitchesThrown: number;
+  strikes: number;
+  strikePercentage: string;
+  era: string;
+  whip: string;
+  battersFaced: number;
+}
+
+interface MLBBoxscore {
+  teams: {
+    home: {
+      team: {
+        id: number;
+        name: string;
+        link: string;
+      };
+      teamStats: {
+        batting: MLBBattingStats;
+        pitching: MLBPitchingStats;
+      };
+      players: Record<
+        string,
+        {
+          person: {
+            id: number;
+            fullName: string;
+            link: string;
+          };
+          stats: {
+            batting: Partial<MLBBattingStats>;
+            pitching: Partial<MLBPitchingStats>;
+          };
+          position: {
+            code: string;
+            name: string;
+            type: string;
+            abbreviation: string;
+          };
+        }
+      >;
+    };
+    away: {
+      team: {
+        id: number;
+        name: string;
+        link: string;
+      };
+      teamStats: {
+        batting: MLBBattingStats;
+        pitching: MLBPitchingStats;
+      };
+      players: Record<
+        string,
+        {
+          person: {
+            id: number;
+            fullName: string;
+            link: string;
+          };
+          stats: {
+            batting: Partial<MLBBattingStats>;
+            pitching: Partial<MLBPitchingStats>;
+          };
+          position: {
+            code: string;
+            name: string;
+            type: string;
+            abbreviation: string;
+          };
+        }
+      >;
+    };
+  };
+}
+
+interface MLBDecisions {
+  winner: {
+    id: number;
+    fullName: string;
+    link: string;
+  };
+  loser: {
+    id: number;
+    fullName: string;
+    link: string;
+  };
+  save: {
+    id: number;
+    fullName: string;
+    link: string;
+  };
+}
+
 export interface MLBLiveGameData {
   copyright: string;
   gamePk: number;
@@ -265,29 +470,13 @@ export interface MLBLiveGameData {
         bottom: number[];
       }>;
     };
-    linescore: {
-      currentInning: number;
-      currentInningOrdinal: string;
-      inningState: string;
-      inningHalf: "Top" | "Bottom";
-      isTopInning: boolean;
-      scheduledInnings: number;
-      innings: Array<{
-        num: number;
-        ordinalNum: string;
-        home: {
-          runs: number;
-          hits: number;
-          errors: number;
-          leftOnBase: number;
-        };
-        away: {
-          runs: number;
-          hits: number;
-          errors: number;
-          leftOnBase: number;
-        };
-      }>;
+    linescore: MLBLinescore;
+    boxscore: MLBBoxscore;
+    decisions: MLBDecisions;
+    leaders: {
+      hitDistance: {};
+      hitSpeed: {};
+      pitchSpeed: {};
     };
   };
 }
