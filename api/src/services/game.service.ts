@@ -4,10 +4,9 @@ import {
   CreateTeamInput,
 } from "../types/game.types.js";
 import prisma from "../prisma/index.js";
-import { games, Prisma } from "@prisma/client";
 
 export default class GameService {
-  async findGameById(id: string) {
+  async findGameById(id: number) {
     return await prisma.games.findUnique({
       where: { id },
       include: {
@@ -84,7 +83,7 @@ export default class GameService {
     });
   }
 
-  async findGameWithHighlights(id: string) {
+  async findGameWithHighlights(id: number) {
     return await prisma.games.findUnique({
       where: { id },
       include: {
