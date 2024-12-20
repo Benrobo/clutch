@@ -5,8 +5,12 @@ import { TRACK_MLB_SEASON } from "../constant/mlb.js";
 import redis from "../config/redis.js";
 import { MLBScheduleResponse, MLBGame, MLBPlayer } from "../types/mlb.types.js";
 import dayjs from "dayjs";
+import { htmlToMarkdown } from "../helpers/turndown.js";
+import { checkDurationLessThanConstraints } from "../lib/utils.js";
+import retry from "async-retry";
+import shortUUID from "short-uuid";
 
-const SCHEDULE_PROCESSING_KEY = "mlb-schedule-processing-date";
+const SCHEDULE_PROCESSING_DATES_KEY = "mlb-schedule-processing-dates";
 const mlbApi = new MLBAPIHelper({
   season: TRACK_MLB_SEASON,
   sportId: 1,
@@ -17,66 +21,144 @@ export const generateGameHighlightsMetadata = inngestClient.createFunction(
   { id: "generate-game-highlights-metadata" },
   { event: "generate-game-highlights-metadata" },
   async () => {
-    console.log(`🔃 Starting MLB game highlights generation...`);
-    await processMLBSchedule();
+    console.log(`\n🔃 Starting MLB game highlights generation...`);
+    // await processMLBSchedule();
   }
 );
 
-processMLBSchedule();
+// processMLBSchedule();
+
+async function getProcessingDates(): Promise<string[]> {
+  try {
+    const datesStr = await redis.get(SCHEDULE_PROCESSING_DATES_KEY);
+    if (!datesStr) return [];
+
+    const dates = JSON.parse(datesStr);
+    if (!Array.isArray(dates)) {
+      console.warn(
+        "Invalid processing dates format in Redis, resetting to empty array"
+      );
+      await redis.set(SCHEDULE_PROCESSING_DATES_KEY, "[]");
+      return [];
+    }
+
+    return dates;
+  } catch (error) {
+    console.warn(
+      "Error parsing processing dates from Redis, resetting to empty array:",
+      error
+    );
+    await redis.set(SCHEDULE_PROCESSING_DATES_KEY, "[]");
+    return [];
+  }
+}
+
+async function getNextScheduleDate(scheduleResponse: MLBScheduleResponse) {
+  const [processingDates, lastProcessedGame] = await Promise.all([
+    getProcessingDates(),
+    prisma.games.findFirst({
+      orderBy: {
+        date: "desc",
+      },
+      select: {
+        date: true,
+      },
+    }),
+  ]);
+
+  // Find the first available date that isn't being processed and is after the last processed date
+  return scheduleResponse.dates.find(
+    (d) =>
+      !processingDates.includes(d.date) &&
+      (!lastProcessedGame || dayjs(d.date).isAfter(lastProcessedGame.date))
+  )?.date;
+}
+
+async function addProcessingDate(date: string) {
+  const dates = await getProcessingDates();
+  dates.push(date);
+  await redis.set(SCHEDULE_PROCESSING_DATES_KEY, JSON.stringify(dates));
+}
+
+async function removeProcessingDate(date: string) {
+  const dates = await getProcessingDates();
+  const updatedDates = dates.filter((d) => d !== date);
+  await redis.set(SCHEDULE_PROCESSING_DATES_KEY, JSON.stringify(updatedDates));
+}
 
 async function processMLBSchedule() {
-  const scheduleResponse = (await mlbApi.getSchedule({
-    gameType: "R",
-  })) as MLBScheduleResponse;
+  try {
+    await retry(
+      async () => {
+        const scheduleResponse = (await mlbApi.getSchedule({
+          gameType: "R",
+        })) as MLBScheduleResponse;
 
-  const currentProcessingDate = await redis.get(SCHEDULE_PROCESSING_KEY);
+        const nextScheduleDate = await getNextScheduleDate(scheduleResponse);
 
-  if (!currentProcessingDate) {
-    await redis.set(SCHEDULE_PROCESSING_KEY, scheduleResponse.dates[0].date);
-    console.log(
-      `📅 Processing games for date: ${scheduleResponse.dates[0].date}`
+        if (!nextScheduleDate) {
+          console.log("No more dates to process in the schedule");
+          return;
+        }
+
+        console.log(`📅 Processing games for date: ${nextScheduleDate}`);
+
+        // Add date to processing list
+        await addProcessingDate(nextScheduleDate);
+
+        try {
+          // Store the current date as previous before updating to new date
+          // await redis.set(SCHEDULE_PROCESSING_DATES_KEY, nextScheduleDate);
+
+          const gamesForDate =
+            scheduleResponse.dates.find((d) => d.date === nextScheduleDate)
+              ?.games || [];
+
+          await processGamesForDate(gamesForDate);
+
+          // Successfully processed - remove from processing list
+          await removeProcessingDate(nextScheduleDate);
+        } catch (error) {
+          // If there's an error, remove the date from processing list
+          await removeProcessingDate(nextScheduleDate);
+          throw error; // Re-throw to trigger retry
+        }
+      },
+      {
+        retries: 3,
+        minTimeout: 2000,
+        onRetry: (e) => {
+          console.error(`Error processing MLB schedule:`, e);
+          console.log(`Retrying operation...`);
+        },
+      }
     );
-
-    await processGamesForDate(scheduleResponse.dates[0].games);
-  } else {
-    console.log(`📅 Processing games for date: ${currentProcessingDate}`);
-
-    const scheduleGame = await processGamesForDate(
-      scheduleResponse?.dates.find((d) => d.date === currentProcessingDate)
-        ?.games || []
-    );
+  } catch (err) {
+    console.error(`Error processing MLB schedule: ${err}`);
+    console.error(err);
   }
 }
 
 async function processGamesForDate(games: MLBGame[]) {
-  const gamesCount = games.length;
-  let processedGames = 0;
+  console.log(`📅 Processing ${games.length} games...`);
+
   for (const game of games) {
     try {
-      if (processedGames === gamesCount) {
-        await redis.del(SCHEDULE_PROCESSING_KEY);
-        console.log(
-          `📅 Finished processing games for date: ${dayjs(game.gameDate).format(
-            "YYYY-MM-DD"
-          )}`
-        );
-        break;
-      }
-
       const existingGame = await gameService.findGameById(game.gamePk);
       if (existingGame) {
         console.log(`⏭️  Skipping processed game: ${game.gamePk}`);
-        return;
+        continue;
       }
 
       const liveGameData = await mlbApi.getLiveGame(game.gamePk);
       if (!liveGameData) {
         console.log(`❌ No live data available for game: ${game.gamePk}`);
-        return;
+        continue;
       }
 
       console.log(`✨ Processing live game: ${game.gamePk}`);
 
+      const gamePk = game.gamePk;
       const gameStatus = game.status?.abstractGameState;
       const gameDecisions = liveGameData?.liveData?.decisions;
       const gameType = game.gameType;
@@ -88,20 +170,39 @@ async function processGamesForDate(games: MLBGame[]) {
       const homeLeague = homeTeam?.league;
       const homeTeamName = homeTeam?.teamName;
       const homeTeamAbbr = homeTeam?.abbreviation;
-      const homeTeamId = homeTeam?.id;
 
+      const homeTeamId = homeTeam?.id;
+      const awayTeamId = awayTeam?.id;
       const awayLeague = awayTeam?.league;
       const awayTeamName = awayTeam?.teamName;
       const awayTeamAbbr = awayTeam?.abbreviation;
-      const awayTeamId = awayTeam?.id;
 
       const homeTeamLogo = mlbApi.getTeamLogo(homeTeamId);
       const awayTeamLogo = mlbApi.getTeamLogo(awayTeamId);
 
       // players
-      const teamRosters = formatPlayers(
-        liveGameData?.gameData?.players ?? {}
-      )?.map((p) => ({
+      // This would have been used, but the live data doesn't have anyway to determine
+      // what team a player belongs to.
+      // const teamRosters = formatPlayers(
+      //   liveGameData?.gameData?.players ?? {}
+      // )?.map((p) => ({
+      //   id: p.id,
+      //   fullname: p.fullName,
+      //   age: p.currentAge,
+      //   height: p.height,
+      //   gender: p.gender,
+      //   verified: p.isVerified,
+      //   position: p?.primaryPosition?.name,
+      //   profile_pic: mlbApi.getPlayerProfilePictures(p.id)?.medium,
+      //   stats: {
+      //     batSide: p.batSide,
+      //     pitchHand: p.pitchHand,
+      //   },
+      // }));
+
+      const homeTeamPlayers = await getTeamRoster(homeTeamId);
+      const awayTeamPlayers = await getTeamRoster(awayTeamId);
+      const homeTeamPlayersFormatted = homeTeamPlayers.map((p) => ({
         id: p.id,
         fullname: p.fullName,
         age: p.currentAge,
@@ -113,33 +214,311 @@ async function processGamesForDate(games: MLBGame[]) {
         stats: {
           batSide: p.batSide,
           pitchHand: p.pitchHand,
-        },
+        } as any,
+        team_id: homeTeamId,
+      }));
+      const awayTeamPlayersFormatted = awayTeamPlayers.map((p) => ({
+        id: p.id,
+        fullname: p.fullName,
+        age: p.currentAge,
+        height: p.height,
+        gender: p.gender,
+        verified: p.isVerified,
+        position: p?.primaryPosition?.name,
+        profile_pic: mlbApi.getPlayerProfilePictures(p.id)?.medium,
+        stats: {
+          batSide: p.batSide,
+          pitchHand: p.pitchHand,
+        } as any,
+        team_id: awayTeamId,
       }));
 
       // highlights
       const gameContent = await mlbApi.getGameContent(game.gamePk);
+      const recap = gameContent?.editorial?.recap?.mlb;
+      const highlightContent = {
+        title: recap?.seoTitle,
+        headline: recap?.headline,
+        keywords: recap?.keywordsAll.map((k) => k.displayName),
+        body: htmlToMarkdown(recap?.body!),
+        photos: recap?.photo?.cuts?.map((p) => p.src).slice(0, 6), // max 5 photos
+      };
 
-      console.log({ gameContent });
+      const highlightsPlaybacks: {
+        url: string; // video url
+        duration: string;
+        title: string;
+        description: string;
+      }[] = [];
 
-      //   console.log({
-      //     home: {
-      //       homeLeague,
-      //       homeTeamName,
-      //       homeTeamAbbr,
-      //       homeTeamLogo,
-      //     },
-      //     away: {
-      //       awayLeague,
-      //       awayTeamName,
-      //       awayTeamAbbr,
-      //       awayTeamLogo,
-      //     },
-      //   });
-      //   console.log(teamRosters);
+      for (const playback of gameContent?.highlights?.highlights?.items ?? []) {
+        const videoPlayback = playback?.playbacks?.find(
+          (p) => p.name === "mp4Avc"
+        );
+        if (videoPlayback) {
+          const validConstraints = checkDurationLessThanConstraints(
+            playback?.duration,
+            "minutes",
+            5
+          );
+          if (validConstraints) {
+            highlightsPlaybacks.push({
+              url: videoPlayback?.url,
+              duration: playback.duration,
+              title: playback.title,
+              description: playback.description,
+            });
+          } else {
+            console.log(
+              "skipping playback",
+              playback.title,
+              "duration",
+              playback.duration
+            );
+          }
+        }
+      }
+
+      // save data in db
+      const gameDataCreated = await retry(
+        async () => {
+          await prisma.$transaction(async (tx) => {
+            // Create game
+            const createdGame = await tx.games.upsert({
+              where: { id: gamePk },
+              update: {},
+              create: {
+                id: gamePk,
+                home_team_id: homeTeamId,
+                away_team_id: awayTeamId,
+                game_type: gameType,
+                status: gameStatus,
+                date: game.gameDate,
+                decisions: gameDecisions as any,
+                season: dayjs(game.gameDate).year(),
+              },
+            });
+
+            if (!createdGame) {
+              throw new Error(`Error creating game: ${gamePk}`);
+            }
+
+            // Create teams
+            if (
+              !homeTeamName ||
+              !homeTeamAbbr ||
+              !homeTeamLogo ||
+              !homeLeague ||
+              !awayTeamName ||
+              !awayTeamAbbr ||
+              !awayTeamLogo ||
+              !awayLeague
+            ) {
+              throw new Error(`Missing required team data for game ${gamePk}`);
+            }
+
+            await Promise.all([
+              tx.teams.upsert({
+                where: { id: homeTeamId },
+                update: {},
+                create: {
+                  id: homeTeamId,
+                  name: homeTeamName,
+                  abbreviation: homeTeamAbbr,
+                  logo_url: homeTeamLogo,
+                  league: homeLeague as any,
+                },
+              }),
+              tx.teams.upsert({
+                where: { id: awayTeamId },
+                update: {},
+                create: {
+                  id: awayTeamId,
+                  name: awayTeamName,
+                  abbreviation: awayTeamAbbr,
+                  logo_url: awayTeamLogo,
+                  league: awayLeague as any,
+                },
+              }),
+            ]);
+
+            // Create players
+            await Promise.all([
+              ...homeTeamPlayersFormatted.map(async (player) => {
+                // First check if player exists by ID or name
+                const existingPlayer = await tx.players.findFirst({
+                  where: {
+                    OR: [{ id: player.id }, { fullname: player.fullname }],
+                  },
+                });
+
+                // If player doesn't exist, create them
+                const playerRecord =
+                  existingPlayer ||
+                  (await tx.players.create({
+                    data: {
+                      id: player.id,
+                      fullname: player.fullname,
+                      age: player.age,
+                      height: player.height,
+                      gender: player.gender,
+                      verified: player.verified,
+                      profile_pic: player.profile_pic,
+                    },
+                  }));
+
+                // Create or update team reference
+                await tx.player_team_refs.upsert({
+                  where: {
+                    player_id_team_id: {
+                      player_id: playerRecord.id,
+                      team_id: player.team_id,
+                    },
+                  },
+                  update: {
+                    position: player.position,
+                    stats: player.stats,
+                  },
+                  create: {
+                    player_id: playerRecord.id,
+                    team_id: player.team_id,
+                    position: player.position,
+                    stats: player.stats,
+                  },
+                });
+              }),
+              ...awayTeamPlayersFormatted.map(async (player) => {
+                // First check if player exists by ID or name
+                const existingPlayer = await tx.players.findFirst({
+                  where: {
+                    OR: [{ id: player.id }, { fullname: player.fullname }],
+                  },
+                });
+
+                // If player doesn't exist, create them
+                const playerRecord =
+                  existingPlayer ||
+                  (await tx.players.create({
+                    data: {
+                      id: player.id,
+                      fullname: player.fullname,
+                      age: player.age,
+                      height: player.height,
+                      gender: player.gender,
+                      verified: player.verified,
+                      profile_pic: player.profile_pic,
+                    },
+                  }));
+
+                // Create or update team reference
+                await tx.player_team_refs.upsert({
+                  where: {
+                    player_id_team_id: {
+                      player_id: playerRecord.id,
+                      team_id: player.team_id,
+                    },
+                  },
+                  update: {
+                    position: player.position,
+                    stats: player.stats,
+                  },
+                  create: {
+                    player_id: playerRecord.id,
+                    team_id: player.team_id,
+                    position: player.position,
+                    stats: player.stats,
+                  },
+                });
+              }),
+            ]);
+
+            // Create highlights
+            let highlight = await tx.highlights.findFirst({
+              where: { game_id: gamePk },
+            });
+
+            if (!highlight) {
+              highlight = await tx.highlights.create({
+                data: {
+                  game_id: gamePk,
+                  id: shortUUID.generate(),
+                },
+              });
+            }
+
+            // Create highlight playbacks
+            await Promise.all(
+              highlightsPlaybacks.map(async (playback) => {
+                const exists = await tx.highlights_playbacks.findFirst({
+                  where: { mlb_video_url: playback.url },
+                });
+
+                if (!exists) {
+                  await tx.highlights_playbacks.create({
+                    data: {
+                      mlb_video_url: playback.url,
+                      mlb_video_duration: playback.duration,
+                      title: playback.title,
+                      description: playback?.description ?? "N/A",
+                      highlight: {
+                        connect: { id: highlight!.id },
+                      },
+                    },
+                  });
+                }
+              })
+            );
+
+            // Create highlight content
+            await tx.highlights_content.upsert({
+              where: { highlight_id: highlight!.id },
+              update: {},
+              create: {
+                photos: highlightContent.photos,
+                title: highlightContent?.title!,
+                headline: highlightContent?.headline!,
+                keywords: highlightContent?.keywords!,
+                body: highlightContent?.body!,
+                highlight: {
+                  connect: { id: highlight!.id },
+                },
+              },
+            });
+          });
+
+          console.log(`\n✅ Game ${gamePk} processed successfully\n`);
+          return true;
+        },
+        {
+          retries: 3,
+          onRetry: (e) => {
+            console.error(`Error processing game ${game.gamePk}:`, e);
+            console.log(`Retrying operation...`);
+          },
+        }
+      );
+
+      if (gameDataCreated) {
+        console.log(`✅ Game ${game.gamePk} processed successfully\n`);
+      }
     } catch (error) {
       console.error(`❌ Error processing game ${game.gamePk}:`, error);
+      throw new Error(`Error processing game ${game.gamePk}: ${error}`);
     }
   }
+}
+
+async function getTeamRoster(teamId: number) {
+  const teamRosters = await mlbApi.getTeamRoster(teamId);
+  let teamPlayers: MLBPlayer[] = [];
+  if (teamRosters.length > 0) {
+    teamPlayers = await Promise.all(
+      teamRosters.map(async (p) => {
+        return await mlbApi.getPlayer(p.person.id);
+      })
+    );
+  }
+  return teamPlayers;
 }
 
 function formatPlayers(data: Record<string, MLBPlayer>) {
