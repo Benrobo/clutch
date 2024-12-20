@@ -21,3 +21,5 @@ export const BASEBALL_KEYWORDS = [
   "safe",
   "runner",
 ];
+
+export const TRACK_MLB_SEASON = 2024;
