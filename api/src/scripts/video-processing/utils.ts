@@ -1,6 +1,51 @@
 import path from "path";
 import { promises as fs } from "fs";
 import shortUUID from "short-uuid";
+import download from "download";
+
+export const getProcessedDir = () => {
+  const cwd = process.cwd();
+  const dir = path.join(cwd, "public", "processed");
+  return dir;
+};
+
+export const getDownloadedDir = () => {
+  const cwd = process.cwd();
+  const dir = path.join(cwd, "public", "downloaded-playback-videos");
+  return dir;
+};
+
+export const checkVideoExists = async (
+  videoName: string
+): Promise<string | null> => {
+  const dir = getDownloadedDir();
+  const videoPath = path.join(dir, videoName);
+
+  try {
+    await fs.access(videoPath);
+    return videoPath;
+  } catch {
+    return null;
+  }
+};
+
+export const downloadPlaybackVideo = async (url: string, videoName: string) => {
+  // Check if video already exists
+  const existingVideoPath = await checkVideoExists(videoName);
+  if (existingVideoPath) {
+    console.log("Video already exists, skipping download");
+    return existingVideoPath;
+  }
+
+  // https://mlb-cuts-diamond.mlb.com/FORGE/2024/2024-03/20/38ccdc46-1c5e1b20-f1855590-csvm-diamondx64-asset_1280x720_59_4000K.mp4
+  const dir = getDownloadedDir();
+  const videoPath = path.join(dir, videoName);
+  const downloadedFile = await download(url, videoPath);
+
+  await fs.writeFile(videoPath, downloadedFile);
+
+  return videoPath;
+};
 
 /**
  * Creates a unique job directory for processing outputs
