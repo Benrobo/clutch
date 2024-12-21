@@ -1,3 +1,5 @@
+import { $Enums, Prisma } from "@prisma/client";
+
 export interface DBLeague {
   id: number;
   name: string;
@@ -45,6 +47,19 @@ interface DBPlayerStats {
   };
 }
 
+export interface DBTranscriptData {
+  text: string;
+  start: number;
+  end: number;
+  confidence: number;
+}
+
+export type SupportedTranslations = "en" | "fr" | "es";
+
+export type DBTranslatedTranscriptData = {
+  [K in SupportedTranslations]?: DBTranscriptData;
+};
+
 export interface CreatePlayersInput {
   id: number;
   team_id: number;
@@ -56,4 +71,21 @@ export interface CreatePlayersInput {
   position: string;
   profile_pic: string;
   stats: DBPlayerStats;
+}
+
+export interface DBPlaybackOutput {
+  id: string;
+  highlight_id: string;
+  title: string;
+  description: string;
+  metadata?: Prisma.JsonValue;
+  mlb_video_url: string;
+  mlb_video_duration: string;
+  processed_video_url: string | null;
+  processed_video_duration: string | null;
+  orientation: $Enums.VideoOrientation;
+  transcript?: Prisma.JsonValue;
+  translated_transcript?: Prisma.JsonValue;
+  subtitles: string | null;
+  summary: string | null;
 }
