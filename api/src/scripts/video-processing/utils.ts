@@ -3,48 +3,98 @@ import { promises as fs } from "fs";
 import shortUUID from "short-uuid";
 import download from "download";
 
-export const getProcessedDir = () => {
+interface VideoPathInfo {
+  videoPath: string;
+  fileName: string;
+}
+
+export const getProcessedDir = async () => {
   const cwd = process.cwd();
   const dir = path.join(cwd, "public", "processed");
-  return dir;
+  try {
+    await fs.access(dir);
+    return dir;
+  } catch (e: any) {
+    await fs.mkdir(dir, { recursive: true });
+    return dir;
+  }
+};
+
+const sanitizeFileName = (fileName: string): string => {
+  return (
+    fileName
+      .replace(/['"]/g, "") // Remove quotes
+      .replace(/[']/g, "") // Remove apostrophes
+      // .replace(/[^a-zA-Z0-9-_]/g, "-") // Replace other special chars with hyphen
+      .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+      .toLowerCase()
+  );
 };
 
 export const getDownloadedDir = () => {
   const cwd = process.cwd();
   const dir = path.join(cwd, "public", "downloaded-playback-videos");
+  // Ensure directory exists
+  fs.mkdir(dir, { recursive: true }).catch(() => {});
   return dir;
 };
 
-export const checkVideoExists = async (
-  videoName: string
+const findVideoInDirectory = async (
+  dirPath: string
 ): Promise<string | null> => {
-  const dir = getDownloadedDir();
-  const videoPath = path.join(dir, videoName);
-
+  console.log(dirPath);
   try {
-    await fs.access(videoPath);
-    return videoPath;
+    const files = await fs.readdir(dirPath);
+
+    console.log({ files });
+    const videoFile = files.find((file) => file.endsWith(".mp4"));
+    return videoFile ? path.join(dirPath, videoFile) : null;
   } catch {
     return null;
   }
 };
 
-export const downloadPlaybackVideo = async (url: string, videoName: string) => {
-  // Check if video already exists
-  const existingVideoPath = await checkVideoExists(videoName);
-  if (existingVideoPath) {
+export const checkVideoExists = async (
+  videoName: string
+): Promise<VideoPathInfo | null> => {
+  const dir = getDownloadedDir();
+  const basePath = path.join(dir, videoName.replace(".mp4", ""));
+  const videoPath = basePath + ".mp4";
+
+  try {
+    await fs.access(videoPath);
+    return {
+      videoPath,
+      fileName: path.basename(videoPath),
+    };
+  } catch (e: any) {
+    console.log(`Video not found: ${videoPath}`);
+    return null;
+  }
+};
+
+export const downloadPlaybackVideo = async (
+  url: string,
+  videoName: string
+): Promise<VideoPathInfo> => {
+  const fileName = videoName.includes(".mp4") ? videoName : `${videoName}.mp4`;
+  const existingVideo = await checkVideoExists(fileName);
+
+  if (existingVideo) {
     console.log("Video already exists, skipping download");
-    return existingVideoPath;
+    return existingVideo;
   }
 
-  // https://mlb-cuts-diamond.mlb.com/FORGE/2024/2024-03/20/38ccdc46-1c5e1b20-f1855590-csvm-diamondx64-asset_1280x720_59_4000K.mp4
   const dir = getDownloadedDir();
-  const videoPath = path.join(dir, videoName);
-  const downloadedFile = await download(url, videoPath);
+  const videoPath = path.join(dir, fileName);
+  await download(url, dir, {
+    filename: fileName,
+  });
 
-  await fs.writeFile(videoPath, downloadedFile);
-
-  return videoPath;
+  return {
+    videoPath,
+    fileName,
+  };
 };
 
 /**
@@ -61,6 +111,18 @@ export async function createJobFolder(inputPath: string): Promise<string> {
   );
   await fs.mkdir(jobDir, { recursive: true });
   return jobDir;
+}
+
+export async function createProcessingFolder(pathName: string) {
+  const processDir = await getProcessedDir();
+  const jobDir = path.join(processDir, pathName);
+  try {
+    await fs.access(jobDir);
+    return jobDir;
+  } catch {
+    await fs.mkdir(jobDir, { recursive: true });
+    return jobDir;
+  }
 }
 
 /**
