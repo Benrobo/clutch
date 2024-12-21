@@ -6,7 +6,7 @@ import redis from "../config/redis.js";
 import { MLBScheduleResponse, MLBGame, MLBPlayer } from "../types/mlb.types.js";
 import dayjs from "dayjs";
 import { htmlToMarkdown } from "../helpers/turndown.js";
-import { checkDurationLessThanConstraints } from "../lib/utils.js";
+import { checkDurationConstraints } from "../lib/utils.js";
 import retry from "async-retry";
 import shortUUID from "short-uuid";
 
@@ -256,12 +256,35 @@ async function processGamesForDate(games: MLBGame[]) {
           (p) => p.name === "mp4Avc"
         );
         if (videoPlayback) {
-          const validConstraints = checkDurationLessThanConstraints(
+          // Check if duration is between 1-5 minutes
+          const validMinutesConstraints = checkDurationConstraints(
             playback?.duration,
-            "minutes",
-            5
+            {
+              type: "minutes",
+              min: 1,
+              max: 5,
+            }
           );
-          if (validConstraints) {
+
+          // Check if duration is between 15-59 seconds (only for videos under 1 minute)
+          const [hours, minutes] = playback?.duration.split(":").map(Number);
+          const validSecondsConstraints =
+            hours === 0 &&
+            minutes === 0 &&
+            checkDurationConstraints(playback?.duration, {
+              type: "seconds",
+              min: 10,
+              max: 59,
+            });
+
+          // console.log(
+          //   `Checking duration for "${playback.title}":`,
+          //   `\n- Duration: ${playback.duration}`,
+          //   `\n- Valid for 1-5 minutes: ${validMinutesConstraints}`,
+          //   `\n- Valid for 15-59 seconds: ${validSecondsConstraints}`
+          // );
+
+          if (validMinutesConstraints || validSecondsConstraints) {
             highlightsPlaybacks.push({
               url: videoPlayback?.url,
               duration: playback.duration,
@@ -270,10 +293,7 @@ async function processGamesForDate(games: MLBGame[]) {
             });
           } else {
             console.log(
-              "skipping playback",
-              playback.title,
-              "duration",
-              playback.duration
+              `⏭️ Skipping "${playback.title}" - ${playback.duration} outside of allowed ranges`
             );
           }
         }
