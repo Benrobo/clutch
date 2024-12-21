@@ -87,4 +87,8 @@ export default class GameService {
       },
     });
   }
+
+  async getAllGameHighlightsPlayback() {
+    return await prisma.highlights_playbacks.findMany({});
+  }
 }
