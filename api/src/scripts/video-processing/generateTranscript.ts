@@ -3,7 +3,7 @@ import path from "path";
 import fetch from "node-fetch";
 import env from "../../config/env.js";
 import MediaService from "../../services/media.service.js";
-import { TranscriptResult, TranscriptSegment } from "./types.js";
+import { TranscriptSegment } from "./types.js";
 import retry from "async-retry";
 import { generateSRT } from "./generateSRT.js";
 
@@ -126,24 +126,32 @@ export default async function generateTranscript(
           const alternative = result.alternatives[0];
           const words = alternative.words || [];
 
-          // Group words into natural segments based on pauses and punctuation
-          let currentSegment: { words: any[]; text: string[] } = {
-            words: [],
-            text: [],
+          type TempSegment = {
+            text: string[];
+            start: number | null;
+            end: number | null;
           };
-          let currentSegments: (typeof currentSegment)[] = [];
+
+          // Group words into natural segments based on pauses and punctuation
+          let currentSegment: TempSegment = {
+            text: [],
+            start: null,
+            end: null,
+          };
+          let currentSegments: TempSegment[] = [];
 
           for (let i = 0; i < words.length; i++) {
             const word = words[i];
             const nextWord = words[i + 1];
 
-            currentSegment.words.push(word);
+            if (currentSegment.start === null) {
+              currentSegment.start = parseFloat(
+                word.startTime.replace("s", "")
+              );
+            }
             currentSegment.text.push(word.word);
 
-            // Check for natural breaks:
-            // 1. Significant pause between words (> 0.7 seconds)
-            // 2. End of sentence punctuation
-            // 3. Or if it's the last word
+            // Check for natural breaks
             const timeBetweenWords = nextWord
               ? parseFloat(nextWord.startTime.replace("s", "")) -
                 parseFloat(word.endTime.replace("s", ""))
@@ -153,26 +161,27 @@ export default async function generateTranscript(
             const isLastWord = i === words.length - 1;
 
             if (isPause || isPunctuation || isLastWord) {
+              currentSegment.end = parseFloat(word.endTime.replace("s", ""));
               currentSegments.push(currentSegment);
-              currentSegment = { words: [], text: [] };
+              currentSegment = { text: [], start: null, end: null };
             }
           }
 
           // Convert segments to final format
           currentSegments.forEach((segment) => {
-            if (segment.words.length > 0) {
+            if (
+              segment.text.length > 0 &&
+              segment.start !== null &&
+              segment.end !== null
+            ) {
               const text = segment.text.join(" ");
               fullTranscript += text + " ";
 
               segments.push({
                 text,
-                start: parseFloat(segment.words[0].startTime.replace("s", "")),
-                end: parseFloat(
-                  segment.words[segment.words.length - 1].endTime.replace(
-                    "s",
-                    ""
-                  )
-                ),
+                start: segment.start,
+                end: segment.end,
+                confidence: alternative.confidence || 0.0,
               });
             }
           });
