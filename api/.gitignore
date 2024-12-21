@@ -28,6 +28,7 @@ lerna-debug.log*
 .DS_Store
 
 
+/public/downloaded-playback-videos
 /public/processed/*
 /public/video-samples/*.mp4
 /src/scripts/logs
