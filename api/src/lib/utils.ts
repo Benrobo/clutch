@@ -1,15 +1,33 @@
-export function checkDurationLessThanConstraints(
+export function checkDurationConstraints(
   duration: string,
-  constraints: "hours" | "minutes" | "seconds" = "minutes",
-  value: number = 5
-) {
-  const [hours, minutes, seconds] = duration.split(":");
-  switch (constraints) {
-    case "hours":
-      return parseInt(hours) <= value;
-    case "minutes":
-      return parseInt(minutes) <= value;
-    case "seconds":
-      return parseInt(seconds) <= value;
+  constraints: {
+    type: "hours" | "minutes" | "seconds";
+    min: number;
+    max: number;
   }
+) {
+  const [hours, minutes, seconds] = duration.split(":").map(Number);
+  const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+  // Convert duration to the target unit for comparison
+  let durationInTargetUnit: number;
+  switch (constraints.type) {
+    case "hours":
+      durationInTargetUnit = totalSeconds / 3600;
+      break;
+    case "minutes":
+      durationInTargetUnit = totalSeconds / 60;
+      break;
+    case "seconds":
+      durationInTargetUnit = totalSeconds;
+      break;
+    default:
+      return false;
+  }
+
+  // Check if duration falls within the specified range
+  return (
+    durationInTargetUnit >= constraints.min &&
+    durationInTargetUnit <= constraints.max
+  );
 }
