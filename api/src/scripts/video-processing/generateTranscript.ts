@@ -6,6 +6,7 @@ import MediaService from "../../services/media.service.js";
 import { TranscriptSegment } from "./types.js";
 import retry from "async-retry";
 import { generateSRT } from "./generateSRT.js";
+import { SupportedTranslations } from "../../types/game.types.js";
 
 /**
  * Generates transcript and SRT files from audio
