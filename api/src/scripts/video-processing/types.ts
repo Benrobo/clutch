@@ -2,6 +2,7 @@ export interface TranscriptSegment {
   start: number;
   end: number;
   text: string;
+  confidence: number;
 }
 
 export interface TranscriptResult {
@@ -22,6 +23,6 @@ export interface ProcessVideoResult {
 
 export interface ProcessingOptions {
   outputDir?: string;
-  format?: 'vertical' | 'horizontal';
-  quality?: 'high' | 'medium' | 'low';
+  format?: "vertical" | "horizontal";
+  quality?: "high" | "medium" | "low";
 }
