@@ -2,6 +2,7 @@ import { storage } from "../config/firebase.js";
 import env from "../config/env.js";
 import { v4 as uuidv4 } from "uuid";
 import { createHash } from "crypto";
+import * as path from "path";
 
 export default class MediaService {
   /**
@@ -11,13 +12,42 @@ export default class MediaService {
    * @param contentType MIME type of the file
    * @returns GCS URI of the uploaded file
    */
+  private async checkFileExists(fileName: string): Promise<string | null> {
+    try {
+      const bucket = storage.bucket();
+      const [files] = await bucket.getFiles({
+        prefix: fileName,
+      });
+
+      const existingFile = files.find((file) => file.name.includes(fileName));
+      if (existingFile) {
+        await existingFile.makePublic();
+        return `gs://${env.FIREBASE.STORAGE_BUCKET}/${existingFile.name}`;
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error checking file existence:", error);
+      return null;
+    }
+  }
+
   async uploadFile(
     filePath: string,
     directory: string,
     contentType: string
   ): Promise<string> {
+    const baseFileName = path.basename(filePath);
+
+    // Check if file already exists
+    const existingFileUrl = await this.checkFileExists(baseFileName);
+    if (existingFileUrl) {
+      console.log(`File ${baseFileName} already exists, skipping upload`);
+      return existingFileUrl;
+    }
+
     const fileHash = createHash("md5").update(filePath).digest("hex");
-    const fileName = `${directory}/${fileHash}-${uuidv4()}`;
+    const fileName = `${directory}/${baseFileName}`;
     const bucket = storage.bucket();
     const file = bucket.file(fileName);
 
