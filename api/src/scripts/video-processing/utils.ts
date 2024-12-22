@@ -2,6 +2,10 @@ import path from "path";
 import { promises as fs } from "fs";
 import shortUUID from "short-uuid";
 import download from "download";
+import { promisify } from "util";
+import { exec } from "child_process";
+
+const execAsync = promisify(exec);
 
 interface VideoPathInfo {
   videoPath: string;
@@ -157,4 +161,35 @@ export function formatTimestampSRT(seconds: number): string {
   const secs = date.getUTCSeconds().toString().padStart(2, "0");
   const ms = date.getUTCMilliseconds().toString().padStart(3, "0");
   return `${hours}:${minutes}:${secs},${ms}`;
+}
+
+/**
+ * Check if video file has audio
+ */
+export async function hasAudio(videoPath: string): Promise<boolean> {
+  try {
+    // First check for audio streams
+    const { stdout: streamInfo } = await execAsync(
+      `ffprobe -i "${videoPath}" -show_streams -select_streams a -loglevel error`
+    );
+
+    if (streamInfo.length === 0) {
+      return false; // No audio streams found
+    }
+
+    // Then check if the audio stream has actual content by analyzing volume
+    const { stdout: volumeInfo } = await execAsync(
+      `ffmpeg -i "${videoPath}" -af "volumedetect" -vn -sn -dn -f null /dev/null 2>&1`
+    );
+
+    // Extract mean volume from the output
+    const meanVolumeMatch = volumeInfo.match(/mean_volume: ([-\d.]+) dB/);
+    const meanVolume = meanVolumeMatch ? parseFloat(meanVolumeMatch[1]) : -91;
+
+    // If mean volume is very low (below -90dB), consider it silent
+    return meanVolume > -90;
+  } catch (error) {
+    console.warn("Failed to check audio:", error);
+    return false;
+  }
 }
