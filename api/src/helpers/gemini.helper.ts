@@ -57,7 +57,8 @@ export default class Gemini {
     } as { error: any; data: FunctionCall[] | null };
     try {
       const generativeModel = this.genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
+        // model: "gemini-1.5-flash",
+        model: "gemini-2.0-flash-exp",
         tools: [
           {
             functionDeclarations: props.tools.map((t) => ({
