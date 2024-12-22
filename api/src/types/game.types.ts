@@ -1,4 +1,5 @@
 import { $Enums, Prisma } from "@prisma/client";
+import { PlaySummary } from "../scripts/video-processing/generateVideoSummary.js";
 
 export interface DBLeague {
   id: number;
@@ -115,5 +116,5 @@ export interface DBPlaybackOutput {
   transcript?: Prisma.JsonValue;
   translated_transcript?: Prisma.JsonValue;
   subtitles: string | null;
-  summary: string | null;
+  summary: PlaySummary;
 }
