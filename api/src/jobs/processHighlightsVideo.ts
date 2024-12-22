@@ -14,10 +14,19 @@ import {
   getProcessedDir,
 } from "../scripts/video-processing/utils.js";
 import { Prisma } from "@prisma/client";
-import { DBPlaybackOutput } from "../types/game.types.js";
+import {
+  DBPlaybackOutput,
+  SupportedTranslations,
+  SupportedTranslationsEnum,
+} from "../types/game.types.js";
 import extractAudio from "../scripts/video-processing/extractAudio.js";
 import generateTranscript from "../scripts/video-processing/generateTranscript.js";
-import { translateTranscript } from "../scripts/video-processing/translation.js";
+import {
+  SupportedLanguages,
+  saveTranslatedTranscript,
+  translateTranscript,
+} from "../scripts/video-processing/translation.js";
+import { sleep } from "../lib/utils.js";
 
 const HIGHLIGHTS_VIDEO_PROCESSING_KEY = "highlights-video-processing";
 const mlbApi = new MLBAPIHelper({
@@ -98,12 +107,35 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
       playback?.id
     );
 
-    // console.log({ transcriptOutput });
-    const translation = await translateTranscript(
-      transcriptOutput?.transcriptPath,
-      "fr",
-      playback?.id
-    );
+    const translatedTranscripts = [];
+    for (const lang of SupportedLanguages) {
+      try {
+        // Add delay between different languages
+        if (translatedTranscripts.length > 0) {
+          await sleep(3000);
+        }
+
+        const translation = await translateTranscript(
+          transcriptOutput?.transcriptPath,
+          lang,
+          playback?.id
+        );
+        if (translation) {
+          translatedTranscripts.push(translation);
+        }
+      } catch (error) {
+        console.error(`Failed to translate to ${lang}:`, error);
+        await sleep(5000);
+      }
+    }
+
+    // Save all translations to a separate file
+    if (translatedTranscripts.length > 0 && transcriptOutput?.transcriptPath) {
+      await saveTranslatedTranscript(
+        transcriptOutput?.transcriptPath,
+        translatedTranscripts as any
+      );
+    }
 
     // translate SRT and Transcript file.
 
@@ -190,6 +222,7 @@ async function transcribeAudio(
     throw e;
   }
 }
+
 async function checkVideoProcessingStatus() {
   const cachedProcessingVideo = await redis.get(
     HIGHLIGHTS_VIDEO_PROCESSING_KEY
@@ -227,6 +260,7 @@ async function getNextPlaybackToProcess() {
     }
   }
 }
+
 async function checkTranscriptFiles(
   mainProcessDir: string
 ): Promise<{ transcriptPath: string; srtPath: string } | null> {
