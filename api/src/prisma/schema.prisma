@@ -137,7 +137,9 @@ model highlights_playbacks {
     translated_transcript Json?
     subtitles             String?
 
-    summary String?
+    summary Json?
+
+    processed Boolean?
 
     highlight highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
