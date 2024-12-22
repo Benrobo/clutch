@@ -27,8 +27,13 @@ import {
   translateTranscript,
 } from "../scripts/video-processing/translation.js";
 import { sleep } from "../lib/utils.js";
+import generateVideoSummary from "../scripts/video-processing/generateVideoSummary.js";
 
 const HIGHLIGHTS_VIDEO_PROCESSING_KEY = "highlights-video-processing";
+const HIGHLIGHTS_VIDEO_FAILED_KEY = "highlights-video-failed";
+const MAX_RETRY_ATTEMPTS = 3;
+const FAILED_CACHE_TTL = 60 * 60 * 24; // 24 hours in seconds
+
 const mlbApi = new MLBAPIHelper({
   season: TRACK_MLB_SEASON,
   sportId: 1,
@@ -37,42 +42,60 @@ const gameService = new GameService();
 
 export const processGameHighlightsVideo = inngestClient.createFunction(
   { id: "process-highlights-video" },
-  { event: "process-highlights-video" },
+  {
+    event: "process-highlights-video",
+  },
   async ({ step }) => {
-    // processVideo();
+    processVideo();
   }
 );
 
-processVideo();
+// processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
-    console.log("\n🔃 Starting video processing..");
-    // get all highlights videos
-    const processingStatus = await checkVideoProcessingStatus();
-    if (processingStatus) {
-      console.log(`🔃 [${processingStatus?.title}] is already in process`);
-      return;
-    }
-    const playback = await getNextPlaybackToProcess();
+    await retry(
+      async () => {
+        console.log("\n🔃 Starting video processing..");
+        // get all highlights videos
+        const processingStatus = await checkVideoProcessingStatus();
+        if (processingStatus) {
+          console.log(`🔃 [${processingStatus?.title}] is already in process`);
+          return;
+        }
+        const playback = await getNextPlaybackToProcess();
 
-    if (!playback) {
-      console.log("🔃 No more highlights to process");
-      return;
-    }
+        if (!playback) {
+          console.log("🔃 No more highlights to process");
+          return;
+        }
 
-    await processPlaybackVideo(playback!);
+        await processPlaybackVideo(playback as any);
+      },
+      {
+        retries: 3,
+        minTimeout: 1000,
+        onRetry: (e, retryCount) => {
+          console.log(
+            `🔄 Retrying to process playback highlights video (attempt ${retryCount})`
+          );
+          console.log(`ERROR PROCESSING PLAYBACK HIGHLIGHTS:`, e);
+        },
+      }
+    );
   }, 100);
 }
 
 async function processPlaybackVideo(playback: DBPlaybackOutput) {
   try {
-    // const title = playback?.title.replace(/\s/g, "-").toLowerCase();
     const videoName = `${playback.id}.mp4`;
 
     console.log(
       `🔃 Processing video for [${playback?.title}]: ${playback?.mlb_video_duration}\n`
     );
+
+    // Store current processing highlight in cache
+    await redis.set(HIGHLIGHTS_VIDEO_PROCESSING_KEY, playback.id);
 
     const videoInfo = await downloadPlaybackVideo(
       playback?.mlb_video_url,
@@ -137,11 +160,106 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
       );
     }
 
-    // translate SRT and Transcript file.
+    // save transcript to DB.
+    const transcriptPath = transcriptOutput?.transcriptPath;
+    const translatedTranscriptPath = path.join(
+      path.dirname(transcriptPath),
+      "translated-transcript.json"
+    );
+    const transcript = JSON.parse(await fs.readFile(transcriptPath, "utf-8"));
+    const translatedTranscript = JSON.parse(
+      await fs.readFile(translatedTranscriptPath, "utf-8")
+    );
 
-    // convert downloaded video to audio
+    // generate summary
+    const summary = await generateVideoSummary(videoInfo?.videoPath);
+
+    // save all processed data to DB
+    await retry(
+      async () => {
+        console.log(`🔃 Saving processed data for [${playback?.title}]`);
+        await prisma.$transaction(async (tx) => {
+          await tx.highlights_playbacks.update({
+            where: {
+              highlight_id: playback?.highlight_id,
+              id: playback.id,
+            },
+            data: {
+              transcript,
+              translated_transcript: translatedTranscript,
+              summary: summary as any,
+              processed: true, // Mark as processed
+            },
+          });
+        });
+
+        console.log(`✅ Saved processed data for [${playback?.title}]`);
+
+        // cleanup
+        console.log(`🔃 Cleaning up for [${playback?.title}]`);
+        await fs.rm(mainProcessPath, { recursive: true, force: true });
+        await fs.rm(videoInfo?.videoPath, { force: true });
+        console.log(`✅ Cleaned up for [${playback?.title}]`);
+
+        // clear cache
+        await redis.del(HIGHLIGHTS_VIDEO_PROCESSING_KEY);
+
+        return true;
+      },
+      {
+        retries: 3,
+        minTimeout: 1000,
+        onRetry: (e, retryCount) => {
+          console.log(`❌ Error processing video for [${playback?.title}]:`, e);
+          console.log(
+            `🔄 Retrying to process video for [${playback?.title}] (attempt ${retryCount})`
+          );
+        },
+      }
+    );
   } catch (e: any) {
     console.error(`❌ Error processing video for [${playback?.title}]:`, e);
+
+    // Get current failed processes
+    const failedProcesses = JSON.parse(
+      (await redis.get(HIGHLIGHTS_VIDEO_FAILED_KEY)) || "[]"
+    );
+
+    // Find existing failed process
+    const existingFailedIndex = failedProcesses.findIndex(
+      (fp: any) => fp.id === playback.id
+    );
+
+    if (existingFailedIndex >= 0) {
+      // Update existing failed process
+      failedProcesses[existingFailedIndex].attempts += 1;
+      failedProcesses[existingFailedIndex].lastAttempt =
+        new Date().toISOString();
+    } else {
+      // Add new failed process
+      failedProcesses.push({
+        id: playback.id,
+        attempts: 1,
+        lastAttempt: new Date().toISOString(),
+      });
+    }
+
+    // Store updated failed processes
+    await redis.set(
+      HIGHLIGHTS_VIDEO_FAILED_KEY,
+      JSON.stringify(failedProcesses),
+      "EX",
+      FAILED_CACHE_TTL
+    );
+
+    console.log(
+      `❌ Failed process count for [${playback?.title}]: ${
+        failedProcesses.find((fp: any) => fp.id === playback.id)?.attempts || 0
+      }`
+    );
+
+    // Clear processing status
+    await redis.del(HIGHLIGHTS_VIDEO_PROCESSING_KEY);
     throw e;
   }
 }
@@ -242,23 +360,50 @@ async function getNextPlaybackToProcess() {
   const highlightsPlaybacks = await gameService.getAllGameHighlightsPlayback();
   const processingVideo = await redis.get(HIGHLIGHTS_VIDEO_PROCESSING_KEY);
 
+  // Get failed processes
+  const failedProcesses = JSON.parse(
+    (await redis.get(HIGHLIGHTS_VIDEO_FAILED_KEY)) || "[]"
+  );
+
+  // Filter out playbacks that:
+  // 1. Have failed too many times
+  // 2. Have already been processed
+  const availablePlaybacks = highlightsPlaybacks.filter((playback) => {
+    // Check if failed too many times
+    const failedProcess = failedProcesses.find(
+      (fp: any) => fp.id === playback.id
+    );
+    if (failedProcess && failedProcess.attempts >= MAX_RETRY_ATTEMPTS) {
+      return false;
+    }
+
+    // Skip if already processed
+    if (playback.processed === true) {
+      return false;
+    }
+
+    return true;
+  });
+
+  console.log(
+    `📊 Found ${availablePlaybacks.length} unprocessed playbacks out of ${highlightsPlaybacks.length} total`
+  );
+
   if (!processingVideo) {
-    const InitialPlayback = highlightsPlaybacks[0];
-    if (InitialPlayback) {
-      // store current processing highlight in cache
-      // await redis.set(HIGHLIGHTS_VIDEO_PROCESSING_KEY, InitialPlayback.id);
-      return InitialPlayback;
+    const initialPlayback = availablePlaybacks[0];
+    if (initialPlayback) {
+      return initialPlayback;
     }
   } else {
-    const nextPlayback = highlightsPlaybacks.find(
+    const nextPlayback = availablePlaybacks.find(
       (playback) => playback.id !== processingVideo
     );
     if (nextPlayback) {
-      // store current processing highlight in cache
-      // await redis.set(HIGHLIGHTS_VIDEO_PROCESSING_KEY, nextPlayback.id);
       return nextPlayback;
     }
   }
+
+  return null;
 }
 
 async function checkTranscriptFiles(
