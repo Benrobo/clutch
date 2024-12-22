@@ -35,10 +35,6 @@ const HIGHLIGHTS_VIDEO_FAILED_KEY = "highlights-video-failed";
 const MAX_RETRY_ATTEMPTS = 3;
 const FAILED_CACHE_TTL = 60 * 60 * 24; // 24 hours in seconds
 
-const mlbApi = new MLBAPIHelper({
-  season: TRACK_MLB_SEASON,
-  sportId: 1,
-});
 const gameService = new GameService();
 
 export const processGameHighlightsVideo = inngestClient.createFunction(
@@ -51,7 +47,7 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
   }
 );
 
-processVideo();
+// processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
