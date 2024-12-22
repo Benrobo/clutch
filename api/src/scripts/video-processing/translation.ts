@@ -4,7 +4,7 @@ import retry from "async-retry";
 import fs from "fs/promises";
 import LLMPromptBuilder from "../../helpers/prompt-builder.helper.js";
 import Gemini from "../../helpers/gemini.helper.js";
-import { TranscriptResult } from "./types.js";
+import { TranscriptResult, TranslatedTranscriptResult } from "./types.js";
 import { sleep } from "../../lib/utils.js";
 import path from "path";
 
@@ -39,6 +39,28 @@ export async function translateTranscript(
         } catch (e: any) {
           console.log(`Transcript not found: ${transcriptPath}`);
           return null;
+        }
+
+        // check if translated transcript exists and it not empty
+        const transcriptDir = path.dirname(transcriptPath);
+        const translatedTranscriptPath = path.join(
+          transcriptDir,
+          "translated-transcript.json"
+        );
+        const translatedTranscriptExists =
+          await checkTranslatedTranscriptExists(translatedTranscriptPath);
+        if (translatedTranscriptExists) {
+          console.log(
+            `Translated transcript already exists: ${translatedTranscriptPath}`
+          );
+          const translatedTranscriptContent = await fs.readFile(
+            translatedTranscriptPath,
+            "utf-8"
+          );
+          const translatedTranscript = JSON.parse(
+            translatedTranscriptContent
+          ) as TranslatedTranscriptResult;
+          return translatedTranscript[lang];
         }
 
         const transcriptContent = await fs.readFile(transcriptPath, "utf-8");
@@ -230,4 +252,23 @@ async function generateTranslation(input: string, lang: SupportedTranslations) {
       }
     );
   } catch (e: any) {}
+}
+
+async function checkTranslatedTranscriptExists(transcriptPath: string) {
+  try {
+    await fs.access(transcriptPath);
+
+    const transcriptContent = await fs.readFile(transcriptPath, "utf-8");
+    const translatedTranscript = JSON.parse(
+      transcriptContent
+    ) as TranslatedTranscriptResult;
+
+    if (Object.entries(translatedTranscript).length === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (e: any) {
+    return false;
+  }
 }
