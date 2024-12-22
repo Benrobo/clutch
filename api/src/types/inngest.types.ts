@@ -7,9 +7,7 @@ type BaseEvent = {
 
 type GenerateGameHighlightsMetadata = BaseEvent & {};
 
-type ProcessHighlightsVideoEvent = BaseEvent & {
-  data: {};
-};
+type ProcessHighlightsVideoEvent = BaseEvent & {};
 
 type Events = {
   "generate-game-highlights-metadata": GenerateGameHighlightsMetadata;
