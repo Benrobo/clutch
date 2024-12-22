@@ -31,3 +31,6 @@ export function checkDurationConstraints(
     durationInTargetUnit <= constraints.max
   );
 }
+
+export const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
