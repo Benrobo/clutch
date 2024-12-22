@@ -1,3 +1,5 @@
+import { SupportedTranslations } from "types/game.types";
+
 export interface TranscriptSegment {
   start: number;
   end: number;
@@ -9,6 +11,20 @@ export interface TranscriptResult {
   segments: TranscriptSegment[];
   fullTranscript: string;
 }
+
+export type TranslatedTranscriptResult = {
+  [key in SupportedTranslations]: {
+    lang: SupportedTranslations;
+    translations: {
+      lang: SupportedTranslations;
+      translated_text: string;
+      start: number;
+      end: number;
+      text: string;
+    }[];
+    fullTranscript: string;
+  };
+};
 
 export interface ProcessVideoResult {
   jobId: string;
