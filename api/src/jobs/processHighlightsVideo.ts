@@ -12,6 +12,7 @@ import {
   createProcessingFolder,
   downloadPlaybackVideo,
   getProcessedDir,
+  hasAudio,
 } from "../scripts/video-processing/utils.js";
 import { Prisma } from "@prisma/client";
 import {
@@ -50,7 +51,7 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
   }
 );
 
-// processVideo();
+processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
@@ -106,72 +107,86 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
     console.log(`📁 File name: ${videoInfo.fileName}\n`);
     console.log(`🔃 Starting video processing for [${playback?.title}]`);
 
-    // create processing dir
-    const mainProcessPath = await createProcessingFolder(
-      videoInfo?.fileName.replace(".mp4", "")
-    );
+    // Check if video has audio before proceeding with audio processing
+    const hasAudioTrack = await hasAudio(videoInfo.videoPath);
+    let transcript: Prisma.JsonValue | null = null;
+    let translatedTranscript: Prisma.JsonValue | null = null;
 
-    // extract audio
-    const audioPath = await extractAudioFromVideo(
-      videoInfo?.videoPath,
-      mainProcessPath,
-      playback?.id
-    );
+    if (hasAudioTrack) {
+      console.log(`🔊 Video has audio, proceeding with transcription`);
 
-    if (!audioPath) {
-      console.log(`❌ Failed to extract audio for [${playback?.title}]`);
-      return;
-    }
+      // create processing dir
+      const mainProcessPath = await createProcessingFolder(
+        videoInfo?.fileName.replace(".mp4", "")
+      );
 
-    // transcribe audio
-    const transcriptOutput = await transcribeAudio(
-      audioPath,
-      mainProcessPath,
-      playback?.id
-    );
+      // extract audio
+      const audioPath = await extractAudioFromVideo(
+        videoInfo?.videoPath,
+        mainProcessPath,
+        playback?.id
+      );
 
-    const translatedTranscripts = [];
-    for (const lang of SupportedLanguages) {
-      try {
-        // Add delay between different languages
-        if (translatedTranscripts.length > 0) {
-          await sleep(3000);
-        }
-
-        const translation = await translateTranscript(
-          transcriptOutput?.transcriptPath,
-          lang,
+      if (audioPath) {
+        // transcribe audio
+        const transcriptOutput = await transcribeAudio(
+          audioPath,
+          mainProcessPath,
           playback?.id
         );
-        if (translation) {
-          translatedTranscripts.push(translation);
+
+        const translatedTranscripts = [];
+        for (const lang of SupportedLanguages) {
+          try {
+            // Add delay between different languages
+            if (translatedTranscripts.length > 0) {
+              await sleep(3000);
+            }
+
+            const translation = await translateTranscript(
+              transcriptOutput?.transcriptPath,
+              lang,
+              playback?.id
+            );
+            if (translation) {
+              translatedTranscripts.push(translation);
+            }
+          } catch (error) {
+            console.error(`Failed to translate to ${lang}:`, error);
+            await sleep(5000);
+          }
         }
-      } catch (error) {
-        console.error(`Failed to translate to ${lang}:`, error);
-        await sleep(5000);
+
+        // Save all translations to a separate file
+        if (
+          translatedTranscripts.length > 0 &&
+          transcriptOutput?.transcriptPath
+        ) {
+          await saveTranslatedTranscript(
+            transcriptOutput?.transcriptPath,
+            translatedTranscripts as any
+          );
+        }
+
+        // save transcript to DB.
+        const transcriptPath = transcriptOutput?.transcriptPath;
+        const translatedTranscriptPath = path.join(
+          path.dirname(transcriptPath),
+          "translated-transcript.json"
+        );
+        transcript = JSON.parse(await fs.readFile(transcriptPath, "utf-8"));
+        translatedTranscript = JSON.parse(
+          await fs.readFile(translatedTranscriptPath, "utf-8")
+        );
+
+        // cleanup processing directory
+        await fs.rm(mainProcessPath, { recursive: true, force: true });
       }
+    } else {
+      console.log(`🔇 Video has no audio, skipping transcription`);
     }
 
-    // Save all translations to a separate file
-    if (translatedTranscripts.length > 0 && transcriptOutput?.transcriptPath) {
-      await saveTranslatedTranscript(
-        transcriptOutput?.transcriptPath,
-        translatedTranscripts as any
-      );
-    }
-
-    // save transcript to DB.
-    const transcriptPath = transcriptOutput?.transcriptPath;
-    const translatedTranscriptPath = path.join(
-      path.dirname(transcriptPath),
-      "translated-transcript.json"
-    );
-    const transcript = JSON.parse(await fs.readFile(transcriptPath, "utf-8"));
-    const translatedTranscript = JSON.parse(
-      await fs.readFile(translatedTranscriptPath, "utf-8")
-    );
-
-    // generate summary
+    // generate summary (always do this regardless of audio)
     const summary = await generateVideoSummary(videoInfo?.videoPath);
 
     // save all processed data to DB
@@ -185,8 +200,8 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
               id: playback.id,
             },
             data: {
-              transcript,
-              translated_transcript: translatedTranscript,
+              transcript: transcript as any,
+              translated_transcript: translatedTranscript as any,
               summary: summary as any,
               processed: true, // Mark as processed
             },
@@ -195,9 +210,7 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
 
         console.log(`✅ Saved processed data for [${playback?.title}]`);
 
-        // cleanup
-        console.log(`🔃 Cleaning up for [${playback?.title}]`);
-        await fs.rm(mainProcessPath, { recursive: true, force: true });
+        // cleanup video file
         await fs.rm(videoInfo?.videoPath, { force: true });
         console.log(`✅ Cleaned up for [${playback?.title}]`);
 
