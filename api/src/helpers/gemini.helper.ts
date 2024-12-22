@@ -109,7 +109,7 @@ export default class Gemini {
     };
     try {
       const genModel = this.genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
+        model: "gemini-2.0-flash-exp",
         systemInstruction: props.instruction,
       });
 
@@ -130,6 +130,8 @@ export default class Gemini {
       }
 
       resp.data = result.response.text();
+
+      console.log({ resp });
       return resp;
     } catch (e: any) {
       console.log(e);
