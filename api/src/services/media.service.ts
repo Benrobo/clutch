@@ -3,8 +3,36 @@ import env from "../config/env.js";
 import { v4 as uuidv4 } from "uuid";
 import { createHash } from "crypto";
 import * as path from "path";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleAIFileManager } from "@google/generative-ai/server";
+import { readFile } from "fs/promises";
+
+interface GeminiFile {
+  name: string;
+  displayName: string;
+  mimeType: string;
+  uri: string;
+  state: "PROCESSING" | "ACTIVE" | "FAILED";
+}
+
+interface GeminiUploadResult {
+  file: GeminiFile;
+}
+
+interface ListFilesResponse {
+  files: GeminiFile[];
+}
 
 export default class MediaService {
+  private storage: any;
+  private fileManager: GoogleAIFileManager;
+
+  constructor() {
+    this.storage = storage;
+    const apiKey = env.GOOGLE_API_KEY;
+    this.fileManager = new GoogleAIFileManager(apiKey);
+  }
+
   /**
    * Uploads a file to Firebase Storage and makes it publicly accessible
    * @param filePath Local path to the file
@@ -16,7 +44,7 @@ export default class MediaService {
     try {
       const bucket = storage.bucket();
       const [files] = await bucket.getFiles({
-        prefix: fileName,
+        // prefix: fileName,
       });
 
       const existingFile = files.find((file) => file.name.includes(fileName));
@@ -41,6 +69,7 @@ export default class MediaService {
 
     // Check if file already exists
     const existingFileUrl = await this.checkFileExists(baseFileName);
+
     if (existingFileUrl) {
       console.log(`File ${baseFileName} already exists, skipping upload`);
       return existingFileUrl;
@@ -104,5 +133,46 @@ export default class MediaService {
     const fileName = gcsUri.replace(`gs://${env.FIREBASE.STORAGE_BUCKET}/`, "");
     const file = storage.bucket().file(fileName);
     await file.delete();
+  }
+
+  async uploadToGemini(
+    filePath: string,
+    mimeType: string
+  ): Promise<GeminiFile> {
+    try {
+      // Upload file directly
+      const uploadResult = (await this.fileManager.uploadFile(filePath, {
+        mimeType,
+        displayName: path.basename(filePath),
+      })) as GeminiUploadResult;
+
+      const file = uploadResult.file;
+      console.log(
+        `Uploaded file ${file.displayName} to Gemini as: ${file.name}`
+      );
+
+      // Wait for file to be active
+      await this.waitForGeminiFile(file);
+      return file;
+    } catch (error) {
+      console.error("Error uploading file to Gemini:", error);
+      throw error;
+    }
+  }
+
+  private async waitForGeminiFile(file: GeminiFile): Promise<void> {
+    console.log("Waiting for Gemini file processing...");
+    let currentFile = (await this.fileManager.getFile(file.name)) as GeminiFile;
+
+    while (currentFile.state === "PROCESSING") {
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+      currentFile = (await this.fileManager.getFile(file.name)) as GeminiFile;
+    }
+
+    if (currentFile.state !== "ACTIVE") {
+      throw new Error(`File ${file.name} failed to process in Gemini`);
+    }
+
+    console.log("Gemini file ready for use");
   }
 }
