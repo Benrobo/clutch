@@ -54,7 +54,35 @@ export interface DBTranscriptData {
   confidence: number;
 }
 
-export type SupportedTranslations = "en" | "fr" | "es";
+export enum SupportedTranslationsEnum {
+  Spanish = "es",
+  Japanese = "ja",
+  Korean = "ko",
+  ChineseSimplified = "zh",
+  ChineseTraditional = "zh-TW",
+  French = "fr",
+  Portuguese = "pt",
+  Italian = "it",
+  Dutch = "nl",
+  Tagalog = "tl",
+  German = "de",
+  Nahuatl = "nah",
+}
+
+export type SupportedTranslations =
+  | "en" // English
+  | "es" // Spanish
+  | "ja" // Japanese
+  | "ko" // Korean
+  | "zh" // Chinese (Simplified)
+  | "zh-TW" // Chinese (Traditional)
+  | "fr" // French
+  | "pt" // Portuguese
+  | "it" // Italian
+  | "nl" // Dutch
+  | "tl" // Tagalog
+  | "de" // German
+  | "nah"; // Nahuatl
 
 export type DBTranslatedTranscriptData = {
   [K in SupportedTranslations]?: DBTranscriptData;
