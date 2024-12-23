@@ -42,46 +42,49 @@ model teams {
     logo_url   String?
     created_at DateTime @default(now())
 
-    player_refs      player_team_refs[] @relation("team_to_player_ref")
-    home_games       games[]            @relation("home_team")
-    away_games       games[]            @relation("away_team")
-    player_team_refs player_team_refs[]
+    // player_refs      player_team_refs[] @relation("team_to_player_ref")
+    home_games games[] @relation("home_team")
+    away_games games[] @relation("away_team")
+    // player_team_refs player_team_refs[]
 }
 
-model players {
-    id          Int     @id
-    fullname    String
-    age         Int
-    height      String
-    gender      String
-    verified    Boolean
-    profile_pic String?
+// No need for a separate model for players
+// GCMLB API would be used in replacement
 
-    // Relation to team references
-    team_refs player_team_refs[]
+// model players {
+//     id          Int     @id
+//     fullname    String
+//     age         Int
+//     height      String
+//     gender      String
+//     verified    Boolean
+//     profile_pic String?
 
-    @@unique([fullname]) // Ensure player names are unique
-}
+//     // Relation to team references
+//     team_refs player_team_refs[]
 
-model player_team_refs {
-    id         String   @id @default(cuid())
-    player_id  Int
-    team_id    Int
-    position   String // Position can change between teams
-    stats      Json? // Team-specific stats
-    created_at DateTime @default(now())
+//     @@unique([fullname]) // Ensure player names are unique
+// }
 
-    // Relations
-    player  players @relation(fields: [player_id], references: [id], onDelete: Cascade)
-    team    teams   @relation("team_to_player_ref", fields: [team_id], references: [id], onDelete: Cascade)
-    teams   teams?  @relation(fields: [teamsId], references: [id])
-    teamsId Int?
+// model player_team_refs {
+//     id         String   @id @default(cuid())
+//     player_id  Int
+//     team_id    Int
+//     position   String // Position can change between teams
+//     stats      Json? // Team-specific stats
+//     created_at DateTime @default(now())
 
-    @@unique([player_id, team_id]) // A player can only have one active reference per team
-    @@index([player_id])
-    @@index([team_id])
-    @@index([teamsId])
-}
+//     // Relations
+//     player  players @relation(fields: [player_id], references: [id], onDelete: Cascade)
+//     team    teams   @relation("team_to_player_ref", fields: [team_id], references: [id], onDelete: Cascade)
+//     teams   teams?  @relation(fields: [teamsId], references: [id])
+//     teamsId Int?
+
+//     @@unique([player_id, team_id]) // A player can only have one active reference per team
+//     @@index([player_id])
+//     @@index([team_id])
+//     @@index([teamsId])
+// }
 
 model games {
     id           Int    @id
