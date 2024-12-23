@@ -8,6 +8,8 @@ import testRoute from "./routes/test.route.js";
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
 import feedRoute from "./routes/feed.route.js";
+import recommendationRoute from "./routes/recommendation.route.js";
+import highlightRoute from "./routes/highlight.route.js";
 import "./test.js";
 
 const app = new Hono();
@@ -29,6 +31,19 @@ app.use(
 );
 app.options("*", (c) => c.text("", 204));
 
+// Routes config
+const routes: any[] = [
+  testRoute,
+  authRoute,
+  userRoute,
+  feedRoute,
+  recommendationRoute,
+  highlightRoute,
+];
+routes.forEach((route) => {
+  app.route("/api", route);
+});
+
 app.on(
   ["GET", "POST", "PUT", "DELETE"],
   "/api/inngest",
@@ -37,12 +52,6 @@ app.on(
     functions: inngestFunctions,
   })
 );
-
-// Routes config
-const routes: any[] = [testRoute, authRoute, userRoute, feedRoute];
-routes.forEach((route) => {
-  app.route("/api", route);
-});
 
 const port = 4050;
 console.log(`Server is running on http://localhost:${port}`);
