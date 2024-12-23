@@ -20,7 +20,7 @@
 	<div class="m-0 h-screen w-full p-0">
 		<QueryClientProvider client={queryClient}>
 			<slot />
+			<Toaster />
 		</QueryClientProvider>
-		<Toaster />
 	</div>
 </body>
