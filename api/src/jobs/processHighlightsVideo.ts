@@ -48,7 +48,7 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
   }
 );
 
-processVideo();
+// processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
