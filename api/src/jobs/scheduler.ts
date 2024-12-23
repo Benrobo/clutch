@@ -14,7 +14,7 @@ export const processGamesEvery30Minutes = inngestClient.createFunction(
 export const processGameHighlightsVideoEvery30Minutes =
   inngestClient.createFunction(
     { id: "process-highlights-video-every-30min" },
-    { cron: "*/2 * * * *" },
+    { cron: "*/10 * * * *" },
     async ({ step }) => {
       inngestClient.send({
         name: "process-highlights-video",
