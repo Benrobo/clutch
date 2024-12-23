@@ -72,6 +72,10 @@ I could write a video processing server which goes through all video highlights 
     - https://dribbble.com/shots/15963561-Esports-app
     - https://dribbble.com/shots/22396996-Balbalan-Live-Score-Football-App
 
+### Packages
+
+- https://lokeshdhakar.com/projects/color-thief/#getting-started
+
 ## Onboarding Flow
 
 1. **Welcome Screen**
