@@ -361,7 +361,7 @@ async function checkVideoProcessingStatus() {
   const highlightsPlaybacks = await gameService.getAllGameHighlightsPlayback();
 
   return highlightsPlaybacks.find(
-    (playback) => playback.id === cachedProcessingVideo
+    (playback) => playback.id === cachedProcessingVideo && !playback.processed
   );
 }
 
