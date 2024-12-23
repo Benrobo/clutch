@@ -23,3 +23,14 @@ export const BASEBALL_KEYWORDS = [
 ];
 
 export const TRACK_MLB_SEASON = 2024;
+
+export const PLAYBACK_CONSTRAINT = {
+  MAX: {
+    MINUTES: 10,
+    SECONDS: 59,
+  },
+  MIN: {
+    MINUTES: 1,
+    SECONDS: 15,
+  },
+};
