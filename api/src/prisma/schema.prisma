@@ -108,13 +108,13 @@ model games {
 }
 
 model highlights {
-    id         String   @id @default(cuid())
+    id         String                 @id @default(cuid())
     game_id    Int
-    created_at DateTime @default(now())
-    likes      Int      @default(0)
+    created_at DateTime               @default(now())
+    likes      Int                    @default(0)
     content    highlights_content?
     highlights highlights_playbacks[]
-    game       games                 @relation(fields: [game_id], references: [id])
+    game       games                  @relation(fields: [game_id], references: [id])
     liked_by   user_highlight_likes[]
     saved_by   saved_highlights[]
 
@@ -129,6 +129,8 @@ model highlights_playbacks {
     description String // check db-fields-structure.md
 
     metadata Json?
+
+    thumbnail String?
 
     mlb_video_url            String // Original MLB video
     mlb_video_duration       String
@@ -159,7 +161,7 @@ model highlights_content {
     headline String
     keywords String[]
     body     String // markdown
-    photos   String[] //max 5
+    photo    String
 
     highlight highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
@@ -181,8 +183,8 @@ model saved_highlights {
 model user_highlight_likes {
     user_id      String
     highlight_id String
-    created_at   DateTime @default(now())
-    user         users     @relation(fields: [user_id], references: [id])
+    created_at   DateTime   @default(now())
+    user         users      @relation(fields: [user_id], references: [id])
     highlight    highlights @relation(fields: [highlight_id], references: [id])
 
     @@id([user_id, highlight_id])
