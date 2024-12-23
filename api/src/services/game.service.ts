@@ -39,17 +39,17 @@ export default class GameService {
     });
   }
 
-  async findPlayerById(id: number) {
-    return await prisma.players.findUnique({
-      where: { id },
-    });
-  }
+  // async findPlayerById(id: number) {
+  //   return await prisma.players.findUnique({
+  //     where: { id },
+  //   });
+  // }
 
-  async findPlayerByIdAndTeamId(id: number, teamId: number) {
-    return await prisma.player_team_refs.findFirst({
-      where: { player_id: id, team_id: teamId },
-    });
-  }
+  // async findPlayerByIdAndTeamId(id: number, teamId: number) {
+  //   return await prisma.player_team_refs.findFirst({
+  //     where: { player_id: id, team_id: teamId },
+  //   });
+  // }
 
   async createGame(data: CreateGameInput) {
     return await prisma.games.create({
