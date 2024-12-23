@@ -19,7 +19,10 @@ export interface HighlightItem {
   gameId: number;
   createdAt: Date;
   likes: number;
-  thumbnail: string | null; // First photo from content
+  thumbnail: {
+    main: string | null;
+    fallback: string | null;
+  }; // First photo from content
   playback: {
     title: string;
     description: string;
@@ -76,7 +79,7 @@ export default class RecommendationService {
       include: {
         content: {
           select: {
-            photos: true,
+            photo: true,
           },
         },
         highlights: {
@@ -118,7 +121,7 @@ export default class RecommendationService {
       include: {
         content: {
           select: {
-            photos: true,
+            photo: true,
           },
         },
         highlights: {
@@ -163,7 +166,7 @@ export default class RecommendationService {
       include: {
         content: {
           select: {
-            photos: true,
+            photo: true,
           },
         },
         highlights: {
@@ -195,7 +198,7 @@ export default class RecommendationService {
       include: {
         content: {
           select: {
-            photos: true,
+            photo: true,
           },
         },
         highlights: {
@@ -220,7 +223,7 @@ export default class RecommendationService {
 
   private mapHighlights(
     highlights: (highlights & {
-      content: { photos: string[] } | null;
+      content: { photo: string } | null;
       highlights: highlights_playbacks[];
       game: {
         home_team_id: number;
@@ -235,7 +238,10 @@ export default class RecommendationService {
       gameId: highlight.game_id,
       createdAt: highlight.created_at,
       likes: highlight.likes,
-      thumbnail: highlight.content?.photos[0] || null,
+      thumbnail: {
+        main: highlight?.highlights[0]?.thumbnail ?? null,
+        fallback: highlight.content?.photo || null,
+      },
       playback: highlight.highlights[0]
         ? {
             title: highlight.highlights[0].title,
