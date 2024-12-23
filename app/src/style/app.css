@@ -75,14 +75,11 @@
 		@apply border-border;
 	}
 	body {
-		@apply bg-dark-107 text-foreground font-poppins text-white-100 m-0 overflow-x-hidden p-0 transition-all;
+		@apply m-0 overflow-x-hidden bg-dark-103 p-0 font-poppins text-foreground text-white-100 transition-all;
 		font-feature-settings:
 			'rlig' 1,
 			'calt' 1;
 	}
-}
-
-body {
 }
 
 .hideScrollBar::-webkit-scrollbar {
