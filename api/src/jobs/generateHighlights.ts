@@ -1,7 +1,7 @@
 import MLBAPIHelper from "../helpers/mlb/mlb-api.helper.js";
 import { inngestClient } from "../config/inngest.js";
 import GameService from "../services/game.service.js";
-import { TRACK_MLB_SEASON } from "../constant/mlb.js";
+import { PLAYBACK_CONSTRAINT, TRACK_MLB_SEASON } from "../constant/mlb.js";
 import redis from "../config/redis.js";
 import { MLBScheduleResponse, MLBGame, MLBPlayer } from "../types/mlb.types.js";
 import dayjs from "dayjs";
@@ -22,7 +22,7 @@ export const generateGameHighlightsMetadata = inngestClient.createFunction(
   { event: "generate-game-highlights-metadata" },
   async () => {
     console.log(`\n🔃 Starting MLB game highlights generation...`);
-    // await processMLBSchedule();
+    await processMLBSchedule();
   }
 );
 
@@ -264,8 +264,8 @@ async function processGamesForDate(games: MLBGame[]) {
             playback?.duration,
             {
               type: "minutes",
-              min: 1,
-              max: 5,
+              min: PLAYBACK_CONSTRAINT.MIN.MINUTES,
+              max: PLAYBACK_CONSTRAINT.MAX.MINUTES,
             }
           );
 
@@ -276,8 +276,8 @@ async function processGamesForDate(games: MLBGame[]) {
             minutes === 0 &&
             checkDurationConstraints(playback?.duration, {
               type: "seconds",
-              min: 10,
-              max: 59,
+              min: PLAYBACK_CONSTRAINT.MIN.SECONDS,
+              max: PLAYBACK_CONSTRAINT.MAX.SECONDS,
             });
 
           // console.log(
@@ -303,7 +303,7 @@ async function processGamesForDate(games: MLBGame[]) {
       }
 
       // save data in db
-      const gameDataCreated = await retry(
+      await retry(
         async () => {
           await prisma.$transaction(async (tx) => {
             // Create game
@@ -523,10 +523,6 @@ async function processGamesForDate(games: MLBGame[]) {
           },
         }
       );
-
-      if (gameDataCreated) {
-        console.log(`✅ Game ${game.gamePk} processed successfully\n`);
-      }
     } catch (error) {
       console.error(`❌ Error processing game ${game.gamePk}:`, error);
       throw new Error(`Error processing game ${game.gamePk}: ${error}`);
