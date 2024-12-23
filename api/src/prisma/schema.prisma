@@ -27,7 +27,7 @@ model users {
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 
-    preferences      Json? // { teams: number[], players: number[], highlightTypes: string[] }
+    preferences      Json? // { teams: number[], players: number[] }
     saved_highlights saved_highlights[]
 
     @@index([email])
