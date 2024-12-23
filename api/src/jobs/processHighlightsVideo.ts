@@ -29,6 +29,7 @@ import {
 } from "../scripts/video-processing/translation.js";
 import { sleep } from "../lib/utils.js";
 import generateVideoSummary from "../scripts/video-processing/generateVideoSummary.js";
+import generateThumbnail from "../scripts/video-processing/generateThumbnail.js";
 
 const HIGHLIGHTS_VIDEO_PROCESSING_KEY = "highlights-video-processing";
 const HIGHLIGHTS_VIDEO_FAILED_KEY = "highlights-video-failed";
@@ -47,7 +48,7 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
   }
 );
 
-// processVideo();
+processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
@@ -110,6 +111,11 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
     console.log(`📁 File name: ${videoInfo.fileName}\n`);
     console.log(`🔃 Starting video processing for [${playback?.title}]`);
 
+    // create processing dir
+    const mainProcessPath = await createProcessingFolder(
+      videoInfo?.fileName.replace(".mp4", "")
+    );
+
     // Check if video has audio before proceeding with audio processing
     const hasAudioTrack = await hasAudio(videoInfo.videoPath);
     let transcript: Prisma.JsonValue | null = null;
@@ -117,11 +123,6 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
 
     if (hasAudioTrack) {
       console.log(`🔊 Video has audio, proceeding with transcription`);
-
-      // create processing dir
-      const mainProcessPath = await createProcessingFolder(
-        videoInfo?.fileName.replace(".mp4", "")
-      );
 
       // extract audio
       const audioPath = await extractAudioFromVideo(
@@ -181,9 +182,6 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
         translatedTranscript = JSON.parse(
           await fs.readFile(translatedTranscriptPath, "utf-8")
         );
-
-        // cleanup processing directory
-        await fs.rm(mainProcessPath, { recursive: true, force: true });
       }
     } else {
       console.log(`🔇 Video has no audio, skipping transcription`);
@@ -197,6 +195,11 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
       async () => {
         console.log(`🔃 Saving processed data for [${playback?.title}]`);
         await prisma.$transaction(async (tx) => {
+          const highlightContent = await tx.highlights_content.findUnique({
+            where: {
+              highlight_id: playback?.highlight_id,
+            },
+          });
           await tx.highlights_playbacks.update({
             where: {
               highlight_id: playback?.highlight_id,
@@ -206,6 +209,7 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
               transcript: transcript as any,
               translated_transcript: translatedTranscript as any,
               summary: summary as any,
+              thumbnail: highlightContent?.photo,
               processed: true, // Mark as processed
             },
           });
@@ -219,6 +223,9 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
 
         // clear cache
         await redis.del(HIGHLIGHTS_VIDEO_PROCESSING_KEY);
+
+        // cleanup processing directory
+        await fs.rm(mainProcessPath, { recursive: true, force: true });
 
         return true;
       },
