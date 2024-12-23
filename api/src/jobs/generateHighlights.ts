@@ -244,7 +244,7 @@ async function processGamesForDate(games: MLBGame[]) {
         headline: recap?.headline,
         keywords: recap?.keywordsAll.map((k) => k.displayName),
         body: htmlToMarkdown(recap?.body!),
-        photos: recap?.photo?.cuts?.map((p) => p.src).slice(0, 6), // max 5 photos
+        photo: recap?.photo?.cuts[0]?.src,
       };
 
       const highlightsPlaybacks: {
@@ -500,7 +500,7 @@ async function processGamesForDate(games: MLBGame[]) {
               where: { highlight_id: highlight!.id },
               update: {},
               create: {
-                photos: highlightContent.photos,
+                photo: highlightContent?.photo!,
                 title: highlightContent?.title!,
                 headline: highlightContent?.headline!,
                 keywords: highlightContent?.keywords!,
