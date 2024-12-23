@@ -15,10 +15,6 @@ export const SupportedLanguages = [
   "zh", // Chinese (Simplified)
   "fr", // French
   "pt", // Portuguese
-  "it", // Italian
-  "nl", // Dutch
-  "de", // German
-  "nah", // Nahuatl (Indigenous Mexican language)
 ] as SupportedTranslations[];
 
 const MAX_TRANSLATION = 4;
