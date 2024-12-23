@@ -6,6 +6,8 @@ import { serve as ingestServe } from "inngest/hono";
 import env from "./config/env.js";
 import testRoute from "./routes/test.route.js";
 import authRoute from "./routes/auth.route.js";
+import userRoute from "./routes/user.route.js";
+import feedRoute from "./routes/feed.route.js";
 import "./test.js";
 
 const app = new Hono();
@@ -37,7 +39,7 @@ app.on(
 );
 
 // Routes config
-const routes: any[] = [testRoute, authRoute];
+const routes: any[] = [testRoute, authRoute, userRoute, feedRoute];
 routes.forEach((route) => {
   app.route("/api", route);
 });
