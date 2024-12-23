@@ -200,38 +200,41 @@ async function processGamesForDate(games: MLBGame[]) {
       //   },
       // }));
 
-      const homeTeamPlayers = await getTeamRoster(homeTeamId);
-      const awayTeamPlayers = await getTeamRoster(awayTeamId);
-      const homeTeamPlayersFormatted = homeTeamPlayers.map((p) => ({
-        id: p.id,
-        fullname: p.fullName,
-        age: p.currentAge,
-        height: p.height,
-        gender: p.gender,
-        verified: p.isVerified,
-        position: p?.primaryPosition?.name,
-        profile_pic: mlbApi.getPlayerProfilePictures(p.id)?.medium,
-        stats: {
-          batSide: p.batSide,
-          pitchHand: p.pitchHand,
-        } as any,
-        team_id: homeTeamId,
-      }));
-      const awayTeamPlayersFormatted = awayTeamPlayers.map((p) => ({
-        id: p.id,
-        fullname: p.fullName,
-        age: p.currentAge,
-        height: p.height,
-        gender: p.gender,
-        verified: p.isVerified,
-        position: p?.primaryPosition?.name,
-        profile_pic: mlbApi.getPlayerProfilePictures(p.id)?.medium,
-        stats: {
-          batSide: p.batSide,
-          pitchHand: p.pitchHand,
-        } as any,
-        team_id: awayTeamId,
-      }));
+      // UPDATE: There's no point storing this players data in our DB since the
+      // API provides an endpoint where it can be retrieved without ratelimiting.
+
+      // const homeTeamPlayers = await getTeamRoster(homeTeamId);
+      // const awayTeamPlayers = await getTeamRoster(awayTeamId);
+      // const homeTeamPlayersFormatted = homeTeamPlayers.map((p) => ({
+      //   id: p.id,
+      //   fullname: p.fullName,
+      //   age: p.currentAge,
+      //   height: p.height,
+      //   gender: p.gender,
+      //   verified: p.isVerified,
+      //   position: p?.primaryPosition?.name,
+      //   profile_pic: mlbApi.getPlayerProfilePictures(p.id)?.medium,
+      //   stats: {
+      //     batSide: p.batSide,
+      //     pitchHand: p.pitchHand,
+      //   } as any,
+      //   team_id: homeTeamId,
+      // }));
+      // const awayTeamPlayersFormatted = awayTeamPlayers.map((p) => ({
+      //   id: p.id,
+      //   fullname: p.fullName,
+      //   age: p.currentAge,
+      //   height: p.height,
+      //   gender: p.gender,
+      //   verified: p.isVerified,
+      //   position: p?.primaryPosition?.name,
+      //   profile_pic: mlbApi.getPlayerProfilePictures(p.id)?.medium,
+      //   stats: {
+      //     batSide: p.batSide,
+      //     pitchHand: p.pitchHand,
+      //   } as any,
+      //   team_id: awayTeamId,
+      // }));
 
       // highlights
       const gameContent = await mlbApi.getGameContent(game.gamePk);
@@ -362,95 +365,98 @@ async function processGamesForDate(games: MLBGame[]) {
               }),
             ]);
 
+            // UPDATE: No need to store this data in our DB since the API provides an endpoint
+            // where it can be retrieved without ratelimiting.
+
             // Create players
-            await Promise.all([
-              ...homeTeamPlayersFormatted.map(async (player) => {
-                // First check if player exists by ID or name
-                const existingPlayer = await tx.players.findFirst({
-                  where: {
-                    OR: [{ id: player.id }, { fullname: player.fullname }],
-                  },
-                });
+            // await Promise.all([
+            //   ...homeTeamPlayersFormatted.map(async (player) => {
+            //     // First check if player exists by ID or name
+            //     const existingPlayer = await tx.players.findFirst({
+            //       where: {
+            //         OR: [{ id: player.id }, { fullname: player.fullname }],
+            //       },
+            //     });
 
-                // If player doesn't exist, create them
-                const playerRecord =
-                  existingPlayer ||
-                  (await tx.players.create({
-                    data: {
-                      id: player.id,
-                      fullname: player.fullname,
-                      age: player.age,
-                      height: player.height,
-                      gender: player.gender,
-                      verified: player.verified,
-                      profile_pic: player.profile_pic,
-                    },
-                  }));
+            //     // If player doesn't exist, create them
+            //     const playerRecord =
+            //       existingPlayer ||
+            //       (await tx.players.create({
+            //         data: {
+            //           id: player.id,
+            //           fullname: player.fullname,
+            //           age: player.age,
+            //           height: player.height,
+            //           gender: player.gender,
+            //           verified: player.verified,
+            //           profile_pic: player.profile_pic,
+            //         },
+            //       }));
 
-                // Create or update team reference
-                await tx.player_team_refs.upsert({
-                  where: {
-                    player_id_team_id: {
-                      player_id: playerRecord.id,
-                      team_id: player.team_id,
-                    },
-                  },
-                  update: {
-                    position: player.position,
-                    stats: player.stats,
-                  },
-                  create: {
-                    player_id: playerRecord.id,
-                    team_id: player.team_id,
-                    position: player.position,
-                    stats: player.stats,
-                  },
-                });
-              }),
-              ...awayTeamPlayersFormatted.map(async (player) => {
-                // First check if player exists by ID or name
-                const existingPlayer = await tx.players.findFirst({
-                  where: {
-                    OR: [{ id: player.id }, { fullname: player.fullname }],
-                  },
-                });
+            //     // Create or update team reference
+            //     await tx.player_team_refs.upsert({
+            //       where: {
+            //         player_id_team_id: {
+            //           player_id: playerRecord.id,
+            //           team_id: player.team_id,
+            //         },
+            //       },
+            //       update: {
+            //         position: player.position,
+            //         stats: player.stats,
+            //       },
+            //       create: {
+            //         player_id: playerRecord.id,
+            //         team_id: player.team_id,
+            //         position: player.position,
+            //         stats: player.stats,
+            //       },
+            //     });
+            //   }),
+            //   ...awayTeamPlayersFormatted.map(async (player) => {
+            //     // First check if player exists by ID or name
+            //     const existingPlayer = await tx.players.findFirst({
+            //       where: {
+            //         OR: [{ id: player.id }, { fullname: player.fullname }],
+            //       },
+            //     });
 
-                // If player doesn't exist, create them
-                const playerRecord =
-                  existingPlayer ||
-                  (await tx.players.create({
-                    data: {
-                      id: player.id,
-                      fullname: player.fullname,
-                      age: player.age,
-                      height: player.height,
-                      gender: player.gender,
-                      verified: player.verified,
-                      profile_pic: player.profile_pic,
-                    },
-                  }));
+            //     // If player doesn't exist, create them
+            //     const playerRecord =
+            //       existingPlayer ||
+            //       (await tx.players.create({
+            //         data: {
+            //           id: player.id,
+            //           fullname: player.fullname,
+            //           age: player.age,
+            //           height: player.height,
+            //           gender: player.gender,
+            //           verified: player.verified,
+            //           profile_pic: player.profile_pic,
+            //         },
+            //       }));
 
-                // Create or update team reference
-                await tx.player_team_refs.upsert({
-                  where: {
-                    player_id_team_id: {
-                      player_id: playerRecord.id,
-                      team_id: player.team_id,
-                    },
-                  },
-                  update: {
-                    position: player.position,
-                    stats: player.stats,
-                  },
-                  create: {
-                    player_id: playerRecord.id,
-                    team_id: player.team_id,
-                    position: player.position,
-                    stats: player.stats,
-                  },
-                });
-              }),
-            ]);
+            //     // Create or update team reference
+            //     await tx.player_team_refs.upsert({
+            //       where: {
+            //         player_id_team_id: {
+            //           player_id: playerRecord.id,
+            //           team_id: player.team_id,
+            //         },
+            //       },
+            //       update: {
+            //         position: player.position,
+            //         stats: player.stats,
+            //       },
+            //       create: {
+            //         player_id: playerRecord.id,
+            //         team_id: player.team_id,
+            //         position: player.position,
+            //         stats: player.stats,
+            //       },
+            //     });
+            //   }),
+            // ]);
 
             // Create highlights
             let highlight = await tx.highlights.findFirst({
