@@ -1,6 +1,7 @@
 import prisma from "../prisma/index.js";
 import short from "short-uuid";
 import { users } from "@prisma/client";
+import { HttpException } from "../lib/exception.js";
 
 export default class UserService {
   async findUserByEmail(email: string) {
@@ -64,6 +65,37 @@ export default class UserService {
         name: true,
         email: true,
       },
+    });
+  }
+
+  async validateTeams(teamIds: number[]) {
+    const teamsExist = await prisma.teams.findMany({
+      where: {
+        id: {
+          in: teamIds
+        }
+      },
+      select: {
+        id: true
+      }
+    });
+
+    const foundTeamIds = teamsExist.map(team => team.id);
+    const invalidTeamIds = teamIds.filter(id => !foundTeamIds.includes(id));
+
+    if (invalidTeamIds.length > 0) {
+      throw new HttpException(`Invalid team IDs: ${invalidTeamIds.join(', ')}`, 400);
+    }
+
+    return true;
+  }
+
+  async savePreference(userId: string, preferences: { teams: number[], players: number[] }) {
+    return await prisma.users.update({
+      where: { id: userId },
+      data: {
+        preferences: preferences
+      }
     });
   }
 }
