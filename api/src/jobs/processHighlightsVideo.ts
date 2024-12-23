@@ -56,11 +56,18 @@ async function processVideo() {
         console.log("\n🔃 Starting video processing..");
         // get all highlights videos
         const processingStatus = await checkVideoProcessingStatus();
+        let playback;
+
         if (processingStatus) {
-          console.log(`🔃 [${processingStatus?.title}] is already in process`);
-          return;
+          // If video needs to resume processing, use it
+          console.log(
+            `🔃 Resuming processing for [${processingStatus?.title}]`
+          );
+          playback = processingStatus;
+        } else {
+          // Otherwise get next unprocessed video
+          playback = await getNextPlaybackToProcess();
         }
-        const playback = await getNextPlaybackToProcess();
 
         if (!playback) {
           console.log("🔃 No more highlights to process");
@@ -136,7 +143,7 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
           try {
             // Add delay between different languages
             if (translatedTranscripts.length > 0) {
-              await sleep(3000);
+              await sleep(5000);
             }
 
             const translation = await translateTranscript(
@@ -358,11 +365,42 @@ async function checkVideoProcessingStatus() {
   if (!cachedProcessingVideo) {
     return null;
   }
-  const highlightsPlaybacks = await gameService.getAllGameHighlightsPlayback();
 
-  return highlightsPlaybacks.find(
-    (playback) => playback.id === cachedProcessingVideo && !playback.processed
+  const highlightsPlaybacks = await gameService.getAllGameHighlightsPlayback();
+  const processingPlayback = highlightsPlaybacks.find(
+    (playback) => playback.id === cachedProcessingVideo
   );
+
+  if (!processingPlayback) {
+    // If playback not found, clear processing status
+    await redis.del(HIGHLIGHTS_VIDEO_PROCESSING_KEY);
+    return null;
+  }
+
+  // Check if all required data is available
+  const isFullyProcessed =
+    processingPlayback.processed === true &&
+    processingPlayback.summary !== null &&
+    // Either has transcript data or is confirmed to be a silent video
+    ((processingPlayback.transcript !== null &&
+      processingPlayback.translated_transcript !== null) ||
+      (processingPlayback.transcript === null &&
+        processingPlayback.translated_transcript === null));
+
+  if (!isFullyProcessed) {
+    console.log(
+      `⚠️ Video ${cachedProcessingVideo} was in processing state but data is incomplete. Resuming processing.`
+    );
+    // Return the playback to continue processing
+    return processingPlayback;
+  }
+
+  // If fully processed, clear processing status
+  console.log(
+    `✅ Video ${cachedProcessingVideo} is fully processed. Clearing processing status.`
+  );
+  await redis.del(HIGHLIGHTS_VIDEO_PROCESSING_KEY);
+  return null;
 }
 
 async function getNextPlaybackToProcess() {
