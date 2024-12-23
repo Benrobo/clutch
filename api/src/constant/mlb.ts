@@ -31,6 +31,6 @@ export const PLAYBACK_CONSTRAINT = {
   },
   MIN: {
     MINUTES: 1,
-    SECONDS: 15,
+    SECONDS: 20,
   },
 };
