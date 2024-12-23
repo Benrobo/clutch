@@ -22,7 +22,7 @@ export const generateGameHighlightsMetadata = inngestClient.createFunction(
   { event: "generate-game-highlights-metadata" },
   async () => {
     console.log(`\n🔃 Starting MLB game highlights generation...`);
-    await processMLBSchedule();
+    // await processMLBSchedule();
   }
 );
 
