@@ -1,25 +1,16 @@
 import { inngestClient } from "../config/inngest.js";
 import redis from "../config/redis.js";
-import dayjs from "dayjs";
 import retry from "async-retry";
-import shortUUID from "short-uuid";
 import GameService from "../services/game.service.js";
-import MLBAPIHelper from "../helpers/mlb/mlb-api.helper.js";
-import { TRACK_MLB_SEASON } from "../constant/mlb.js";
 import path from "path";
 import fs from "fs/promises";
 import {
   createProcessingFolder,
   downloadPlaybackVideo,
-  getProcessedDir,
   hasAudio,
 } from "../scripts/video-processing/utils.js";
 import { Prisma } from "@prisma/client";
-import {
-  DBPlaybackOutput,
-  SupportedTranslations,
-  SupportedTranslationsEnum,
-} from "../types/game.types.js";
+import { DBPlaybackOutput } from "../types/game.types.js";
 import extractAudio from "../scripts/video-processing/extractAudio.js";
 import generateTranscript from "../scripts/video-processing/generateTranscript.js";
 import {
@@ -30,7 +21,6 @@ import {
 } from "../scripts/video-processing/translation.js";
 import { sleep } from "../lib/utils.js";
 import generateVideoSummary from "../scripts/video-processing/generateVideoSummary.js";
-import generateThumbnail from "../scripts/video-processing/generateThumbnail.js";
 
 const HIGHLIGHTS_VIDEO_PROCESSING_KEY = "highlights-video-processing";
 const HIGHLIGHTS_VIDEO_FAILED_KEY = "highlights-video-failed";
@@ -45,11 +35,11 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
     event: "process-highlights-video",
   },
   async ({ step }) => {
-    // processVideo();
+    processVideo();
   }
 );
 
-processVideo();
+// processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
