@@ -11,12 +11,9 @@ export default class HighlightController {
 
   async toggleLike(c: Context) {
     const user = c.get("user");
-    const { highlightId } = c.req.param();
+    const { playbackId } = c.req.param();
 
-    const isLiked = await this.highlightService.toggleLike(
-      user.id,
-      highlightId
-    );
+    const isLiked = await this.highlightService.toggleLike(user.id, playbackId);
     return sendResponse.success(
       c,
       `Highlight ${isLiked ? "liked" : "unliked"} successfully`,
