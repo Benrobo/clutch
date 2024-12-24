@@ -12,15 +12,43 @@ export const SupportedLanguages = [
   "es", // Spanish
   "ja", // Japanese
   "ko", // Korean
-  "zh", // Chinese (Simplified)
-  "fr", // French
-  "pt", // Portuguese
 ] as SupportedTranslations[];
 
 const MAX_TRANSLATION = 4;
 
 const RATE_LIMIT_DELAY = 2000;
 const RATE_LIMIT_BACKOFF = 5000;
+
+interface TranslationSegment {
+  id: number;
+  text: string;
+}
+
+interface TranslatedSegment {
+  id: number;
+  translation: string;
+}
+
+interface FormattedTranslation {
+  lang: SupportedTranslations;
+  translated_text: string;
+  start: number;
+  end: number;
+  text: string;
+}
+
+interface GeminiFunctionResponse {
+  name: string;
+  args: {
+    output: string;
+  };
+}
+
+export interface TranslationResult {
+  lang: SupportedTranslations;
+  translations: FormattedTranslation[];
+  fullTranscript: string;
+}
 
 export async function translateTranscript(
   transcriptPath: string,
@@ -37,7 +65,6 @@ export async function translateTranscript(
           return null;
         }
 
-        // check if translated transcript exists and it not empty
         const transcriptDir = path.dirname(transcriptPath);
         const translatedTranscriptPath = path.join(
           transcriptDir,
@@ -62,61 +89,45 @@ export async function translateTranscript(
         const transcriptContent = await fs.readFile(transcriptPath, "utf-8");
         const transcript = JSON.parse(transcriptContent) as TranscriptResult;
 
-        // Check if transcript has required content
         if (!transcript.segments?.length || !transcript.fullTranscript) {
           throw new Error("Invalid transcript content");
         }
 
-        // Translate each segment sequentially with rate limiting
-        const translatedSegments = [];
-        for (const segment of transcript.segments) {
-          try {
-            // Add delay before each translation to avoid rate limits
-            await sleep(RATE_LIMIT_DELAY);
+        const segmentsForTranslation: TranslationSegment[] =
+          transcript.segments.map((segment) => ({
+            id: segment.start,
+            text: segment.text,
+          }));
 
-            const result = (await generateTranslation(segment.text, lang)) as {
-              output: string;
-              lang: string;
-            };
-            translatedSegments.push({
-              lang,
-              translated_text: result.output,
-              start: segment.start,
-              end: segment.end,
-              text: segment.text, // original text
-            });
-          } catch (error: any) {
-            // If we hit rate limit, wait longer before retrying
-            if (
-              error?.message?.includes("429") ||
-              error?.response?.status === 429
-            ) {
-              console.log(
-                `Rate limit hit, waiting ${RATE_LIMIT_BACKOFF}ms before retrying...`
-              );
-              await sleep(RATE_LIMIT_BACKOFF);
-              // Retry this segment
-              const result = await generateTranslation(segment.text, lang);
-              translatedSegments.push({
-                lang,
-                translated_text: result?.output,
-                start: segment.start,
-                end: segment.end,
-                text: segment.text,
-              });
-            } else {
-              console.error(
-                `Translation failed for segment in language ${lang}:`,
-                error
-              );
-            }
-          }
+        const result = await generateTranslation(
+          JSON.stringify(segmentsForTranslation),
+          lang
+        );
+
+        if (!result?.output) {
+          throw new Error("Translation failed");
         }
 
-        // Create the translation result for this language
-        const translationResult = {
+        const translatedSegments = JSON.parse(
+          result.output
+        ) as TranslatedSegment[];
+
+        if (!Array.isArray(translatedSegments)) {
+          throw new Error("Invalid translation format - expected array");
+        }
+
+        const formattedTranslations: FormattedTranslation[] =
+          transcript.segments.map((segment, index) => ({
+            lang,
+            translated_text: translatedSegments[index]?.translation || "",
+            start: segment.start,
+            end: segment.end,
+            text: segment.text,
+          }));
+
+        const translationResult: TranslationResult = {
           lang,
-          translations: translatedSegments,
+          translations: formattedTranslations,
           fullTranscript: transcript.fullTranscript,
         };
 
@@ -124,7 +135,7 @@ export async function translateTranscript(
       },
       {
         retries: 3,
-        minTimeout: RATE_LIMIT_BACKOFF, // Use the backoff time as minimum retry delay
+        minTimeout: RATE_LIMIT_BACKOFF,
         onRetry: (e, retryCount) => {
           console.log(
             `❌ Error translating transcript for [${pb_id}] in language [${lang}]:`,
@@ -144,17 +155,7 @@ export async function translateTranscript(
 
 export async function saveTranslatedTranscript(
   transcriptPath: string,
-  translatedTranscripts: {
-    lang: SupportedTranslations;
-    translations: {
-      lang: SupportedTranslations;
-      translated_text: string;
-      start: number;
-      end: number;
-      text: string;
-    }[];
-    fullTranscript: string;
-  }[]
+  translatedTranscripts: TranslationResult[]
 ) {
   try {
     const transcriptDir = path.dirname(transcriptPath);
@@ -169,7 +170,7 @@ export async function saveTranslatedTranscript(
         translatedTranscripts.reduce((acc, trans) => {
           acc[trans.lang] = trans;
           return acc;
-        }, {} as Record<SupportedTranslations, (typeof translatedTranscripts)[0]>),
+        }, {} as Record<SupportedTranslations, TranslationResult>),
         null,
         2
       )
@@ -188,9 +189,9 @@ async function generateTranslation(input: string, lang: SupportedTranslations) {
         const prompt = new LLMPromptBuilder()
           .addCustomBlock(
             "role",
-            "You are a highly skilled translator tasked with translating a given text while preserving its exact tone, style, and nuances. Your goal is to produce a translation that reads as if it were originally written in the target language while staying 100% true to the content, style, and tone of the source text."
+            `You are a highly skilled translator tasked with translating text from English to ${lang}. Your task is to translate each segment while preserving its meaning and tone.`
           )
-          .addPlainText("Here is the text you need to translate:")
+          .addPlainText("Here are the text segments to translate:")
           .addCustomBlock("source_text", input)
           .addCustomBlock("target_language", lang)
           .addCustomBlock(
@@ -198,10 +199,15 @@ async function generateTranslation(input: string, lang: SupportedTranslations) {
             `1. Translate the text into the target language, maintaining the original meaning, tone, and style exactly as they appear in the source text.
 2. Preserve all natural pauses and breaks from the original text, including punctuation and paragraph structure. Adapt these to the conventions of the target language if necessary.
 3. Translate idiomatic expressions, cultural references, and specialized language as directly as possible without attempting to explain or simplify them.
-4. Ensure that the final translation sounds natural in the target language while still maintaining the exact style and tone of the original.`
+4. Ensure that the final translation sounds natural in the target language while still maintaining the exact style and tone of the original.
+5. Translate ONLY the "text" field into ${lang}
+6. Return a JSON array of objects with format: { "id": number, "translation": "translated text" }
+7. Maintain the exact same order as input array
+8. Return ONLY the JSON array, no other text
+`
           )
           .addRule(
-            "Please provide your translation directly, without any additional explanations or markup. Your output should consist solely of the translated text."
+            "IMPORTANT: You must translate the text to ${lang}. Do not return the original English text."
           )
           .compose();
 
@@ -210,14 +216,15 @@ async function generateTranslation(input: string, lang: SupportedTranslations) {
           tools: [
             {
               func_name: "translate",
-              description: "Translate text",
+              description: "Translate text segments",
               parameters: {
                 type: "object",
                 properties: {
                   // @ts-expect-error
                   output: {
                     type: "string",
-                    description: "The translated text",
+                    description:
+                      "JSON array of translated segments - each must have id and translation fields",
                   },
                 },
                 required: ["output"],
@@ -227,16 +234,59 @@ async function generateTranslation(input: string, lang: SupportedTranslations) {
         });
 
         if (!response.data) {
-          throw new Error("Translation failed");
+          throw new Error("Translation failed - no response data");
         }
 
-        return {
-          output: (
-            response.data.find((item: any) => item.name === "translate")
-              ?.args as any
-          )?.output,
-          lang,
-        } as { output: string; lang: SupportedTranslations };
+        const functionResult = response.data.find(
+          (item): item is GeminiFunctionResponse => item.name === "translate"
+        );
+
+        if (!functionResult?.args?.output) {
+          throw new Error(
+            "Translation failed - invalid function response format"
+          );
+        }
+
+        // First unescape the JSON string if it contains escaped quotes
+        const unescapedJson = functionResult.args.output.replace(/\\"/g, '"');
+
+        let parsedOutput: TranslatedSegment[];
+        try {
+          // Parse and validate the response
+          const parsed = JSON.parse(unescapedJson);
+
+          // Validate array structure
+          if (!Array.isArray(parsed)) {
+            throw new Error("Response is not an array");
+          }
+
+          // Validate each segment has required fields
+          parsedOutput = parsed.map((segment: any, index) => {
+            if (typeof segment.id !== "number") {
+              throw new Error(`Invalid id at index ${index}`);
+            }
+            if (typeof segment.translation !== "string") {
+              throw new Error(`Missing translation at index ${index}`);
+            }
+            return {
+              id: segment.id,
+              translation: segment.translation,
+            };
+          });
+
+          return {
+            output: JSON.stringify(parsedOutput),
+            lang,
+          };
+        } catch (e: any) {
+          console.error(
+            "Invalid translation response:",
+            functionResult.args.output,
+            "\nError:",
+            e
+          );
+          throw new Error(`Translation validation failed: ${e.message}`);
+        }
       },
       {
         retries: 3,
@@ -247,7 +297,10 @@ async function generateTranslation(input: string, lang: SupportedTranslations) {
         },
       }
     );
-  } catch (e: any) {}
+  } catch (e: any) {
+    console.error("Translation error:", e);
+    throw e;
+  }
 }
 
 async function checkTranslatedTranscriptExists(transcriptPath: string) {
