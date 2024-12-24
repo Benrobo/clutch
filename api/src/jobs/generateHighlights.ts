@@ -270,15 +270,15 @@ async function processGamesForDate(games: MLBGame[]) {
           );
 
           // Check if duration is between 15-59 seconds (only for videos under 1 minute)
-          const [hours, minutes] = playback?.duration.split(":").map(Number);
-          const validSecondsConstraints =
-            hours === 0 &&
-            minutes === 0 &&
-            checkDurationConstraints(playback?.duration, {
-              type: "seconds",
-              min: PLAYBACK_CONSTRAINT.MIN.SECONDS,
-              max: PLAYBACK_CONSTRAINT.MAX.SECONDS,
-            });
+          // const [hours, minutes] = playback?.duration.split(":").map(Number);
+          // const validSecondsConstraints =
+          //   hours === 0 &&
+          //   minutes === 0 &&
+          //   checkDurationConstraints(playback?.duration, {
+          //     type: "seconds",
+          //     min: PLAYBACK_CONSTRAINT.MIN.SECONDS,
+          //     max: PLAYBACK_CONSTRAINT.MAX.SECONDS,
+          //   });
 
           // console.log(
           //   `Checking duration for "${playback.title}":`,
@@ -287,7 +287,7 @@ async function processGamesForDate(games: MLBGame[]) {
           //   `\n- Valid for 15-59 seconds: ${validSecondsConstraints}`
           // );
 
-          if (validMinutesConstraints || validSecondsConstraints) {
+          if (validMinutesConstraints) {
             highlightsPlaybacks.push({
               url: videoPlayback?.url,
               duration: playback.duration,
