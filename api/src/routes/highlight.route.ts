@@ -9,7 +9,7 @@ const highlightController = new HighlightController();
 
 // Toggle like status for a highlight
 router.put(
-  `${basePath}/:highlightId/like`,
+  `${basePath}/:playbackId/like`,
   useCatchErrors(
     isAuthenticated(highlightController.toggleLike.bind(highlightController))
   )
