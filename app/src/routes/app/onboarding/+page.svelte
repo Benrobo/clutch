@@ -5,6 +5,9 @@
 	import SelectTeams from '@/modules/onboarding/components/SelectTeams.svelte';
 
 	$: steps = 1;
+
+	let selectedTeams: number[] = [];
+	$: selectedTeams = [];
 </script>
 
 <!-- <MainScreen
@@ -13,7 +16,11 @@
 	}}
 /> -->
 
-<SelectTeams />
+<SelectTeams
+	onTeamSelect={(team) => {
+		selectedTeams = team;
+	}}
+/>
 
 <!-- control buttons -->
 <Flex
