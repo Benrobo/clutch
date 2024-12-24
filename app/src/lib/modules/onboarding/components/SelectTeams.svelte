@@ -346,7 +346,7 @@
 		return `https://midfield.mlbstatic.com/v1/team/${teamId}/spots/500`;
 	};
 
-	function toggleTeamSelection(team) {
+	function toggleTeamSelection(team: any) {
 		const teamExist = selectedTeams.has(team.id);
 		if (teamExist) {
 			selectedTeams.delete(team.id);
@@ -354,9 +354,12 @@
 			selectedTeams.add(team.id);
 		}
 		selectedTeams = selectedTeams;
+		onTeamSelect(Array.from(selectedTeams?.values()));
 	}
 
 	onMount(() => {});
+
+	export let onTeamSelect = (team: any) => {};
 </script>
 
 <Flex className="w-full h-screen flex-col items-start justify-start gap-0">
@@ -379,7 +382,9 @@
 		<div class="w-full grid grid-cols-4 gap-3">
 			{#each sampleTeams as team}
 				<button
-					on:click={() => toggleTeamSelection(team)}
+					on:click={() => {
+						toggleTeamSelection(team);
+					}}
 					class={cn(
 						'w-[85px] relative rounded-full transition-all z-[10] border-[4px] border-transparent grayscale opacity-50',
 						selectedTeams.has(team.id) && 'border-white-100 grayscale-0 opacity-100',
