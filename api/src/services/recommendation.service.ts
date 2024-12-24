@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import prisma from "../prisma/index.js";
 import {
   users,
@@ -149,10 +150,11 @@ export default class RecommendationService {
     params: FeedParams
   ): Promise<HighlightItem[]> {
     // Get recent trending content (last 7 days)
+    const now = dayjs();
     const trendingHighlights = await prisma.highlights.findMany({
       where: {
         created_at: {
-          gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          gte: now.subtract(7, "day").toDate(),
         },
         NOT: {
           saved_by: {
