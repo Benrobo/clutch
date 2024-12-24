@@ -1,15 +1,12 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
 	import Spinner from '@/components/Spinner.svelte';
+	import { useBrowser } from '@/hooks/useBrowser';
 	import type { Highlight } from '@/types/highlights';
 	import { cn } from '@/utils';
-	import { Pause, Play } from 'lucide-svelte';
+	import { Pause, Play, Volume, Volume2, VolumeX } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
-
-	export let highlight: Highlight | null = null;
-	export let videoUrl: string | undefined = undefined;
-	export let thumbnailUrl: string | undefined = undefined;
-	export let title: string | undefined = undefined;
+	import EngagementBar from './EngagementBar.svelte';
 
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
@@ -22,6 +19,11 @@
 	let isBuffering = false;
 	let videoPaused = true;
 	let isVideoPlaying = false;
+	let muted = true;
+
+	$: isSafariMobile = false;
+
+	const MAX_DESCRIPTION_LENGTH = 30;
 
 	$: loadingState = {
 		isInitialLoading,
@@ -60,6 +62,8 @@
 	function handleVisibilityChange(entries: IntersectionObserverEntry[]) {
 		entries.forEach((entry) => {
 			if (entry.isIntersecting) {
+				const vidDataId = entry.target.getAttribute('data-id');
+				onObServedDataId(vidDataId);
 				if (videoElement && videoPaused) {
 					videoElement.play();
 					videoPaused = false;
@@ -74,6 +78,17 @@
 			}
 		});
 	}
+
+	const checkBrowser = () => {
+		const { isSafari, isMobile } = useBrowser();
+		isSafariMobile = isSafari && isMobile;
+	};
+
+	onMount(() => {
+		checkBrowser();
+		window.addEventListener('resize', checkBrowser);
+		return () => window.removeEventListener('resize', checkBrowser);
+	});
 
 	onMount(() => {
 		observer = new IntersectionObserver(handleVisibilityChange, {
@@ -90,22 +105,31 @@
 			observer.disconnect();
 		}
 	});
+
+	export let highlight: Highlight | null = null;
+	export let videoUrl: string | undefined = undefined;
+	export let thumbnailUrl: string | undefined = undefined;
+	export let title: string | undefined = undefined;
+	export let last_video_id: string | null = null;
+	export let onObServedDataId: (id: string | null) => void = () => {};
 </script>
 
-<div bind:this={containerRef} class="w-full h-full relative flex-center">
+<div bind:this={containerRef} data-id={highlight?.id} class="w-full h-full relative flex-center">
 	<div
 		class={cn(
-			'w-full relative flex-center ',
-			currentAspectRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[16/9]'
+			'w-full relative flex-center',
+			currentAspectRatio === '9:16'
+				? 'min-h-[100vh] aspect-[9/16] -translate-y-0'
+				: 'h-auto aspect-[16/9] mt-[10vh] -translate-y-[6em]'
 		)}
 	>
 		<video
 			bind:this={videoElement}
 			src={videoUrl}
-			class="w-full h-full object-cover {loadingState.isInitialLoading ? 'hidden' : 'block'}"
+			class={cn('w-full h-full object-cover', loadingState.isInitialLoading ? 'hidden' : 'block')}
 			preload="metadata"
 			playsinline
-			muted={false}
+			muted={true}
 			on:loadstart={handleLoadStart}
 			on:canplay={handleCanPlay}
 			on:waiting={handleWaiting}
@@ -114,6 +138,37 @@
 			<track kind="captions" src="" label="English" srclang="en" default />
 			Your browser does not support the video tag.
 		</video>
+
+		<!-- Main Minor Video Control -->
+		<div
+			class={cn(
+				'w-full h-auto px-4 py-3 z-[10] absolute top-0 right-0 flex flex-row items-center justify-between',
+				loadingState.isInitialLoading ? 'hidden' : 'flex'
+			)}
+		>
+			<button
+				class="w-8 h-8 rounded bg-none backdrop-blur-xs text-white-100 text-sm hover:bg-white-100/40 flex-center"
+				on:click={() => {
+					muted = !muted;
+					if (videoElement) {
+						videoElement.muted = muted;
+					}
+				}}
+			>
+				{#if muted}
+					<VolumeX size={18} />
+				{:else}
+					<Volume2 size={18} />
+				{/if}
+			</button>
+			<!-- Aspect ratio toggle -->
+			<button
+				class="top-4 px-3 py-1 rounded bg-white-100/30 backdrop-blur-md text-white-100 text-sm hover:bg-white-100/40"
+				on:click={toggleAspectRatio}
+			>
+				{currentAspectRatio}
+			</button>
+		</div>
 
 		<!-- Loading/Buffering Overlay -->
 		{#if loadingState.showSpinner}
@@ -150,16 +205,28 @@
 				</button>
 			</Flex>
 		{/if}
+	</div>
 
-		<!-- Aspect ratio toggle -->
-		<button
-			class="absolute top-4 right-4 z-10 px-3 py-1 rounded bg-white-100/30 backdrop-blur-md text-white-100 text-sm hover:bg-white-100/40"
-			on:click={toggleAspectRatio}
-		>
-			{currentAspectRatio}
-		</button>
+	<!-- playback metadata (description) -->
+	<div
+		class={cn(
+			'w-full h-auto max-h-[100px] px-4 py-6 z-[10] absolute bottom-[5em]',
+			isSafariMobile && '-translate-y-[5em]'
+		)}
+	>
+		<Flex className="w-full h-auto flex-col items-start justify-start gap-1">
+			<!-- team info -->
+			<h1 class="text-white-100 font-poppins font-semibold text-sm">
+				{highlight?.game?.home_team?.name} & {highlight?.game?.away_team?.name}
+			</h1>
+			<span class="text-white-100 font-poppins font-normal text-xs">
+				{highlight?.playback?.description}
+			</span>
+		</Flex>
 	</div>
 </div>
+
+<EngagementBar likesCount={highlight?.likes} viewsCount={0} />
 
 <style>
 	video {
