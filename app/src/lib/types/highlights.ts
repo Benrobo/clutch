@@ -16,8 +16,16 @@ export type Playback = {
 };
 
 export type Game = {
-    homeTeamId: number;
-    awayTeamId: number;
+    home_team: {
+        id: number;
+        name: string;
+        logo_url: string | null;
+    };
+    away_team: {
+        id: number;
+        name: string;
+        logo_url: string | null;
+    };
     date: string;
     status: string;
 };
