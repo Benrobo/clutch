@@ -36,19 +36,35 @@ export default class UserController {
     }
   }
 
+  public getAuthenticatedUser = async (c: Context) => {
+    const user = c.get("user");
+    return sendResponse.success(c, "User retrieved successfully", 200, user);
+  };
+
   async addPreference(c: Context) {
     const payload: AddUserPreferencePayload = await c.req.json();
     const user = c.get("user");
 
     await this.userService.validateTeams(payload.teams);
-    await this.validatePlayers(payload.players);
+    if (payload?.players?.length > 0) {
+      await this.validatePlayers(payload.players);
+    }
 
-    const updatedUser = await this.userService.savePreference(user.id, payload);
+    const updatedUser = await this.userService.savePreference(
+      user?.id,
+      payload
+    );
     return sendResponse.success(
       c,
       "Preference saved",
       200,
       updatedUser?.preferences
     );
+  }
+
+  async hasPreference(c: Context) {
+    const user = c.get("user");
+    const hasPreference = await this.userService.hasPreference(user.id);
+    return sendResponse.success(c, "Success", 200, { hasPreference });
   }
 }
