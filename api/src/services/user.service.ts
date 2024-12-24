@@ -72,30 +72,50 @@ export default class UserService {
     const teamsExist = await prisma.teams.findMany({
       where: {
         id: {
-          in: teamIds
-        }
+          in: teamIds,
+        },
       },
       select: {
-        id: true
-      }
+        id: true,
+      },
     });
 
-    const foundTeamIds = teamsExist.map(team => team.id);
-    const invalidTeamIds = teamIds.filter(id => !foundTeamIds.includes(id));
+    const foundTeamIds = teamsExist.map((team) => team.id);
+    const invalidTeamIds = teamIds.filter((id) => !foundTeamIds.includes(id));
 
     if (invalidTeamIds.length > 0) {
-      throw new HttpException(`Invalid team IDs: ${invalidTeamIds.join(', ')}`, 400);
+      throw new HttpException(
+        `Invalid team IDs: ${invalidTeamIds.join(", ")}`,
+        400
+      );
     }
 
     return true;
   }
 
-  async savePreference(userId: string, preferences: { teams: number[], players: number[] }) {
+  async savePreference(
+    userId: string,
+    preferences: { teams: number[]; players: number[] }
+  ) {
     return await prisma.users.update({
       where: { id: userId },
       data: {
-        preferences: preferences
-      }
+        preferences: preferences,
+      },
     });
+  }
+
+  async hasPreference(userId: string): Promise<boolean> {
+    const user = await prisma.users.findUnique({
+      where: { id: userId },
+      select: {
+        preferences: true,
+      },
+    });
+
+    if (!user?.preferences) return false;
+
+    const prefs = user.preferences as { teams?: number[]; players?: number[] };
+    return Array.isArray(prefs.teams) && prefs.teams.length > 0;
   }
 }
