@@ -378,8 +378,8 @@
 		<p class="text-white-200 font-brunoace font-normal text-md mt-4">Select your favorite teams</p>
 	</div>
 
-	<div class="w-full h-full max-h-[100vh] overflow-y-auto px-10">
-		<div class="w-full grid grid-cols-4 gap-3">
+	<div class="w-full h-full max-h-[100vh] overflow-y-auto px-3 md:px-10">
+		<div class="w-full grid grid-cols-4 gap-3 pb-[8em]">
 			{#each sampleTeams as team}
 				<button
 					on:click={() => {
