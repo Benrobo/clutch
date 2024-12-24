@@ -3,7 +3,7 @@
 	import LogoWithText from '@/components/branding/LogoWithText.svelte';
 	import Flex from '@/components/Flex.svelte';
 	import Button from '@/components/ui/button.svelte';
-	import { cn } from '@/utils';
+	import { cn, getTeamLogoWithBg } from '@/utils';
 	import { Bot, CheckCheck, HandHeart, Tv } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 
@@ -341,10 +341,6 @@
 	const MAX_TEAM_SELECTION = 5;
 
 	$: selectedCount = selectedTeams.size;
-
-	const getTeamLogoWithBg = (teamId: number) => {
-		return `https://midfield.mlbstatic.com/v1/team/${teamId}/spots/500`;
-	};
 
 	function toggleTeamSelection(team: any) {
 		const teamExist = selectedTeams.has(team.id);
