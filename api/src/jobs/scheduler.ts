@@ -13,7 +13,7 @@ export const processGamesScheduler = inngestClient.createFunction(
 
 export const processGameHighlightsVideoScheduler = inngestClient.createFunction(
   { id: "process-highlights-video-scheduler" },
-  { cron: "*/45 * * * *" },
+  { cron: "*/20 * * * *" },
   async ({ step }) => {
     inngestClient.send({
       name: "process-highlights-video",
