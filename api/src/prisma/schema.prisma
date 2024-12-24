@@ -111,12 +111,9 @@ model highlights {
     id         String                 @id @default(cuid())
     game_id    Int
     created_at DateTime               @default(now())
-    likes      Int                    @default(0)
     content    highlights_content?
     highlights highlights_playbacks[]
     game       games                  @relation(fields: [game_id], references: [id])
-    liked_by   user_highlight_likes[]
-    saved_by   saved_highlights[]
 
     @@index([game_id])
 }
@@ -132,6 +129,8 @@ model highlights_playbacks {
 
     thumbnail String?
 
+    likes Int @default(0)
+
     mlb_video_url            String // Original MLB video
     mlb_video_duration       String
     processed_video_url      String? // Our processed/generated video
@@ -146,6 +145,9 @@ model highlights_playbacks {
     summary Json?
 
     processed Boolean?
+
+    liked_by user_highlight_likes[]
+    saved_by saved_highlights[]
 
     highlight highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
@@ -169,27 +171,27 @@ model highlights_content {
 }
 
 model saved_highlights {
-    id           String     @id @default(cuid())
-    user_id      String
-    highlight_id String
-    user         users      @relation(fields: [user_id], references: [id])
-    highlight    highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
+    id          String               @id @default(cuid())
+    user_id     String
+    playback_id String
+    user        users                @relation(fields: [user_id], references: [id])
+    playback    highlights_playbacks @relation(fields: [playback_id], references: [id], onDelete: Cascade)
 
-    @@unique([user_id, highlight_id])
+    @@unique([user_id, playback_id])
     @@index([user_id])
-    @@index([highlight_id])
+    @@index([playback_id])
 }
 
 model user_highlight_likes {
-    user_id      String
-    highlight_id String
-    created_at   DateTime   @default(now())
-    user         users      @relation(fields: [user_id], references: [id])
-    highlight    highlights @relation(fields: [highlight_id], references: [id])
+    user_id     String
+    playback_id String
+    created_at  DateTime             @default(now())
+    user        users                @relation(fields: [user_id], references: [id])
+    playback    highlights_playbacks @relation(fields: [playback_id], references: [id])
 
-    @@id([user_id, highlight_id])
+    @@id([user_id, playback_id])
     @@index([user_id])
-    @@index([highlight_id])
+    @@index([playback_id])
 }
 
 enum JobType {
