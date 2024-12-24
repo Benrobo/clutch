@@ -6,6 +6,7 @@ export type Thumbnail = {
 };
 
 export type Playback = {
+    id: string;
     title: string;
     description: string;
     mlbVideoUrl: string;
@@ -35,6 +36,7 @@ export type Highlight = {
     gameId: number;
     createdAt: string;
     likes: number;
+    youLiked: boolean;
     thumbnail: Thumbnail;
     playback: Playback;
     game: Game;
