@@ -3,7 +3,7 @@
 	import Spinner from '@/components/Spinner.svelte';
 	import { useBrowser } from '@/hooks/useBrowser';
 	import type { Highlight } from '@/types/highlights';
-	import { cn } from '@/utils';
+	import { cn, getTeamLogoWithBg } from '@/utils';
 	import { Pause, Play, Volume, Volume2, VolumeX } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import EngagementBar from './EngagementBar.svelte';
@@ -226,7 +226,19 @@
 	</div>
 </div>
 
-<EngagementBar likesCount={highlight?.likes} viewsCount={0} />
+<EngagementBar
+	likesCount={highlight?.likes}
+	youLiked={highlight?.youLiked}
+	viewsCount={0}
+	teams={{
+		img: [
+			// @ts-expect-error
+			getTeamLogoWithBg(highlight?.game?.away_team?.id),
+			// @ts-expect-error
+			getTeamLogoWithBg(highlight?.game?.home_team?.id)
+		]
+	}}
+/>
 
 <style>
 	video {
