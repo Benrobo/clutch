@@ -75,9 +75,16 @@ export function isAuthenticated(fn: Function) {
     const email = decoded?.email;
 
     // check if user exists in our db
-    const user = await prisma.users.findFirst({
+    const user = await prisma.users.findUnique({
       where: {
         email,
+      },
+      select: {
+        id: true,
+        avatar: true,
+        name: true,
+        email: true,
+        preferences: true,
       },
     });
 
