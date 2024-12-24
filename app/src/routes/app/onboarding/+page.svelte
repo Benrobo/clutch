@@ -10,52 +10,59 @@
 	$: selectedTeams = [];
 </script>
 
-<!-- <MainScreen
-	nextStep={() => {
-		steps += 1;
-	}}
-/> -->
+{#if steps === 1}
+	<MainScreen
+		nextStep={() => {
+			steps += 1;
+		}}
+	/>
+{/if}
 
-<SelectTeams
-	onTeamSelect={(team) => {
-		selectedTeams = team;
-	}}
-/>
+{#if steps === 2}
+	<SelectTeams
+		onTeamSelect={(team) => {
+			selectedTeams = team;
+		}}
+	/>
+{/if}
 
 <!-- control buttons -->
-<Flex
-	className="w-full h-auto pb-10 bg-dark-103 fixed bottom-0 left-0 px-10 backdrop-blur-sm gap-10"
->
-	<!-- next  -->
-	{#if steps > 1}
-		<Button
-			className="w-full h-[45px] mt-10 rounded-full bg-transparent border-[2px] border-red-302 hover:bg-red-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
-			on:click={() => {
-				steps -= 1;
-			}}
+{#if steps > 1}
+	<div class="w-full h-auto flex-center fixed bottom-0 left-0 z-[100]">
+		<Flex
+			className="w-full md:max-w-[600px] h-auto pb-5 bg-dark-103/30 px-10 backdrop-blur-md gap-5"
 		>
-			Prev
-		</Button>
-	{:else}
-		<Button
-			className="w-full h-[45px] mt-10 rounded-full bg-red-305 hover:bg-orange-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
-			on:click={() => {
-				steps += 1;
-			}}
-		>
-			Next Step
-		</Button>
-	{/if}
+			<!-- next  -->
+			{#if steps > 2}
+				<Button
+					className="w-full h-[45px] mt-10 rounded-full bg-transparent border-[2px] border-red-302 hover:bg-red-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
+					on:click={() => {
+						steps -= 1;
+					}}
+				>
+					Prev
+				</Button>
+			{/if}
+			<!-- <Button
+				className="w-full h-[45px] mt-10 rounded-full bg-transparent border-[2px] border-red-302 hover:bg-red-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
+				on:click={() => {
+					steps += 1;
+				}}
+			>
+				Skip
+			</Button> -->
 
-	<!-- prev -->
-	{#if steps === 2}
-		<Button
-			className="w-full h-[45px] mt-10 rounded-full bg-red-305 hover:bg-orange-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
-			on:click={() => {
-				steps += 1;
-			}}
-		>
-			Continue
-		</Button>
-	{/if}
-</Flex>
+			<!-- prev -->
+			{#if steps === 2}
+				<Button
+					className="w-full h-[45px] mt-10 rounded-full bg-red-305 hover:bg-orange-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
+					on:click={() => {
+						steps += 1;
+					}}
+				>
+					Continue
+				</Button>
+			{/if}
+		</Flex>
+	</div>
+{/if}
