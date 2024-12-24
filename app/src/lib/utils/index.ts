@@ -208,3 +208,8 @@ export const splitIntoParagraphs = (text: string): string[] => {
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+
+export const getTeamLogoWithBg = (teamId: number) => {
+	return `https://midfield.mlbstatic.com/v1/team/${teamId}/spots/500`;
+};
