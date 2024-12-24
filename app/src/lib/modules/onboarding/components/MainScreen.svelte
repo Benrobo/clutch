@@ -4,6 +4,8 @@
 	import Flex from '@/components/Flex.svelte';
 	import Button from '@/components/ui/button.svelte';
 	import { Bot, HandHeart, Tv } from 'lucide-svelte';
+
+	export let nextStep: () => void;
 </script>
 
 <Flex className="w-full h-screen flex-col items-start justify-start gap-0">
@@ -66,6 +68,7 @@
 
 		<Button
 			className="w-full h-[45px] mt-10 rounded-full bg-red-305 hover:bg-orange-303 text-white-100 font-montserrat font-semibold text-sm enableBounceEffect"
+			on:click={nextStep}
 		>
 			Let's Go
 		</Button>
