@@ -10,10 +10,24 @@ const basePath = "/user";
 const userController = new UserController();
 
 router.post(
-  `${basePath}/add-preference`,
+  `${basePath}/preference`,
   validateSchema(AddUserPreferencesSchema),
   useCatchErrors(
     isAuthenticated(userController.addPreference.bind(userController))
+  )
+);
+
+router.get(
+  basePath,
+  useCatchErrors(
+    isAuthenticated(userController.getAuthenticatedUser.bind(userController))
+  )
+);
+
+router.get(
+  `${basePath}/has-preference`,
+  useCatchErrors(
+    isAuthenticated(userController.hasPreference.bind(userController))
   )
 );
 
