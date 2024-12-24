@@ -20,11 +20,13 @@ export interface HighlightItem {
   gameId: number;
   createdAt: Date;
   likes: number;
+  youLiked: boolean;
   thumbnail: {
     main: string | null;
     fallback: string | null;
-  }; // First photo from content
+  };
   playback: {
+    id: string;
     title: string;
     description: string;
     mlbVideoUrl: string;
@@ -34,8 +36,16 @@ export interface HighlightItem {
     orientation: VideoOrientation;
   };
   game: {
-    homeTeamId: number;
-    awayTeamId: number;
+    home_team: {
+      id: number;
+      name: string | null;
+      logo_url: string | null;
+    };
+    away_team: {
+      id: number;
+      name: string | null;
+      logo_url: string | null;
+    };
     date: string;
     status: string;
   };
@@ -52,7 +62,6 @@ export default class RecommendationService {
     } | null;
 
     if (!userPrefs?.teams.length && !userPrefs?.players.length) {
-      // If user has no preferences, return explore feed
       return this.getExploreFeed(user.id, params);
     }
 
@@ -68,13 +77,17 @@ export default class RecommendationService {
             { away_team_id: { in: userPrefs.teams } },
           ],
         },
-        NOT: {
-          saved_by: {
-            some: { user_id: user.id },
+        highlights: {
+          some: {
+            NOT: {
+              saved_by: {
+                some: { user_id: user?.id },
+              },
+            },
           },
         },
       },
-      orderBy: [{ likes: "desc" }, { created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }],
       take: preferredCount,
       ...(params.cursor ? { cursor: { id: params.cursor } } : {}),
       include: {
@@ -84,13 +97,31 @@ export default class RecommendationService {
           },
         },
         highlights: {
-          take: 1, // Get first playback
-          orderBy: { id: "asc" },
+          take: 1,
+          orderBy: [{ likes: "desc" }, { id: "asc" }],
+          include: {
+            liked_by: {
+              where: { user_id: user?.id },
+              select: { user_id: true },
+            },
+          },
         },
         game: {
           select: {
-            home_team_id: true,
-            away_team_id: true,
+            home_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
+            away_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
             date: true,
             status: true,
           },
@@ -101,7 +132,6 @@ export default class RecommendationService {
     // Get discovery content
     const discoveryHighlights = await prisma.highlights.findMany({
       where: {
-        // get highlights where the game does NOT involve any of the user's preferred teams
         game: {
           NOT: {
             OR: [
@@ -110,14 +140,17 @@ export default class RecommendationService {
             ],
           },
         },
-        // get highlights that have NOT been saved by this user
-        NOT: {
-          saved_by: {
-            some: { user_id: user.id },
+        highlights: {
+          some: {
+            NOT: {
+              saved_by: {
+                some: { user_id: user?.id },
+              },
+            },
           },
         },
       },
-      orderBy: [{ likes: "desc" }, { created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }],
       take: discoveryCount,
       include: {
         content: {
@@ -127,12 +160,30 @@ export default class RecommendationService {
         },
         highlights: {
           take: 1,
-          orderBy: { id: "asc" },
+          orderBy: [{ likes: "desc" }, { id: "asc" }],
+          include: {
+            liked_by: {
+              where: { user_id: user?.id },
+              select: { user_id: true },
+            },
+          },
         },
         game: {
           select: {
-            home_team_id: true,
-            away_team_id: true,
+            home_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
+            away_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
             date: true,
             status: true,
           },
@@ -149,20 +200,23 @@ export default class RecommendationService {
     userId: string,
     params: FeedParams
   ): Promise<HighlightItem[]> {
-    // Get recent trending content (last 7 days)
     const now = dayjs();
     const trendingHighlights = await prisma.highlights.findMany({
       where: {
         created_at: {
           gte: now.subtract(7, "day").toDate(),
         },
-        NOT: {
-          saved_by: {
-            some: { user_id: userId },
+        highlights: {
+          some: {
+            NOT: {
+              saved_by: {
+                some: { user_id: userId },
+              },
+            },
           },
         },
       },
-      orderBy: [{ likes: "desc" }, { created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }],
       take: Math.ceil(params.limit * 0.6),
       ...(params.cursor ? { cursor: { id: params.cursor } } : {}),
       include: {
@@ -173,12 +227,30 @@ export default class RecommendationService {
         },
         highlights: {
           take: 1,
-          orderBy: { id: "asc" },
+          orderBy: [{ likes: "desc" }, { id: "asc" }],
+          include: {
+            liked_by: {
+              where: { user_id: userId },
+              select: { user_id: true },
+            },
+          },
         },
         game: {
           select: {
-            home_team_id: true,
-            away_team_id: true,
+            home_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
+            away_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
             date: true,
             status: true,
           },
@@ -189,9 +261,13 @@ export default class RecommendationService {
     // Get random highlights
     const randomHighlights = await prisma.highlights.findMany({
       where: {
-        NOT: {
-          saved_by: {
-            some: { user_id: userId },
+        highlights: {
+          some: {
+            NOT: {
+              saved_by: {
+                some: { user_id: userId },
+              },
+            },
           },
         },
       },
@@ -205,12 +281,30 @@ export default class RecommendationService {
         },
         highlights: {
           take: 1,
-          orderBy: { id: "asc" },
+          orderBy: [{ likes: "desc" }, { id: "asc" }],
+          include: {
+            liked_by: {
+              where: { user_id: userId },
+              select: { user_id: true },
+            },
+          },
         },
         game: {
           select: {
-            home_team_id: true,
-            away_team_id: true,
+            home_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
+            away_team: {
+              select: {
+                id: true,
+                name: true,
+                logo_url: true,
+              },
+            },
             date: true,
             status: true,
           },
@@ -226,69 +320,81 @@ export default class RecommendationService {
   private mapHighlights(
     highlights: (highlights & {
       content: { photo: string } | null;
-      highlights: highlights_playbacks[];
+      highlights: (highlights_playbacks & {
+        liked_by: { user_id: string }[];
+      })[];
       game: {
-        home_team_id: number;
-        away_team_id: number;
+        home_team: {
+          id: number;
+          name: string;
+          logo_url: string | null;
+        };
+        away_team: {
+          id: number;
+          name: string;
+          logo_url: string | null;
+        };
         date: string;
         status: string;
       };
     })[]
   ): HighlightItem[] {
-    return highlights.map((highlight) => ({
-      id: highlight.id,
-      gameId: highlight.game_id,
-      createdAt: highlight.created_at,
-      likes: highlight.likes,
-      thumbnail: {
-        main: highlight?.highlights[0]?.thumbnail ?? null,
-        fallback: highlight.content?.photo || null,
-      },
-      playback: highlight.highlights[0]
-        ? {
-            title: highlight.highlights[0].title,
-            description: highlight.highlights[0].description,
-            mlbVideoUrl: highlight.highlights[0].mlb_video_url,
-            mlbVideoDuration: highlight.highlights[0].mlb_video_duration,
-            processedVideoUrl: highlight.highlights[0].processed_video_url,
-            processedVideoDuration:
-              highlight.highlights[0].processed_video_duration,
-            orientation: highlight.highlights[0].orientation,
-            // the transcript would be gotten from a different endpoint
-            // transcript: highlight.highlights[0].transcript,
-            // translated_transcript:
-            //   highlight.highlights[0].translated_transcript,
-          }
-        : {
-            // Fallback if no playback exists
-            title: "",
-            description: "",
-            mlbVideoUrl: "",
-            mlbVideoDuration: "",
-            processedVideoUrl: null,
-            processedVideoDuration: null,
-            orientation: "HORIZONTAL",
+    return highlights.map((highlight) => {
+      const playback = highlight.highlights[0];
+      return {
+        id: highlight.id,
+        gameId: highlight.game_id,
+        createdAt: highlight.created_at,
+        likes: playback?.likes ?? 0,
+        youLiked: playback?.liked_by.length > 0 ?? false,
+        thumbnail: {
+          main: playback?.thumbnail ?? null,
+          fallback: highlight.content?.photo || null,
+        },
+        playback: playback
+          ? {
+              id: playback.id,
+              title: playback.title,
+              description: playback.description,
+              mlbVideoUrl: playback.mlb_video_url,
+              mlbVideoDuration: playback.mlb_video_duration,
+              processedVideoUrl: playback.processed_video_url,
+              processedVideoDuration: playback.processed_video_duration,
+              orientation: playback.orientation,
+            }
+          : {
+              id: "",
+              title: "",
+              description: "",
+              mlbVideoUrl: "",
+              mlbVideoDuration: "",
+              processedVideoUrl: null,
+              processedVideoDuration: null,
+              orientation: "HORIZONTAL",
+            },
+        game: {
+          home_team: {
+            id: highlight.game.home_team?.id,
+            name: highlight.game.home_team?.name ?? null,
+            logo_url: highlight.game.home_team?.logo_url ?? null,
           },
-      game: {
-        homeTeamId: highlight.game.home_team_id,
-        awayTeamId: highlight.game.away_team_id,
-        date: highlight.game.date,
-        status: highlight.game.status,
-      },
-    }));
+          away_team: {
+            id: highlight.game.away_team?.id,
+            name: highlight.game.away_team?.name ?? null,
+            logo_url: highlight.game.away_team?.logo_url ?? null,
+          },
+          date: highlight.game.date,
+          status: highlight.game.status,
+        },
+      };
+    });
   }
 
-  // Knuth shuffle Algorithm (Modified Fisher-Yates)
   private shuffleWithBias(items: HighlightItem[]): HighlightItem[] {
     const result = [...items];
     for (let i = result.length - 1; i > 0; i--) {
-      // For each item, flip a coin (with 70% chance of keeping it in place)
       if (Math.random() > 0.7) {
-        // If we decide to move it (30% chance):
-        // 1. Pick a random position to swap with
         const j = Math.floor(Math.random() * (i + 1));
-
-        // 2. swap the items
         [result[i], result[j]] = [result[j], result[i]];
       }
     }
