@@ -48,61 +48,69 @@
 	afterUpdate(() => {});
 </script>
 
-<div class="w-full h-auto flex-center fixed bottom-0 left-0 z-[50]">
-	<Flex className="w-full h-auto max-w-[600px] py-5 bg-dark-103 border-t-[1px] border-t-gray-100">
-		{#each tabs as tab}
-			<button
-				class={cn(
-					'w-full transition-all flex flex-col items-center justify-center gap-1 text-white-100 enableBounceEffect',
-					activeTab === tab.id && 'text-red-302'
-				)}
-				on:click={() => {
-					goto(tab.href);
-				}}
-			>
-				{#if tab.id === 'feed'}
-					<GalleryHorizontal
-						size={20}
-						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
-					/>
-				{:else if tab.id === 'articles'}
-					<Newspaper
-						size={20}
-						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
-					/>
-				{:else if tab.id === 'activities'}
-					<BellRing
-						size={20}
-						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
-					/>
-				{:else if tab.id === 'dugout'}
-					<Gamepad_2
-						size={20}
-						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
-					/>
-				{:else if tab.id === 'profile'}
-					<img
-						src={userDetails?.avatar}
-						alt=""
-						class="w-[22px] h-[22px] rounded-full"
-						on:error={(e) => {
-							// @ts-expect-error
-							e.currentTarget.src = '/baseball.png';
-						}}
-					/>
-				{:else}
-					{null}
-				{/if}
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-dark-103 pb-safe">
+	<div class="max-w-[600px] mx-auto">
+		<Flex className="w-full py-5 border-t-[1px] border-t-gray-100">
+			{#each tabs as tab}
+				<button
+					class={cn(
+						'w-full transition-all flex flex-col items-center justify-center gap-1 text-white-100 enableBounceEffect',
+						activeTab === tab.id && 'text-red-302'
+					)}
+					on:click={() => {
+						goto(tab.href);
+					}}
+				>
+					{#if tab.id === 'feed'}
+						<GalleryHorizontal
+							size={20}
+							class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+						/>
+					{:else if tab.id === 'articles'}
+						<Newspaper
+							size={20}
+							class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+						/>
+					{:else if tab.id === 'activities'}
+						<BellRing
+							size={20}
+							class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+						/>
+					{:else if tab.id === 'dugout'}
+						<Gamepad_2
+							size={20}
+							class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+						/>
+					{:else if tab.id === 'profile'}
+						<img
+							src={userDetails?.avatar}
+							alt=""
+							class="w-[22px] h-[22px] rounded-full"
+							on:error={(e) => {
+								// @ts-expect-error
+								e.currentTarget.src = '/baseball.png';
+							}}
+						/>
+					{:else}
+						{null}
+					{/if}
 
-				{#if tab.title}
-					<span
-						class={cn(
-							'font-montserrat text-xs font-normal',
-							activeTab === tab.id && 'text-red-302'
-						)}>{tab.title}</span
-					>
-				{/if}
-			</button>
-		{/each}
-	</Flex>
-</div>
+					{#if tab.title}
+						<span
+							class={cn(
+								'font-montserrat text-xs font-normal',
+								activeTab === tab.id && 'text-red-302'
+							)}>{tab.title}</span
+						>
+					{/if}
+				</button>
+			{/each}
+		</Flex>
+	</div>
+</nav>
+
+<style>
+	nav {
+		padding-bottom: env(safe-area-inset-bottom);
+	}
+</style>
