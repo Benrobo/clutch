@@ -45,9 +45,7 @@
 		}
 	];
 
-	afterUpdate(() => {
-		console.log($authStore?.user);
-	});
+	afterUpdate(() => {});
 </script>
 
 <div class="w-full h-auto flex-center fixed bottom-0 left-0 z-[50]">
