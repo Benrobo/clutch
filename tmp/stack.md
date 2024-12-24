@@ -71,6 +71,7 @@ I could write a video processing server which goes through all video highlights 
     - https://dribbble.com/shots/24040065-Gemstream-Gaming-Streaming-Platform
     - https://dribbble.com/shots/15963561-Esports-app
     - https://dribbble.com/shots/22396996-Balbalan-Live-Score-Football-App
+    - https://cdn.prod.website-files.com/62fedc274d48c576b05e21aa/6675f162bc7fe4653dff522b_Sports%20Long%20(1)-p-2600.png
 
 ### Packages
 
