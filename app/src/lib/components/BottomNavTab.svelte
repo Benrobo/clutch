@@ -1,0 +1,110 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import Flex from '@/components/Flex.svelte';
+	import { authStore } from '@/store/auth.store';
+	import { cn } from '@/utils';
+	import { BellRing, GalleryHorizontal, Newspaper } from 'lucide-svelte';
+	import Gamepad_2 from 'lucide-svelte/icons/gamepad-2';
+	import { afterUpdate, onMount } from 'svelte';
+	import { derived } from 'svelte/store';
+	import type { User } from '@/types/auth';
+
+	$: pathname = derived(page, ($page) => $page.url.pathname);
+	$: slug = $pathname.split('/');
+	let activeTab: string | null;
+	$: activeTab = slug[slug.length - 1] ?? 'discover';
+
+	$: userDetails = $authStore?.user as User;
+
+	const tabs = [
+		{
+			id: 'feed',
+			title: 'Discover',
+			href: '/home/feed'
+		},
+		{
+			id: 'articles',
+			title: 'Articles',
+			href: '/home/articles'
+		},
+		{
+			id: 'activities',
+			title: 'Activities',
+			href: '/home/activities'
+		},
+		{
+			id: 'dugout',
+			title: 'Dugout',
+			href: '/home/dugout'
+		},
+		{
+			id: 'profile',
+			title: 'Profile',
+			href: '/home/profile'
+		}
+	];
+
+	afterUpdate(() => {
+		console.log($authStore?.user);
+	});
+</script>
+
+<div class="w-full h-auto flex-center fixed bottom-0 left-0 z-[50]">
+	<Flex className="w-full h-auto max-w-[600px] py-5 bg-dark-103 border-t-[1px] border-t-gray-100">
+		{#each tabs as tab}
+			<button
+				class={cn(
+					'w-full transition-all flex flex-col items-center justify-center gap-1 text-white-100 enableBounceEffect',
+					activeTab === tab.id && 'text-red-302'
+				)}
+				on:click={() => {
+					goto(tab.href);
+				}}
+			>
+				{#if tab.id === 'feed'}
+					<GalleryHorizontal
+						size={20}
+						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+					/>
+				{:else if tab.id === 'articles'}
+					<Newspaper
+						size={20}
+						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+					/>
+				{:else if tab.id === 'activities'}
+					<BellRing
+						size={20}
+						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+					/>
+				{:else if tab.id === 'dugout'}
+					<Gamepad_2
+						size={20}
+						class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+					/>
+				{:else if tab.id === 'profile'}
+					<img
+						src={userDetails?.avatar}
+						alt=""
+						class="w-[22px] h-[22px] rounded-full"
+						on:error={(e) => {
+							// @ts-expect-error
+							e.currentTarget.src = '/baseball.png';
+						}}
+					/>
+				{:else}
+					{null}
+				{/if}
+
+				{#if tab.title}
+					<span
+						class={cn(
+							'font-montserrat text-xs font-normal',
+							activeTab === tab.id && 'text-red-302'
+						)}>{tab.title}</span
+					>
+				{/if}
+			</button>
+		{/each}
+	</Flex>
+</div>
