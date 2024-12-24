@@ -26,6 +26,7 @@ import {
   SupportedLanguages,
   saveTranslatedTranscript,
   translateTranscript,
+  TranslationResult,
 } from "../scripts/video-processing/translation.js";
 import { sleep } from "../lib/utils.js";
 import generateVideoSummary from "../scripts/video-processing/generateVideoSummary.js";
@@ -44,50 +45,54 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
     event: "process-highlights-video",
   },
   async ({ step }) => {
-    processVideo();
+    // processVideo();
   }
 );
 
-// processVideo();
+processVideo();
 
 async function processVideo() {
   setTimeout(async () => {
-    await retry(
-      async () => {
-        console.log("\n🔃 Starting video processing..");
-        // get all highlights videos
-        const processingStatus = await checkVideoProcessingStatus();
-        let playback;
+    try {
+      await retry(
+        async () => {
+          console.log("\n🔃 Starting video processing..");
+          // get all highlights videos
+          const processingStatus = await checkVideoProcessingStatus();
+          let playback;
 
-        if (processingStatus) {
-          // If video needs to resume processing, use it
-          console.log(
-            `🔃 Resuming processing for [${processingStatus?.title}]`
-          );
-          playback = processingStatus;
-        } else {
-          // Otherwise get next unprocessed video
-          playback = await getNextPlaybackToProcess();
-        }
+          if (processingStatus) {
+            // If video needs to resume processing, use it
+            console.log(
+              `🔃 Resuming processing for [${processingStatus?.title}]`
+            );
+            playback = processingStatus;
+          } else {
+            // Otherwise get next unprocessed video
+            playback = await getNextPlaybackToProcess();
+          }
 
-        if (!playback) {
-          console.log("🔃 No more highlights to process");
-          return;
-        }
+          if (!playback) {
+            console.log("🔃 No more highlights to process");
+            return;
+          }
 
-        await processPlaybackVideo(playback as any);
-      },
-      {
-        retries: 3,
-        minTimeout: 1000,
-        onRetry: (e, retryCount) => {
-          console.log(
-            `🔄 Retrying to process playback highlights video (attempt ${retryCount})`
-          );
-          console.log(`ERROR PROCESSING PLAYBACK HIGHLIGHTS:`, e);
+          await processPlaybackVideo(playback as any);
         },
-      }
-    );
+        {
+          retries: 3,
+          minTimeout: 1000,
+          onRetry: (e, retryCount) => {
+            console.log(
+              `🔄 Retrying to process playback highlights video (attempt ${retryCount})`
+            );
+            console.log(`ERROR PROCESSING PLAYBACK HIGHLIGHTS:`, e);
+          },
+        }
+      );
+    } catch (e: any) {
+      console.log(`Error processing highlight video:`, e);
+    }
   }, 100);
 }
 
@@ -139,7 +144,7 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
           playback?.id
         );
 
-        const translatedTranscripts = [];
+        const translatedTranscripts: TranslationResult[] = [];
         for (const lang of SupportedLanguages) {
           try {
             // Add delay between different languages
@@ -168,7 +173,7 @@ async function processPlaybackVideo(playback: DBPlaybackOutput) {
         ) {
           await saveTranslatedTranscript(
             transcriptOutput?.transcriptPath,
-            translatedTranscripts as any
+            translatedTranscripts
           );
         }
 
