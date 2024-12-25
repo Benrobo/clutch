@@ -210,6 +210,6 @@ export const capitalizeFirstLetter = (str: string) => {
 };
 
 
-export const getTeamLogoWithBg = (teamId: number) => {
+export const getTeamLogoWithBg = (teamId?: number | null) => {
 	return `https://midfield.mlbstatic.com/v1/team/${teamId}/spots/500`;
 };
