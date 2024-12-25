@@ -87,24 +87,6 @@
 		animation: dasharray 1s linear forwards;
 	}
 
-	/* @keyframes icon-animation {
-		0%,
-		100% {
-			stroke-dasharray: 0;
-		}
-		45% {
-			stroke-dasharray: 68;
-		}
-		50%,
-		65% {
-			stroke-dasharray: 68;
-		}
-		66%,
-		90% {
-			stroke-dasharray: 0;
-		}
-	} */
-
 	.ai-button-trigger .inner {
 		transition: color 0.2s ease-in-out;
 	}
