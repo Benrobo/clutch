@@ -79,7 +79,7 @@
 						<Telescope size={25} class="fill-white-100" />
 						<span class="text-xs mt-1">{viewsCount}</span>
 					{:else if bar.id === 'insight'}
-						<Sparkles size={25} class="fill-red-302" strokeWidth={0.5} />
+						<Sparkles size={25} class="stroke-white-100" strokeWidth={1.5} />
 					{:else if bar.id === 'teams'}
 						<div class="flex flex-col -space-y-2 rtl:space-x-reverse gap-0">
 							{#if teams}
