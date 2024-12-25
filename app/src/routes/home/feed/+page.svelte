@@ -92,8 +92,7 @@
 		isOpen={$feedStore?.showBottomSheet}
 		onClose={() => {
 			feedStore.toggleShowBottomSheet(false);
-			feedStore.setVideoPlaying(true);
-			feedStore.setVideoPaused(false);
+			feedStore.setVideoPlaying(false);
 		}}
 		headline="Play Insights"
 		tagline=""
