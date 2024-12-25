@@ -37,8 +37,9 @@
 	const samplePlaystats = samplePlaybackStats;
 
 	onDestroy(() => {
-		insightsHighlighter?.destroy();
-		summaryHighlighter?.destroy();
+		// @ts-expect-error
+		if (insightsHighlighter) insightsHighlighter?.destroy();
+		if (summaryHighlighter) summaryHighlighter?.destroy();
 	});
 </script>
 
@@ -152,7 +153,7 @@
 					{highlight?.playback?.description}
 				</p>
 
-				<div class="flex flex-col gap-2">
+				<div class="flex flex-col gap-1 mt-3">
 					<h4 class="text-dark-100 text-sm font-jetbrains font-bold">Insights</h4>
 					<p
 						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
@@ -179,7 +180,7 @@
 					</p>
 				</div>
 
-				<div class="flex flex-col gap-2">
+				<div class="flex flex-col gap-1 mt-3">
 					<h4 class="text-dark-100 font-jetbrains font-bold">Summary</h4>
 					<p
 						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
@@ -219,6 +220,7 @@
 							// videoElement.play();
 						}, 200);
 					}}
+					visible={$feedStore?.showBottomSheet}
 				/>
 			</div>
 		</div>
