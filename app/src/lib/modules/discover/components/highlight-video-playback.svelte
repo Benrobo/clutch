@@ -21,16 +21,30 @@
 	let muted = true;
 
 	$: if (videoElement && $feedStore) {
-		if ($feedStore.videoPlaying) {
-			videoElement.play();
-		} else {
-			videoElement.pause();
-		}
+		handleVideoState();
 	}
 
 	$: isSafariMobile = false;
 
 	const MAX_DESCRIPTION_LENGTH = 50;
+
+	async function handleVideoState() {
+		if (!videoElement || !$feedStore) return;
+
+		try {
+			if ($feedStore.videoPlaying) {
+				await videoElement.play();
+			} else {
+				videoElement.pause();
+			}
+		} catch (error) {
+			if (error instanceof Error && error.name === 'AbortError') {
+				// Ignore abort errors from interrupting play/pause
+				return;
+			}
+			console.error('Video playback error:', error);
+		}
+	}
 
 	function toggleAspectRatio() {
 		currentAspectRatio = currentAspectRatio === '9:16' ? '16:9' : '9:16';
@@ -237,7 +251,8 @@
 	}}
 	onInsight={() => {
 		feedStore.toggleShowBottomSheet(true);
-		if ($feedStore.videoPlaying) videoElement.pause();
+		// if ($feedStore.videoPlaying) videoElement.pause();
+		videoElement.pause();
 	}}
 />
 
