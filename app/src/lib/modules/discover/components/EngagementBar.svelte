@@ -42,12 +42,13 @@
 	export let teams: {
 		img: (string | null)[];
 	} | null = null;
+	export let onInsight: () => void = () => {};
 </script>
 
 <div
 	class={cn(
-		'w-auto h-auto absolute right-2 pr-1 z-[100]',
-		isMobileVP ? 'bottom-[10em]' : 'bottom-[7em]'
+		'w-auto h-auto absolute right-2 pr-1 z-[100] bottom-[10em] md:bottom-[7em]'
+		// isMobileVP ? 'bottom-[10em]' : 'bottom-[7em]'
 	)}
 >
 	<div
@@ -59,6 +60,11 @@
 					'p-1 px-3 enableBounceEffect rounded-lg bg-transparent text-white-100 text-sm text-center flex-center flex-col gap-3'
 					// ['like', 'views'].includes(bar.id) && 'hover:bg-white-100/20 hover:backdrop-blur-sm'
 				)}
+				on:click={() => {
+					if (bar.id === 'insight') {
+						onInsight();
+					}
+				}}
 			>
 				<span>
 					{#if bar.id === 'like'}
