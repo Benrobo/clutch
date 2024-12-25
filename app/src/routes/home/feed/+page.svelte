@@ -1,14 +1,17 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import { sampleHighlights } from '@/data/highlights';
+	import { sampleHighlights, samplePlaybackStats } from '@/data/highlights';
 	import HighlightVideo from '@/modules/discover/components/highlight-video.svelte';
 	import EngagementBar from '@/modules/discover/components/EngagementBar.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { cn, getTeamLogoWithBg } from '@/utils';
 	import useDetectDevice from '@/hooks/useDetectDevice';
 	import BottomSheet from '@/components/BottomSheet.svelte';
 	import { useFeedStore } from '@/store/feed.store';
 	import AiButton from '@/components/AIButton.svelte';
+	import Highlighter from '@/highlighter';
+	import mlbGlossaryJson from '$lib/data/mlb-glossary.json';
+	import type { MLBGlossary } from '@/types/games';
 
 	let activeFeed: 'for-you' | 'explore' = 'for-you';
 	$: activeFeed = 'for-you';
@@ -17,9 +20,26 @@
 	let observedPlaybackId: string | null = null;
 	$: observedPlaybackId = null;
 
+	let insightsContainer: HTMLDivElement | null;
+	let summaryContainer: HTMLDivElement | null;
+	$: insightsContainer = null;
+	$: summaryContainer = null;
+
+	let insightsHighlighter: Highlighter | null = null;
+	let summaryHighlighter: Highlighter | null = null;
+
+	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
+	const mlbGlossaryTerms = mlbGlossary.map((glossary) => glossary.title.toLowerCase());
+
 	const deviceInfo = useDetectDevice();
 
 	const higlights = sampleHighlights;
+	const samplePlaystats = samplePlaybackStats;
+
+	onDestroy(() => {
+		insightsHighlighter?.destroy();
+		summaryHighlighter?.destroy();
+	});
 </script>
 
 <div class="w-full h-full flex items-center justify-center">
@@ -97,7 +117,6 @@
 		headline="Play Insights"
 		tagline=""
 		className="h-auto"
-		showBackdrop={$feedStore?.showBottomSheet}
 	>
 		<div class="p-1 flex flex-col gap-6">
 			<!-- team versus -->
@@ -127,45 +146,72 @@
 				</Flex>
 			</Flex>
 
-			<!-- playback description -->
-			<p class="text-xs text-dark-100/80 font-poppins">
-				{highlight?.playback?.description}
-			</p>
-
-			<!-- Score & Count -->
-			<!-- <div class="flex items-center justify-between bg-dark-103/5 p-3 rounded-lg">
-			<span class="text-dark-100 font-medium">Yankees 3, Red Sox 2</span>
-			<span class="text-dark-100/60">Count: 2-2</span>
-		</div> -->
-
-			<!-- Pitch Speed -->
-			<!-- <div class="bg-dark-103/5 p-3 rounded-lg">
-			<span class="text-dark-100/60 text-sm">Pitch Speed</span>
-			<div class="text-dark-100 font-semibold text-lg">97 MPH</div>
-		</div> -->
-
-			<!-- Play Description -->
-			<!-- <div class="flex flex-col gap-4">
-			<div class="flex flex-col gap-2">
-				<h4 class="text-dark-100 font-medium">Highlight</h4>
-				<p class="text-dark-100 text-lg leading-snug">
-					Judge crushes a towering home run to deep left field, giving the Yankees the lead in a
-					crucial moment.
+			<div class="w-full max-h-[250px] overflow-y-auto hideScrollBar2">
+				<!-- playback description -->
+				<p class="text-xs text-dark-100/80 font-poppins">
+					{highlight?.playback?.description}
 				</p>
-			</div>
 
-			<div class="flex flex-col gap-2">
-				<h4 class="text-dark-100 font-medium">Play Details</h4>
-				<p class="text-dark-100/80 leading-relaxed">
-					With a runner on first, Aaron Judge steps up to face Chris Sale. On a 2-2 count, Sale
-					delivers a fastball that Judge drives deep to left field for a two-run homer, putting the
-					Yankees ahead 3-2 in the seventh.
-				</p>
+				<div class="flex flex-col gap-2">
+					<h4 class="text-dark-100 text-sm font-jetbrains font-bold">Insights</h4>
+					<p
+						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
+						bind:this={insightsContainer}
+					>
+						{#if samplePlaystats?.highlight && insightsContainer}
+							{@const highlighter = new Highlighter({
+								text: samplePlaystats?.highlight,
+								keywords: mlbGlossaryTerms.map((term) => ({
+									word: term,
+									borderStyle: 'solid',
+									borderWidth: '1px',
+									fontWeight: 600,
+									color: '#fe605f',
+									style: 'border-bottom',
+									onClick: (match) => {
+										console.log({ match });
+									}
+								}))
+							})}
+							<!-- {insightsHighlighter = highlighter} -->
+							{highlighter.render(insightsContainer) ?? ''}
+						{/if}
+					</p>
+				</div>
+
+				<div class="flex flex-col gap-2">
+					<h4 class="text-dark-100 font-jetbrains font-bold">Summary</h4>
+					<p
+						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
+						bind:this={summaryContainer}
+					>
+						{#if samplePlaystats?.summary && summaryContainer}
+							{@const highlighter = new Highlighter({
+								text: samplePlaystats?.summary,
+								keywords: mlbGlossaryTerms.map((term) => ({
+									word: term,
+									borderStyle: 'solid',
+									borderWidth: '1px',
+									fontWeight: 600,
+									color: '#fe605f',
+									style: 'border-bottom',
+									onClick: (match) => {
+										console.log({ match });
+									}
+								})),
+								options: {
+									caseSensitive: true
+								}
+							})}
+							{(summaryHighlighter = highlighter)}
+							{highlighter.render(summaryContainer)}
+						{/if}
+					</p>
+				</div>
 			</div>
-		</div> -->
 
 			<!-- AI Button -->
-			<div class="flex justify-center mt-2">
+			<div class="flex justify-center mt-2 pb-5">
 				<AiButton
 					onClick={() => {
 						setTimeout(() => {
