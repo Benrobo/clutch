@@ -2,7 +2,7 @@ import { browser } from '$app/environment';
 import DeviceDetector from "device-detector-js";
 
 export default function useDetectDevice() {
-    if (!browser) return { isSafari: false, isMobile: false };
+    if (!browser) return null;
 
     const ua = navigator.userAgent.toLowerCase();
     
