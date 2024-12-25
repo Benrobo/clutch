@@ -4,7 +4,7 @@
 	import type { Highlight } from '@/types/highlights';
 	import { cn, getTeamLogoWithBg } from '@/utils';
 	import { Pause, Play, Volume2, VolumeX } from 'lucide-svelte';
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, afterUpdate } from 'svelte';
 	import EngagementBar from './EngagementBar.svelte';
 	import useDetectDevice from '$lib/hooks/useDetectDevice';
 	import { useFeedStore } from '@/store/feed.store';
@@ -12,16 +12,23 @@
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
 
+	const deviceInfo = useDetectDevice();
+	$: feedStore = useFeedStore();
 	let videoElement: HTMLVideoElement;
 	$: videoElement;
 	let containerRef: HTMLDivElement;
 	let observer: IntersectionObserver;
 	let muted = true;
 
-	$: feedStore = useFeedStore();
-	const deviceInfo = useDetectDevice();
+	$: if (videoElement && $feedStore) {
+		if ($feedStore.videoPlaying) {
+			videoElement.play();
+		} else {
+			videoElement.pause();
+		}
+	}
+
 	$: isSafariMobile = false;
-	$: bottomSheetOpen = false;
 
 	const MAX_DESCRIPTION_LENGTH = 50;
 
