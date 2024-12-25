@@ -42,8 +42,8 @@
 			bind:this={sheetElement}
 			style="z-index: 999999;"
 			class={cn(
-				'h-[60vh] fixed bottom-0 left-0 right-0 bg-white-100',
-				'transform transition-transform duration-300 ease-out',
+				'w-full max-w-[600px] mx-auto h-[60vh] bg-white-100',
+				'transform transition-transform duration-300 ease-out fixed bottom-0 left-0 right-0',
 				'flex flex-col',
 				rounded && 'rounded-t-[20px]',
 				className
@@ -78,6 +78,7 @@
 				<slot />
 			</div>
 		</div>
+		<!-- </div> -->
 	</Portal>
 {/if}
 
