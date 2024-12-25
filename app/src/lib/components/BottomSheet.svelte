@@ -30,9 +30,10 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		{#if showBackdrop}
 			<div
-				class="fixed inset-0 bg-black/30 backdrop-blur-sm"
+				class="fixed inset-0 bg-dark-100/5 backdrop-blur-sm"
 				style="z-index: 999999;"
 				on:click={onClose}
+				transition:fade={{ duration: 50 }}
 			/>
 		{/if}
 
@@ -42,7 +43,7 @@
 			style="z-index: 999999;"
 			class={cn(
 				'h-[60vh] fixed bottom-0 left-0 right-0 bg-white-100',
-				'transform transition-transform duration-100 ease-out',
+				'transform transition-transform duration-300 ease-out',
 				'flex flex-col',
 				rounded && 'rounded-t-[20px]',
 				className
