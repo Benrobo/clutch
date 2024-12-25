@@ -48,9 +48,9 @@
 	afterUpdate(() => {});
 </script>
 
-<nav class="fixed bottom-0 left-0 right-0 z-50 bg-dark-103 pb-safe">
+<nav class="fixed bottom-0 left-0 right-0 z-[1] bg-dark-103 pb-safe">
 	<div class="max-w-[600px] mx-auto">
-		<Flex className="w-full py-5 border-t-[1px] border-t-gray-100">
+		<Flex className="w-full py-3 border-t-[1px] border-t-gray-100">
 			{#each tabs as tab}
 				<button
 					class={cn(
