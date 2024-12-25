@@ -8,6 +8,7 @@
 	import EngagementBar from './EngagementBar.svelte';
 	import useDetectDevice from '$lib/hooks/useDetectDevice';
 	import { useFeedStore } from '@/store/feed.store';
+	import VideoEmbed from './video-embed.svelte';
 
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
@@ -127,22 +128,18 @@
 	>
 		<video
 			bind:this={videoElement}
-			src={videoUrl}
-			class={cn(
-				'w-full h-full object-cover',
-				$feedStore.isInitialVideoLoading ? 'hidden' : 'block'
-			)}
-			preload="metadata"
-			playsinline
+			class={cn('w-full h-full object-cover', $feedStore.isInitialVideoLoading ? 'hidden' : 'flex')}
+			preload="auto"
 			muted={true}
 			loop={true}
+			width="640"
+			height="360"
 			on:loadstart={handleLoadStart}
 			on:canplay={handleCanPlay}
 			on:waiting={handleWaiting}
 			on:playing={handlePlaying}
 		>
-			<track kind="captions" src="" label="English" srclang="en" default />
-			Your browser does not support the video tag.
+			<source src={videoUrl} type="video/mp4" />
 		</video>
 
 		<!-- Main Minor Video Control -->
@@ -153,7 +150,7 @@
 			)}
 		>
 			<button
-				class="w-8 h-8 rounded bg-none backdrop-blur-xs text-white-100 text-sm hover:bg-white-100/40 flex-center"
+				class="w-8 h-8 rounded bg-none backdrop-blurrr-xs text-white-100 text-sm hover:bg-white-100/40 flex-center"
 				on:click={() => {
 					muted = !muted;
 					if (videoElement) {
@@ -169,7 +166,7 @@
 			</button>
 			<!-- Aspect ratio toggle -->
 			<!-- <button
-				class="top-4 px-3 py-1 rounded bg-white-100/30 backdrop-blur-md text-white-100 text-sm hover:bg-white-100/40"
+				class="top-4 px-3 py-1 rounded bg-white-100/30 backdrop-blurr-md text-white-100 text-sm hover:bg-white-100/40"
 				on:click={toggleAspectRatio}
 			>
 				{currentAspectRatio}
@@ -181,7 +178,7 @@
 			<div
 				class={'absolute inset-0 z-[3] flex-center ' +
 					($feedStore.videoBuffering && !$feedStore.isInitialVideoLoading
-						? 'bg-dark-103/30 backdrop-blur-sm'
+						? 'bg-dark-103/30 backdrop-blurr-sm'
 						: '')}
 			>
 				<Spinner size={'40'} />
@@ -193,7 +190,7 @@
 			<Flex class="w-full h-full flex-center absolute inset-0 group">
 				<button
 					class={cn(
-						'w-[70px] h-[70px] rounded-full bg-white-100/30 flex-center backdrop-blur-md enableBounceEffect transition ease-in-out duration-500',
+						'w-[70px] h-[70px] rounded-full bg-white-100/30 flex-center backdrop-blurr-md enableBounceEffect transition ease-in-out duration-500',
 						$feedStore.videoPlaying ? 'opacity-0 duration-500' : 'opacity-100 duration-100',
 						$feedStore.videoPaused && 'opacity-100',
 						'group-hover:opacity-100'
