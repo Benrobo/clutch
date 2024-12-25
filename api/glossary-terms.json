@@ -1,0 +1,1682 @@
+[
+  {
+    "id": "10-and-5-rights",
+    "title": "10-and-5 Rights",
+    "url": "/glossary/transactions/10-and-5-rights"
+  },
+  {
+    "id": "10-day-injured-list",
+    "title": "10-day Injured List",
+    "url": "/glossary/injuries/10-day-injured-list"
+  },
+  {
+    "id": "15-day-injured-list",
+    "title": "15-day Injured List",
+    "url": "/glossary/injuries/15-day-injured-list"
+  },
+  {
+    "id": "26-man-roster",
+    "title": "26-man Roster",
+    "url": "/glossary/transactions/26-man-roster"
+  },
+  {
+    "id": "27th-man",
+    "title": "27th Man",
+    "url": "/glossary/transactions/27th-man"
+  },
+  {
+    "id": "40-man-roster",
+    "title": "40-man Roster",
+    "url": "/glossary/transactions/40-man-roster"
+  },
+  {
+    "id": "60-day-injured-list",
+    "title": "60-day Injured List",
+    "url": "/glossary/injuries/60-day-injured-list"
+  },
+  {
+    "id": "7-day-injured-list",
+    "title": "7-day Injured List",
+    "url": "/glossary/injuries/7-day-injured-list"
+  },
+  {
+    "id": "90-foot-running-splits",
+    "title": "90-foot Running Splits",
+    "url": "/glossary/statcast/90-foot-running-splits"
+  },
+  {
+    "id": "ace",
+    "title": "Ace",
+    "url": "/glossary/idioms/ace"
+  },
+  {
+    "id": "active-spin",
+    "title": "Active Spin",
+    "url": "/glossary/statcast/active-spin"
+  },
+  {
+    "id": "earned-run-average-plus",
+    "title": "Adjusted Earned Run Average",
+    "url": "/glossary/advanced-stats/earned-run-average-plus"
+  },
+  {
+    "id": "all-star-ballot",
+    "title": "All-Star Ballot",
+    "url": "/glossary/miscellaneous/all-star-ballot"
+  },
+  {
+    "id": "ambidextrous-pitchers",
+    "title": "Ambidextrous Pitchers",
+    "url": "/glossary/rules/ambidextrous-pitchers"
+  },
+  {
+    "id": "appeal-plays",
+    "title": "Appeal Plays",
+    "url": "/glossary/rules/appeal-plays"
+  },
+  {
+    "id": "appearance",
+    "title": "Appearance",
+    "url": "/glossary/standard-stats/appearance"
+  },
+  {
+    "id": "arm-strength",
+    "title": "Arm Strength",
+    "url": "/glossary/statcast/arm-strength"
+  },
+  {
+    "id": "around-the-horn",
+    "title": "Around-the-horn",
+    "url": "/glossary/idioms/around-the-horn"
+  },
+  {
+    "id": "assist",
+    "title": "Assist",
+    "url": "/glossary/standard-stats/assist"
+  },
+  {
+    "id": "at-bat",
+    "title": "At-bat",
+    "url": "/glossary/standard-stats/at-bat"
+  },
+  {
+    "id": "balk",
+    "title": "Balk",
+    "url": "/glossary/standard-stats/balk"
+  },
+  {
+    "id": "balk",
+    "title": "Balk",
+    "url": "/glossary/rules/balk"
+  },
+  {
+    "id": "park-factor",
+    "title": "Ballpark Factor",
+    "url": "/glossary/advanced-stats/park-factor"
+  },
+  {
+    "id": "baltimore-chop",
+    "title": "Baltimore Chop",
+    "url": "/glossary/idioms/baltimore-chop"
+  },
+  {
+    "id": "barrel",
+    "title": "Barrel",
+    "url": "/glossary/statcast/barrel"
+  },
+  {
+    "id": "base-sizes",
+    "title": "Base Sizes",
+    "url": "/glossary/rules/base-sizes"
+  },
+  {
+    "id": "baseball-age",
+    "title": "Baseball Age",
+    "url": "/glossary/miscellaneous/baseball-age"
+  },
+  {
+    "id": "baserunner",
+    "title": "Baserunner",
+    "url": "/glossary/positions/baserunner"
+  },
+  {
+    "id": "baserunners-per-nine-innings-pitched",
+    "title": "Baserunners Per Nine Innings Pitched",
+    "url": "/glossary/advanced-stats/baserunners-per-nine-innings-pitched"
+  },
+  {
+    "id": "baserunning",
+    "title": "Baserunning",
+    "url": "/glossary/statcast/baserunning"
+  },
+  {
+    "id": "batted-ball-event",
+    "title": "Batted Ball Event",
+    "url": "/glossary/statcast/batted-ball-event"
+  },
+  {
+    "id": "batter",
+    "title": "Batter",
+    "url": "/glossary/positions/batter"
+  },
+  {
+    "id": "batters-box",
+    "title": "Batter's Box",
+    "url": "/glossary/rules/batters-box"
+  },
+  {
+    "id": "batters-faced",
+    "title": "Batters Faced",
+    "url": "/glossary/standard-stats/batters-faced"
+  },
+  {
+    "id": "batting-average",
+    "title": "Batting Average",
+    "url": "/glossary/standard-stats/batting-average"
+  },
+  {
+    "id": "babip",
+    "title": "Batting Average on Balls in Play",
+    "url": "/glossary/advanced-stats/babip"
+  },
+  {
+    "id": "batting-out-of-turn",
+    "title": "Batting Out of Turn",
+    "url": "/glossary/rules/batting-out-of-turn"
+  },
+  {
+    "id": "bench-coach",
+    "title": "Bench Coach",
+    "url": "/glossary/positions/bench-coach"
+  },
+  {
+    "id": "bequeathed-runners",
+    "title": "Bequeathed Runners",
+    "url": "/glossary/advanced-stats/bequeathed-runners"
+  },
+  {
+    "id": "bequeathed-runners-scored",
+    "title": "Bequeathed Runners Scored",
+    "url": "/glossary/advanced-stats/bequeathed-runners-scored"
+  },
+  {
+    "id": "bat-tracking-blasts",
+    "title": "Blasts",
+    "url": "/glossary/statcast/bat-tracking-blasts"
+  },
+  {
+    "id": "blown-save",
+    "title": "Blown Save",
+    "url": "/glossary/standard-stats/blown-save"
+  },
+  {
+    "id": "bolt",
+    "title": "Bolt",
+    "url": "/glossary/statcast/bolt"
+  },
+  {
+    "id": "bone-bruise",
+    "title": "Bone Bruise",
+    "url": "/glossary/injuries/bone-bruise"
+  },
+  {
+    "id": "bullpen-coach",
+    "title": "Bullpen Coach",
+    "url": "/glossary/positions/bullpen-coach"
+  },
+  {
+    "id": "bursitis-and-shoulder-bursitis",
+    "title": "Bursitis/Shoulder Bursitis",
+    "url": "/glossary/injuries/bursitis-and-shoulder-bursitis"
+  },
+  {
+    "id": "bush-league",
+    "title": "Bush League",
+    "url": "/glossary/idioms/bush-league"
+  },
+  {
+    "id": "butcher-boy",
+    "title": "Butcher Boy",
+    "url": "/glossary/idioms/butcher-boy"
+  },
+  {
+    "id": "can-of-corn",
+    "title": "Can of Corn",
+    "url": "/glossary/idioms/can-of-corn"
+  },
+  {
+    "id": "catch-probability",
+    "title": "Catch Probability",
+    "url": "/glossary/statcast/catch-probability"
+  },
+  {
+    "id": "catcher",
+    "title": "Catcher",
+    "url": "/glossary/positions/catcher"
+  },
+  {
+    "id": "catcher-framing",
+    "title": "Catcher Framing",
+    "url": "/glossary/statcast/catcher-framing"
+  },
+  {
+    "id": "catcher-interference",
+    "title": "Catcher Interference",
+    "url": "/glossary/rules/catcher-interference"
+  },
+  {
+    "id": "caught-stealing",
+    "title": "Caught Stealing",
+    "url": "/glossary/standard-stats/caught-stealing"
+  },
+  {
+    "id": "caught-stealing-percentage",
+    "title": "Caught Stealing Percentage",
+    "url": "/glossary/standard-stats/caught-stealing-percentage"
+  },
+  {
+    "id": "cellar",
+    "title": "Cellar",
+    "url": "/glossary/idioms/cellar"
+  },
+  {
+    "id": "center-fielder",
+    "title": "Center Fielder",
+    "url": "/glossary/positions/center-fielder"
+  },
+  {
+    "id": "changeup",
+    "title": "Changeup",
+    "url": "/glossary/pitch-types/changeup"
+  },
+  {
+    "id": "chin-music",
+    "title": "Chin Music",
+    "url": "/glossary/idioms/chin-music"
+  },
+  {
+    "id": "closer",
+    "title": "Closer",
+    "url": "/glossary/positions/closer"
+  },
+  {
+    "id": "club-option",
+    "title": "Club Option",
+    "url": "/glossary/transactions/club-option"
+  },
+  {
+    "id": "coach-interference",
+    "title": "Coach Interference",
+    "url": "/glossary/rules/coach-interference"
+  },
+  {
+    "id": "collisions-at-home-plate",
+    "title": "Collisions at Home Plate",
+    "url": "/glossary/rules/collisions-at-home-plate"
+  },
+  {
+    "id": "competitive-balance-draft-picks",
+    "title": "Competitive Balance Draft Picks",
+    "url": "/glossary/transactions/competitive-balance-draft-picks"
+  },
+  {
+    "id": "competitive-balance-tax",
+    "title": "Competitive Balance Tax",
+    "url": "/glossary/transactions/competitive-balance-tax"
+  },
+  {
+    "id": "complete-game",
+    "title": "Complete Game",
+    "url": "/glossary/standard-stats/complete-game"
+  },
+  {
+    "id": "contract-renewal",
+    "title": "Contract Renewal",
+    "url": "/glossary/transactions/contract-renewal"
+  },
+  {
+    "id": "contract-tendered",
+    "title": "Contract Tendered",
+    "url": "/glossary/transactions/contract-tendered"
+  },
+  {
+    "id": "curveball",
+    "title": "Curveball",
+    "url": "/glossary/pitch-types/curveball"
+  },
+  {
+    "id": "cutter",
+    "title": "Cutter",
+    "url": "/glossary/pitch-types/cutter"
+  },
+  {
+    "id": "dead-ball",
+    "title": "Dead Ball",
+    "url": "/glossary/rules/dead-ball"
+  },
+  {
+    "id": "defensive-efficiency-ratio",
+    "title": "Defensive Efficiency Ratio",
+    "url": "/glossary/advanced-stats/defensive-efficiency-ratio"
+  },
+  {
+    "id": "defensive-runs-saved",
+    "title": "Defensive Runs Saved",
+    "url": "/glossary/advanced-stats/defensive-runs-saved"
+  },
+  {
+    "id": "defensive-shift-limits",
+    "title": "Defensive Shift Limits",
+    "url": "/glossary/rules/defensive-shift-limits"
+  },
+  {
+    "id": "designate-for-assignment",
+    "title": "Designate for Assignment",
+    "url": "/glossary/transactions/designate-for-assignment"
+  },
+  {
+    "id": "designated-hitter",
+    "title": "Designated Hitter",
+    "url": "/glossary/positions/designated-hitter"
+  },
+  {
+    "id": "designated-hitter-rule",
+    "title": "Designated Hitter Rule",
+    "url": "/glossary/rules/designated-hitter-rule"
+  },
+  {
+    "id": "designated-runner",
+    "title": "Designated Runner",
+    "url": "/glossary/rules/designated-runner"
+  },
+  {
+    "id": "distance-covered",
+    "title": "Distance Covered",
+    "url": "/glossary/statcast/distance-covered"
+  },
+  {
+    "id": "doctoring-the-baseball",
+    "title": "Doctoring the Baseball",
+    "url": "/glossary/rules/doctoring-the-baseball"
+  },
+  {
+    "id": "double",
+    "title": "Double",
+    "url": "/glossary/standard-stats/double"
+  },
+  {
+    "id": "double-play",
+    "title": "Double Play",
+    "url": "/glossary/standard-stats/double-play"
+  },
+  {
+    "id": "earned-run",
+    "title": "Earned Run",
+    "url": "/glossary/standard-stats/earned-run"
+  },
+  {
+    "id": "earned-run-average",
+    "title": "Earned Run Average",
+    "url": "/glossary/standard-stats/earned-run-average"
+  },
+  {
+    "id": "eephus",
+    "title": "Eephus",
+    "url": "/glossary/pitch-types/eephus"
+  },
+  {
+    "id": "error",
+    "title": "Error",
+    "url": "/glossary/standard-stats/error"
+  },
+  {
+    "id": "exit-velocity",
+    "title": "Exit Velocity",
+    "url": "/glossary/statcast/exit-velocity"
+  },
+  {
+    "id": "expected-batting-average",
+    "title": "Expected Batting Average",
+    "url": "/glossary/statcast/expected-batting-average"
+  },
+  {
+    "id": "expected-era",
+    "title": "Expected ERA",
+    "url": "/glossary/statcast/expected-era"
+  },
+  {
+    "id": "expected-fielding-independent-pitching",
+    "title": "Expected Fielding Independent Pitching",
+    "url": "/glossary/advanced-stats/expected-fielding-independent-pitching"
+  },
+  {
+    "id": "expected-slugging-percentage",
+    "title": "Expected Slugging Percentage",
+    "url": "/glossary/statcast/expected-slugging-percentage"
+  },
+  {
+    "id": "expected-woba",
+    "title": "Expected Weighted On-base Average",
+    "url": "/glossary/statcast/expected-woba"
+  },
+  {
+    "id": "extension",
+    "title": "Extension",
+    "url": "/glossary/statcast/extension"
+  },
+  {
+    "id": "extra-base-hit",
+    "title": "Extra-base Hit",
+    "url": "/glossary/standard-stats/extra-base-hit"
+  },
+  {
+    "id": "fair-ball",
+    "title": "Fair Ball",
+    "url": "/glossary/rules/fair-ball"
+  },
+  {
+    "id": "fast-swing-rate",
+    "title": "Fast-swing Rate",
+    "url": "/glossary/statcast/fast-swing-rate"
+  },
+  {
+    "id": "field-dimensions",
+    "title": "Field Dimensions",
+    "url": "/glossary/rules/field-dimensions"
+  },
+  {
+    "id": "fielder-right-of-way",
+    "title": "Fielder Right of Way",
+    "url": "/glossary/rules/fielder-right-of-way"
+  },
+  {
+    "id": "fielding-independent-pitching",
+    "title": "Fielding Independent Pitching",
+    "url": "/glossary/advanced-stats/fielding-independent-pitching"
+  },
+  {
+    "id": "fielding-percentage",
+    "title": "Fielding Percentage",
+    "url": "/glossary/standard-stats/fielding-percentage"
+  },
+  {
+    "id": "fielding-run-value",
+    "title": "Fielding Run Value",
+    "url": "/glossary/statcast/fielding-run-value"
+  },
+  {
+    "id": "first-baseman",
+    "title": "First Baseman",
+    "url": "/glossary/positions/first-baseman"
+  },
+  {
+    "id": "first-base-coach",
+    "title": "First-base Coach",
+    "url": "/glossary/positions/first-base-coach"
+  },
+  {
+    "id": "fly-ball-rate",
+    "title": "Fly-ball Rate",
+    "url": "/glossary/advanced-stats/fly-ball-rate"
+  },
+  {
+    "id": "flyout",
+    "title": "Flyout",
+    "url": "/glossary/standard-stats/flyout"
+  },
+  {
+    "id": "force-play",
+    "title": "Force Play",
+    "url": "/glossary/rules/force-play"
+  },
+  {
+    "id": "forearm-flexor-tendinitis",
+    "title": "Forearm Flexor Tendinitis",
+    "url": "/glossary/injuries/forearm-flexor-tendinitis"
+  },
+  {
+    "id": "forkball",
+    "title": "Forkball",
+    "url": "/glossary/pitch-types/forkball"
+  },
+  {
+    "id": "foul-ball",
+    "title": "Foul Ball",
+    "url": "/glossary/rules/foul-ball"
+  },
+  {
+    "id": "foul-tip",
+    "title": "Foul Tip",
+    "url": "/glossary/rules/foul-tip"
+  },
+  {
+    "id": "four-seam-fastball",
+    "title": "Four-Seam Fastball",
+    "url": "/glossary/pitch-types/four-seam-fastball"
+  },
+  {
+    "id": "free-agency",
+    "title": "Free Agency",
+    "url": "/glossary/transactions/free-agency"
+  },
+  {
+    "id": "game-score",
+    "title": "Game Score",
+    "url": "/glossary/advanced-stats/game-score"
+  },
+  {
+    "id": "games-finished",
+    "title": "Games Finished",
+    "url": "/glossary/standard-stats/games-finished"
+  },
+  {
+    "id": "games-played",
+    "title": "Games Played",
+    "url": "/glossary/standard-stats/games-played"
+  },
+  {
+    "id": "games-started",
+    "title": "Games Started",
+    "url": "/glossary/standard-stats/games-started"
+  },
+  {
+    "id": "general-manager",
+    "title": "General Manager",
+    "url": "/glossary/positions/general-manager"
+  },
+  {
+    "id": "grand-slam",
+    "title": "Grand Slam",
+    "url": "/glossary/standard-stats/grand-slam"
+  },
+  {
+    "id": "ground-into-double-play",
+    "title": "Ground Into Double Play",
+    "url": "/glossary/standard-stats/ground-into-double-play"
+  },
+  {
+    "id": "ground-rules",
+    "title": "Ground Rules",
+    "url": "/glossary/rules/ground-rules"
+  },
+  {
+    "id": "ground-ball-rate",
+    "title": "Ground-ball Rate",
+    "url": "/glossary/advanced-stats/ground-ball-rate"
+  },
+  {
+    "id": "groundout",
+    "title": "Groundout",
+    "url": "/glossary/standard-stats/groundout"
+  },
+  {
+    "id": "groundout-to-airout-ratio",
+    "title": "Groundout-to-Airout Ratio",
+    "url": "/glossary/standard-stats/groundout-to-airout-ratio"
+  },
+  {
+    "id": "guaranteed-contract",
+    "title": "Guaranteed Contract",
+    "url": "/glossary/transactions/guaranteed-contract"
+  },
+  {
+    "id": "hamstring-strain",
+    "title": "Hamstring Strain",
+    "url": "/glossary/injuries/hamstring-strain"
+  },
+  {
+    "id": "hard-hit-rate",
+    "title": "Hard-hit Rate",
+    "url": "/glossary/statcast/hard-hit-rate"
+  },
+  {
+    "id": "hit",
+    "title": "Hit",
+    "url": "/glossary/standard-stats/hit"
+  },
+  {
+    "id": "hit-distance",
+    "title": "Hit Distance",
+    "url": "/glossary/statcast/hit-distance"
+  },
+  {
+    "id": "hit-by-pitch",
+    "title": "Hit-by-pitch",
+    "url": "/glossary/standard-stats/hit-by-pitch"
+  },
+  {
+    "id": "hits-per-nine-innings",
+    "title": "Hits Per Nine Innings",
+    "url": "/glossary/advanced-stats/hits-per-nine-innings"
+  },
+  {
+    "id": "hitting-coach",
+    "title": "Hitting Coach",
+    "url": "/glossary/positions/hitting-coach"
+  },
+  {
+    "id": "hold",
+    "title": "Hold",
+    "url": "/glossary/standard-stats/hold"
+  },
+  {
+    "id": "home-run",
+    "title": "Home Run",
+    "url": "/glossary/standard-stats/home-run"
+  },
+  {
+    "id": "home-run-to-fly-ball-rate",
+    "title": "Home Run To Fly Ball Rate",
+    "url": "/glossary/advanced-stats/home-run-to-fly-ball-rate"
+  },
+  {
+    "id": "home-runs-per-nine-innings",
+    "title": "Home Runs Per Nine Innings",
+    "url": "/glossary/advanced-stats/home-runs-per-nine-innings"
+  },
+  {
+    "id": "home-to-first",
+    "title": "Home To First",
+    "url": "/glossary/statcast/home-to-first"
+  },
+  {
+    "id": "incentive-clause",
+    "title": "Incentive Clause",
+    "url": "/glossary/transactions/incentive-clause"
+  },
+  {
+    "id": "infield-fly",
+    "title": "Infield Fly",
+    "url": "/glossary/rules/infield-fly"
+  },
+  {
+    "id": "inherited-runner",
+    "title": "Inherited Runner",
+    "url": "/glossary/standard-stats/inherited-runner"
+  },
+  {
+    "id": "inherited-runs-allowed",
+    "title": "Inherited Runs Allowed",
+    "url": "/glossary/advanced-stats/inherited-runs-allowed"
+  },
+  {
+    "id": "inherited-runs-allowed-percentage",
+    "title": "Inherited Runs Allowed Percentage",
+    "url": "/glossary/advanced-stats/inherited-runs-allowed-percentage"
+  },
+  {
+    "id": "innings-per-start",
+    "title": "Innings Per Start",
+    "url": "/glossary/advanced-stats/innings-per-start"
+  },
+  {
+    "id": "innings-pitched",
+    "title": "Innings Pitched",
+    "url": "/glossary/standard-stats/innings-pitched"
+  },
+  {
+    "id": "innings-played",
+    "title": "Innings Played",
+    "url": "/glossary/standard-stats/innings-played"
+  },
+  {
+    "id": "intentional-walk",
+    "title": "Intentional Walk",
+    "url": "/glossary/standard-stats/intentional-walk"
+  },
+  {
+    "id": "intercostal-strain",
+    "title": "Intercostal Strain",
+    "url": "/glossary/injuries/intercostal-strain"
+  },
+  {
+    "id": "international-amateur-free-agency-bonus-pool-money",
+    "title": "International Amateur Free Agency & Bonus Pool Money",
+    "url": "/glossary/transactions/international-amateur-free-agency-bonus-pool-money"
+  },
+  {
+    "id": "international-free-agency-asia-professional",
+    "title": "International Free Agency -- Asia",
+    "url": "/glossary/transactions/international-free-agency-asia-professional"
+  },
+  {
+    "id": "international-free-agency-cuba-professional",
+    "title": "International Free Agency -- Cuba",
+    "url": "/glossary/transactions/international-free-agency-cuba-professional"
+  },
+  {
+    "id": "isolated-power",
+    "title": "Isolated Power",
+    "url": "/glossary/advanced-stats/isolated-power"
+  },
+  {
+    "id": "japanese-posting-system",
+    "title": "Japanese Posting System",
+    "url": "/glossary/transactions/japanese-posting-system"
+  },
+  {
+    "id": "jaws",
+    "title": "JAWS",
+    "url": "/glossary/miscellaneous/jaws"
+  },
+  {
+    "id": "jump",
+    "title": "Jump",
+    "url": "/glossary/statcast/jump"
+  },
+  {
+    "id": "k",
+    "title": "K",
+    "url": "/glossary/idioms/k"
+  },
+  {
+    "id": "knuckle-curve",
+    "title": "Knuckle-curve",
+    "url": "/glossary/pitch-types/knuckle-curve"
+  },
+  {
+    "id": "knuckleball",
+    "title": "Knuckleball",
+    "url": "/glossary/pitch-types/knuckleball"
+  },
+  {
+    "id": "korean-posting-system",
+    "title": "Korean Posting System",
+    "url": "/glossary/transactions/korean-posting-system"
+  },
+  {
+    "id": "lat-strain",
+    "title": "Lat Strain",
+    "url": "/glossary/injuries/lat-strain"
+  },
+  {
+    "id": "late-inning-pressure-situations",
+    "title": "Late-inning Pressure Situation",
+    "url": "/glossary/advanced-stats/late-inning-pressure-situations"
+  },
+  {
+    "id": "launch-angle",
+    "title": "Launch Angle",
+    "url": "/glossary/statcast/launch-angle"
+  },
+  {
+    "id": "lead-distance",
+    "title": "Lead Distance",
+    "url": "/glossary/statcast/lead-distance"
+  },
+  {
+    "id": "left-fielder",
+    "title": "Left Fielder",
+    "url": "/glossary/positions/left-fielder"
+  },
+  {
+    "id": "left-on-base",
+    "title": "Left On Base",
+    "url": "/glossary/standard-stats/left-on-base"
+  },
+  {
+    "id": "leverage-index",
+    "title": "Leverage Index",
+    "url": "/glossary/advanced-stats/leverage-index"
+  },
+  {
+    "id": "line-drive-rate",
+    "title": "Line-drive Rate",
+    "url": "/glossary/advanced-stats/line-drive-rate"
+  },
+  {
+    "id": "lisfranc-injury",
+    "title": "Lisfranc Injury",
+    "url": "/glossary/injuries/lisfranc-injury"
+  },
+  {
+    "id": "loss",
+    "title": "Loss",
+    "url": "/glossary/standard-stats/loss"
+  },
+  {
+    "id": "maddux",
+    "title": "Maddux",
+    "url": "/glossary/idioms/maddux"
+  },
+  {
+    "id": "magic-number",
+    "title": "Magic Number",
+    "url": "/glossary/advanced-stats/magic-number"
+  },
+  {
+    "id": "major-league-baseball-logo",
+    "title": "Major League Baseball Logo",
+    "url": "/glossary/miscellaneous/major-league-baseball-logo"
+  },
+  {
+    "id": "manager",
+    "title": "Manager",
+    "url": "/glossary/positions/manager"
+  },
+  {
+    "id": "manager-challenge",
+    "title": "Manager Challenge",
+    "url": "/glossary/rules/manager-challenge"
+  },
+  {
+    "id": "marcel-the-monkey-forecasting-system",
+    "title": "Marcel the Monkey Forecasting System",
+    "url": "/glossary/projection-systems/marcel-the-monkey-forecasting-system"
+  },
+  {
+    "id": "mendoza-line",
+    "title": "Mendoza Line",
+    "url": "/glossary/idioms/mendoza-line"
+  },
+  {
+    "id": "minor-league-options",
+    "title": "Minor League Options",
+    "url": "/glossary/transactions/minor-league-options"
+  },
+  {
+    "id": "mound-visit",
+    "title": "Mound Visit",
+    "url": "/glossary/rules/mound-visit"
+  },
+  {
+    "id": "mutual-option",
+    "title": "Mutual Option",
+    "url": "/glossary/transactions/mutual-option"
+  },
+  {
+    "id": "neighborhood-play",
+    "title": "Neighborhood Play",
+    "url": "/glossary/rules/neighborhood-play"
+  },
+  {
+    "id": "no-trade-clause",
+    "title": "No-trade Clause",
+    "url": "/glossary/transactions/no-trade-clause"
+  },
+  {
+    "id": "non-guaranteed-contract",
+    "title": "Non-guaranteed Contract",
+    "url": "/glossary/transactions/non-guaranteed-contract"
+  },
+  {
+    "id": "non-roster-invite",
+    "title": "Non-roster Invite",
+    "url": "/glossary/transactions/non-roster-invite"
+  },
+  {
+    "id": "non-tendered",
+    "title": "Non-tendered",
+    "url": "/glossary/transactions/non-tendered"
+  },
+  {
+    "id": "number-of-pitches",
+    "title": "Number of Pitches",
+    "url": "/glossary/standard-stats/number-of-pitches"
+  },
+  {
+    "id": "oblique-strain",
+    "title": "Oblique Strain",
+    "url": "/glossary/injuries/oblique-strain"
+  },
+  {
+    "id": "obstruction",
+    "title": "Obstruction",
+    "url": "/glossary/rules/obstruction"
+  },
+  {
+    "id": "official-scorer",
+    "title": "Official Scorer",
+    "url": "/glossary/rules/official-scorer"
+  },
+  {
+    "id": "oliver",
+    "title": "Oliver",
+    "url": "/glossary/projection-systems/oliver"
+  },
+  {
+    "id": "on-base-percentage",
+    "title": "On-base Percentage",
+    "url": "/glossary/standard-stats/on-base-percentage"
+  },
+  {
+    "id": "on-base-plus-slugging",
+    "title": "On-base Plus Slugging",
+    "url": "/glossary/standard-stats/on-base-plus-slugging"
+  },
+  {
+    "id": "on-base-plus-slugging-plus",
+    "title": "On-base Plus Slugging Plus",
+    "url": "/glossary/advanced-stats/on-base-plus-slugging-plus"
+  },
+  {
+    "id": "opener",
+    "title": "Opener",
+    "url": "/glossary/idioms/opener"
+  },
+  {
+    "id": "ordinary-effort",
+    "title": "Ordinary Effort",
+    "url": "/glossary/rules/ordinary-effort"
+  },
+  {
+    "id": "out",
+    "title": "Out",
+    "url": "/glossary/standard-stats/out"
+  },
+  {
+    "id": "outfield-assist",
+    "title": "Outfield Assist",
+    "url": "/glossary/standard-stats/outfield-assist"
+  },
+  {
+    "id": "outright-waivers",
+    "title": "Outright Waivers",
+    "url": "/glossary/transactions/outright-waivers"
+  },
+  {
+    "id": "outs-above-average",
+    "title": "Outs Above Average",
+    "url": "/glossary/statcast/outs-above-average"
+  },
+  {
+    "id": "pace-of-play",
+    "title": "Pace of Play",
+    "url": "/glossary/rules/pace-of-play"
+  },
+  {
+    "id": "painting-the-black",
+    "title": "Painting the Black",
+    "url": "/glossary/idioms/painting-the-black"
+  },
+  {
+    "id": "partner-leagues",
+    "title": "Partner Leagues",
+    "url": "/glossary/miscellaneous/partner-leagues"
+  },
+  {
+    "id": "passed-ball",
+    "title": "Passed Ball",
+    "url": "/glossary/standard-stats/passed-ball"
+  },
+  {
+    "id": "perceived-velocity",
+    "title": "Perceived Velocity",
+    "url": "/glossary/statcast/perceived-velocity"
+  },
+  {
+    "id": "pickle",
+    "title": "Pickle",
+    "url": "/glossary/idioms/pickle"
+  },
+  {
+    "id": "pickoff",
+    "title": "Pickoff",
+    "url": "/glossary/standard-stats/pickoff"
+  },
+  {
+    "id": "pitch-movement",
+    "title": "Pitch Movement",
+    "url": "/glossary/statcast/pitch-movement"
+  },
+  {
+    "id": "pitch-tempo",
+    "title": "Pitch Tempo",
+    "url": "/glossary/statcast/pitch-tempo"
+  },
+  {
+    "id": "pitch-timer",
+    "title": "Pitch Timer",
+    "url": "/glossary/rules/pitch-timer"
+  },
+  {
+    "id": "pitches-per-inning-pitched",
+    "title": "Pitches Per Inning Pitched",
+    "url": "/glossary/advanced-stats/pitches-per-inning-pitched"
+  },
+  {
+    "id": "pitches-per-plate-appearance",
+    "title": "Pitches Per Plate Appearance",
+    "url": "/glossary/advanced-stats/pitches-per-plate-appearance"
+  },
+  {
+    "id": "pitches-per-start",
+    "title": "Pitches Per Start",
+    "url": "/glossary/advanced-stats/pitches-per-start"
+  },
+  {
+    "id": "pitching-coach",
+    "title": "Pitching Coach",
+    "url": "/glossary/positions/pitching-coach"
+  },
+  {
+    "id": "plantar-fasciitis",
+    "title": "Plantar Fasciitis",
+    "url": "/glossary/injuries/plantar-fasciitis"
+  },
+  {
+    "id": "plate-appearance",
+    "title": "Plate Appearance",
+    "url": "/glossary/standard-stats/plate-appearance"
+  },
+  {
+    "id": "plate-appearances-per-strikeout",
+    "title": "Plate Appearances Per Strikeout",
+    "url": "/glossary/advanced-stats/plate-appearances-per-strikeout"
+  },
+  {
+    "id": "player-empirical-comparison-and-optimization-test-algorithm",
+    "title": "Player Empirical Comparison and Optimization Test Algorithm",
+    "url": "/glossary/projection-systems/player-empirical-comparison-and-optimization-test-algorithm"
+  },
+  {
+    "id": "player-option",
+    "title": "Player Option",
+    "url": "/glossary/transactions/player-option"
+  },
+  {
+    "id": "player-to-be-named-later",
+    "title": "Player to Be Named Later",
+    "url": "/glossary/transactions/player-to-be-named-later"
+  },
+  {
+    "id": "pop-time",
+    "title": "Pop Time",
+    "url": "/glossary/statcast/pop-time"
+  },
+  {
+    "id": "pop-up-rate",
+    "title": "Pop-up Rate",
+    "url": "/glossary/advanced-stats/pop-up-rate"
+  },
+  {
+    "id": "postseason-roster-rules-eligibility",
+    "title": "Postseason Roster Rules & Eligibility",
+    "url": "/glossary/transactions/postseason-roster-rules-eligibility"
+  },
+  {
+    "id": "postseason-share",
+    "title": "Postseason Share",
+    "url": "/glossary/miscellaneous/postseason-share"
+  },
+  {
+    "id": "projected-home-run-distance",
+    "title": "Projected Home Run Distance",
+    "url": "/glossary/statcast/projected-home-run-distance"
+  },
+  {
+    "id": "protested-game",
+    "title": "Protested Game",
+    "url": "/glossary/rules/protested-game"
+  },
+  {
+    "id": "putaway-percentage",
+    "title": "Putaway Percentage",
+    "url": "/glossary/statcast/putaway-percentage"
+  },
+  {
+    "id": "putout",
+    "title": "Putout",
+    "url": "/glossary/standard-stats/putout"
+  },
+  {
+    "id": "pythagorean-winning-percentage",
+    "title": "Pythagorean Winning Percentage",
+    "url": "/glossary/advanced-stats/pythagorean-winning-percentage"
+  },
+  {
+    "id": "qualifying-offer",
+    "title": "Qualifying Offer",
+    "url": "/glossary/transactions/qualifying-offer"
+  },
+  {
+    "id": "quality-start",
+    "title": "Quality Start",
+    "url": "/glossary/standard-stats/quality-start"
+  },
+  {
+    "id": "range-factor",
+    "title": "Range Factor",
+    "url": "/glossary/advanced-stats/range-factor"
+  },
+  {
+    "id": "rate-stats-qualifiers",
+    "title": "Rate Stats Qualifiers",
+    "url": "/glossary/standard-stats/rate-stats-qualifiers"
+  },
+  {
+    "id": "rate-stats-qualifiers",
+    "title": "Rate Stats Qualifiers",
+    "url": "/glossary/standard-stats/rate-stats-qualifiers"
+  },
+  {
+    "id": "reached-on-error",
+    "title": "Reached On Error",
+    "url": "/glossary/standard-stats/reached-on-error"
+  },
+  {
+    "id": "regulation-game",
+    "title": "Regulation Game",
+    "url": "/glossary/rules/regulation-game"
+  },
+  {
+    "id": "release-waivers",
+    "title": "Release Waivers",
+    "url": "/glossary/transactions/release-waivers"
+  },
+  {
+    "id": "relief-pitcher",
+    "title": "Relief Pitcher",
+    "url": "/glossary/positions/relief-pitcher"
+  },
+  {
+    "id": "relief-win",
+    "title": "Relief Win",
+    "url": "/glossary/standard-stats/relief-win"
+  },
+  {
+    "id": "replay-review",
+    "title": "Replay Review",
+    "url": "/glossary/rules/replay-review"
+  },
+  {
+    "id": "retention-bonus",
+    "title": "Retention Bonus (Article XX(B) Free Agents)",
+    "url": "/glossary/transactions/retention-bonus"
+  },
+  {
+    "id": "right-fielder",
+    "title": "Right Fielder",
+    "url": "/glossary/positions/right-fielder"
+  },
+  {
+    "id": "rookie-eligibility",
+    "title": "Rookie Eligibility",
+    "url": "/glossary/rules/rookie-eligibility"
+  },
+  {
+    "id": "rule-4-draft",
+    "title": "Rule 4 Draft",
+    "url": "/glossary/transactions/rule-4-draft"
+  },
+  {
+    "id": "rule-5-draft",
+    "title": "Rule 5 Draft",
+    "url": "/glossary/transactions/rule-5-draft"
+  },
+  {
+    "id": "run",
+    "title": "Run",
+    "url": "/glossary/standard-stats/run"
+  },
+  {
+    "id": "run-differential",
+    "title": "Run Differential",
+    "url": "/glossary/standard-stats/run-differential"
+  },
+  {
+    "id": "run-support-per-nine-innings",
+    "title": "Run Support Per Nine Innings",
+    "url": "/glossary/advanced-stats/run-support-per-nine-innings"
+  },
+  {
+    "id": "runs-allowed-per-nine-innings-pitched",
+    "title": "Runs Allowed Per Nine Innings Pitched",
+    "url": "/glossary/advanced-stats/runs-allowed-per-nine-innings-pitched"
+  },
+  {
+    "id": "runs-batted-in",
+    "title": "Runs Batted In",
+    "url": "/glossary/standard-stats/runs-batted-in"
+  },
+  {
+    "id": "runs-created",
+    "title": "Runs Created",
+    "url": "/glossary/advanced-stats/runs-created"
+  },
+  {
+    "id": "sacrifice-bunt",
+    "title": "Sacrifice Bunt",
+    "url": "/glossary/standard-stats/sacrifice-bunt"
+  },
+  {
+    "id": "sacrifice-fly",
+    "title": "Sacrifice Fly",
+    "url": "/glossary/standard-stats/sacrifice-fly"
+  },
+  {
+    "id": "salary-arbitration",
+    "title": "Salary Arbitration",
+    "url": "/glossary/transactions/salary-arbitration"
+  },
+  {
+    "id": "save",
+    "title": "Save",
+    "url": "/glossary/standard-stats/save"
+  },
+  {
+    "id": "save-opportunity",
+    "title": "Save Opportunity",
+    "url": "/glossary/standard-stats/save-opportunity"
+  },
+  {
+    "id": "save-percentage",
+    "title": "Save Percentage",
+    "url": "/glossary/standard-stats/save-percentage"
+  },
+  {
+    "id": "scorekeeping",
+    "title": "Scorekeeping",
+    "url": "/glossary/miscellaneous/scorekeeping"
+  },
+  {
+    "id": "scouting-grades",
+    "title": "Scouting Grades",
+    "url": "/glossary/miscellaneous/scouting-grades"
+  },
+  {
+    "id": "screwball",
+    "title": "Screwball",
+    "url": "/glossary/pitch-types/screwball"
+  },
+  {
+    "id": "second-baseman",
+    "title": "Second Baseman",
+    "url": "/glossary/positions/second-baseman"
+  },
+  {
+    "id": "seeing-eye-single",
+    "title": "Seeing-eye Single",
+    "url": "/glossary/idioms/seeing-eye-single"
+  },
+  {
+    "id": "service-time",
+    "title": "Service Time",
+    "url": "/glossary/transactions/service-time"
+  },
+  {
+    "id": "set-position",
+    "title": "Set Position",
+    "url": "/glossary/rules/set-position"
+  },
+  {
+    "id": "shifts",
+    "title": "Shifts",
+    "url": "/glossary/statcast/shifts"
+  },
+  {
+    "id": "shortstop",
+    "title": "Shortstop",
+    "url": "/glossary/positions/shortstop"
+  },
+  {
+    "id": "shutout",
+    "title": "Shutout",
+    "url": "/glossary/standard-stats/shutout"
+  },
+  {
+    "id": "single",
+    "title": "Single",
+    "url": "/glossary/standard-stats/single"
+  },
+  {
+    "id": "sinker",
+    "title": "Sinker",
+    "url": "/glossary/pitch-types/sinker"
+  },
+  {
+    "id": "skill-interactive-earned-run-average",
+    "title": "Skill-interactive Earned Run Average",
+    "url": "/glossary/advanced-stats/skill-interactive-earned-run-average"
+  },
+  {
+    "id": "slash-line",
+    "title": "Slash Line",
+    "url": "/glossary/miscellaneous/slash-line"
+  },
+  {
+    "id": "slide-rule",
+    "title": "Slide Rule",
+    "url": "/glossary/rules/slide-rule"
+  },
+  {
+    "id": "slider",
+    "title": "Slider",
+    "url": "/glossary/pitch-types/slider"
+  },
+  {
+    "id": "slugging-percentage",
+    "title": "Slugging Percentage",
+    "url": "/glossary/standard-stats/slugging-percentage"
+  },
+  {
+    "id": "slurve",
+    "title": "Slurve",
+    "url": "/glossary/pitch-types/slurve"
+  },
+  {
+    "id": "southpaw",
+    "title": "Southpaw",
+    "url": "/glossary/idioms/southpaw"
+  },
+  {
+    "id": "spectator-interference",
+    "title": "Spectator Interference",
+    "url": "/glossary/rules/spectator-interference"
+  },
+  {
+    "id": "spin-rate",
+    "title": "Spin Rate",
+    "url": "/glossary/statcast/spin-rate"
+  },
+  {
+    "id": "split-contract",
+    "title": "Split Contract",
+    "url": "/glossary/transactions/split-contract"
+  },
+  {
+    "id": "splitter",
+    "title": "Splitter",
+    "url": "/glossary/pitch-types/splitter"
+  },
+  {
+    "id": "sprint-speed",
+    "title": "Sprint Speed",
+    "url": "/glossary/statcast/sprint-speed"
+  },
+  {
+    "id": "squared-up",
+    "title": "Squared-up Rate",
+    "url": "/glossary/statcast/squared-up"
+  },
+  {
+    "id": "starting-pitcher",
+    "title": "Starting Pitcher",
+    "url": "/glossary/positions/starting-pitcher"
+  },
+  {
+    "id": "steamer",
+    "title": "Steamer",
+    "url": "/glossary/projection-systems/steamer"
+  },
+  {
+    "id": "stolen-base",
+    "title": "Stolen Base",
+    "url": "/glossary/standard-stats/stolen-base"
+  },
+  {
+    "id": "stolen-base-percentage",
+    "title": "Stolen-base Percentage",
+    "url": "/glossary/standard-stats/stolen-base-percentage"
+  },
+  {
+    "id": "strike-zone",
+    "title": "Strike Zone",
+    "url": "/glossary/rules/strike-zone"
+  },
+  {
+    "id": "strikeout",
+    "title": "Strikeout",
+    "url": "/glossary/standard-stats/strikeout"
+  },
+  {
+    "id": "strikeout-rate",
+    "title": "Strikeout Rate",
+    "url": "/glossary/advanced-stats/strikeout-rate"
+  },
+  {
+    "id": "strikeout-to-walk-ratio",
+    "title": "Strikeout-to-walk Ratio",
+    "url": "/glossary/advanced-stats/strikeout-to-walk-ratio"
+  },
+  {
+    "id": "strikeouts-per-nine-innings",
+    "title": "Strikeouts Per Nine Innings",
+    "url": "/glossary/advanced-stats/strikeouts-per-nine-innings"
+  },
+  {
+    "id": "substitutions",
+    "title": "Substitutions",
+    "url": "/glossary/rules/substitutions"
+  },
+  {
+    "id": "super-two",
+    "title": "Super Two",
+    "url": "/glossary/transactions/super-two"
+  },
+  {
+    "id": "suspended-game",
+    "title": "Suspended Game",
+    "url": "/glossary/rules/suspended-game"
+  },
+  {
+    "id": "sweeper",
+    "title": "Sweeper",
+    "url": "/glossary/pitch-types/sweeper"
+  },
+  {
+    "id": "sweet-spot",
+    "title": "Sweet Spot",
+    "url": "/glossary/statcast/sweet-spot"
+  },
+  {
+    "id": "swing-length",
+    "title": "Swing Length",
+    "url": "/glossary/statcast/swing-length"
+  },
+  {
+    "id": "sword",
+    "title": "Swords",
+    "url": "/glossary/statcast/sword"
+  },
+  {
+    "id": "szymborski-projection-system",
+    "title": "sZymborski Projection System",
+    "url": "/glossary/projection-systems/szymborski-projection-system"
+  },
+  {
+    "id": "texas-leaguer",
+    "title": "Texas Leaguer",
+    "url": "/glossary/idioms/texas-leaguer"
+  },
+  {
+    "id": "the-hot-stove",
+    "title": "The Hot Stove",
+    "url": "/glossary/idioms/the-hot-stove"
+  },
+  {
+    "id": "third-baseman",
+    "title": "Third Baseman",
+    "url": "/glossary/positions/third-baseman"
+  },
+  {
+    "id": "third-base-coach",
+    "title": "Third-base Coach",
+    "url": "/glossary/positions/third-base-coach"
+  },
+  {
+    "id": "thoracic-outlet-syndrome",
+    "title": "Thoracic Outlet Syndrome",
+    "url": "/glossary/injuries/thoracic-outlet-syndrome"
+  },
+  {
+    "id": "three-true-outcomes",
+    "title": "Three True Outcomes",
+    "url": "/glossary/idioms/three-true-outcomes"
+  },
+  {
+    "id": "three-batter-minimum",
+    "title": "Three-batter Minimum",
+    "url": "/glossary/rules/three-batter-minimum"
+  },
+  {
+    "id": "baserunning",
+    "title": "Throwing Value",
+    "url": "/glossary/statcast/baserunning"
+  },
+  {
+    "id": "tommy-john-surgery",
+    "title": "Tommy John Surgery",
+    "url": "/glossary/injuries/tommy-john-surgery"
+  },
+  {
+    "id": "tools-of-ignorance",
+    "title": "Tools of Ignorance",
+    "url": "/glossary/idioms/tools-of-ignorance"
+  },
+  {
+    "id": "tootblan",
+    "title": "TOOTBLAN",
+    "url": "/glossary/idioms/tootblan"
+  },
+  {
+    "id": "total-bases",
+    "title": "Total Bases",
+    "url": "/glossary/standard-stats/total-bases"
+  },
+  {
+    "id": "total-chances",
+    "title": "Total Chances",
+    "url": "/glossary/standard-stats/total-chances"
+  },
+  {
+    "id": "trade-deadline",
+    "title": "Trade Deadline",
+    "url": "/glossary/transactions/trade-deadline"
+  },
+  {
+    "id": "trade-waivers-aug-31-deadline",
+    "title": "Trade Waivers & Aug. 31 'Deadline'",
+    "url": "/glossary/transactions/trade-waivers-aug-31-deadline"
+  },
+  {
+    "id": "triple",
+    "title": "Triple",
+    "url": "/glossary/standard-stats/triple"
+  },
+  {
+    "id": "triple-play",
+    "title": "Triple Play",
+    "url": "/glossary/standard-stats/triple-play"
+  },
+  {
+    "id": "true-earned-run-average",
+    "title": "True Earned Run Average",
+    "url": "/glossary/advanced-stats/true-earned-run-average"
+  },
+  {
+    "id": "two-way-players",
+    "title": "Two-way Players",
+    "url": "/glossary/rules/two-way-players"
+  },
+  {
+    "id": "ultimate-zone-rating",
+    "title": "Ultimate Zone Rating",
+    "url": "/glossary/advanced-stats/ultimate-zone-rating"
+  },
+  {
+    "id": "umpire",
+    "title": "Umpire",
+    "url": "/glossary/rules/umpire"
+  },
+  {
+    "id": "unearned-run",
+    "title": "Unearned Run",
+    "url": "/glossary/standard-stats/unearned-run"
+  },
+  {
+    "id": "velocity",
+    "title": "Velocity",
+    "url": "/glossary/statcast/velocity"
+  },
+  {
+    "id": "vesting-option",
+    "title": "Vesting Option",
+    "url": "/glossary/transactions/vesting-option"
+  },
+  {
+    "id": "walk",
+    "title": "Walk",
+    "url": "/glossary/standard-stats/walk"
+  },
+  {
+    "id": "walk-rate",
+    "title": "Walk Rate",
+    "url": "/glossary/advanced-stats/walk-rate"
+  },
+  {
+    "id": "walk-off",
+    "title": "Walk-off",
+    "url": "/glossary/standard-stats/walk-off"
+  },
+  {
+    "id": "walk-off",
+    "title": "Walk-off",
+    "url": "/glossary/idioms/walk-off"
+  },
+  {
+    "id": "walks-and-hits-per-inning-pitched",
+    "title": "Walks And Hits Per Inning Pitched",
+    "url": "/glossary/standard-stats/walks-and-hits-per-inning-pitched"
+  },
+  {
+    "id": "walks-per-nine-innings",
+    "title": "Walks Per Nine Innings",
+    "url": "/glossary/advanced-stats/walks-per-nine-innings"
+  },
+  {
+    "id": "warmup-pitches",
+    "title": "Warmup Pitches",
+    "url": "/glossary/rules/warmup-pitches"
+  },
+  {
+    "id": "weighted-on-base-average",
+    "title": "Weighted On-base Average",
+    "url": "/glossary/advanced-stats/weighted-on-base-average"
+  },
+  {
+    "id": "weighted-runs-above-average",
+    "title": "Weighted Runs Above Average",
+    "url": "/glossary/advanced-stats/weighted-runs-above-average"
+  },
+  {
+    "id": "weighted-runs-created-plus",
+    "title": "Weighted Runs Created Plus",
+    "url": "/glossary/advanced-stats/weighted-runs-created-plus"
+  },
+  {
+    "id": "wild-pitch",
+    "title": "Wild Pitch",
+    "url": "/glossary/standard-stats/wild-pitch"
+  },
+  {
+    "id": "win",
+    "title": "Win",
+    "url": "/glossary/standard-stats/win"
+  },
+  {
+    "id": "win-expectancy",
+    "title": "Win Expectancy",
+    "url": "/glossary/advanced-stats/win-expectancy"
+  },
+  {
+    "id": "win-probability-added",
+    "title": "Win Probability Added",
+    "url": "/glossary/advanced-stats/win-probability-added"
+  },
+  {
+    "id": "windup-position",
+    "title": "Windup Position",
+    "url": "/glossary/rules/windup-position"
+  },
+  {
+    "id": "winning-percentage",
+    "title": "Winning Percentage",
+    "url": "/glossary/standard-stats/winning-percentage"
+  },
+  {
+    "id": "wins-above-replacement",
+    "title": "Wins Above Replacement",
+    "url": "/glossary/advanced-stats/wins-above-replacement"
+  }
+]
