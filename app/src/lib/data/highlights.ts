@@ -354,15 +354,15 @@ export const sampleHighlights: Highlights = [
 ]
 
 export const samplePlaybackStats = {
-  "count": "0-1",
-  "score": "Blue Jays 4, Rays 1",
+  "count": "No count",
+  "score": "null",
   "stats": {
     "time": null,
     "distance": null,
-    "pitchSpeed": "86 MPH",
+    "pitchSpeed": null,
     "exitVelocity": null
   },
-  "inning": "Bottom of the 3rd",
-  "summary": "Alexander pitches a cutter, Clement makes contact and sends it to deep left field. Arozarena sprints toward the wall and makes the catch before hitting the wall.",
-  "highlight": "With a runner on first base, Clement hits a hard ball to left field. Arozarena, timed the fly ball well and made an amazing catch at the wall, preventing Clement from getting extra bases."
+  "inning": "null",
+  "summary": "This is a pitcher report for Trevor Rogers of the Marlins on Sunday, March 31, 2024. Rogers threw 26 changeups, 25 sinkers, 24 four-seam fastballs, and 22 sliders in the game. He had multiple strikeouts in his pitches, especially in the four-seam fastball. The average speed of his changeup was 86.6 mph and his four-seam fastball was 93.2 mph. 54 pitches were taken by the batter, and 43 pitches were swung at by the batter. The results of the pitches were 39 balls, 28 strikes, 30 hits. The strikes were made of 15 called strikes and 13 swinging strikes. The contact resulted in 14 foul balls, 9 outs, and 7 hits.",
+  "highlight": "This comprehensive view shows the types, speeds, and results of the pitches thrown by Trevor Rogers."
 }
