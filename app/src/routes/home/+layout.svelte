@@ -20,7 +20,7 @@
 </script>
 
 <div class="w-screen h-screen flex flex-col bg-dark-103">
-	<main class={cn('flex-1 overflow-hidden relative pb-[5em]', isSafariMobile && 'pbh-[10em]')}>
+	<main class={cn('flex-1 overflow-hidden relative pb-[4em]', isSafariMobile && 'pbh-[10em]')}>
 		<div class="w-full h-full mx-auto md:max-w-[643px]">
 			<slot />
 		</div>
