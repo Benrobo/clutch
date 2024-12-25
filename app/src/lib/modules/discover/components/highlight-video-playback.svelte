@@ -10,6 +10,7 @@
 	import useViewport from '@/hooks/useViewport';
 	import useDetectDevice from '$lib/hooks/useDetectDevice';
 	import BottomSheet from '@/components/BottomSheet.svelte';
+	import AiButton from '@/components/AIButton.svelte';
 
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
@@ -260,7 +261,57 @@
 		bottomSheetOpen = false;
 		videoElement.play();
 	}}
-/>
+	headline="Play Insights"
+	tagline="Top of the 7th"
+	className="h-auto"
+	showBackdrop={bottomSheetOpen}
+>
+	<div class="p-4 flex flex-col gap-6">
+		<!-- Score & Count -->
+		<div class="flex items-center justify-between bg-dark-103/5 p-3 rounded-lg">
+			<span class="text-dark-100 font-medium">Yankees 3, Red Sox 2</span>
+			<span class="text-dark-100/60">Count: 2-2</span>
+		</div>
+
+		<!-- Pitch Speed -->
+		<div class="bg-dark-103/5 p-3 rounded-lg">
+			<span class="text-dark-100/60 text-sm">Pitch Speed</span>
+			<div class="text-dark-100 font-semibold text-lg">97 MPH</div>
+		</div>
+
+		<!-- Play Description -->
+		<div class="flex flex-col gap-4">
+			<div class="flex flex-col gap-2">
+				<h4 class="text-dark-100 font-medium">Highlight</h4>
+				<p class="text-dark-100 text-lg leading-snug">
+					Judge crushes a towering home run to deep left field, giving the Yankees the lead in a
+					crucial moment.
+				</p>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<h4 class="text-dark-100 font-medium">Play Details</h4>
+				<p class="text-dark-100/80 leading-relaxed">
+					With a runner on first, Aaron Judge steps up to face Chris Sale. On a 2-2 count, Sale
+					delivers a fastball that Judge drives deep to left field for a two-run homer, putting the
+					Yankees ahead 3-2 in the seventh.
+				</p>
+			</div>
+		</div>
+
+		<!-- AI Button -->
+		<div class="flex justify-center mt-2">
+			<AiButton
+				onClick={() => {
+					setTimeout(() => {
+						bottomSheetOpen = false;
+						videoElement.pause();
+					}, 200);
+				}}
+			/>
+		</div>
+	</div>
+</BottomSheet>
 
 <style>
 	video {
