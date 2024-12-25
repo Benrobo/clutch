@@ -7,6 +7,9 @@
 	import { Pause, Play, Volume, Volume2, VolumeX } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import EngagementBar from './EngagementBar.svelte';
+	import useViewport from '@/hooks/useViewport';
+	import useDetectDevice from '$lib/hooks/useDetectDevice';
+	import BottomSheet from '@/components/BottomSheet.svelte';
 
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
@@ -21,7 +24,10 @@
 	let isVideoPlaying = false;
 	let muted = true;
 
+	const deviceInfo = useDetectDevice();
+	const { isMobile } = useViewport();
 	$: isSafariMobile = false;
+	$: bottomSheetOpen = false;
 
 	const MAX_DESCRIPTION_LENGTH = 30;
 
@@ -82,9 +88,12 @@
 	const checkBrowser = () => {
 		const { isSafari, isMobile } = useBrowser();
 		isSafariMobile = isSafari && isMobile;
+		// isMobileVP = isMobile;
 	};
 
 	onMount(() => {
+		console.log({ deviceInfo });
+		console.log({ isMobile: $isMobile });
 		checkBrowser();
 		window.addEventListener('resize', checkBrowser);
 		return () => window.removeEventListener('resize', checkBrowser);
@@ -120,7 +129,8 @@
 			'w-full relative flex-center',
 			currentAspectRatio === '9:16'
 				? 'min-h-[100vh] aspect-[9/16] -translate-y-0'
-				: 'h-auto aspect-[16/9] mt-[10vh] -translate-y-[6em]'
+				: 'h-auto aspect-[16/9] mt-[10vh] -translate-y-[10em]',
+			$isMobile && '-translate-y-[15em]'
 		)}
 	>
 		<video
@@ -162,12 +172,12 @@
 				{/if}
 			</button>
 			<!-- Aspect ratio toggle -->
-			<button
+			<!-- <button
 				class="top-4 px-3 py-1 rounded bg-white-100/30 backdrop-blur-md text-white-100 text-sm hover:bg-white-100/40"
 				on:click={toggleAspectRatio}
 			>
 				{currentAspectRatio}
-			</button>
+			</button> -->
 		</div>
 
 		<!-- Loading/Buffering Overlay -->
@@ -210,7 +220,7 @@
 	<!-- playback metadata (description) -->
 	<div
 		class={cn(
-			'w-full h-auto max-h-[100px] px-4 py-6 z-[10] absolute bottom-[5em]',
+			'w-full h-auto max-h-[100px] px-4 py-6 z-[10] absolute bottom-[4.2em] sm:bottom-[4.2em] xs:bottom-[5em]',
 			isSafariMobile && '-translate-y-[5em]'
 		)}
 	>
@@ -237,6 +247,18 @@
 			// @ts-expect-error
 			getTeamLogoWithBg(highlight?.game?.home_team?.id)
 		]
+	}}
+	onInsight={() => {
+		bottomSheetOpen = !bottomSheetOpen;
+		if (isVideoPlaying) videoElement.pause();
+	}}
+/>
+
+<BottomSheet
+	isOpen={bottomSheetOpen}
+	onClose={() => {
+		bottomSheetOpen = false;
+		videoElement.play();
 	}}
 />
 
