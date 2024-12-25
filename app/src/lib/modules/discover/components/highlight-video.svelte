@@ -1,6 +1,15 @@
 <script lang="ts">
 	import type { Highlight } from '@/types/highlights';
 	import HighlightVideoPlayback from './highlight-video-playback.svelte';
+	import { useFeedStore } from '@/store/feed.store';
+	import { afterUpdate, onMount } from 'svelte';
+	import AiButton from '@/components/AIButton.svelte';
+	import BottomSheet from '@/components/BottomSheet.svelte';
+
+	$: feedStore = useFeedStore();
+	$: bottomSheetOpen = false;
+
+	afterUpdate(() => {});
 
 	export let hl: Highlight;
 	export let last_video_id: string | null = null;
