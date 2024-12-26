@@ -16,6 +16,15 @@ router.get(
   )
 );
 
+router.get(
+  `${basePath}/feed/v2`,
+  useCatchErrors(
+    isAuthenticated(
+      recommendationController.getFeedV2.bind(recommendationController)
+    )
+  )
+);
+
 router.post(
   `${basePath}/highlight/mark-seen`,
   useCatchErrors(
