@@ -1,18 +1,26 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
 	import Spinner from '@/components/Spinner.svelte';
-	import type { Highlight } from '@/types/highlights';
 	import { cn, getTeamLogoWithBg } from '@/utils';
 	import { Pause, Play, Volume2, VolumeX } from 'lucide-svelte';
 	import { onMount, onDestroy, afterUpdate } from 'svelte';
 	import EngagementBar from './EngagementBar.svelte';
 	import useDetectDevice from '$lib/hooks/useDetectDevice';
 	import { useFeedStore } from '@/store/feed.store';
-	import VideoEmbed from './video-embed.svelte';
+	import { useUrlParams } from '@/hooks/useUrlParams';
+	import type { RecommendationData } from '@/types/recommendation';
+
+	export let highlight: RecommendationData | null = null;
+	export let videoUrl: string | undefined = undefined;
+	export let thumbnailUrl: string | undefined = undefined;
+	export let title: string | undefined = undefined;
+	export let last_video_id: string | null = null;
+	export let onObServedDataId: (id: string | null) => void = () => {};
 
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
 
+	const params = useUrlParams();
 	const deviceInfo = useDetectDevice();
 	$: feedStore = useFeedStore();
 	let videoElement: HTMLVideoElement;
@@ -28,6 +36,7 @@
 	$: isSafariMobile = false;
 
 	const MAX_DESCRIPTION_LENGTH = 50;
+	const DEBUG_MODE_VIDEO_URL = 'https://www.w3schools.com/html/mov_bbb.mp4';
 
 	async function handleVideoState() {
 		if (!videoElement || !$feedStore) return;
@@ -77,6 +86,9 @@
 			if (entry.isIntersecting) {
 				const vidDataId = entry.target.getAttribute('data-id');
 				onObServedDataId(vidDataId);
+				params.updateParams({
+					pbId: highlight?.playback?.id as string
+				});
 				if (videoElement && $feedStore.videoPaused) {
 					videoElement.play();
 					feedStore.setVideoPaused(false);
@@ -107,13 +119,6 @@
 			observer.disconnect();
 		}
 	});
-
-	export let highlight: Highlight | null = null;
-	export let videoUrl: string | undefined = undefined;
-	export let thumbnailUrl: string | undefined = undefined;
-	export let title: string | undefined = undefined;
-	export let last_video_id: string | null = null;
-	export let onObServedDataId: (id: string | null) => void = () => {};
 </script>
 
 <div bind:this={containerRef} data-id={highlight?.id} class="w-full h-full relative flex-center">
@@ -138,8 +143,11 @@
 			on:canplay={handleCanPlay}
 			on:waiting={handleWaiting}
 			on:playing={handlePlaying}
+			on:timeupdate={() => {}}
+			poster={highlight?.thumbnail?.main || highlight?.thumbnail?.fallback}
 		>
-			<source src={videoUrl} type="video/mp4" />
+			<!-- <source src={videoUrl} type="video/mp4" /> -->
+			<source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" />
 		</video>
 
 		<!-- Main Minor Video Control -->
@@ -225,7 +233,8 @@
 		<Flex className="w-full h-auto flex-col items-start justify-start gap-1">
 			<!-- team info -->
 			<h1 class="text-white-100 font-poppins font-semibold text-sm">
-				{highlight?.game?.home_team?.name} & {highlight?.game?.away_team?.name}
+				<!-- {highlight?.game?.home_team?.name} & {highlight?.game?.away_team?.name} -->
+				{highlight?.playback?.title}
 			</h1>
 			<span class="text-white-100 font-poppins font-normal text-xs">
 				{(highlight?.playback?.description ?? '')?.length > MAX_DESCRIPTION_LENGTH
@@ -239,7 +248,7 @@
 <EngagementBar
 	likesCount={highlight?.likes}
 	youLiked={highlight?.youLiked}
-	viewsCount={0}
+	viewsCount={highlight?.views}
 	teams={{
 		img: [
 			getTeamLogoWithBg(highlight?.game?.away_team?.id),
