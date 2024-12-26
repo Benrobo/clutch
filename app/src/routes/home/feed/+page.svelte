@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import { sampleHighlights, samplePlaybackStats } from '@/data/highlights';
+	import { samplePlaybackStats } from '@/data/highlights';
 	import HighlightVideo from '@/modules/discover/components/highlight-video.svelte';
-	import EngagementBar from '@/modules/discover/components/EngagementBar.svelte';
 	import { onMount, onDestroy } from 'svelte';
-	import { cn, getTeamLogoWithBg } from '@/utils';
+	import { cn, extractAxiosResponseData, getTeamLogoWithBg } from '@/utils';
 	import useDetectDevice from '@/hooks/useDetectDevice';
 	import BottomSheet from '@/components/BottomSheet.svelte';
 	import { useFeedStore } from '@/store/feed.store';
@@ -12,29 +11,156 @@
 	import Highlighter from '@/highlighter';
 	import mlbGlossaryJson from '$lib/data/mlb-glossary.json';
 	import type { MLBGlossary } from '@/types/games';
+	import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
+	import { getRecommendations, markHighlightVideoAsSeen } from '@/http/requests';
+	import type { BaseResponse } from '@/types';
+	import type { RecommendationData, RecommendationResponse } from '@/types/recommendation';
+	import Spinner from '@/components/Spinner.svelte';
+	import ErrorAction from '@/components/ErrorAction.svelte';
+	import { useUrlParams } from '$lib/hooks/useUrlParams';
 
-	let activeFeed: 'for-you' | 'explore' = 'for-you';
-	$: activeFeed = 'for-you';
+	const params = useUrlParams();
+	const feedParam = params.getParam<'foryou' | 'explore'>({
+		key: 'feed',
+		defaultValue: 'foryou'
+	});
+	const pbIdParam = params.getParam<string>({
+		key: 'pbId',
+		defaultValue: ''
+	});
+
 	$: feedStore = useFeedStore();
+	$: activeFeed = $feedParam;
+	$: activePbId = $pbIdParam;
 
+	let lastViewedPbIds: string[] = [];
+	$: lastViewedPbIds = [];
+
+	const deviceInfo = useDetectDevice();
+	const queryClient = useQueryClient();
+	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
+	const mlbGlossaryTerms = mlbGlossary.map((glossary) => glossary.title.toLowerCase());
+	const samplePlaystats = samplePlaybackStats;
+
+	// Video playback state
 	let observedPlaybackId: string | null = null;
 	$: observedPlaybackId = null;
 
-	let insightsContainer: HTMLDivElement | null;
-	let summaryContainer: HTMLDivElement | null;
-	$: insightsContainer = null;
-	$: summaryContainer = null;
+	// Recommendation pagination
+	const MAX_RECOMMENDATIONS = 10;
+	type PaginationState = {
+		hasMore: boolean;
+		type: 'foryou' | 'explore';
+	};
 
+	$: recommendationPagination = {
+		hasMore: true,
+		type: activeFeed
+	} as PaginationState;
+
+	// Recommendations state
+	let recommendations: RecommendationData[] = [];
+
+	$: getRecommendationsQuery = createQuery({
+		queryKey: ['recommendations', activeFeed],
+		queryFn: async () => {
+			const resp = (await getRecommendations({
+				type: activeFeed,
+				limit: MAX_RECOMMENDATIONS
+			})) as BaseResponse<RecommendationResponse>;
+			return resp;
+		},
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
+		refetchOnMount: false
+	});
+
+	$: loadMoreRecommendationsMut = createMutation({
+		mutationFn: async () => {
+			const resp = (await getRecommendations({
+				type: activeFeed,
+				limit: MAX_RECOMMENDATIONS
+			})) as BaseResponse<RecommendationResponse>;
+			return resp;
+		},
+		onSuccess: (data) => {
+			const resp = extractAxiosResponseData(data, 'success')?.data as RecommendationResponse;
+			recommendationPagination = {
+				hasMore: resp?.hasMore,
+				type: activeFeed
+			};
+
+			recommendations = [...recommendations, ...(resp?.items || [])];
+		},
+		onError: (error) => {
+			const err = extractAxiosResponseData(error, 'error')?.message;
+			console.error({ err });
+		}
+	});
+
+	$: markHighlightVideoViewMut = createMutation({
+		mutationFn: async (playbackId: string) => {
+			return markHighlightVideoAsSeen(playbackId);
+		},
+		onError: (error) => {
+			console.error('Failed to track video view:', error);
+		}
+	});
+
+	// Derived states
+	$: recommendationResp = extractAxiosResponseData($getRecommendationsQuery?.data, 'success')
+		?.data as RecommendationResponse;
+	$: recommendationError = extractAxiosResponseData(
+		$getRecommendationsQuery?.error,
+		'error'
+	)?.message;
+	$: recommendations = [...(recommendationResp?.items ?? [])];
+	$: isLoading = $getRecommendationsQuery?.isLoading;
+
+	// Update pagination when query data changes
+	$: if ($getRecommendationsQuery?.data) {
+		const data = extractAxiosResponseData($getRecommendationsQuery?.data, 'success')
+			?.data as RecommendationResponse;
+		recommendations = data.items;
+		recommendationPagination = {
+			hasMore: data?.hasMore,
+			type: activeFeed
+		};
+	}
+
+	// Load more when reaching the last visible item
+	$: if (
+		observedPlaybackId &&
+		observedPlaybackId === recommendations[recommendations.length - 1]?.id &&
+		recommendationPagination?.hasMore &&
+		!$loadMoreRecommendationsMut?.isPending
+	) {
+		$loadMoreRecommendationsMut.mutate();
+	}
+
+	$: if (activePbId && !lastViewedPbIds.includes(activePbId)) {
+		let timeoutId = setTimeout(() => {
+			$markHighlightVideoViewMut.mutate(activePbId);
+			lastViewedPbIds.push(activePbId);
+			clearTimeout(timeoutId);
+		}, 4000);
+	}
+
+	// Track last visible item for infinite scroll
+	$: lastVisibleItemId =
+		recommendations?.length > 0 ? recommendations[recommendations.length - 1].id : null;
+
+	// Highlight containers for text processing
+	let insightsContainer: HTMLDivElement | null = null;
+	let summaryContainer: HTMLDivElement | null = null;
 	let insightsHighlighter: Highlighter | null = null;
 	let summaryHighlighter: Highlighter | null = null;
 
-	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
-	const mlbGlossaryTerms = mlbGlossary.map((glossary) => glossary.title.toLowerCase());
-
-	const deviceInfo = useDetectDevice();
-
-	const higlights = sampleHighlights;
-	const samplePlaystats = samplePlaybackStats;
+	onMount(() => {
+		params.updateParams({
+			feed: activeFeed
+		});
+	});
 
 	onDestroy(() => {
 		// @ts-expect-error
@@ -45,7 +171,7 @@
 
 <div class="w-full h-full flex items-center justify-center">
 	<div class="w-full h-full max-w-[600px] relative">
-		<!-- header -->
+		<!-- Feed Type Selector -->
 		<div
 			class={cn(
 				'w-full h-auto fixed top-0 left-0 z-[100]',
@@ -54,7 +180,7 @@
 		>
 			<Flex className="w-full max-w-[600px] mx-auto h-auto justify-between px-4">
 				<div class="w-auto flex items-start justify-start bg-gray-101/30 rounded-md">
-					{#each ['for-you', 'explore'] as feed}
+					{#each ['foryou', 'explore'] as feed}
 						<button
 							class={cn(
 								'h-full flex flex-row items-center justify-start gap-2 px-3 py-[8px] rounded-sm text-xs font-poppins transition-all text-white-300/50',
@@ -62,10 +188,10 @@
 							)}
 							on:click={() => {
 								// @ts-expect-error
-								activeFeed = feed;
+								feedParam.set(feed);
 							}}
 						>
-							{#if feed === 'for-you'}
+							{#if feed === 'foryou'}
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 									><path
 										fill="currentColor"
@@ -85,30 +211,42 @@
 						</button>
 					{/each}
 				</div>
-				<!-- <div>profile</div> -->
 				<div />
 			</Flex>
 		</div>
 
+		<!-- Video Feed -->
 		<div class="w-full h-full highlight-videos-container overflow-y-auto hideScrollBar2">
-			{#each higlights as hl}
-				<div class="w-full h-full snap-start snap-always">
-					<HighlightVideo
-						{hl}
-						last_video_id={higlights[higlights.length - 1]?.id}
-						onObServedDataId={(id) => {
-							observedPlaybackId = id;
-						}}
+			{#if isLoading}
+				<div class="w-full h-[100vh] flex-center">
+					<Spinner size={'20'} />
+				</div>
+			{:else if recommendationError}
+				<div class="w-full h-[100vh] flex-center">
+					<ErrorAction
+						error={recommendationError}
+						callback={() => queryClient.invalidateQueries({ queryKey: ['recommendations'] })}
+						showActionButton={true}
+						isLoading={false}
 					/>
 				</div>
-			{/each}
+			{:else if recommendations?.length > 0}
+				{#each recommendations as rec}
+					<div class="w-full h-full snap-start snap-always">
+						<HighlightVideo
+							hl={rec}
+							last_video_id={lastVisibleItemId}
+							onObServedDataId={(id) => (observedPlaybackId = id)}
+						/>
+					</div>
+				{/each}
+			{/if}
 		</div>
 	</div>
 </div>
 
 {#if observedPlaybackId}
-	{@const highlight = higlights.find((hl) => hl.id === observedPlaybackId)}
-
+	{@const highlight = recommendations.find((hl) => hl.id === observedPlaybackId)}
 	<BottomSheet
 		isOpen={$feedStore?.showBottomSheet}
 		onClose={() => {
@@ -120,13 +258,12 @@
 		className="h-auto"
 	>
 		<div class="p-1 flex flex-col gap-6">
-			<!-- team versus -->
 			<Flex className={cn('w-full h-auto items-center justify-between gap-5')}>
-				<!-- svelte-ignore a11y-missing-attribute -->
 				<Flex className={'flex-col items-center justify-center text-center'}>
 					<img
 						src={getTeamLogoWithBg(highlight?.game?.home_team?.id)}
 						class="w-[70px] h-[70px] rounded-full"
+						alt={highlight?.game?.home_team?.name}
 					/>
 					<p class="text-dark-100 font-brunoace font-semibold text-sm">
 						{highlight?.game?.home_team?.name}
@@ -136,10 +273,10 @@
 				<h1 class="text-dark-106/30 font-recoleta font-bold text-[2em]">Vs</h1>
 
 				<Flex className={'flex-col items-center justify-center text-center'}>
-					<!-- svelte-ignore a11y-missing-attribute -->
 					<img
 						src={getTeamLogoWithBg(highlight?.game?.away_team?.id)}
 						class="w-[70px] h-[70px] rounded-full"
+						alt={highlight?.game?.away_team?.name}
 					/>
 					<p class="text-dark-100 font-brunoace font-semibold text-sm">
 						{highlight?.game?.away_team?.name}
@@ -148,7 +285,6 @@
 			</Flex>
 
 			<div class="w-full max-h-[250px] overflow-y-auto hideScrollBar2">
-				<!-- playback description -->
 				<p class="text-xs text-dark-100/80 font-poppins">
 					{highlight?.playback?.description}
 				</p>
@@ -169,12 +305,9 @@
 									fontWeight: 600,
 									color: '#fe605f',
 									style: 'border-bottom',
-									onClick: (match) => {
-										console.log({ match });
-									}
+									onClick: (match) => console.log({ match })
 								}))
 							})}
-							<!-- {insightsHighlighter = highlighter} -->
 							{highlighter.render(insightsContainer) ?? ''}
 						{/if}
 					</p>
@@ -196,13 +329,9 @@
 									fontWeight: 600,
 									color: '#fe605f',
 									style: 'border-bottom',
-									onClick: (match) => {
-										console.log({ match });
-									}
+									onClick: (match) => console.log({ match })
 								})),
-								options: {
-									caseSensitive: true
-								}
+								options: { caseSensitive: true }
 							})}
 							{(summaryHighlighter = highlighter)}
 							{highlighter.render(summaryContainer)}
@@ -211,17 +340,8 @@
 				</div>
 			</div>
 
-			<!-- AI Button -->
 			<div class="flex justify-center mt-2 pb-5">
-				<AiButton
-					onClick={() => {
-						setTimeout(() => {
-							// bottomSheetOpen = false;
-							// videoElement.play();
-						}, 200);
-					}}
-					visible={$feedStore?.showBottomSheet}
-				/>
+				<AiButton onClick={() => {}} visible={$feedStore?.showBottomSheet} />
 			</div>
 		</div>
 	</BottomSheet>
