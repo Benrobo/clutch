@@ -1,13 +1,6 @@
 <script lang="ts">
 	import HighlightVideoPlayback from './highlight-video-playback.svelte';
-	import { useFeedStore } from '@/store/feed.store';
-	import { afterUpdate, onMount } from 'svelte';
 	import type { RecommendationData } from '@/types/recommendation';
-
-	$: feedStore = useFeedStore();
-	$: bottomSheetOpen = false;
-
-	afterUpdate(() => {});
 
 	export let hl: RecommendationData;
 	export let last_video_id: string | null = null;
