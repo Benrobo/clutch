@@ -24,6 +24,7 @@
 	import { useUrlParams } from '$lib/hooks/useUrlParams';
 	import { useFeedStore } from '@/store/feed.store';
 	import { recommendationStore } from '@/store/recommendation.store';
+	import { useLocalStorage } from '$lib/hooks/useLocalStorage';
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
@@ -38,8 +39,9 @@
 	$: activeFeed = $feedParam;
 	$: activePbId = $pbIdParam;
 
-	let lastViewedPbIds: string[] = [];
-	$: lastViewedPbIds = [];
+	const LAST_VIEWED_IDS_KEY = 'lastViewedPlaybackIds';
+	const lastViewedPbIdsStore = useLocalStorage<string[]>(LAST_VIEWED_IDS_KEY, []);
+	$: lastViewedPbIds = $lastViewedPbIdsStore;
 
 	const deviceInfo = useDetectDevice();
 	const queryClient = useQueryClient();
@@ -60,18 +62,6 @@
 
 	const feedStore = useFeedStore();
 
-	$: currentFeedState = $recommendationStore[activeFeed];
-	$: recommendations = currentFeedState?.items || [];
-	$: currentPagination = currentFeedState?.pagination;
-
-	$: console.log('Current feed state:', {
-		activeFeed,
-		currentFeedState,
-		recommendations: recommendations.length,
-		isLoading: currentFeedState?.isLoading,
-		error: currentFeedState?.error
-	});
-
 	$: getRecommendationsQuery = createQuery({
 		queryKey: ['recommendations', activeFeed],
 		queryFn: async () => {
@@ -86,49 +76,15 @@
 		enabled: true,
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
-		refetchOnMount: true
+		refetchOnMount: false
 	});
-
-	$: {
-		console.log('Query state:', {
-			isLoading: $getRecommendationsQuery.isLoading,
-			isError: $getRecommendationsQuery.isError,
-			isSuccess: $getRecommendationsQuery.isSuccess,
-			data: $getRecommendationsQuery.data
-		});
-
-		if ($getRecommendationsQuery.isLoading) {
-			console.log('Setting loading state');
-			recommendationStore.setLoading(activeFeed, true);
-		} else if ($getRecommendationsQuery.isError) {
-			console.log('Setting error state');
-			const error = $getRecommendationsQuery.error;
-			const errorMessage = extractAxiosResponseData(error, 'error')?.message;
-			recommendationStore.setError(activeFeed, errorMessage);
-		} else if ($getRecommendationsQuery.isSuccess) {
-			console.log('Setting success state');
-			const data = extractAxiosResponseData($getRecommendationsQuery.data, 'success')
-				?.data as RecommendationResponse;
-			console.log('Query success:', { data });
-			
-			recommendationStore.updateFeed(activeFeed, {
-				items: data.items,
-				pagination: {
-					hasMore: data?.hasMore,
-					cursor: data?.nextCursor!
-				},
-				error: null,
-				isLoading: false
-			});
-		}
-	}
 
 	$: loadMoreRecommendationsMut = createMutation({
 		mutationFn: async () => {
 			recommendationStore.setLoadingMore(activeFeed, true);
 			const resp = (await getRecommendationsV2({
 				type: activeFeed,
-				cursor: currentPagination.cursor,
+				cursor: $recommendationStore[activeFeed].pagination.cursor,
 				limit: MAX_RECOMMENDATIONS
 			})) as BaseResponse<RecommendationResponse>;
 			recommendationStore.setLoadingMore(activeFeed, false);
@@ -139,7 +95,7 @@
 
 			// Update only the current feed's state
 			recommendationStore.updateFeed(activeFeed, {
-				items: [...recommendations, ...(resp?.items || [])],
+				items: [...$recommendationStore[activeFeed].items, ...(resp?.items || [])],
 				pagination: {
 					hasMore: resp?.hasMore,
 					cursor: resp?.nextCursor!
@@ -162,6 +118,33 @@
 		}
 	});
 
+	$: {
+		if ($getRecommendationsQuery.isLoading) {
+			console.log('Setting loading state');
+			recommendationStore.setLoading(activeFeed, true);
+		} else if ($getRecommendationsQuery.isError) {
+			console.log('Setting error state');
+			const error = $getRecommendationsQuery.error;
+			const errorMessage = extractAxiosResponseData(error, 'error')?.message;
+			recommendationStore.setError(activeFeed, errorMessage);
+		} else if ($getRecommendationsQuery.isSuccess) {
+			console.log('Setting success state');
+			const data = extractAxiosResponseData($getRecommendationsQuery.data, 'success')
+				?.data as RecommendationResponse;
+			console.log('Query success:', { data });
+
+			recommendationStore.updateFeed(activeFeed, {
+				items: data.items,
+				pagination: {
+					hasMore: data?.hasMore,
+					cursor: data?.nextCursor!
+				},
+				error: null,
+				isLoading: false
+			});
+		}
+	}
+
 	// Load more when reaching the last visible item
 	$: if (
 		observedPlaybackId &&
@@ -172,17 +155,23 @@
 		$loadMoreRecommendationsMut.mutate();
 	}
 
-	$: if (activePbId && !lastViewedPbIds.includes(activePbId)) {
+	$: if (
+		observedPlaybackId &&
+		!lastViewedPbIds.includes(observedPlaybackId) &&
+		!$loadMoreRecommendationsMut.isPending
+	) {
 		let timeoutId = setTimeout(() => {
-			$markHighlightVideoViewMut.mutate(activePbId);
-			lastViewedPbIds.push(activePbId);
+			lastViewedPbIdsStore.set([...lastViewedPbIds, observedPlaybackId as string]);
+			$markHighlightVideoViewMut.mutate(observedPlaybackId as string);
 			clearTimeout(timeoutId);
 		}, 4000);
 	}
 
 	// Track last visible item for infinite scroll
 	$: lastVisibleItemId =
-		recommendations?.length > 0 ? recommendations[recommendations.length - 1].id : null;
+		$recommendationStore[activeFeed]?.items?.length > 0
+			? $recommendationStore[activeFeed].items[$recommendationStore[activeFeed].items.length - 1].id
+			: null;
 
 	// Highlight containers for text processing
 	let insightsContainer: HTMLDivElement | null = null;
@@ -253,22 +242,24 @@
 
 		<!-- Video Feed -->
 		<div class="w-full h-full highlight-videos-container overflow-y-auto hideScrollBar2">
-			{#if currentFeedState.error}
+			{#if $recommendationStore[activeFeed]?.error}
 				<div class="w-full h-[100vh] flex-center">
 					<ErrorAction
-						error={currentFeedState.error}
+						error={$recommendationStore[activeFeed].error}
 						callback={() => queryClient.invalidateQueries({ queryKey: ['recommendations'] })}
 						showActionButton={true}
 						isLoading={false}
 					/>
 				</div>
-			{:else if currentFeedState.isLoading && !recommendations.length}
+			{:else if $recommendationStore[activeFeed]?.isLoading && !$recommendationStore[activeFeed]?.items?.length}
 				<div class="w-full h-[100vh] flex-center">
 					<Spinner size={'20'} />
 				</div>
-			{:else if recommendations.length > 0}
-				{console.log('Rendering recommendations:', { count: recommendations.length })}
-				{#each recommendations as rec}
+			{:else if $recommendationStore[activeFeed]?.items?.length > 0}
+				{console.log('Rendering recommendations:', {
+					count: $recommendationStore[activeFeed]?.items?.length
+				})}
+				{#each $recommendationStore[activeFeed].items as rec}
 					<div class="w-full h-full snap-start snap-always">
 						<HighlightVideo
 							hl={rec}
@@ -278,18 +269,24 @@
 					</div>
 				{/each}
 
-				{#if currentFeedState.isLoadingMore}
+				{#if $recommendationStore[activeFeed]?.isLoadingMore}
 					<div class="w-full py-4 flex-center">
 						<Spinner size={'20'} />
 					</div>
 				{/if}
+			{:else}
+				<div class="w-full h-[100vh] flex-center">
+					<p>No recommendations available</p>
+				</div>
 			{/if}
 		</div>
 	</div>
 </div>
 
 {#if observedPlaybackId}
-	{@const highlight = recommendations.find((hl) => hl.id === observedPlaybackId)}
+	{@const highlight = $recommendationStore[activeFeed].items.find(
+		(hl) => hl.id === observedPlaybackId
+	)}
 	<BottomSheet
 		isOpen={$feedStore?.showBottomSheet}
 		onClose={() => {
