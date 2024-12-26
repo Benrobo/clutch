@@ -67,7 +67,7 @@ export default class AuthController {
 
         console.log(`User created: ${email}`);
 
-        return c.redirect(`${env.CLIENT_URL}/dashboard`);
+        return c.redirect(`${env.CLIENT_URL}/home/feed`);
       }
 
       // update
@@ -85,7 +85,7 @@ export default class AuthController {
 
       console.log(`User logged in with email: ${email}`);
 
-      return c.redirect(`${env.CLIENT_URL}/app`);
+      return c.redirect(`${env.CLIENT_URL}/home/feed`);
     } catch (e: any) {
       console.error(e);
       const msg = e.message || "Google Auth failed";
