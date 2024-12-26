@@ -18,7 +18,7 @@ export interface FeedParams {
 const SEEN_VIDEOS_EXPIRY = 60 * 60 * 24 * 7; // 7 days in seconds
 const SEEN_VIDEOS_KEY_PREFIX = "user:seen-videos:";
 const VIEW_PLAYBACKS_KEY_PREFIX = "user:view-playbacks:";
-const VIEW_PLAYBACKS_EXPIRY = 5 * 60 * 60; // 5 minutes
+const VIEW_PLAYBACKS_EXPIRY = 10 * 60; // 10 minutes
 
 export interface HighlightItem {
   id: string;
@@ -295,7 +295,7 @@ export default class RecommendationService {
 
     const allHighlights = [...preferredHighlights, ...discoveryHighlights];
 
-    return this.shuffleWithBias(this.mapHighlights(allHighlights));
+    return this.shuffleWithBias(this.mapHighlightsV2(allHighlights));
   }
 
   async getExploreFeed(
@@ -443,7 +443,287 @@ export default class RecommendationService {
 
     const allHighlights = [...trendingHighlights, ...randomHighlights];
 
-    return this.shuffleWithBias(this.mapHighlights(allHighlights));
+    return this.shuffleWithBias(this.mapHighlightsV2(allHighlights));
+  }
+
+  async getForYouFeedV2(
+    userId: string,
+    cursor?: string,
+    limit = 10
+  ): Promise<HighlightItem[]> {
+    // Get user preferences
+    const userPreferences = await this.getUserPreferences(userId);
+    const seenVideos = await this.getSeenVideos(userId);
+
+    // Get preferred playbacks based on user preferences
+    const preferredPlaybacks = await prisma.highlights_playbacks.findMany({
+      where: {
+        NOT: {
+          id: { in: seenVideos },
+        },
+        highlight: {
+          game: {
+            OR: [
+              { home_team: { id: { in: userPreferences } } },
+              { away_team: { id: { in: userPreferences } } },
+            ],
+          },
+        },
+      },
+      take: limit,
+      cursor: cursor ? { id: cursor } : undefined,
+      include: {
+        highlight: {
+          include: {
+            content: true,
+            game: {
+              include: {
+                home_team: true,
+                away_team: true,
+              },
+            },
+          },
+        },
+        liked_by: {
+          where: {
+            user_id: userId,
+          },
+          select: {
+            user_id: true,
+          },
+        },
+      },
+      orderBy: {
+        highlight: {
+          created_at: "desc",
+        },
+      },
+    });
+
+    // Get discovery playbacks (random selection)
+    const discoveryPlaybacks = await prisma.highlights_playbacks.findMany({
+      where: {
+        NOT: {
+          OR: [
+            { id: { in: seenVideos } },
+            { id: { in: preferredPlaybacks.map((p) => p.id) } },
+          ],
+        },
+      },
+      take: Math.max(0, limit - preferredPlaybacks.length),
+      include: {
+        highlight: {
+          include: {
+            content: true,
+            game: {
+              include: {
+                home_team: true,
+                away_team: true,
+              },
+            },
+          },
+        },
+        liked_by: {
+          where: {
+            user_id: userId,
+          },
+          select: {
+            user_id: true,
+          },
+        },
+      },
+      orderBy: {
+        highlight: {
+          created_at: "desc",
+        },
+      },
+    });
+
+    const allPlaybacks = [...preferredPlaybacks, ...discoveryPlaybacks];
+    return this.mapPlaybacksToHighlights(allPlaybacks);
+  }
+
+  async getExploreFeedV2(
+    userId: string,
+    cursor?: string,
+    limit = 10
+  ): Promise<HighlightItem[]> {
+    const seenVideos = await this.getSeenVideos(userId);
+
+    // Get trending playbacks (most liked/viewed)
+    const trendingPlaybacks = await prisma.highlights_playbacks.findMany({
+      where: {
+        NOT: {
+          id: { in: seenVideos },
+        },
+      },
+      take: Math.floor(limit * 0.7), // 70% trending
+      cursor: cursor ? { id: cursor } : undefined,
+      include: {
+        highlight: {
+          select: {
+            content: true,
+            game: {
+              select: {
+                home_team: true,
+                away_team: true,
+              },
+            },
+            id: true,
+            created_at: true,
+          },
+        },
+        liked_by: {
+          where: {
+            user_id: userId,
+          },
+          select: {
+            user_id: true,
+          },
+        },
+      },
+      orderBy: [{ likes: "desc" }, { views: "desc" }],
+    });
+
+    // Get random playbacks
+    const randomPlaybacks = await prisma.highlights_playbacks.findMany({
+      where: {
+        NOT: {
+          OR: [
+            { id: { in: seenVideos } },
+            { id: { in: trendingPlaybacks.map((p) => p.id) } },
+          ],
+        },
+      },
+      take: Math.max(0, limit - trendingPlaybacks.length),
+      include: {
+        highlight: {
+          select: {
+            content: {
+              select: {
+                photo: true,
+              },
+            },
+            game: {
+              select: {
+                home_team: {
+                  select: {
+                    id: true,
+                    name: true,
+                    logo_url: true,
+                  },
+                },
+                away_team: {
+                  select: {
+                    id: true,
+                    name: true,
+                    logo_url: true,
+                  },
+                },
+                date: true,
+                status: true,
+              },
+            },
+            id: true,
+            created_at: true,
+          },
+        },
+        liked_by: {
+          where: {
+            user_id: userId,
+          },
+          select: {
+            user_id: true,
+          },
+        },
+      },
+      orderBy: {
+        highlight: {
+          created_at: "desc",
+        },
+      },
+    });
+
+    const allPlaybacks = [...trendingPlaybacks, ...randomPlaybacks];
+    return this.mapPlaybacksToHighlights(allPlaybacks);
+  }
+
+  private async getUserPreferences(userId: string): Promise<number[]> {
+    const user = await prisma.users.findUnique({
+      where: { id: userId },
+      select: { preferences: true },
+    });
+
+    if (!user?.preferences) {
+      return [];
+    }
+
+    // preferences is a JSON field with { teams: number[], players: number[] }
+    const prefs = user.preferences as { teams: number[]; players: number[] };
+    return prefs.teams || [];
+  }
+
+  private mapPlaybacksToHighlights(
+    playbacks: (highlights_playbacks & {
+      liked_by: { user_id: string }[];
+      highlight: {
+        content: { photo: string } | null;
+        created_at: Date;
+        id: string;
+        game: {
+          home_team: {
+            id: number;
+            name: string;
+            logo_url: string | null;
+          };
+          away_team: {
+            id: number;
+            name: string;
+            logo_url: string | null;
+          };
+          date: string;
+          status: string;
+        };
+      };
+    })[]
+  ): HighlightItem[] {
+    return playbacks.map((playback) => ({
+      id: playback.id,
+      higlightId: playback.highlight?.id,
+      gameId: playback.highlight?.game?.home_team?.id,
+      createdAt: playback.highlight?.created_at,
+      likes: playback.likes ?? 0,
+      views: playback.views ?? 0,
+      youLiked: playback.liked_by.length > 0,
+      thumbnail: {
+        main: playback.thumbnail ?? null,
+        fallback: playback.highlight.content?.photo || null,
+      },
+      playback: {
+        id: playback.id,
+        title: playback.title,
+        description: playback.description,
+        mlbVideoUrl: playback.mlb_video_url,
+        mlbVideoDuration: playback.mlb_video_duration,
+        processedVideoUrl: playback.processed_video_url,
+        processedVideoDuration: playback.processed_video_duration,
+        orientation: playback.orientation,
+      },
+      game: {
+        home_team: {
+          id: playback.highlight.game.home_team?.id,
+          name: playback.highlight.game.home_team?.name ?? null,
+          logo_url: playback.highlight.game.home_team?.logo_url ?? null,
+        },
+        away_team: {
+          id: playback.highlight.game.away_team?.id,
+          name: playback.highlight.game.away_team?.name ?? null,
+          logo_url: playback.highlight.game.away_team?.logo_url ?? null,
+        },
+        date: playback.highlight.game.date,
+        status: playback.highlight.game.status,
+      },
+    }));
   }
 
   private mapHighlights(
@@ -518,6 +798,78 @@ export default class RecommendationService {
         },
       };
     });
+  }
+
+  private mapHighlightsV2(
+    highlights: (highlights & {
+      content: { photo: string } | null;
+      highlights: (highlights_playbacks & {
+        liked_by: { user_id: string }[];
+      })[];
+      game: {
+        home_team: {
+          id: number;
+          name: string;
+          logo_url: string | null;
+        };
+        away_team: {
+          id: number;
+          name: string;
+          logo_url: string | null;
+        };
+        date: string;
+        status: string;
+      };
+    })[]
+  ): HighlightItem[] {
+    const items: HighlightItem[] = [];
+
+    for (const highlight of highlights) {
+      // Skip highlights without playbacks
+      if (!highlight.highlights?.length) continue;
+
+      // Add each playback as a separate item
+      for (const playback of highlight.highlights) {
+        items.push({
+          id: playback.id, // Use playback ID as main identifier
+          gameId: highlight.game_id,
+          createdAt: highlight.created_at,
+          likes: playback.likes ?? 0,
+          views: playback.views ?? 0,
+          youLiked: playback.liked_by.length > 0,
+          thumbnail: {
+            main: playback.thumbnail ?? null,
+            fallback: highlight.content?.photo || null,
+          },
+          playback: {
+            id: playback.id,
+            title: playback.title,
+            description: playback.description,
+            mlbVideoUrl: playback.mlb_video_url,
+            mlbVideoDuration: playback.mlb_video_duration,
+            processedVideoUrl: playback.processed_video_url,
+            processedVideoDuration: playback.processed_video_duration,
+            orientation: playback.orientation,
+          },
+          game: {
+            home_team: {
+              id: highlight.game.home_team?.id,
+              name: highlight.game.home_team?.name ?? null,
+              logo_url: highlight.game.home_team?.logo_url ?? null,
+            },
+            away_team: {
+              id: highlight.game.away_team?.id,
+              name: highlight.game.away_team?.name ?? null,
+              logo_url: highlight.game.away_team?.logo_url ?? null,
+            },
+            date: highlight.game.date,
+            status: highlight.game.status,
+          },
+        });
+      }
+    }
+
+    return items;
   }
 
   private shuffleWithBias(items: HighlightItem[]): HighlightItem[] {
