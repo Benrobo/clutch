@@ -130,6 +130,7 @@ model highlights_playbacks {
     thumbnail String?
 
     likes Int @default(0)
+    views Int @default(0)
 
     mlb_video_url            String // Original MLB video
     mlb_video_duration       String
