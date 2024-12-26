@@ -1,6 +1,7 @@
 import { Context } from "hono";
 import RecommendationService, {
   FeedType,
+  HighlightItem,
 } from "../services/recommendation.service.js";
 import sendResponse from "../lib/send-response.js";
 import { HttpException } from "../lib/exception.js";
@@ -23,34 +24,44 @@ export default class RecommendationController {
   async getFeed(c: Context) {
     try {
       const user = c.get("user");
-      const { type = "ForYou", cursor, limit = 10 } = c.req.query();
+      const { type = "foryou", cursor, limit = 10 } = c.req.query();
 
-      if (!["ForYou", "Explore"].includes(type)) {
+      if (!["foryou", "explore"].includes(type.toLowerCase())) {
         throw new HttpException("Invalid feed type", 400);
       }
 
-      const feedParams = {
-        cursor,
-        limit: Math.min(Number(limit), 20), // Cap at 20 items per request
-      };
+      // Validate limit
+      const parsedLimit = Math.min(Number(limit), 20); // Cap at 20 items per request
+      if (isNaN(parsedLimit) || parsedLimit < 1) {
+        throw new HttpException("Invalid limit parameter", 400);
+      }
 
-      const highlights =
-        type === "ForYou"
-          ? await this.recommendationService.getForYouFeed(user, feedParams)
-          : await this.recommendationService.getExploreFeed(
-              user.id,
-              feedParams
-            );
+      const recommendationService = new RecommendationService();
+      let highlights: HighlightItem[] = [];
 
-      const nextCursor =
-        highlights.length === feedParams.limit
-          ? highlights[highlights.length - 1].id
-          : undefined;
+      if (type === "foryou") {
+        highlights = await recommendationService.getForYouFeed(user, {
+          // cursor,
+          limit: parsedLimit,
+        });
+      } else {
+        highlights = await recommendationService.getExploreFeed(user.id, {
+          // cursor,
+          limit: parsedLimit,
+        });
+      }
+
+      // Get the next cursor from the last item
+      // const nextCursor =
+      //   highlights.length > 0 ? highlights[highlights.length - 1].id : null;
+
+      // Check if we got a full page of results
+      const hasMore = highlights.length >= parsedLimit;
 
       return sendResponse.success(c, null, 200, {
         items: highlights,
-        nextCursor,
-        hasMore: !!nextCursor,
+        // nextCursor,
+        hasMore,
       });
     } catch (error) {
       console.log(error);
@@ -59,5 +70,19 @@ export default class RecommendationController {
       }
       throw new HttpException("Failed to fetch feed", 500);
     }
+  }
+
+  async markVideoAsSeen(c: Context) {
+    const user = c.get("user");
+    const { playbackId } = c.req.query();
+
+    if (!playbackId) {
+      throw new HttpException("Playback ID is required", 400);
+    }
+
+    const recommendationService = new RecommendationService();
+    await recommendationService.markHighlightViewed(user.id, playbackId);
+
+    return sendResponse.success(c, "Playback highlight marked as seen", 200);
   }
 }
