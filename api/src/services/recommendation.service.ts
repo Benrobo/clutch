@@ -7,19 +7,25 @@ import {
   highlights_playbacks,
   VideoOrientation,
 } from "@prisma/client";
+import redis from "../config/redis.js";
 
 export type FeedType = "ForYou" | "Explore";
 
 export interface FeedParams {
-  cursor?: string;
   limit: number;
 }
+
+const SEEN_VIDEOS_EXPIRY = 60 * 60 * 24 * 7; // 7 days in seconds
+const SEEN_VIDEOS_KEY_PREFIX = "user:seen-videos:";
+const VIEW_PLAYBACKS_KEY_PREFIX = "user:view-playbacks:";
+const VIEW_PLAYBACKS_EXPIRY = 5 * 60 * 60; // 5 minutes
 
 export interface HighlightItem {
   id: string;
   gameId: number;
   createdAt: Date;
   likes: number;
+  views: number;
   youLiked: boolean;
   thumbnail: {
     main: string | null;
@@ -52,44 +58,124 @@ export interface HighlightItem {
 }
 
 export default class RecommendationService {
+  private async getSeenVideos(userId: string): Promise<string[]> {
+    const key = `${SEEN_VIDEOS_KEY_PREFIX}${userId}`;
+    const seenVideos = await redis.smembers(key);
+    return seenVideos;
+  }
+
+  private async getViewedPlaybacks(userId: string): Promise<string[]> {
+    const key = `${VIEW_PLAYBACKS_KEY_PREFIX}${userId}`;
+    const viewedPlaybacks = await redis.smembers(key);
+    return viewedPlaybacks;
+  }
+
+  // For playback views purpose
+  private async markPlaybackViewed(
+    userId: string,
+    playbackId: string
+  ): Promise<void> {
+    const key = `${VIEW_PLAYBACKS_KEY_PREFIX}${userId}`;
+    const viewedPlaybacks = await redis.smembers(key);
+    if (!viewedPlaybacks.includes(playbackId)) {
+      const pipeline = redis.pipeline();
+      pipeline.sadd(key, playbackId);
+      pipeline.expire(key, VIEW_PLAYBACKS_EXPIRY);
+      await pipeline.exec();
+    }
+  }
+
+  // For recommendation purpose
+  private async markPlaybackSeen(
+    userId: string,
+    playbackId: string
+  ): Promise<void> {
+    const seenVideos = await this.getSeenVideos(userId);
+    if (!seenVideos.includes(playbackId)) {
+      const key = `${SEEN_VIDEOS_KEY_PREFIX}${userId}`;
+      const pipeline = redis.pipeline();
+      pipeline.sadd(key, playbackId);
+      pipeline.expire(key, SEEN_VIDEOS_EXPIRY);
+      await pipeline.exec();
+    }
+  }
+
+  async markHighlightViewed(userId: string, playbackId: string): Promise<void> {
+    const viewedPlaybacks = await this.getViewedPlaybacks(userId);
+    // Only update if not already viewed
+    if (!viewedPlaybacks.includes(playbackId)) {
+      await prisma.$transaction(async (tx) => {
+        await tx.highlights_playbacks.update({
+          where: {
+            id: playbackId,
+          },
+          data: {
+            views: { increment: 1 },
+          },
+        });
+
+        await this.markPlaybackViewed(userId, playbackId);
+        await this.markPlaybackSeen(userId, playbackId);
+      });
+    }
+  }
+
   async getForYouFeed(
     user: users,
     params: FeedParams
   ): Promise<HighlightItem[]> {
+    // Get user preferences from the JSON field
     const userPrefs = user.preferences as {
       teams: number[];
       players: number[];
     } | null;
 
-    if (!userPrefs?.teams.length && !userPrefs?.players.length) {
+    if (!userPrefs?.teams?.length && !userPrefs?.players?.length) {
       return this.getExploreFeed(user.id, params);
     }
 
     const preferredCount = Math.ceil(params.limit * 0.7);
     const discoveryCount = params.limit - preferredCount;
+    const now = dayjs();
+    const seenVideos = await this.getSeenVideos(user.id);
 
-    // Get preferred content (from teams user follows)
+    // Get preferred content within a time window
     const preferredHighlights = await prisma.highlights.findMany({
       where: {
-        game: {
-          OR: [
-            { home_team_id: { in: userPrefs.teams } },
-            { away_team_id: { in: userPrefs.teams } },
-          ],
-        },
-        highlights: {
-          some: {
+        AND: [
+          {
+            game: {
+              OR: [
+                { home_team_id: { in: userPrefs.teams } },
+                { away_team_id: { in: userPrefs.teams } },
+              ],
+            },
+          },
+          {
+            created_at: {
+              gte: now.subtract(7, "day").toDate(),
+            },
+          },
+          {
             NOT: {
-              saved_by: {
-                some: { user_id: user?.id },
+              id: { in: seenVideos },
+            },
+          },
+          {
+            highlights: {
+              some: {
+                NOT: {
+                  saved_by: {
+                    some: { user_id: user?.id },
+                  },
+                },
               },
             },
           },
-        },
+        ],
       },
-      orderBy: [{ created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
       take: preferredCount,
-      ...(params.cursor ? { cursor: { id: params.cursor } } : {}),
       include: {
         content: {
           select: {
@@ -129,28 +215,44 @@ export default class RecommendationService {
       },
     });
 
-    // Get discovery content
+    // Get discovery content excluding seen videos
     const discoveryHighlights = await prisma.highlights.findMany({
       where: {
-        game: {
-          NOT: {
-            OR: [
-              { home_team_id: { in: userPrefs.teams } },
-              { away_team_id: { in: userPrefs.teams } },
-            ],
-          },
-        },
-        highlights: {
-          some: {
-            NOT: {
-              saved_by: {
-                some: { user_id: user?.id },
+        AND: [
+          {
+            game: {
+              NOT: {
+                OR: [
+                  { home_team_id: { in: userPrefs.teams } },
+                  { away_team_id: { in: userPrefs.teams } },
+                ],
               },
             },
           },
-        },
+          {
+            created_at: {
+              gte: now.subtract(30, "day").toDate(),
+            },
+          },
+          {
+            NOT: {
+              id: { in: seenVideos },
+            },
+          },
+          {
+            highlights: {
+              some: {
+                NOT: {
+                  saved_by: {
+                    some: { user_id: user?.id },
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
-      orderBy: [{ created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
       take: discoveryCount,
       include: {
         content: {
@@ -191,9 +293,9 @@ export default class RecommendationService {
       },
     });
 
-    return this.shuffleWithBias(
-      this.mapHighlights([...preferredHighlights, ...discoveryHighlights])
-    );
+    const allHighlights = [...preferredHighlights, ...discoveryHighlights];
+
+    return this.shuffleWithBias(this.mapHighlights(allHighlights));
   }
 
   async getExploreFeed(
@@ -201,24 +303,37 @@ export default class RecommendationService {
     params: FeedParams
   ): Promise<HighlightItem[]> {
     const now = dayjs();
+    const seenVideos = await this.getSeenVideos(userId);
+
+    // Get trending highlights from last 7 days
     const trendingHighlights = await prisma.highlights.findMany({
       where: {
-        created_at: {
-          gte: now.subtract(7, "day").toDate(),
-        },
-        highlights: {
-          some: {
+        AND: [
+          {
+            created_at: {
+              gte: now.subtract(7, "day").toDate(),
+            },
+          },
+          {
             NOT: {
-              saved_by: {
-                some: { user_id: userId },
+              id: { in: seenVideos },
+            },
+          },
+          {
+            highlights: {
+              some: {
+                NOT: {
+                  saved_by: {
+                    some: { user_id: userId },
+                  },
+                },
               },
             },
           },
-        },
+        ],
       },
-      orderBy: [{ created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
       take: Math.ceil(params.limit * 0.6),
-      ...(params.cursor ? { cursor: { id: params.cursor } } : {}),
       include: {
         content: {
           select: {
@@ -258,20 +373,34 @@ export default class RecommendationService {
       },
     });
 
-    // Get random highlights
+    // Get random highlights from last 30 days
     const randomHighlights = await prisma.highlights.findMany({
       where: {
-        highlights: {
-          some: {
+        AND: [
+          {
+            created_at: {
+              gte: now.subtract(30, "day").toDate(),
+            },
+          },
+          {
             NOT: {
-              saved_by: {
-                some: { user_id: userId },
+              id: { in: seenVideos },
+            },
+          },
+          {
+            highlights: {
+              some: {
+                NOT: {
+                  saved_by: {
+                    some: { user_id: userId },
+                  },
+                },
               },
             },
           },
-        },
+        ],
       },
-      orderBy: [{ created_at: "desc" }],
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
       take: Math.floor(params.limit * 0.4),
       include: {
         content: {
@@ -312,9 +441,9 @@ export default class RecommendationService {
       },
     });
 
-    return this.shuffleWithBias(
-      this.mapHighlights([...trendingHighlights, ...randomHighlights])
-    );
+    const allHighlights = [...trendingHighlights, ...randomHighlights];
+
+    return this.shuffleWithBias(this.mapHighlights(allHighlights));
   }
 
   private mapHighlights(
@@ -347,6 +476,7 @@ export default class RecommendationService {
         createdAt: highlight.created_at,
         likes: playback?.likes ?? 0,
         youLiked: playback?.liked_by.length > 0 ?? false,
+        views: playback?.views ?? 0,
         thumbnail: {
           main: playback?.thumbnail ?? null,
           fallback: highlight.content?.photo || null,
