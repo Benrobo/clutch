@@ -16,4 +16,13 @@ router.get(
   )
 );
 
+router.post(
+  `${basePath}/highlight/mark-seen`,
+  useCatchErrors(
+    isAuthenticated(
+      recommendationController.markVideoAsSeen.bind(recommendationController)
+    )
+  )
+);
+
 export default router;
