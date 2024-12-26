@@ -1,12 +1,13 @@
 
 export type RecommendationResponse = {
     items: RecommendationData[]
-    // nextCursor?: null | string;
+    nextCursor?: null | string;
     hasMore: boolean;
 }
 
 export type RecommendationData = {
     id: string,
+    higlightId: string,
     gameId: number,
     createdAt: string,
     likes: number,
