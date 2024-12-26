@@ -39,6 +39,25 @@ export const getRecommendations = async (props: {
 	return res.data;
 };
 
+
+export const getRecommendationsV2 = async (props: {
+	type?: "foryou" | "explore";
+	cursor?: string | null;
+	limit?: number;
+}) => {
+	let url = `/recommendations/feed/v2`;
+	const urlParams = new URLSearchParams();
+
+	if(props.type) urlParams.append("type", props.type);
+	if(props.cursor) urlParams.append("cursor", props.cursor);
+	if(props.limit) urlParams.append("limit", String(props.limit));
+
+	if(urlParams.toString()) url += `?${urlParams.toString()}`
+
+	const res = await $axios.get(url);
+	return res.data;
+};
+
 export const markHighlightVideoAsSeen = async (playbackId: string) => {
 	let url = `/recommendations/highlight/mark-seen?playbackId=${playbackId}`;
 	const res = await $axios.post(url);
