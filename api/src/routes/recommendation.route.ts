@@ -19,9 +19,9 @@ router.get(
 router.get(
   `${basePath}/feed/v2`,
   useCatchErrors(
-    isAuthenticated(
-      recommendationController.getFeedV2.bind(recommendationController)
-    )
+    // isAuthenticated(
+    recommendationController.getFeedV2.bind(recommendationController)
+    // )
   )
 );
 
