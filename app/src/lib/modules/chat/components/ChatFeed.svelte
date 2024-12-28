@@ -77,18 +77,18 @@
 
 				<!-- bottom floating chatbox -->
 				<div
-					class="w-full min-h-[100px] px-8 absolute bottom-0 left-0 bg-dark-100/10 backdrop-blur-sm"
+					class="w-full min-h-[80px] px-8 py-3 absolute bottom-0 left-0 bg-dark-100/10 backdrop-blur-sm"
 				>
 					<Flex
-						className="w-full h-[50px] bg-dark-106 items-center justify-between pl-4 pr-1 rounded-full border-[1px] border-gray-101/50 shadow-md shadow-dark-100"
+						className="w-full h-[50px] bg-dark-106 items-center justify-between pl-4 pr-1 rounded-full border-[1px] border-gray-101/50 shadow-md shadow-dark-100 scale-[1.1]"
 					>
 						<input
 							type="text"
 							placeholder="Ask me anything about this highlight..."
-							class="w-auto h-full py-3 bg-transparent text-white-200 font-recoleta font-normal text-sm border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/70"
+							class="w-full h-full py-3 bg-transparent text-white-200 font-recoleta font-normal text-sm border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/90"
 						/>
 
-						<button class="w-[38px] h-[38px] bg-gray-101 rounded-full flex-center">
+						<button class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center">
 							<ArrowRight />
 						</button>
 					</Flex>
