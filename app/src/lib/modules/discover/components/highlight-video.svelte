@@ -3,8 +3,8 @@
 	import type { RecommendationData } from '@/types/recommendation';
 
 	export let hl: RecommendationData;
-	export let last_video_id: string | null = null;
 	export let onObServedDataId: (id: string | null) => void = () => {};
+	export let currentVideoId: string | null = null;
 </script>
 
 <div class="video-container w-full h-[100vh] relative">
@@ -21,13 +21,10 @@
 	<div class="absolute inset-0 z-[2] backdrop-blur-xl bg-dark-103/30">
 		<HighlightVideoPlayback
 			highlight={hl}
-			videoUrl={hl?.playback?.mlbVideoUrl}
-			thumbnailUrl={hl?.thumbnail?.fallback}
-			title={hl?.playback?.title}
-			{last_video_id}
 			onObServedDataId={(id) => {
 				onObServedDataId(id);
 			}}
+			{currentVideoId}
 		/>
 	</div>
 </div>
