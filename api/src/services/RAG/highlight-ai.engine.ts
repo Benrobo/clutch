@@ -46,8 +46,8 @@ export default class HighlightAIEngine {
   ): Promise<CallToolResponse<T> | null> {
     if (tool_name === "search_web") {
       const [_, value] = (parameters ?? "").split("=");
-      const sanitizedParameters = value
-        .replace(/["]/g, "")
+      const sanitizedParameters = (value ?? "")
+        ?.replace(/["]/g, "")
         .replace(/[']/g, "")
         .replace(/\\/g, "");
 
