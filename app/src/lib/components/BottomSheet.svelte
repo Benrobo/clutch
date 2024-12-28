@@ -31,7 +31,7 @@
 		{#if showBackdrop}
 			<div
 				class="fixed inset-0 bg-dark-100/5 backdrop-blur-sm"
-				style="z-index: 999999;"
+				style="z-index: 99;"
 				on:click={onClose}
 				transition:fade={{ duration: 50 }}
 			/>
@@ -40,7 +40,7 @@
 		<!-- Bottom Sheet -->
 		<div
 			bind:this={sheetElement}
-			style="z-index: 999999;"
+			style="z-index: 100;"
 			class={cn(
 				'w-full max-w-[600px] mx-auto h-[60vh] bg-white-100',
 				'transform transition-transform duration-300 ease-out fixed bottom-0 left-0 right-0',
