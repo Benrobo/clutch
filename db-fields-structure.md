@@ -50,3 +50,18 @@
 // description -> gotten from highlights -> items -> -> description (API based)
 // title -> gotten from highlights -> items -> -> title (API based)
 ```
+
+## Chat Messages
+
+```js
+// sources
+[
+  {
+    title: "",
+    description: "",
+    url: "",
+    favicon: "",
+    site_name: "",
+  },
+];
+```
