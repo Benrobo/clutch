@@ -556,6 +556,9 @@ export default class RecommendationService {
         NOT: {
           id: { in: seenVideos },
         },
+        summary: {
+          not: null as any,
+        },
       },
       take: Math.floor(limit * 0.7), // 70% trending
       cursor: cursor ? { id: cursor } : undefined,
