@@ -25,6 +25,7 @@
 	import { useFeedStore } from '@/store/feed.store';
 	import { recommendationStore } from '@/store/recommendation.store';
 	import { useLocalStorage } from '$lib/hooks/useLocalStorage';
+	import ChatFeed from '@/modules/chat/components/ChatFeed.svelte';
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
@@ -52,6 +53,10 @@
 	// Video playback state
 	let observedPlaybackId: string | null = null;
 	$: observedPlaybackId = null;
+
+	// chat feed
+	let chatId: string | null;
+	$: chatId = null;
 
 	// Recommendation pagination
 	const MAX_RECOMMENDATIONS = 10;
@@ -180,8 +185,7 @@
 	let summaryHighlighter: Highlighter | null = null;
 
 	onMount(() => {
-		console.log('Component mounted, invalidating query');
-		queryClient.invalidateQueries({ queryKey: ['recommendations', activeFeed] });
+		// queryClient.invalidateQueries({ queryKey: ['recommendations', activeFeed] });
 		params.updateParams({
 			feed: activeFeed
 		});
@@ -190,6 +194,7 @@
 	onDestroy(() => {
 		// @ts-expect-error
 		if (insightsHighlighter) insightsHighlighter?.destroy();
+		// @ts-expect-error
 		if (summaryHighlighter) summaryHighlighter?.destroy();
 	});
 </script>
@@ -292,6 +297,7 @@
 		onClose={() => {
 			feedStore.toggleShowBottomSheet(false);
 			feedStore.setVideoPlaying(true);
+			chatId = null;
 		}}
 		headline="Play Insights"
 		tagline=""
@@ -324,7 +330,7 @@
 				</Flex>
 			</Flex>
 
-			<div class="w-full max-h-[250px] overflow-y-auto hideScrollBar2">
+			<div class="w-full max-h-[250px] overflow-y-auto hideScrollBar3">
 				<p class="text-xs text-dark-100/80 font-poppins">
 					{highlight?.playback?.description}
 				</p>
@@ -373,18 +379,27 @@
 								})),
 								options: { caseSensitive: true }
 							})}
-							{(summaryHighlighter = highlighter)}
-							{highlighter.render(summaryContainer)}
+							{highlighter.render(summaryContainer ?? null) ?? ''}
 						{/if}
 					</p>
 				</div>
 			</div>
 
 			<div class="flex justify-center mt-2 pb-5">
-				<AiButton onClick={() => {}} visible={$feedStore?.showBottomSheet} />
+				<AiButton
+					onClick={() => {
+						chatId = '1234';
+						// feedStore.toggleShowBottomSheet(false);
+					}}
+					visible={$feedStore?.showBottomSheet}
+				/>
 			</div>
 		</div>
 	</BottomSheet>
+{/if}
+
+{#if chatId}
+	<ChatFeed {chatId} onClose={() => (chatId = null)} />
 {/if}
 
 <style>
