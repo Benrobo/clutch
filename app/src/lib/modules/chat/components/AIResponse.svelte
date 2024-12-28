@@ -63,7 +63,7 @@
 
 		<!-- answer content -->
 		<div class="w-full h-auto">
-			<span class="text-white-200 font-recoleta font-normal text-md sm:text-lg">
+			<span class="text-white-100 font-recoleta font-normal text-md sm:text-lg">
 				{answer}
 			</span>
 		</div>
