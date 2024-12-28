@@ -34,6 +34,9 @@ const env = {
   EXA_AI_API_KEY: process.env.EXA_AI_API_KEY!,
   // huggingface token
   HF_TOKEN: process.env.HF_TOKEN!,
+
+  // JINA-AI
+  JINA_API_KEY: process.env.JINA_API_KEY!,
 };
 
 export default env;
