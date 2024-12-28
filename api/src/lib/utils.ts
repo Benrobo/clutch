@@ -34,3 +34,63 @@ export function checkDurationConstraints(
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+export const lowerCase = (str: string) => {
+  return str.toLowerCase();
+};
+
+export const getCleanedUrl = (url: string) => {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.href.endsWith("/")
+      ? urlObj.href.replace(/\/$/, "")
+      : urlObj.href;
+  } catch (e) {
+    return url;
+  }
+};
+
+export function extractCleanDomain(url: string): string {
+  if (!url) return "";
+  const cleanedUrl = getCleanedUrl(url);
+  const domain = cleanedUrl.split("/")[2];
+  return domain.replace("www.", "");
+}
+
+export const generateRandomHexColor = (): string => {
+  // Generate a random number between 0x0 and 0xFFFFFF
+  const randomColor = Math.floor(Math.random() * 0xffffff);
+
+  // Convert to hex and pad with zeros if needed
+  return "#" + randomColor.toString(16).padStart(6, "0");
+};
+
+export const extractAxiosResponseData = <T>(
+  res: any | null,
+  type: "success" | "error"
+) => {
+  if (type === "error") {
+    return res?.response as T;
+  }
+  return res as T;
+};
+
+export const capitalizeFirstLetterOfEachWord = (str: string) => {
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+export const validateImageUrl = async (url: string) => {
+  try {
+    const req = await fetch(url);
+    if (!req.ok) {
+      return false;
+    }
+    return true;
+  } catch (e) {
+    console.log(`Error validating image URL:`, e);
+    return false;
+  }
+};
