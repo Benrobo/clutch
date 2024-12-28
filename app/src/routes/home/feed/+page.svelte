@@ -26,19 +26,19 @@
 	import { recommendationStore } from '@/store/recommendation.store';
 	import { useLocalStorage } from '$lib/hooks/useLocalStorage';
 	import ChatFeed from '@/modules/chat/components/ChatFeed.svelte';
+	import { authStore } from '@/store/auth.store';
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
 		key: 'feed',
 		defaultValue: 'foryou'
 	});
-	const pbIdParam = params.getParam<string>({
+	$: pbIdParam = params.getParam<string>({
 		key: 'pbId',
 		defaultValue: ''
 	});
 
 	$: activeFeed = $feedParam;
-	$: activePbId = $pbIdParam;
 
 	const LAST_VIEWED_IDS_KEY = 'lastViewedPlaybackIds';
 	const lastViewedPbIdsStore = useLocalStorage<string[]>(LAST_VIEWED_IDS_KEY, []);
@@ -166,9 +166,11 @@
 		!$loadMoreRecommendationsMut.isPending
 	) {
 		let timeoutId = setTimeout(() => {
-			lastViewedPbIdsStore.set([...lastViewedPbIds, observedPlaybackId as string]);
-			$markHighlightVideoViewMut.mutate(observedPlaybackId as string);
-			clearTimeout(timeoutId);
+			if ($authStore?.user?.id) {
+				lastViewedPbIdsStore.set([...lastViewedPbIds, observedPlaybackId as string]);
+				$markHighlightVideoViewMut.mutate(observedPlaybackId as string);
+				clearTimeout(timeoutId);
+			}
 		}, 4000);
 	}
 
@@ -268,8 +270,8 @@
 					<div class="w-full h-full snap-start snap-always">
 						<HighlightVideo
 							hl={rec}
-							last_video_id={lastVisibleItemId}
 							onObServedDataId={(id) => (observedPlaybackId = id)}
+							currentVideoId={$pbIdParam}
 						/>
 					</div>
 				{/each}
@@ -296,8 +298,8 @@
 		isOpen={$feedStore?.showBottomSheet}
 		onClose={() => {
 			feedStore.toggleShowBottomSheet(false);
-			feedStore.setVideoPlaying(true);
 			chatId = null;
+			setTimeout(() => feedStore.setVideoPlaying(true), 300);
 		}}
 		headline="Play Insights"
 		tagline=""
@@ -389,6 +391,7 @@
 				<AiButton
 					onClick={() => {
 						chatId = '1234';
+						feedStore.setVideoPlaying(false);
 						// feedStore.toggleShowBottomSheet(false);
 					}}
 					visible={$feedStore?.showBottomSheet}
