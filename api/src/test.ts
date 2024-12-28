@@ -3,6 +3,12 @@ import uploadFinalVideo from "./scripts/video-processing/uploadFinalVideo.js";
 import MLBAPIHelper from "./helpers/mlb/mlb-api.helper.js";
 import fs from "fs/promises";
 import path from "path";
+import searchWeb from "./services/RAG/tools/searchWeb.js";
+import WebCrawler from "./helpers/web-crawler.js";
+import { validateImageUrl } from "./lib/utils.js";
+import ToolOrchestrator from "./services/RAG/orchestrator.js";
+import ContentModeration from "./helpers/content-moderation.js";
+import HighlightAIEngine from "./services/RAG/highlight-ai.engine.js";
 
 async function mlbTest() {
   // MLB API TEST
@@ -129,6 +135,44 @@ async function testUploadingVideo() {
     try {
       // await mlbTest();
       // await testUploadingVideo();
+      // const result = await searchWeb(
+      //   "When was the last time the Guardians won a championship?"
+      // );
+      // console.log(result);
+      // const webCrawler = new WebCrawler();
+      // const webMetadata = await webCrawler.getWebsiteMetadata(
+      //   `https://apnews.com/article/cleveland-guardians-cecac3263d06ed2b8592ea22488b6b00`
+      // );
+      // console.log(webMetadata);
+      // const validateFavicon = await validateImageUrl(
+      //   // "https://wager6.ag/wp-content/uploads/2020/01/cropped-w6logo-2-180x180.png"
+      //   "https://apnews.com/apple-touch-icon.png"
+      // );
+      // console.log({ validateFavicon });
+
+      const toolOrchestrator = new ToolOrchestrator();
+      // const result = await toolOrchestrator.queryRoute(
+      //   // "Who hit the most home runs in 2021?"
+      //   // "What was the last time the Yankees won a championship?"
+      //   // "hello"
+      //   // "what services do you offer?"
+      //   "Hey gemini, wsup. how's your day going."
+      // );
+
+      // console.log({ result });
+
+      const contentModerator = new ContentModeration();
+      // const result = await contentModerator.safetyCheck(
+      //   // "I am a bad person."
+      //   // "Hey gemini, wsup. how's your day going."
+      //   "hello"
+      // );
+      // console.log({ result });
+
+      const hlAIEngine = new HighlightAIEngine();
+      const result = await hlAIEngine.generateAIResponse(
+        "What was the last time the Yankees won a championship?"
+      );
     } catch (error) {
       console.error("Test Error:", error);
     }
