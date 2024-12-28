@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec \"clear && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/server.ts\"",
+    "devOld": "nodemon --exec \"node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/server.ts\"",
     "vid:process": "tsx src/scripts/proces-video.ts",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
@@ -28,7 +29,7 @@
     "cheerio": "^1.0.0",
     "dayjs": "^1.11.13",
     "download": "^8.0.0",
-    "exa-js": "^1.3.2",
+    "exa-js": "^1.3.3",
     "firebase-admin": "^13.0.1",
     "fluent-ffmpeg": "^2.1.3",
     "google-auth-library": "^9.15.0",
@@ -40,6 +41,7 @@
     "langchain": "^0.3.2",
     "short-uuid": "^5.2.0",
     "turndown": "^7.2.0",
+    "user-agents": "^1.1.401",
     "winston": "^3.14.2",
     "zod": "^3.23.8"
   },
@@ -54,6 +56,7 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20.11.17",
     "@types/turndown": "^5.0.5",
+    "@types/user-agents": "^1.0.4",
     "dotenv": "^16.4.5",
     "nodemon": "^3.1.7",
     "prisma": "^5.19.1",
