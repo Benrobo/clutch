@@ -30,6 +30,7 @@ model users {
     preferences      Json? // { teams: number[], players: number[] }
     saved_highlights saved_highlights[]
     liked_highlights user_highlight_likes[]
+    chat             chat[]
 
     @@index([email])
 }
@@ -193,6 +194,46 @@ model user_highlight_likes {
     @@id([user_id, playback_id])
     @@index([user_id])
     @@index([playback_id])
+}
+
+enum RefType {
+    highlight_playback
+}
+
+model chat {
+    id       String   @id @default(cuid())
+    user_id  String
+    ref      String?
+    ref_type RefType?
+
+    title String
+
+    created_at DateTime @default(now())
+
+    user     users           @relation(fields: [user_id], references: [id])
+    messages chat_messages[]
+
+    @@unique([user_id, ref])
+    @@index([user_id])
+}
+
+enum ChatRole {
+    USER
+    AI
+}
+
+model chat_messages {
+    id      String   @id @default(cuid())
+    chat_id String
+    role    ChatRole
+    content String
+    sources Json? // check db-fields-structure.md
+
+    created_at DateTime @default(now())
+
+    chat chat @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+
+    @@index([chat_id])
 }
 
 enum JobType {
