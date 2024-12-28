@@ -11,16 +11,17 @@
 		deviceInfo?.device?.type === 'smartphone' && deviceInfo?.os?.name.toLowerCase() === 'ios';
 </script>
 
-<AuthLayout>
-	<div class="w-screen h-screen flex flex-col bg-dark-103">
-		<main class={cn('flex-1 overflow-hidden relative pb-[4em]', isSafariMobile && 'pbh-[10em]')}>
-			<div class="w-full h-full mx-auto md:max-w-[643px]">
-				<slot />
-			</div>
-		</main>
-		<BottomNavTab />
-	</div>
-</AuthLayout>
+<!-- <AuthLayout> -->
+<div class="w-screen h-screen flex flex-col bg-dark-103">
+	<main class={cn('flex-1 overflow-hidden relative pb-[4em]', isSafariMobile && 'pbh-[10em]')}>
+		<div class="w-full h-full mx-auto md:max-w-[643px]">
+			<slot />
+		</div>
+	</main>
+	<BottomNavTab />
+</div>
+
+<!-- </AuthLayout> -->
 
 <style>
 	:global(body) {
