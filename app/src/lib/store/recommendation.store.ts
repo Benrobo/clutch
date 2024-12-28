@@ -43,7 +43,6 @@ function createRecommendationStore() {
     return {
         subscribe,
         updateFeed: (feed: 'foryou' | 'explore', newState: Partial<FeedState>) => {
-            console.log('Updating feed:', { feed, newState });
             update(state => {
                 const updatedState = {
                     ...state,
@@ -60,7 +59,6 @@ function createRecommendationStore() {
                         isLoadingMore: newState.isLoadingMore ?? state[feed].isLoadingMore
                     }
                 };
-                console.log('Updated state:', updatedState);
                 return updatedState;
             });
         },
