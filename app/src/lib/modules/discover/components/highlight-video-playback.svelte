@@ -11,11 +11,8 @@
 	import type { RecommendationData } from '@/types/recommendation';
 
 	export let highlight: RecommendationData | null = null;
-	export let videoUrl: string | undefined = undefined;
-	export let thumbnailUrl: string | undefined = undefined;
-	export let title: string | undefined = undefined;
-	export let last_video_id: string | null = null;
 	export let onObServedDataId: (id: string | null) => void = () => {};
+	export let currentVideoId: string | null = null;
 
 	type AspectRatio = '9:16' | '16:9';
 	let currentAspectRatio: AspectRatio = '16:9';
@@ -131,24 +128,31 @@
 			deviceInfo?.device?.type === 'smartphone' && '-translate-y-[10em]'
 		)}
 	>
-		<video
-			bind:this={videoElement}
-			class={cn('w-full h-full object-cover', $feedStore.isInitialVideoLoading ? 'hidden' : 'flex')}
-			preload="auto"
-			muted={true}
-			loop={true}
-			width="640"
-			height="360"
-			on:loadstart={handleLoadStart}
-			on:canplay={handleCanPlay}
-			on:waiting={handleWaiting}
-			on:playing={handlePlaying}
-			on:timeupdate={() => {}}
-			poster={highlight?.thumbnail?.main || highlight?.thumbnail?.fallback}
-		>
-			<!-- <source src={videoUrl} type="video/mp4" /> -->
-			<source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" />
-		</video>
+		{#if currentVideoId === highlight?.playback?.id}
+			<video
+				bind:this={videoElement}
+				class={cn(
+					'w-full h-full object-cover',
+					$feedStore.isInitialVideoLoading ? 'hidden' : 'flex'
+				)}
+				playsinline
+				preload="auto"
+				muted={true}
+				loop={true}
+				width="640"
+				height="360"
+				autoplay
+				on:loadstart={handleLoadStart}
+				on:canplay={handleCanPlay}
+				on:waiting={handleWaiting}
+				on:playing={handlePlaying}
+				on:timeupdate={() => {}}
+				poster={highlight?.thumbnail?.main || highlight?.thumbnail?.fallback}
+			>
+				<source src={highlight?.playback?.mlbVideoUrl} type="video/mp4" />
+				<!-- <source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" /> -->
+			</video>
+		{/if}
 
 		<!-- Main Minor Video Control -->
 		<div
