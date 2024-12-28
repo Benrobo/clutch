@@ -84,7 +84,7 @@
 		width: 18px;
 		height: 18px;
 		fill: transparent;
-		animation: dasharray 1s linear forwards;
+		animation: dasharray 2s linear forwards infinite;
 	}
 
 	.ai-button-trigger .inner {
