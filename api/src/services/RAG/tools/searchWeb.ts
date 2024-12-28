@@ -4,7 +4,7 @@ import redis from "../../../config/redis.js";
 
 const cacheWebResult = async (query: string, data: any) => {
   const cacheKey = `web-search:${query}`;
-  const expiry = 10 * 60; // 10 minutes
+  const expiry = 20 * 60; // 10 minutes
   const pipeline = redis.pipeline();
   pipeline.sadd(cacheKey, JSON.stringify(data));
   pipeline.expire(cacheKey, expiry);
@@ -13,7 +13,7 @@ const cacheWebResult = async (query: string, data: any) => {
 
 const extendCacheTime = async (query: string) => {
   const cacheKey = `web-search:${query}`;
-  const expiry = 10 * 60; // 10 minutes
+  const expiry = 20 * 60; // 10 minutes
   const pipeline = redis.pipeline();
   pipeline.expire(cacheKey, expiry);
   await pipeline.exec();
