@@ -170,9 +170,9 @@ async function testUploadingVideo() {
       // console.log({ result });
 
       const hlAIEngine = new HighlightAIEngine();
-      const result = await hlAIEngine.generateAIResponse(
-        "What was the last time the Yankees won a championship?"
-      );
+      // const result = await hlAIEngine.generateAIResponse(
+      //   "What was the last time the Yankees won a championship?"
+      // );
     } catch (error) {
       console.error("Test Error:", error);
     }
