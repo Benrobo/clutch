@@ -2,20 +2,20 @@ import ExaAiService from "../../exa-ai.service.js";
 import retry from "async-retry";
 import redis from "../../../config/redis.js";
 
+const CACHE_EXPIRY = 60 * 60; // 1hr
+
 const cacheWebResult = async (query: string, data: any) => {
   const cacheKey = `web-search:${query}`;
-  const expiry = 20 * 60; // 10 minutes
   const pipeline = redis.pipeline();
   pipeline.sadd(cacheKey, JSON.stringify(data));
-  pipeline.expire(cacheKey, expiry);
+  pipeline.expire(cacheKey, CACHE_EXPIRY);
   await pipeline.exec();
 };
 
 const extendCacheTime = async (query: string) => {
   const cacheKey = `web-search:${query}`;
-  const expiry = 20 * 60; // 10 minutes
   const pipeline = redis.pipeline();
-  pipeline.expire(cacheKey, expiry);
+  pipeline.expire(cacheKey, CACHE_EXPIRY);
   await pipeline.exec();
   console.log(`Extended cache time for ${query}`);
 };
