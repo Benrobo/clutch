@@ -229,6 +229,8 @@ model chat_messages {
     content String
     sources Json? // check db-fields-structure.md
 
+    error String?
+
     created_at DateTime @default(now())
 
     chat chat @relation(fields: [chat_id], references: [id], onDelete: Cascade)
