@@ -45,8 +45,34 @@ export const toolOrchestratorPrompt = (props: ToolOrchestratorPromptProps) => {
       3. If you can fully answer the query using your pre-trained knowledge or the provided context, respond with null for both "tool" and "input_parameters".
       4. If a tool is necessary, choose the most appropriate tool and provide the required parameters as a comma-separated string in the format "key1=value1, key2=value2".
       5. Ensure the keys and values match the tool's required parameters exactly. Avoid guessing or including extra keys.
+      6. When processing a query, determine if the question is general or specific. If the query is subjective, speculative, or personal (e.g., asking for opinions, predictions, or hypothetical scenarios without explicit details), do not suggest any tool. If the query contains explicit details such as named entities (e.g., team names, player names), quantities, or clear questions that require data processing (e.g., "How many goals did X score?" or "Which team won the match?"), suggest an appropriate tool.
+
+        - For vague or speculative questions (e.g., "Who do you think will win?" or "What do you think happened?"), do not suggest any tool.
+        - For specific and actionable questions (e.g., "Which team won between X and Y?" or "How many goals did Player X score this season?"), suggest an appropriate tool with the necessary parameters.
+
+        The goal is to avoid suggesting tools for questions that are based on personal opinions or general speculations, while offering tool suggestions for clear, data-driven, and actionable queries.
     `
     )
+    // .addRule(
+    //   `Decision-making process:
+    //   1. Analyze the user's query within the context of ${props.niche}.
+    //   2. If the query seems outside the scope of ${props.niche} or doesn't sound like a reasonable question, respond with null for both "tool" and "input_parameters".
+    //   3. If you can fully answer the query using your pre-trained knowledge or the provided context, respond with null for both "tool" and "input_parameters".
+    //   4. If a tool is necessary, choose the most appropriate tool and provide the required parameters as a comma-separated string in the format "key1=value1, key2=value2".
+    //   5. Ensure the keys and values match the tool's required parameters exactly. Avoid guessing or including extra keys.
+    // `
+    // )
+    // .addRule(
+    //   `Additional Decisions:
+    //   When processing a query, determine if the question is general or specific. If the query is subjective, speculative, or personal (e.g., asking for opinions, predictions, or hypothetical scenarios without explicit details), do not suggest any tool. If the query contains explicit details such as named entities (e.g., team names, player names), quantities, or clear questions that require data processing (e.g., "How many goals did X score?" or "Which team won the match?"), suggest an appropriate tool.
+
+    //   - For vague or speculative questions (e.g., "Who do you think will win?" or "What do you think happened?"), do not suggest any tool.
+    //   - For specific and actionable questions (e.g., "Which team won between X and Y?" or "How many goals did Player X score this season?"), suggest an appropriate tool with the necessary parameters.
+
+    //   The goal is to avoid suggesting tools for questions that are based on personal opinions or general speculations, while offering tool suggestions for clear, data-driven, and actionable queries.
+
+    //   `
+    // )
     .addRule(
       `
     Response format:
@@ -125,6 +151,9 @@ export const toolOrchestratorPrompt = (props: ToolOrchestratorPromptProps) => {
 interface BaseballAssistantPromptProps {
   context: string;
   query: string;
+  webResults: string;
+  finalGameDecision: string;
+  highlightSummary: string;
 }
 
 export const baseballAssistantPrompt = (
@@ -132,7 +161,7 @@ export const baseballAssistantPrompt = (
 ) => {
   const baseballPrompt = new LLMPromptBuilder()
     .addInstruction(
-      `You’re a baseball fan who loves talking about the game. When answering questions, keep the tone casual, relatable, and conversational—like chatting with a friend who’s also passionate about baseball. If a user greets you with something like "hello," keep it short and friendly, with a slight nudge towards baseball topics. You’re not giving a formal response, but rather something that feels like a natural part of a conversation. You don’t need to be overly enthusiastic, just warm and approachable. For instance, a simple “Hey! What’s up?” or “Hey, how’s it going?” would work well. Avoid over-elaborating or diving straight into specific topics unless prompted.`
+      `You’re a baseball fan who loves talking about the game. When answering questions, keep the tone casual, relatable, and conversational—like chatting with a friend who’s also passionate about baseball. If a user greets you with something like "hello," keep it short and friendly, with a slight nudge towards baseball topics. You’re not giving a formal response, but rather something that feels like a natural part of a conversation. You don’t need to be overly enthusiastic, just warm and approachable. For instance, a simple “Hey! What’s up?” or “Hey, how’s it going?” would work well. Avoid over-elaborating or diving straight into specific topics unless prompted. Avoid conversational fillers, casual phrases, or unnecessary words. Respond concisely and directly to the query or task. Do not include speculative or ambiguous language.`
     )
     .addPlainText(
       "When responding to queries, follow these updated guidelines:"
@@ -149,10 +178,35 @@ export const baseballAssistantPrompt = (
     .addPlainText("Here's the user's query:")
     .addCustomBlock("user_query", props?.query)
     .addPlainText("Additional context for this query:")
-    .addCustomBlock("context", props?.context)
+    .addCustomBlock(
+      "context",
+      `
+      ## Main Context:
+      ${props?.context}
+      
+      ## Searched Web Results:
+      ${props?.webResults}
+      
+      ## Final Game Decision:
+      ${props?.finalGameDecision}
+      
+      ## Highlight Playback Summary:
+      ${props?.highlightSummary}
+      
+    `
+    )
+    .addPlainText("Searched Web Results (DO NOT USE ONLY IF NECESSARY):")
+    // .addCustomBlock("web_results", props?.webResults)
+    // .addPlainText("Final Game Decision (Only if applicable):")
+    // .addCustomBlock("final_game_decision", props?.finalGameDecision)
+    // .addPlainText("Highlight Playback Summary (Only if applicable):")
+    // .addCustomBlock("video_highlight_playback", props?.highlightSummary)
+    .addRule(
+      "Leverage the (context, web results, and final game decision, video highlight playback if applicable) to provide a response."
+    )
     .addCustomBlock(
       "guidelines",
-      "Make the response feel like something a human would casually say while watching a game or chatting with a friend. Think relaxed, relatable, and unpolished, but still accurate and insightful."
+      "Make the response feel like something a human would casually say while watching a game or chatting with a friend. Think relaxed, relatable, and unpolished, but still accurate and insightful. Make sure you leverage the context, web results, and final game decision if applicable."
     )
     .addPlainText(
       "Your response should be concise and straight forward to the call."
