@@ -1,6 +1,18 @@
 import prisma from "../prisma/index.js";
 import { HttpException } from "../lib/exception.js";
 
+type PlaybackResponse = {
+  id: string;
+  highlight_id: string;
+  title: string;
+  description: string;
+  metadata: null;
+  thumbnail: string | null;
+  likes: number;
+  views: number;
+  mlb_video_url: string;
+};
+
 export default class HighlightService {
   async toggleLike(userId: string, playbackId: string): Promise<boolean> {
     const playback = await prisma.highlights_playbacks.findUnique({
@@ -51,5 +63,18 @@ export default class HighlightService {
       ]);
       return true;
     }
+  }
+
+  async getPlayback(playbackId: string) {
+    return await prisma.highlights_playbacks.findUnique({
+      where: { id: playbackId },
+      include: {
+        highlight: {
+          include: {
+            game: true,
+          },
+        },
+      },
+    });
   }
 }
