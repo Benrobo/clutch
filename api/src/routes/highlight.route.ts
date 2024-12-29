@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import HighlightController from "../controllers/highlight.controller.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 import useCatchErrors from "../lib/error.js";
+import { validateSchema } from "../middlewares/validateSchema.js";
+import { AIChatConversationSchema } from "../lib/schema-validator.js";
 
 const router = new Hono();
 const basePath = "/highlights";
@@ -12,6 +14,34 @@ router.put(
   `${basePath}/:playbackId/like`,
   useCatchErrors(
     isAuthenticated(highlightController.toggleLike.bind(highlightController))
+  )
+);
+
+router.post(
+  `${basePath}/:playbackId/start-conversation`,
+  useCatchErrors(
+    isAuthenticated(
+      highlightController.startConversation.bind(highlightController)
+    )
+  )
+);
+
+router.post(
+  `${basePath}/chat/:chatId`,
+  validateSchema(AIChatConversationSchema),
+  useCatchErrors(
+    isAuthenticated(
+      highlightController.aiChatConversation.bind(highlightController)
+    )
+  )
+);
+
+router.post(
+  `${basePath}/chat/:chatId/process`,
+  useCatchErrors(
+    isAuthenticated(
+      highlightController.processLastMessage.bind(highlightController)
+    )
   )
 );
 
