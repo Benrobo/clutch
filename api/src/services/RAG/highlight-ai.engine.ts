@@ -8,6 +8,7 @@ import {
   CallToolResponse,
   ValidRAGToolToolName,
 } from "../../types/rag.types.js";
+import { baseballAssistantPrompt } from "../../data/prompts/llm-prompts.js";
 
 export default class HighlightAIEngine {
   private gemini: Gemini;
@@ -62,17 +63,82 @@ export default class HighlightAIEngine {
     return sources;
   }
 
-  async generateAIResponse(query: string) {
+  private formatToolResponseToMarkdown<T extends ValidRAGToolToolName>(
+    toolName: ValidRAGToolToolName,
+    toolResponse: CallToolResponse<T>
+  ) {
+    let markdown = "";
+    if (toolName === "search_web") {
+      (toolResponse ?? [])?.slice(0, 5)?.forEach((t) => {
+        markdown += `[${t.url}]\n\n"""\n${t.summary}"""\n\n`;
+      });
+      return markdown;
+    }
+    return markdown;
+  }
+
+  async generateAIResponse(props: {
+    query: string;
+    finalGameDecision: string;
+    highlightSummary: string;
+    context?: string;
+  }) {
     // check if tool is needed
-    const toolDecision = await this.doINeedToolHelp(query);
-    let toolResponse: any = null;
+    const toolDecision = await this.doINeedToolHelp(props.query);
+    console.log({ toolDecision });
+    let toolResponse: CallToolResponse<"search_web"> | null = null;
+    let sources: CallToolResponse<"search_web"> | [] = [];
     if (toolDecision) {
-      toolResponse = await this.callTool(
-        toolDecision?.input_parameters!,
-        toolDecision?.tool as any
-      );
+      const [_toolResponse, _sources] = await Promise.all([
+        this.callTool(
+          toolDecision?.input_parameters!,
+          toolDecision?.tool as any
+        ),
+        this.getSources(props.query),
+      ]);
+
+      toolResponse = _toolResponse;
+      sources = _sources;
     }
 
-    console.log(toolResponse);
+    const formattedToolResponse = this.formatToolResponseToMarkdown(
+      toolDecision?.tool as any,
+      toolResponse as any
+    );
+
+    const prompt = baseballAssistantPrompt({
+      query: props.query,
+      finalGameDecision: props.finalGameDecision,
+      highlightSummary: props.highlightSummary,
+      webResults: formattedToolResponse,
+      context: props.context ?? "N/A",
+    });
+
+    const response = await this.gemini.functionCall({
+      prompt: prompt as any,
+      tools: [
+        {
+          func_name: "baseball_assistant",
+          description: "Provide a response to a baseball question",
+          parameters: {
+            type: "object",
+            properties: {
+              // @ts-expect-error
+              response: {
+                type: "string",
+              },
+            },
+          },
+          required: ["response"],
+        },
+      ],
+    });
+
+    const aiResponse = response?.data?.[0]?.args as { response: string };
+
+    return {
+      response: aiResponse?.response,
+      sources,
+    };
   }
 }
