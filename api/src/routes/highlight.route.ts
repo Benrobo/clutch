@@ -45,4 +45,13 @@ router.post(
   )
 );
 
+router.get(
+  `${basePath}/chat/:chatId/messages`,
+  useCatchErrors(
+    isAuthenticated(
+      highlightController.getChatMessages.bind(highlightController)
+    )
+  )
+);
+
 export default router;
