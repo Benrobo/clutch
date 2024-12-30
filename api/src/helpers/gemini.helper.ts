@@ -79,6 +79,9 @@ export default class Gemini {
             mode: FunctionCallingMode.ANY,
           },
         },
+        generationConfig: {
+          temperature: 1,
+        },
       });
 
       logger.info("Sending prompt to Gemini:", props.prompt);
@@ -111,7 +114,7 @@ export default class Gemini {
       const genModel = this.genAI.getGenerativeModel({
         model: "gemini-2.0-flash-exp",
         // model: "gemini-1.5-flash",
-        systemInstruction: props.instruction,
+        // systemInstruction: props.instruction,
       });
 
       let result: GenerateContentResult;
