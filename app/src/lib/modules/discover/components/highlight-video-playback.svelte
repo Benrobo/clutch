@@ -149,8 +149,8 @@
 				on:timeupdate={() => {}}
 				poster={highlight?.thumbnail?.main || highlight?.thumbnail?.fallback}
 			>
-				<source src={highlight?.playback?.mlbVideoUrl} type="video/mp4" />
-				<!-- <source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" /> -->
+				<!-- <source src={highlight?.playback?.mlbVideoUrl} type="video/mp4" /> -->
+				<source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" />
 			</video>
 		{/if}
 
