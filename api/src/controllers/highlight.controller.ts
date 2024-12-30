@@ -134,12 +134,13 @@ export default class HighlightController {
     });
   }
 
+  // CURRENTLY, CONTENT MODERATION IS BEEN CHECK ON MESSAGE SENT
+  // NOW, IT SHOULD BE DONE WITHIN THE PROCESS METHOD BELOW
+
   async processLastMessage(c: Context) {
     const user = c.get("user");
     const { chatId } = c.req.param();
     const message = await this.chatService.getLastMessage(chatId);
-
-    console.log({ message });
 
     if (message?.role === "AI") {
       return sendResponse.success(c, "Message processed successfully", 200, {
