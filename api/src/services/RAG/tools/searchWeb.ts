@@ -1,6 +1,7 @@
-import ExaAiService from "../../exa-ai.service.js";
 import retry from "async-retry";
 import redis from "../../../config/redis.js";
+import exa from "../../../config/exa-ai.js";
+import { ExaSearchResult } from "../../../config/exa-js-client.js";
 
 const CACHE_EXPIRY = 60 * 60; // 1hr
 
@@ -31,24 +32,46 @@ const getCachedResults = async (query: string) => {
   return null;
 };
 
-export default async function searchWeb(query: string) {
-  const exaService = new ExaAiService();
+export default async function searchWeb(
+  query: string,
+  niche?: string
+): Promise<ExaSearchResult[]> {
   try {
     return await retry(
       async () => {
-        console.log(`Searching web for [${query}]...`);
+        let formattedQuery = `${query}`;
+        if (niche) {
+          formattedQuery = `${formattedQuery}. "${niche}"`;
+        }
+
+        console.log(`Searching web for [${formattedQuery}]...`);
 
         const result = await getCachedResults(query);
 
         if (result) return result;
 
-        const results = await exaService.searchWeb(query, {
+        const { results } = await exa.searchAndContents({
+          query: formattedQuery,
           category: "news",
-          includeText: ["baseball"],
-          excludeText: ["basketball basket ball football"],
-          extras: {
-            imageLinks: 4,
-            links: 5,
+          type: "auto",
+          includeText: "baseball, MLB",
+          excludeText: "basketball, basket ball, football",
+          includeDomains: [
+            "https://www.mlb.com/",
+            "https://www.espn.com/",
+            "https://www.cbssports.com/",
+            "https://www.fangraphs.com",
+            "https://d1baseball.com/",
+            "https://sabr.org/",
+            "https://www.baseballamerica.com/",
+            "https://www.mlbtraderumors.com",
+          ],
+          contents: {
+            extras: {
+              imageLinks: 4,
+              links: 5,
+            },
+            summary: {},
           },
         });
 
@@ -70,6 +93,6 @@ export default async function searchWeb(query: string) {
     );
   } catch (e: any) {
     console.log(`Error searching web:`, e);
-    return null;
+    return [];
   }
 }
