@@ -15,7 +15,8 @@
 	import {
 		getRecommendations,
 		getRecommendationsV2,
-		markHighlightVideoAsSeen
+		markHighlightVideoAsSeen,
+		startPlaybackChatConversation
 	} from '@/http/requests';
 	import type { BaseResponse } from '@/types';
 	import type { RecommendationData, RecommendationResponse } from '@/types/recommendation';
@@ -27,6 +28,7 @@
 	import { useLocalStorage } from '$lib/hooks/useLocalStorage';
 	import ChatFeed from '@/modules/chat/components/ChatFeed.svelte';
 	import { authStore } from '@/store/auth.store';
+	import toast from 'svelte-french-toast';
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
@@ -120,6 +122,19 @@
 		},
 		onError: (error) => {
 			console.error('Failed to track video view:', error);
+		}
+	});
+
+	$: startPlaybackConversationMut = createMutation({
+		mutationFn: async () => await startPlaybackChatConversation($feedParam),
+		onSuccess: (data) => {
+			const resp = extractAxiosResponseData(data, 'success')?.data;
+
+			console.log({ resp });
+		},
+		onError: (err) => {
+			const error = extractAxiosResponseData(err, 'error')?.message;
+			toast.error(error);
 		}
 	});
 
@@ -390,11 +405,12 @@
 			<div class="flex justify-center mt-2 pb-5">
 				<AiButton
 					onClick={() => {
-						chatId = '1234';
+						$startPlaybackConversationMut.mutate();
 						feedStore.setVideoPlaying(false);
 						// feedStore.toggleShowBottomSheet(false);
 					}}
 					visible={$feedStore?.showBottomSheet}
+					loading={$startPlaybackConversationMut.isPending}
 				/>
 			</div>
 		</div>
