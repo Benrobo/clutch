@@ -36,7 +36,7 @@
 				err?.message === 'INTERNAL SERVER ERROR'
 			) {
 				toast.error('Something went wrong.');
-				await logoutClient();
+				// await logoutClient();
 			}
 		}
 	});
