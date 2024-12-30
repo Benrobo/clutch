@@ -8,13 +8,13 @@
 	import { onMount } from 'svelte';
 	import { authStore } from '@/store/auth.store';
 	import AiResponse from './AIResponse.svelte';
-	import { fakeMessages, fakeSources } from '@/data/chatfeed';
 	import { useChatFeedStore } from '@/store/chatfeed.store';
 	import ChatLoading from './loaders/ChatLoading.svelte';
 	import AnswerLoading from './loaders/AnswerLoading.svelte';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
-	import { getChatMessages, sendMessage } from '@/http/requests';
+	import { getChatMessages, processLastMsg, sendMessage } from '@/http/requests';
 	import type { ChatMessagesResponse } from '@/types/chatfeed';
+	import Spinner from '@/components/Spinner.svelte';
 
 	export let onClose: () => void = () => {};
 
@@ -27,19 +27,45 @@
 
 	let message = '';
 
+	$: processingLastMsg = false;
+
 	$: getMessagesQuery = createQuery({
 		queryKey: ['getMessages', chatId],
-		queryFn: async () => getChatMessages(chatId!),
+		queryFn: async () => await getChatMessages(chatId!),
 		enabled: !!chatId
 	});
 
 	$: sendMessageMutation = createMutation({
 		mutationFn: async (message: string) => await sendMessage(chatId!, message),
 		onSuccess: (data) => {
-			const resp = extractAxiosResponseData(data, 'success')
-				?.data as unknown as ChatMessagesResponse;
-			console.log({ data });
-			// $getMessagesQuery.refetch();
+			processingLastMsg = true;
+			$processLastMsgMut.mutate();
+			const resp = extractAxiosResponseData(data, 'success')?.data as unknown as {
+				ai: ChatMessagesResponse;
+				user: ChatMessagesResponse;
+			};
+			chatMessages = [...chatMessages, resp?.user];
+		},
+		onError: (error) => {
+			processingLastMsg = false;
+			console.error(error);
+			$processLastMsgMut.mutate();
+		}
+	});
+
+	$: processLastMsgMut = createMutation({
+		mutationFn: async () => {
+			processingLastMsg = true;
+			const resp = await processLastMsg(chatId!);
+			return resp;
+		},
+		onSuccess: (data) => {
+			processingLastMsg = false;
+			const resp = extractAxiosResponseData(data, 'success')?.data as unknown as {
+				ai: ChatMessagesResponse;
+				user: ChatMessagesResponse;
+			};
+			chatMessages = [...chatMessages, resp?.ai];
 		},
 		onError: (error) => {
 			console.error(error);
@@ -47,14 +73,12 @@
 	});
 
 	$: fetchingChatMessages = $getMessagesQuery.isLoading;
-	$: fetchingAIResponse = false;
+	$: fetchingAIResponse = processingLastMsg || $processLastMsgMut.isPending;
 
-	$: {
-		if ($getMessagesQuery.data) {
-			const data = extractAxiosResponseData($getMessagesQuery.data, 'success')
-				?.data as unknown as ChatMessagesResponse[];
-			chatMessages = data;
-		}
+	$: if ($getMessagesQuery.data) {
+		const data = extractAxiosResponseData($getMessagesQuery.data, 'success')
+			?.data as unknown as ChatMessagesResponse[];
+		chatMessages = data;
 	}
 
 	onMount(() => {});
@@ -90,23 +114,11 @@
 				</Flex>
 
 				<!-- chat feed -->
-				<div class="w-full h-screen overflow-y-auto pb-[20em] px-5 py-3 hideScrollBar2">
-					{#if fetchingChatMessages}
-						<ChatLoading />
-					{/if}
-
-					{#if fetchingAIResponse}
-						<AnswerLoading />
-					{/if}
-
+				<div class="w-full h-screen overflow-y-auto pb-[25em] px-5 py-3 hideScrollBar2">
 					{#if !fetchingChatMessages && chatMessages.length > 0}
 						{#each chatMessages as msg}
-							<!-- ai response -->
-							{#if msg.role === 'AI'}
-								<AiResponse answer={msg.content} sources={msg?.sources?.slice(0, 5)} />
-							{:else}
-								<!-- human response -->
-								<Flex className="w-full h-auto flex-col gap-3 my-10">
+							{#if msg?.role === 'USER'}
+								<Flex className="w-full h-auto flex-col gap-3 mt-10">
 									<Flex className="w-full h-auto flex-row items-center">
 										<img
 											src={$authStore?.user?.avatar}
@@ -123,14 +135,24 @@
 										</div>
 									</Flex>
 								</Flex>
+							{:else if msg?.role === 'AI'}
+								<AiResponse answer={msg.content} sources={msg?.sources?.slice(0, 5)} />
 							{/if}
 						{/each}
+					{/if}
+
+					{#if fetchingChatMessages}
+						<ChatLoading />
+					{/if}
+
+					{#if fetchingAIResponse}
+						<AnswerLoading />
 					{/if}
 				</div>
 
 				<!-- bottom floating chatbox -->
 				<div
-					class="w-full min-h-[80px] px-8 py-3 absolute bottom-0 left-0 bg-dark-100/10 backdrop-blur-sm"
+					class="w-full min-h-[80px] px-8 py-3 pb-10 absolute bottom-0 left-0 bg-dark-100/10 backdrop-blur-sm"
 				>
 					<Flex
 						className="w-full h-[50px] bg-dark-106 items-center justify-between pl-4 pr-1 rounded-full border-[1px] border-gray-101/50 shadow-md shadow-dark-100 scale-[1.05]"
@@ -138,7 +160,7 @@
 						<input
 							type="text"
 							placeholder="Ask me anything about this highlight..."
-							class="w-full h-full py-3 bg-transparent text-white-200 font-recoleta font-normal text-sm border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/90"
+							class="w-full h-full py-3 bg-transparent text-white-200 font-recoleta font-normal text-sm border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/50 disabled:cursor-not-allowed disabled:opacity-50"
 							bind:value={message}
 							on:keydown={(e) => {
 								if (e.key === 'Enter') {
@@ -146,10 +168,15 @@
 									message = '';
 								}
 							}}
+							disabled={$sendMessageMutation.isPending}
 						/>
 
 						<button class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center">
-							<ArrowRight />
+							{#if $sendMessageMutation.isPending}
+								<Spinner size={'20'} />
+							{:else}
+								<ArrowRight size={18} />
+							{/if}
 						</button>
 					</Flex>
 				</div>
