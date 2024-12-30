@@ -13,7 +13,7 @@
 	import ChatLoading from './loaders/ChatLoading.svelte';
 	import AnswerLoading from './loaders/AnswerLoading.svelte';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
-	import { getChatMessages } from '@/http/requests';
+	import { getChatMessages, sendMessage } from '@/http/requests';
 	import type { ChatMessagesResponse } from '@/types/chatfeed';
 
 	export let onClose: () => void = () => {};
@@ -22,17 +22,32 @@
 	$: chatId = $chatFeedStore?.activeConversation?.id;
 	$: userAvatar = $authStore?.user?.avatar;
 
+	let chatMessages: ChatMessagesResponse[] = [];
+	$: chatMessages = [];
+
+	let message = '';
+
 	$: getMessagesQuery = createQuery({
 		queryKey: ['getMessages', chatId],
 		queryFn: async () => getChatMessages(chatId!),
 		enabled: !!chatId
 	});
 
+	$: sendMessageMutation = createMutation({
+		mutationFn: async (message: string) => await sendMessage(chatId!, message),
+		onSuccess: (data) => {
+			const resp = extractAxiosResponseData(data, 'success')
+				?.data as unknown as ChatMessagesResponse;
+			console.log({ data });
+			// $getMessagesQuery.refetch();
+		},
+		onError: (error) => {
+			console.error(error);
+		}
+	});
+
 	$: fetchingChatMessages = $getMessagesQuery.isLoading;
 	$: fetchingAIResponse = false;
-
-	let chatMessages: ChatMessagesResponse[] = [];
-	$: chatMessages = [];
 
 	$: {
 		if ($getMessagesQuery.data) {
@@ -124,6 +139,13 @@
 							type="text"
 							placeholder="Ask me anything about this highlight..."
 							class="w-full h-full py-3 bg-transparent text-white-200 font-recoleta font-normal text-sm border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/90"
+							bind:value={message}
+							on:keydown={(e) => {
+								if (e.key === 'Enter') {
+									$sendMessageMutation.mutate(message);
+									message = '';
+								}
+							}}
 						/>
 
 						<button class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center">
