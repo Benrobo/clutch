@@ -15,6 +15,7 @@
 
 	$: userAvatar = $authStore?.user?.avatar;
 
+
 	onMount(() => {});
 </script>
 
@@ -80,7 +81,7 @@
 					class="w-full min-h-[80px] px-8 py-3 absolute bottom-0 left-0 bg-dark-100/10 backdrop-blur-sm"
 				>
 					<Flex
-						className="w-full h-[50px] bg-dark-106 items-center justify-between pl-4 pr-1 rounded-full border-[1px] border-gray-101/50 shadow-md shadow-dark-100 scale-[1.1]"
+						className="w-full h-[50px] bg-dark-106 items-center justify-between pl-4 pr-1 rounded-full border-[1px] border-gray-101/50 shadow-md shadow-dark-100 scale-[1.05]"
 					>
 						<input
 							type="text"
