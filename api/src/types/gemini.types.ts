@@ -16,7 +16,7 @@ export interface IFunctionCall {
 }
 
 export interface ICallAIProps {
-  instruction: string;
+  instruction?: string;
   user_prompt: string;
   enable_call_history?: boolean;
   history?: {
