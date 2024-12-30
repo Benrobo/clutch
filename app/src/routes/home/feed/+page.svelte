@@ -29,6 +29,8 @@
 	import ChatFeed from '@/modules/chat/components/ChatFeed.svelte';
 	import { authStore } from '@/store/auth.store';
 	import toast from 'svelte-french-toast';
+	import type { ConversationResponse } from '@/types/chatfeed';
+	import { useChatFeedStore } from '@/store/chatfeed.store';
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
@@ -46,6 +48,7 @@
 	const lastViewedPbIdsStore = useLocalStorage<string[]>(LAST_VIEWED_IDS_KEY, []);
 	$: lastViewedPbIds = $lastViewedPbIdsStore;
 
+	const chatFeedStore = useChatFeedStore();
 	const deviceInfo = useDetectDevice();
 	const queryClient = useQueryClient();
 	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
@@ -55,10 +58,6 @@
 	// Video playback state
 	let observedPlaybackId: string | null = null;
 	$: observedPlaybackId = null;
-
-	// chat feed
-	let chatId: string | null;
-	$: chatId = null;
 
 	// Recommendation pagination
 	const MAX_RECOMMENDATIONS = 10;
@@ -126,11 +125,11 @@
 	});
 
 	$: startPlaybackConversationMut = createMutation({
-		mutationFn: async () => await startPlaybackChatConversation($feedParam),
+		mutationFn: async () => await startPlaybackChatConversation($pbIdParam),
 		onSuccess: (data) => {
-			const resp = extractAxiosResponseData(data, 'success')?.data;
-
-			console.log({ resp });
+			const resp = extractAxiosResponseData(data, 'success')
+				?.data as unknown as ConversationResponse;
+			chatFeedStore.setActiveConversation(resp);
 		},
 		onError: (err) => {
 			const error = extractAxiosResponseData(err, 'error')?.message;
@@ -313,7 +312,7 @@
 		isOpen={$feedStore?.showBottomSheet}
 		onClose={() => {
 			feedStore.toggleShowBottomSheet(false);
-			chatId = null;
+			chatFeedStore.reset();
 			setTimeout(() => feedStore.setVideoPlaying(true), 300);
 		}}
 		headline="Play Insights"
@@ -417,8 +416,12 @@
 	</BottomSheet>
 {/if}
 
-{#if chatId}
-	<ChatFeed {chatId} onClose={() => (chatId = null)} />
+{#if $chatFeedStore?.activeConversation?.id}
+	<ChatFeed
+		onClose={() => {
+			chatFeedStore.reset();
+		}}
+	/>
 {/if}
 
 <style>
