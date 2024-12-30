@@ -1,14 +1,21 @@
 <script lang="ts">
+	import { cn } from '@/utils';
 	import { Sparkles } from 'lucide-svelte';
+	import Spinner from './Spinner.svelte';
 
 	export let onClick = () => {};
 	export let visible: boolean = false;
+	export let loading: boolean = false;
 </script>
 
 {#if visible}
 	<button
 		type="button"
-		class="ai-button-trigger w-auto h-[45px] px-6 relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-[100px] border-none outline-none transition-all ease-in-out duration-500 enableBounceEffect"
+		class={cn(
+			'ai-button-trigger w-auto h-[45px] px-6 relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-[100px] border-none outline-none transition-all ease-in-out duration-500 enableBounceEffect',
+			loading && 'grayscale cursor-not-allowed opacity-50'
+		)}
+		disabled={loading}
 		on:click={onClick}
 	>
 		<div class="points_wrapper absolute inset-0 z-[1] pointer-events-none overflow-hidden">
@@ -21,20 +28,24 @@
 			class="inner relative z-[2] w-full text-white flex items-center justify-center gap-1.5 text-base font-medium leading-normal"
 		>
 			<!-- <Sparkles size={18} /> -->
-			<svg
-				class="icon"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2.5"
-			>
-				<polyline
-					points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"
-				></polyline></svg
-			>
+			{#if loading}
+				<Spinner size={'18'} />
+			{:else}
+				<svg
+					class="icon"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2.5"
+				>
+					<polyline
+						points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"
+					></polyline></svg
+				>
+			{/if}
 
 			<span class="text-xs font-poppins"> Ask About This Play </span>
 		</span>
@@ -102,14 +113,14 @@
 			filled 0.1s linear forwards 0.95s;
 	}
 
-	@keyframes dasharray {
+	/* @keyframes dasharray {
 		from {
 			stroke-dasharray: 0 0 0 0;
 		}
 		to {
 			stroke-dasharray: 68 68 0 0;
 		}
-	}
+	} */
 
 	@keyframes filled {
 		to {
