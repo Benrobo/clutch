@@ -1,4 +1,10 @@
 
+export type ConversationResponse = {
+    id: string;
+    ref: string;
+    refType: "highlight_playback" | string;
+    title: string;
+}
 
 export type ChatFeedSources = {
     title: string;
