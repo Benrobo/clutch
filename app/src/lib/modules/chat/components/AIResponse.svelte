@@ -2,7 +2,6 @@
 	import Logo from '@/components/branding/Logo.svelte';
 	import LogoWithText from '@/components/branding/LogoWithText.svelte';
 	import Flex from '@/components/Flex.svelte';
-	import { fakeSources } from '@/data/chatfeed';
 	import type { ChatFeedSources } from '@/types/chatfeed';
 	import { Pickaxe } from 'lucide-svelte';
 
@@ -10,15 +9,17 @@
 	export let sources: ChatFeedSources[] | null = [];
 </script>
 
-{#if sources && sources.length > 0}
-	<Flex className="w-full h-auto flex-col gap-4">
-		<!-- sources sections -->
-		<Flex className="w-full h-auto flex-col">
+<Flex className="w-full h-auto flex-col gap-4 mt-3">
+	<!-- sources sections -->
+	<Flex className="w-full h-auto flex-col mt-3">
+		{#if sources && sources.length > 0}
 			<Flex className="w-full h-auto flex-row items-center">
 				<Pickaxe size={18} class="stroke-white-200" />
 				<h1 class="text-white-200 font-recoleta font-normal text-md">Sources</h1>
 			</Flex>
-			<div class="w-full h-auto flex flex-row items-start justify-start gap-3 overflow-x-auto mt-2">
+			<div
+				class="w-full h-auto flex flex-row items-start justify-start gap-3 overflow-x-auto mt-2 hideScrollBar2"
+			>
 				{#each sources as src}
 					<!-- <Flex
 					className="w-full h-[100px] flex-row items-center justify-between bg-dark-106 p-2 rounded-md"
@@ -51,23 +52,23 @@
 					</a>
 				{/each}
 			</div>
-		</Flex>
-
-		<!-- answer -->
-		<Flex className="w-full h-auto flex-col mt-3">
-			<Flex className="w-full h-auto flex-row items-center">
-				<span class="p-1 rounded-full bg-dark-106">
-					<Logo size={18} className="stroke-red-302 text-red-302" />
-				</span>
-				<h1 class="text-white-200 font-recoleta font-normal text-lg">Answer</h1>
-			</Flex>
-
-			<!-- answer content -->
-			<div class="w-full h-auto">
-				<span class="text-white-100 font-recoleta font-normal text-md sm:text-lg">
-					{answer}
-				</span>
-			</div>
-		</Flex>
+		{/if}
 	</Flex>
-{/if}
+
+	<!-- answer -->
+	<Flex className="w-full h-auto flex-col mt-1">
+		<Flex className="w-full h-auto flex-row items-center">
+			<span class="p-1 rounded-full bg-dark-106">
+				<Logo size={18} className="stroke-red-302 text-red-302" />
+			</span>
+			<h1 class="text-white-200 font-recoleta font-normal text-lg">Answer</h1>
+		</Flex>
+
+		<!-- answer content -->
+		<div class="w-full h-auto">
+			<span class="text-white-100 font-inter font-normal text-md sm:text-lg">
+				{answer}
+			</span>
+		</div>
+	</Flex>
+</Flex>
