@@ -8,6 +8,10 @@ import { sleep } from "../lib/utils.js";
 import HighlightAIEngine from "../services/RAG/highlight-ai.engine.js";
 import { DBGameDecision } from "../types/game.types.js";
 import ContentModeration from "../helpers/content-moderation.js";
+import { SEARCH_WEB_RESPONSE } from "../types/rag.types.js";
+import retry from "async-retry";
+import WebCrawler from "../helpers/web-crawler.js";
+import { ExaSearchResult } from "../config/exa-js-client.js";
 
 export default class HighlightController {
   private highlightService: HighlightService;
@@ -149,15 +153,86 @@ export default class HighlightController {
       : "N/A";
     const context = "N/A";
 
-    const aiResponse = await this.highlightAIEngine.generateAIResponse({
-      query: message?.content!,
-      finalGameDecision,
-      highlightSummary: JSON.stringify(pbSummary, null, 2),
-      context,
-    });
+    try {
+      const aiResponse = await this.highlightAIEngine.generateAIResponse({
+        query: message?.content!,
+        finalGameDecision,
+        highlightSummary: JSON.stringify(pbSummary, null, 2),
+        context,
+      });
 
-    console.log(aiResponse);
+      const parsedSources = await this.parseSources(aiResponse?.sources!);
 
-    return sendResponse.success(c, "Message processed successfully", 200, {});
+      const savedResp = await this.chatService.saveChatMessage({
+        chatId: message?.chat_id!,
+        message: aiResponse?.response!,
+        role: "AI",
+        sources: parsedSources,
+      });
+      return sendResponse.success(
+        c,
+        "Message processed successfully",
+        200,
+        savedResp
+      );
+    } catch (err: any) {
+      const savedResp = await this.chatService.saveChatMessage({
+        chatId: message?.chat_id!,
+        message: `I'm sorry, something went wrong.`,
+        role: "AI",
+        error: err?.message,
+        sources: [],
+      });
+
+      return sendResponse.success(
+        c,
+        "Message processed successfully",
+        200,
+        savedResp
+      );
+    }
+  }
+
+  private async parseSources(sources: ExaSearchResult[]) {
+    if (sources?.length === 0) return [];
+
+    const webCrawler = new WebCrawler();
+    const parsedSources = await retry(
+      async () => {
+        const parsedSources: {
+          url: string;
+          favicon: string;
+          title: string;
+          domain: string;
+          ogImage?: string;
+        }[] = [];
+
+        await Promise.all(
+          sources.map(async (src) => {
+            const metadata = await webCrawler.getWebsiteMetadata(src.url);
+            if (metadata) {
+              if (metadata?.favicon || (metadata?.favicon ?? "")?.length > 0) {
+                parsedSources.push({
+                  url: src.url,
+                  favicon: metadata.favicon,
+                  title: metadata.title,
+                  domain: metadata.domain,
+                  ogImage: metadata.ogImage,
+                });
+              }
+            }
+          })
+        );
+
+        return parsedSources;
+      },
+      {
+        retries: 3,
+        onRetry: (e, attempt) => {
+          console.log(`Failed parsing sources, retrying attempt ${attempt}`);
+        },
+      }
+    );
+    return parsedSources;
   }
 }
