@@ -31,6 +31,13 @@ export default class HighlightAIEngine {
       return null;
     }
 
+    if (response?.tool && !response?.input_parameters) {
+      return {
+        tool: response.tool,
+        input_parameters: `query=${query}`,
+      };
+    }
+
     // check if the tool is available
     const toolExist = getToolByName(lowerCase(response?.tool));
     if (!toolExist) {
@@ -43,7 +50,8 @@ export default class HighlightAIEngine {
 
   private async callTool<T extends ValidRAGToolToolName>(
     parameters: string,
-    tool_name: ValidRAGToolToolName
+    tool_name: ValidRAGToolToolName,
+    niche?: string
   ): Promise<CallToolResponse<T> | null> {
     if (tool_name === "search_web") {
       const [_, value] = (parameters ?? "").split("=");
@@ -52,14 +60,14 @@ export default class HighlightAIEngine {
         .replace(/[']/g, "")
         .replace(/\\/g, "");
 
-      const result = await searchWeb(sanitizedParameters);
-      return result;
+      const result = await searchWeb(sanitizedParameters, niche);
+      return result as any;
     }
     return null;
   }
 
-  private async getSources(query: string) {
-    const sources = await searchWeb(query);
+  private async getSources(query: string, niche?: string) {
+    const sources = await searchWeb(query, niche);
     return sources;
   }
 
@@ -77,7 +85,7 @@ export default class HighlightAIEngine {
     return markdown;
   }
 
-  async generateAIResponse(props: {
+  async generateAIResponseV1(props: {
     query: string;
     finalGameDecision: string;
     highlightSummary: string;
@@ -92,7 +100,8 @@ export default class HighlightAIEngine {
       const [_toolResponse, _sources] = await Promise.all([
         this.callTool(
           toolDecision?.input_parameters!,
-          toolDecision?.tool as any
+          toolDecision?.tool as any,
+          "baseball"
         ),
         this.getSources(props.query),
       ]);
@@ -138,6 +147,53 @@ export default class HighlightAIEngine {
 
     return {
       response: aiResponse?.response,
+      sources,
+    };
+  }
+
+  async generateAIResponse(props: {
+    query: string;
+    finalGameDecision: string;
+    highlightSummary: string;
+    context?: string;
+  }) {
+    // check if tool is needed
+    const toolDecision = await this.doINeedToolHelp(props.query);
+    let toolResponse: CallToolResponse<"search_web"> | null = null;
+    let sources: CallToolResponse<"search_web"> | [] = [];
+    if (toolDecision) {
+      const [_toolResponse, _sources] = await Promise.all([
+        this.callTool(
+          toolDecision?.input_parameters!,
+          toolDecision?.tool as any,
+          "baseball"
+        ),
+        this.getSources(props.query, "baseball"),
+      ]);
+
+      toolResponse = _toolResponse;
+      sources = _sources;
+    }
+
+    const formattedToolResponse = this.formatToolResponseToMarkdown(
+      toolDecision?.tool as any,
+      toolResponse as any
+    );
+
+    const prompt = baseballAssistantPrompt({
+      query: props.query,
+      finalGameDecision: props.finalGameDecision,
+      highlightSummary: props.highlightSummary,
+      webResults: formattedToolResponse,
+      context: props.context ?? "N/A",
+    });
+
+    const response = await this.gemini.callAI({
+      user_prompt: prompt as any,
+    });
+
+    return {
+      response: response?.data,
       sources,
     };
   }
