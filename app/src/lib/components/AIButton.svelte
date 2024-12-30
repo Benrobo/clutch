@@ -13,7 +13,7 @@
 		type="button"
 		class={cn(
 			'ai-button-trigger w-auto h-[45px] px-6 relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-[100px] border-none outline-none transition-all ease-in-out duration-500 enableBounceEffect',
-			loading && 'grayscale cursor-not-allowed opacity-50'
+			loading && 'grayscale cursor-not-allowed'
 		)}
 		disabled={loading}
 		on:click={onClick}
