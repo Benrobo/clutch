@@ -11,14 +11,14 @@
 
 <Flex className="w-full h-auto flex-col gap-4 mt-3">
 	<!-- sources sections -->
-	<Flex className="w-full h-auto flex-col mt-3">
+	<Flex className="w-full h-auto flex-col mt-8">
 		{#if sources && sources.length > 0}
 			<Flex className="w-full h-auto flex-row items-center">
 				<Pickaxe size={18} class="stroke-white-200" />
 				<h1 class="text-white-200 font-recoleta font-normal text-md">Sources</h1>
 			</Flex>
 			<div
-				class="w-full h-auto flex flex-row items-start justify-start gap-3 overflow-x-auto mt-2 hideScrollBar2"
+				class="w-fit h-auto flex flex-row items-start justify-start gap-3 overflow-x-hidden mt-2 hideScrollBar2 whitespace-nowrap"
 			>
 				{#each sources as src}
 					<!-- <Flex
