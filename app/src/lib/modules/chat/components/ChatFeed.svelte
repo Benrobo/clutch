@@ -9,12 +9,18 @@
 	import { authStore } from '@/store/auth.store';
 	import AiResponse from './AIResponse.svelte';
 	import { fakeMessages, fakeSources } from '@/data/chatfeed';
+	import { useChatFeedStore } from '@/store/chatfeed.store';
+	import ChatLoading from './loaders/ChatLoading.svelte';
+	import AnswerLoading from './loaders/AnswerLoading.svelte';
 
-	export let chatId: string | null;
 	export let onClose: () => void = () => {};
 
+	$: chatFeedStore = useChatFeedStore();
+	$: chatId = $chatFeedStore?.activeConversation?.id;
 	$: userAvatar = $authStore?.user?.avatar;
 
+	$: fetchingChatMessages = true;
+	$: fetchingAIResponse = true;
 
 	onMount(() => {});
 </script>
@@ -39,7 +45,9 @@
 						<X size={20} class="stroke-white-100" strokeWidth={2} />
 					</button>
 					<div>
-						<h1 class="text-white-100 font-medium text-lg">Chat</h1>
+						<h1 class="text-white-100 font-normal font-recoleta text-md">
+							{$chatFeedStore?.activeConversation?.title}
+						</h1>
 					</div>
 					<button>
 						<!-- <ChevronLeft size={24} class="stroke-white-100" /> -->
@@ -48,6 +56,14 @@
 
 				<!-- chat feed -->
 				<div class="w-full h-screen overflow-y-auto pb-[20em] px-5 py-3 hideScrollBar2">
+					{#if fetchingChatMessages}
+						<ChatLoading />
+					{/if}
+
+					{#if fetchingAIResponse}
+						<AnswerLoading />
+					{/if}
+
 					{#each fakeMessages as msg}
 						<!-- ai response -->
 						{#if msg.role === 'ai'}
@@ -66,7 +82,7 @@
 										}}
 									/>
 									<div class="w-full h-auto">
-										<span class="text-white-200 font-poppins font-normal text-sm sm:text-lg">
+										<span class="text-white-200 font-poppins font-normal text-sm sm:text-sm">
 											{msg?.content}
 										</span>
 									</div>
