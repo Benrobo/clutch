@@ -77,11 +77,13 @@ export default class HighlightController {
     const user = c.get("user");
     const { chatId } = c.req.param();
     const messages = await this.chatService.getMessages(chatId, user?.id);
+    const sortedMessages = messages.reverse();
+
     return sendResponse.success(
       c,
       "Messages retrieved successfully",
       200,
-      messages
+      sortedMessages
     );
   }
 
@@ -115,7 +117,6 @@ export default class HighlightController {
           error: safetyCheck?.type,
         }),
       ]);
-
       return sendResponse.success(c, "Message sent successfully", 200, {
         ai,
         user,
@@ -128,12 +129,9 @@ export default class HighlightController {
       role: "USER",
     });
 
-    return sendResponse.success(
-      c,
-      "Message sent successfully",
-      200,
-      humanMessage
-    );
+    return sendResponse.success(c, "Message sent successfully", 200, {
+      user: humanMessage,
+    });
   }
 
   async processLastMessage(c: Context) {
@@ -141,8 +139,15 @@ export default class HighlightController {
     const { chatId } = c.req.param();
     const message = await this.chatService.getLastMessage(chatId);
 
+    console.log({ message });
+
     if (message?.role === "AI") {
-      return sendResponse.success(c, "Message processed successfully", 200, {});
+      return sendResponse.success(c, "Message processed successfully", 200, {
+        ai: {
+          ...message,
+          chat: undefined,
+        },
+      });
     }
 
     const pbId = message?.chat?.ref;
@@ -189,12 +194,9 @@ export default class HighlightController {
         role: "AI",
         sources: parsedSources,
       });
-      return sendResponse.success(
-        c,
-        "Message processed successfully",
-        200,
-        savedResp
-      );
+      return sendResponse.success(c, "Message processed successfully", 200, {
+        ai: savedResp,
+      });
     } catch (err: any) {
       const savedResp = await this.chatService.saveChatMessage({
         chatId: message?.chat_id!,
@@ -204,12 +206,9 @@ export default class HighlightController {
         sources: [],
       });
 
-      return sendResponse.success(
-        c,
-        "Message processed successfully",
-        200,
-        savedResp
-      );
+      return sendResponse.success(c, "Message processed successfully", 200, {
+        ai: savedResp,
+      });
     }
   }
 
