@@ -1,3 +1,5 @@
+import { ExaSearchResult } from "../config/exa-js-client";
+
 export type ValidRAGToolToolName = "search_web";
 
 export interface RAGTool {
@@ -17,5 +19,5 @@ export type SEARCH_WEB_RESPONSE = {
 };
 
 export type CallToolResponse<T extends ValidRAGToolToolName> = {
-  search_web: SEARCH_WEB_RESPONSE[];
+  search_web: ExaSearchResult[];
 }[T];
