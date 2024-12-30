@@ -68,3 +68,8 @@ export const startPlaybackChatConversation = async (ref: string)=> {
   const res = await $axios.post(`/highlights/${ref}/start-conversation`);
 	return res.data;
 }
+
+export const getChatMessages = async (ref: string)=> {
+  const res = await $axios.get(`/highlights/chat/${ref}/messages`);
+  return res.data;
+}
