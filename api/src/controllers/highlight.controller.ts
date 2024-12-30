@@ -65,7 +65,12 @@ export default class HighlightController {
       userId: user.id,
     });
 
-    return sendResponse.success(c, "Chat started successfully", 200, _chat);
+    return sendResponse.success(c, "Chat started successfully", 200, {
+      id: _chat?.id,
+      ref: _chat?.ref,
+      refType: _chat?.ref_type,
+      title: _chat?.title,
+    });
   }
 
   async aiChatConversation(c: Context) {
