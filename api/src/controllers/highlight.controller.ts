@@ -116,7 +116,10 @@ export default class HighlightController {
         }),
       ]);
 
-      return sendResponse.success(c, "Message sent successfully", 200, ai);
+      return sendResponse.success(c, "Message sent successfully", 200, {
+        ai,
+        user,
+      });
     }
 
     const humanMessage = await this.chatService.saveChatMessage({
