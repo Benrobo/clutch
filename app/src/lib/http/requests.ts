@@ -73,3 +73,8 @@ export const getChatMessages = async (ref: string)=> {
   const res = await $axios.get(`/highlights/chat/${ref}/messages`);
   return res.data;
 }
+
+export const sendMessage = async (ref: string, message: string)=> {
+  const res = await $axios.post(`/highlights/chat/${ref}`, {message});
+  return res.data;
+}
