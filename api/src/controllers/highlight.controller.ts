@@ -73,6 +73,18 @@ export default class HighlightController {
     });
   }
 
+  async getChatMessages(c: Context) {
+    const user = c.get("user");
+    const { chatId } = c.req.param();
+    const messages = await this.chatService.getMessages(chatId, user?.id);
+    return sendResponse.success(
+      c,
+      "Messages retrieved successfully",
+      200,
+      messages
+    );
+  }
+
   async aiChatConversation(c: Context) {
     const user = c.get("user");
     const { chatId } = c.req.param();
