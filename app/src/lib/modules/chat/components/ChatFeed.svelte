@@ -4,7 +4,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import Portal from '@/components/Portal.svelte';
-	import { cn } from '@/utils';
+	import { cn, extractAxiosResponseData } from '@/utils';
 	import { onMount } from 'svelte';
 	import { authStore } from '@/store/auth.store';
 	import AiResponse from './AIResponse.svelte';
@@ -12,6 +12,9 @@
 	import { useChatFeedStore } from '@/store/chatfeed.store';
 	import ChatLoading from './loaders/ChatLoading.svelte';
 	import AnswerLoading from './loaders/AnswerLoading.svelte';
+	import { createMutation, createQuery } from '@tanstack/svelte-query';
+	import { getChatMessages } from '@/http/requests';
+	import type { ChatMessagesResponse } from '@/types/chatfeed';
 
 	export let onClose: () => void = () => {};
 
@@ -19,8 +22,25 @@
 	$: chatId = $chatFeedStore?.activeConversation?.id;
 	$: userAvatar = $authStore?.user?.avatar;
 
-	$: fetchingChatMessages = true;
-	$: fetchingAIResponse = true;
+	$: getMessagesQuery = createQuery({
+		queryKey: ['getMessages', chatId],
+		queryFn: async () => getChatMessages(chatId!),
+		enabled: !!chatId
+	});
+
+	$: fetchingChatMessages = $getMessagesQuery.isLoading;
+	$: fetchingAIResponse = false;
+
+	let chatMessages: ChatMessagesResponse[] = [];
+	$: chatMessages = [];
+
+	$: {
+		if ($getMessagesQuery.data) {
+			const data = extractAxiosResponseData($getMessagesQuery.data, 'success')
+				?.data as unknown as ChatMessagesResponse[];
+			chatMessages = data;
+		}
+	}
 
 	onMount(() => {});
 </script>
@@ -64,32 +84,33 @@
 						<AnswerLoading />
 					{/if}
 
-					{#each fakeMessages as msg}
-						<!-- ai response -->
-						{#if msg.role === 'ai'}
-							{@const sources = msg.sources?.map((idx) => fakeSources[idx]) ?? []}
-							<AiResponse answer={msg.content} {sources} />
-						{:else}
-							<!-- human response -->
-							<Flex className="w-full h-auto flex-col gap-3 my-10">
-								<Flex className="w-full h-auto flex-row items-center">
-									<img
-										src={$authStore?.user?.avatar}
-										class="w-[20px] h-[20px] rounded-full bg-white-100"
-										alt="favicon"
-										on:error={(e) => {
-											userAvatar = `https://api.dicebear.com/6.x/micah/svg?seed=${$authStore?.user?.email}`;
-										}}
-									/>
-									<div class="w-full h-auto">
-										<span class="text-white-200 font-poppins font-normal text-sm sm:text-sm">
-											{msg?.content}
-										</span>
-									</div>
+					{#if !fetchingChatMessages && chatMessages.length > 0}
+						{#each chatMessages as msg}
+							<!-- ai response -->
+							{#if msg.role === 'AI'}
+								<AiResponse answer={msg.content} sources={msg?.sources?.slice(0, 5)} />
+							{:else}
+								<!-- human response -->
+								<Flex className="w-full h-auto flex-col gap-3 my-10">
+									<Flex className="w-full h-auto flex-row items-center">
+										<img
+											src={$authStore?.user?.avatar}
+											class="w-[20px] h-[20px] rounded-full bg-white-100"
+											alt="favicon"
+											on:error={(e) => {
+												userAvatar = `https://api.dicebear.com/6.x/micah/svg?seed=${$authStore?.user?.email}`;
+											}}
+										/>
+										<div class="w-full h-auto">
+											<span class="text-white-200 font-poppins font-normal text-sm sm:text-sm">
+												{msg?.content}
+											</span>
+										</div>
+									</Flex>
 								</Flex>
-							</Flex>
-						{/if}
-					{/each}
+							{/if}
+						{/each}
+					{/if}
 				</div>
 
 				<!-- bottom floating chatbox -->
