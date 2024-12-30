@@ -63,3 +63,8 @@ export const markHighlightVideoAsSeen = async (playbackId: string) => {
 	const res = await $axios.post(url);
 	return res.data;
 };
+
+export const startPlaybackChatConversation = async (ref: string)=> {
+  const res = await $axios.post(`/highlights/${ref}/start-conversation`);
+	return res.data;
+}
