@@ -95,16 +95,16 @@ export default class ChatService {
     });
   }
 
-  async getMessages(msgId: string) {
+  async getMessages(chatId: string, userId: string) {
     return await prisma.chat_messages.findMany({
       where: {
-        id: msgId,
+        chat_id: chatId,
+        chat: {
+          user_id: userId,
+        },
       },
       orderBy: {
         created_at: "desc",
-      },
-      include: {
-        chat: true,
       },
     });
   }
