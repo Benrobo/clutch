@@ -7,14 +7,11 @@ export type ConversationResponse = {
 }
 
 export type ChatFeedSources = {
-    title: string;
     url: string;
-    description?: string;
-    seo: {
-        favicon: string;
-        site_name: string;
-    },
-    image: string;
+    title: string;
+    domain: string;
+    favicon: string;
+    ogImage?: string;
 }
 
 export type ChatFeedData = {
@@ -22,4 +19,14 @@ export type ChatFeedData = {
     content: string;
     role: "ai" | "human";
     sources?: ChatFeedSources[];
+}
+
+export type ChatMessagesResponse = {
+    id: string;
+    chat_id: string;
+    role: "USER" | "AI";
+    content: string;
+    sources: ChatFeedSources[] | null;
+    error: string | null;
+    created_at: string;
 }
