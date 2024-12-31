@@ -17,6 +17,19 @@ export type RecommendationData = {
         main: null | string,
         fallback: string
     },
+    summary: {
+        count: string,
+        score: string,
+        stats: {
+            time: null | string,
+            distance: null | number,
+            pitchSpeed: string,
+            exitVelocity: null | number,
+        },
+        inning: string,
+        summary: string,
+        highlight: string,
+    }
     playback: {
         id: string,
         title: string,

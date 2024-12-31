@@ -357,9 +357,9 @@
 						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
 						bind:this={insightsContainer}
 					>
-						{#if samplePlaystats?.highlight && insightsContainer}
+						{#if highlight?.summary && insightsContainer}
 							{@const highlighter = new Highlighter({
-								text: samplePlaystats?.highlight,
+								text: highlight?.summary?.highlight,
 								keywords: mlbGlossaryTerms.map((term) => ({
 									word: term,
 									borderStyle: 'solid',
@@ -370,7 +370,7 @@
 									onClick: (match) => console.log({ match })
 								}))
 							})}
-							{highlighter.render(insightsContainer) ?? ''}
+							{highlighter.render(insightsContainer ?? 'N/A') ?? ''}
 						{/if}
 					</p>
 				</div>
@@ -381,9 +381,9 @@
 						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
 						bind:this={summaryContainer}
 					>
-						{#if samplePlaystats?.summary && summaryContainer}
+						{#if highlight?.summary && summaryContainer}
 							{@const highlighter = new Highlighter({
-								text: samplePlaystats?.summary,
+								text: highlight?.summary?.summary,
 								keywords: mlbGlossaryTerms.map((term) => ({
 									word: term,
 									borderStyle: 'solid',
@@ -395,7 +395,7 @@
 								})),
 								options: { caseSensitive: true }
 							})}
-							{highlighter.render(summaryContainer ?? null) ?? ''}
+							{highlighter.render(summaryContainer ?? 'N/A') ?? ''}
 						{/if}
 					</p>
 				</div>

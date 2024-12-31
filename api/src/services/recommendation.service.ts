@@ -58,6 +58,9 @@ export interface HighlightItem {
 }
 
 export default class RecommendationService {
+  private recentlyShownCache = new Map<string, number>();
+  private readonly CACHE_EXPIRY = 1000 * 60 * 5; // 5 minutes
+
   private async getSeenVideos(userId: string): Promise<string[]> {
     const key = `${SEEN_VIDEOS_KEY_PREFIX}${userId}`;
     const seenVideos = await redis.smembers(key);
@@ -540,7 +543,7 @@ export default class RecommendationService {
     });
 
     const allPlaybacks = [...preferredPlaybacks, ...discoveryPlaybacks];
-    return this.mapPlaybacksToHighlights(allPlaybacks);
+    return this.shuffleWithBias(this.mapPlaybacksToHighlights(allPlaybacks));
   }
 
   async getExploreFeedV2(
@@ -648,7 +651,7 @@ export default class RecommendationService {
     });
 
     const allPlaybacks = [...trendingPlaybacks, ...randomPlaybacks];
-    return this.mapPlaybacksToHighlights(allPlaybacks);
+    return this.shuffleWithBias(this.mapPlaybacksToHighlights(allPlaybacks));
   }
 
   private async getUserPreferences(userId: string): Promise<number[]> {
@@ -702,6 +705,7 @@ export default class RecommendationService {
         main: playback.thumbnail ?? null,
         fallback: playback.highlight.content?.photo || null,
       },
+      summary: playback?.summary ?? null,
       playback: {
         id: playback.id,
         title: playback.title,
@@ -876,13 +880,38 @@ export default class RecommendationService {
   }
 
   private shuffleWithBias(items: HighlightItem[]): HighlightItem[] {
-    const result = [...items];
-    for (let i = result.length - 1; i > 0; i--) {
-      if (Math.random() > 0.7) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [result[i], result[j]] = [result[j], result[i]];
-      }
+    if (items.length <= 1) return items;
+
+    // First, create chunks of the array to maintain some original ordering
+    const chunkSize = Math.max(2, Math.floor(items.length / 3));
+    const chunks: HighlightItem[][] = [];
+
+    for (let i = 0; i < items.length; i += chunkSize) {
+      chunks.push(items.slice(i, i + chunkSize));
     }
-    return result;
+
+    // Shuffle within each chunk
+    chunks.forEach((chunk) => {
+      for (let i = chunk.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [chunk[i], chunk[j]] = [chunk[j], chunk[i]];
+      }
+    });
+
+    // Shuffle the chunks themselves
+    for (let i = chunks.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [chunks[i], chunks[j]] = [chunks[j], chunks[i]];
+    }
+
+    // Randomly decide whether to reverse some chunks
+    chunks.forEach((chunk) => {
+      if (Math.random() > 0.5) {
+        chunk.reverse();
+      }
+    });
+
+    // Flatten the chunks back into a single array
+    return chunks.flat();
   }
 }
