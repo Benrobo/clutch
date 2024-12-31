@@ -38,18 +38,17 @@
 	$: sendMessageMutation = createMutation({
 		mutationFn: async (message: string) => await sendMessage(chatId!, message),
 		onSuccess: (data) => {
-			processingLastMsg = true;
-			$processLastMsgMut.mutate();
 			const resp = extractAxiosResponseData(data, 'success')?.data as unknown as {
-				ai: ChatMessagesResponse;
 				user: ChatMessagesResponse;
 			};
 			chatMessages = [...chatMessages, resp?.user];
+			processingLastMsg = true;
+			$processLastMsgMut.mutate();
+			scrollToBottom();
 		},
 		onError: (error) => {
 			processingLastMsg = false;
 			console.error(error);
-			$processLastMsgMut.mutate();
 		}
 	});
 
@@ -63,11 +62,11 @@
 			processingLastMsg = false;
 			const resp = extractAxiosResponseData(data, 'success')?.data as unknown as {
 				ai: ChatMessagesResponse;
-				user: ChatMessagesResponse;
 			};
 			chatMessages = [...chatMessages, resp?.ai];
 		},
 		onError: (error) => {
+			processingLastMsg = false;
 			console.error(error);
 		}
 	});
@@ -75,13 +74,28 @@
 	$: fetchingChatMessages = $getMessagesQuery.isLoading;
 	$: fetchingAIResponse = processingLastMsg || $processLastMsgMut.isPending;
 
+	let scrollElement: HTMLElement | null;
+	$: scrollElement = null;
+
+	const scrollToBottom = () => {
+		if (scrollElement) {
+			scrollElement.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
+	$: if (chatMessages.length > 0) {
+		setTimeout(scrollToBottom, 100); // Small delay to ensure content is rendered
+	}
+
 	$: if ($getMessagesQuery.data) {
 		const data = extractAxiosResponseData($getMessagesQuery.data, 'success')
 			?.data as unknown as ChatMessagesResponse[];
 		chatMessages = data;
 	}
 
-	onMount(() => {});
+	onMount(() => {
+		scrollToBottom();
+	});
 </script>
 
 {#if chatId}
@@ -96,7 +110,9 @@
 		>
 			<div class="w-full mx-auto overflow-hidden">
 				<!-- topbar -->
-				<Flex className="w-full h-auto items-center justify-between px-4 pt-8 pb-3">
+				<Flex
+					className="w-full h-auto items-center justify-between px-4 pt-8 pb-3 absolute top-0 left-0"
+				>
 					<button
 						class="p-[6px] bg-dark-106 rounded-full flex-center enableBounceEffect"
 						on:click={onClose}
@@ -114,11 +130,13 @@
 				</Flex>
 
 				<!-- chat feed -->
-				<div class="w-full h-screen overflow-y-auto pb-[25em] px-5 py-3 hideScrollBar2">
+				<div
+					class="w-full h-screen flex flex-col overflow-y-scroll pb-[10em] pt-[8em] px-5 py-10 hideScrollBar2 gap-10"
+				>
 					{#if !fetchingChatMessages && chatMessages.length > 0}
 						{#each chatMessages as msg}
 							{#if msg?.role === 'USER'}
-								<Flex className="w-full h-auto flex-col gap-3 mt-10">
+								<Flex className="w-full h-auto flex-col gap-3">
 									<Flex className="w-full h-auto flex-row items-center">
 										<img
 											src={$authStore?.user?.avatar}
@@ -148,6 +166,8 @@
 					{#if fetchingAIResponse}
 						<AnswerLoading />
 					{/if}
+
+					<div bind:this={scrollElement} />
 				</div>
 
 				<!-- bottom floating chatbox -->
