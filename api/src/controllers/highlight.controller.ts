@@ -98,31 +98,6 @@ export default class HighlightController {
       throw new HttpException("Chat not found", 404);
     }
 
-    // content moderation
-    const safetyCheck = await this.contentModeration.safetyCheck(
-      payload.message
-    );
-
-    if (!safetyCheck.isValid) {
-      const [user, ai] = await Promise.all([
-        this.chatService.saveChatMessage({
-          chatId: chat.id,
-          message: payload.message,
-          role: "USER",
-        }),
-        this.chatService.saveChatMessage({
-          chatId: chat.id,
-          message: safetyCheck?.followUp!,
-          role: "AI",
-          error: safetyCheck?.type,
-        }),
-      ]);
-      return sendResponse.success(c, "Message sent successfully", 200, {
-        ai,
-        user,
-      });
-    }
-
     const humanMessage = await this.chatService.saveChatMessage({
       chatId: chat.id,
       message: payload.message,
@@ -140,28 +115,48 @@ export default class HighlightController {
   async processLastMessage(c: Context) {
     const user = c.get("user");
     const { chatId } = c.req.param();
-    const message = await this.chatService.getLastMessage(chatId);
+    const lastMessage = await this.chatService.getLastMessage(chatId);
 
-    if (message?.role === "AI") {
+    if (lastMessage?.role === "AI") {
       return sendResponse.success(c, "Message processed successfully", 200, {
         ai: {
-          ...message,
+          ...lastMessage,
           chat: undefined,
         },
       });
     }
 
-    const pbId = message?.chat?.ref;
+    const pbId = lastMessage?.chat?.ref;
     const playback = await this.highlightService.getPlayback(pbId!);
 
+    // content moderation
+    const safetyCheck = await this.contentModeration.safetyCheck(
+      lastMessage?.content!
+    );
+
+    if (!safetyCheck.isValid) {
+      const savedResp = await this.chatService.saveChatMessage({
+        chatId: lastMessage?.chat_id!,
+        message: safetyCheck?.followUp!,
+        role: "AI",
+        error: safetyCheck?.type,
+      });
+      return sendResponse.success(c, "Message sent successfully", 200, {
+        ai: {
+          ...savedResp,
+          chat: undefined,
+        },
+      });
+    }
+
     if (!playback) {
-      await this.chatService.saveChatMessage({
-        chatId: message?.chat_id!,
+      const savedResp = await this.chatService.saveChatMessage({
+        chatId: lastMessage?.chat_id!,
         message: "I'm sorry, I could not find the gameplay highlight.",
         role: "AI",
         error: "Playback not found",
       });
-      return sendResponse.success(c, "Playback not found", 200, message);
+      return sendResponse.success(c, "Playback not found", 200, savedResp);
     }
 
     const pbSummary = playback?.summary;
@@ -181,7 +176,7 @@ export default class HighlightController {
 
     try {
       const aiResponse = await this.highlightAIEngine.generateAIResponse({
-        query: message?.content!,
+        query: lastMessage?.content!,
         finalGameDecision,
         highlightSummary: JSON.stringify(pbSummary, null, 2),
         context,
@@ -190,7 +185,7 @@ export default class HighlightController {
       const parsedSources = await this.parseSources(aiResponse?.sources!);
 
       const savedResp = await this.chatService.saveChatMessage({
-        chatId: message?.chat_id!,
+        chatId: lastMessage?.chat_id!,
         message: aiResponse?.response!,
         role: "AI",
         sources: parsedSources,
@@ -200,7 +195,7 @@ export default class HighlightController {
       });
     } catch (err: any) {
       const savedResp = await this.chatService.saveChatMessage({
-        chatId: message?.chat_id!,
+        chatId: lastMessage?.chat_id!,
         message: `I'm sorry, something went wrong.`,
         role: "AI",
         error: err?.message,
