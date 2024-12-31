@@ -96,3 +96,55 @@ export default async function searchWeb(
     return [];
   }
 }
+
+export async function searchWebWithKeywords(
+  query: string,
+  niche?: string,
+  options?: {
+    includeText?: string;
+    excludeText?: string;
+    includeDomains?: string[];
+    category?: "news" | "general" | "company";
+  }
+): Promise<ExaSearchResult[]> {
+  try {
+    return await retry(
+      async () => {
+        let formattedQuery = `${query}`;
+        if (niche) {
+          formattedQuery = `${formattedQuery}. "${niche}"`;
+        }
+
+        console.log(`Searching web for [${formattedQuery}]...`);
+
+        const result = await getCachedResults(query);
+
+        if (result) return result;
+
+        const { results } = await exa.searchAndContents({
+          query: formattedQuery,
+          type: "keyword",
+          ...options,
+        });
+
+        if (!results || results.length === 0) {
+          throw new Error("No results found");
+        }
+
+        // cache result
+        await cacheWebResult(query, results);
+
+        return results;
+      },
+      {
+        retries: 3,
+        onRetry: (error, attempt) => {
+          console.log(`Error searching web (attempt ${attempt}):`, error);
+        },
+      }
+    );
+  } catch (e: any) {
+    console.log(`Error searching web:`, e);
+    return [];
+  }
+}
