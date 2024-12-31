@@ -26,6 +26,7 @@ app.use(
     origin: [
       env.CLIENT_URL,
       "http://192.168.151.103:5173",
+      "http://192.168.151.103:4050",
       "http://benlab.a.pinggy.link",
     ],
     exposeHeaders: ["Content-Length"],
