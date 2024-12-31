@@ -46,6 +46,10 @@ export default class HighlightController {
     const { playbackId } = c.req.param();
     const playback = await this.highlightService.getPlayback(playbackId);
 
+    if (!user) {
+      throw new Error(`Unauthorized.`);
+    }
+
     if (!playback) {
       throw new HttpException("Playback not found", 404);
     }
