@@ -15,6 +15,7 @@
 	import { getChatMessages, processLastMsg, sendMessage } from '@/http/requests';
 	import type { ChatMessagesResponse } from '@/types/chatfeed';
 	import Spinner from '@/components/Spinner.svelte';
+	import EmptyChat from './EmptyChat.svelte';
 
 	export let onClose: () => void = () => {};
 
@@ -111,7 +112,7 @@
 			<div class="w-full mx-auto overflow-hidden">
 				<!-- topbar -->
 				<Flex
-					className="w-full h-auto items-center justify-between px-4 pt-8 pb-3 absolute top-0 left-0"
+					className="w-full h-auto items-center justify-between px-4 pt-8 pb-3 absolute top-0 left-0 z-[3]"
 				>
 					<button
 						class="p-[6px] bg-dark-106 rounded-full flex-center enableBounceEffect"
@@ -133,6 +134,10 @@
 				<div
 					class="w-full h-screen flex flex-col overflow-y-scroll pb-[10em] pt-[8em] px-5 py-10 hideScrollBar2 gap-10"
 				>
+					{#if !fetchingAIResponse && chatMessages.length === 0}
+						<EmptyChat />
+					{/if}
+
 					{#if !fetchingChatMessages && chatMessages.length > 0}
 						{#each chatMessages as msg}
 							{#if msg?.role === 'USER'}
@@ -172,7 +177,7 @@
 
 				<!-- bottom floating chatbox -->
 				<div
-					class="w-full min-h-[80px] px-8 py-3 pb-10 absolute bottom-0 left-0 bg-dark-100/10 backdrop-blur-sm"
+					class="w-full min-h-[80px] px-8 py-3 pb-10 absolute bottom-0 left-0 z-[3] bg-dark-100/10 backdrop-blur-sm"
 				>
 					<Flex
 						className="w-full h-[50px] bg-dark-106 items-center justify-between pl-4 pr-1 rounded-full border-[1px] border-gray-101/50 shadow-md shadow-dark-100 scale-[1.05]"
