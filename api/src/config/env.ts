@@ -9,7 +9,9 @@ const env = {
   JWT_SECRET: process.env.JWT_SECRET!,
   NODE_ENV: process.env.NODE_ENV || "development",
   CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173",
-  API_URL: process.env.API_URL || "http://localhost:8050/api",
+  // CLIENT_URL: process.env.CLIENT_URL || "http://192.168.151.103:5173",
+  API_URL: process.env.API_URL || "http://localhost:4050/api",
+  // API_URL: process.env.API_URL || "http://192.168.151.103:4050/api",
   MAIL_FROM: process.env.MAIL_FROM!,
   RESEND_API_KEY: process.env.RESEND_API_KEY!,
   // GOOGLE AUTH
