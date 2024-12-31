@@ -351,54 +351,58 @@
 					{highlight?.playback?.description}
 				</p>
 
-				<div class="flex flex-col gap-1 mt-3">
-					<h4 class="text-dark-100 text-sm font-jetbrains font-bold">Insights</h4>
-					<p
-						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
-						bind:this={insightsContainer}
-					>
-						{#if highlight?.summary && insightsContainer}
-							{@const highlighter = new Highlighter({
-								text: highlight?.summary?.highlight,
-								keywords: mlbGlossaryTerms.map((term) => ({
-									word: term,
-									borderStyle: 'solid',
-									borderWidth: '1px',
-									fontWeight: 600,
-									color: '#fe605f',
-									style: 'border-bottom',
-									onClick: (match) => console.log({ match })
-								}))
-							})}
-							{highlighter.render(insightsContainer ?? 'N/A') ?? ''}
-						{/if}
-					</p>
-				</div>
+				{#if highlight?.summary?.highlight}
+					<div class="flex flex-col gap-1 mt-3">
+						<h4 class="text-dark-100 text-sm font-jetbrains font-bold">Insights</h4>
+						<p
+							class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
+							bind:this={insightsContainer}
+						>
+							{#if highlight?.summary && insightsContainer}
+								{@const highlighter = new Highlighter({
+									text: highlight?.summary?.highlight,
+									keywords: mlbGlossaryTerms.map((term) => ({
+										word: term,
+										borderStyle: 'solid',
+										borderWidth: '1px',
+										fontWeight: 600,
+										color: '#fe605f',
+										style: 'border-bottom',
+										onClick: (match) => console.log({ match })
+									}))
+								})}
+								{highlighter.render(insightsContainer ?? 'N/A') ?? ''}
+							{/if}
+						</p>
+					</div>
+				{/if}
 
-				<div class="flex flex-col gap-1 mt-3">
-					<h4 class="text-dark-100 font-jetbrains font-bold">Summary</h4>
-					<p
-						class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
-						bind:this={summaryContainer}
-					>
-						{#if highlight?.summary && summaryContainer}
-							{@const highlighter = new Highlighter({
-								text: highlight?.summary?.summary,
-								keywords: mlbGlossaryTerms.map((term) => ({
-									word: term,
-									borderStyle: 'solid',
-									borderWidth: '1px',
-									fontWeight: 600,
-									color: '#fe605f',
-									style: 'border-bottom',
-									onClick: (match) => console.log({ match })
-								})),
-								options: { caseSensitive: true }
-							})}
-							{highlighter.render(summaryContainer ?? 'N/A') ?? ''}
-						{/if}
-					</p>
-				</div>
+				{#if highlight?.summary?.summary}
+					<div class="flex flex-col gap-1 mt-3">
+						<h4 class="text-dark-100 font-jetbrains font-bold">Summary</h4>
+						<p
+							class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
+							bind:this={summaryContainer}
+						>
+							{#if highlight?.summary && summaryContainer}
+								{@const highlighter = new Highlighter({
+									text: highlight?.summary?.summary,
+									keywords: mlbGlossaryTerms.map((term) => ({
+										word: term,
+										borderStyle: 'solid',
+										borderWidth: '1px',
+										fontWeight: 600,
+										color: '#fe605f',
+										style: 'border-bottom',
+										onClick: (match) => console.log({ match })
+									})),
+									options: { caseSensitive: true }
+								})}
+								{highlighter.render(summaryContainer ?? 'N/A') ?? ''}
+							{/if}
+						</p>
+					</div>
+				{/if}
 			</div>
 
 			<div class="flex justify-center mt-2 pb-5">
