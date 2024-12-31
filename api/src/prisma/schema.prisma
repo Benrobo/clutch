@@ -166,6 +166,7 @@ model highlights_content {
     keywords String[]
     body     String // markdown
     photo    String
+    sources  Json? // generate web search sources.
 
     highlight highlights @relation(fields: [highlight_id], references: [id], onDelete: Cascade)
 
