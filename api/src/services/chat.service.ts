@@ -61,11 +61,16 @@ export default class ChatService {
   }) {
     return await prisma.chat_messages.create({
       data: {
-        chat_id: props?.chatId,
+        // chat_id: props?.chatId,
         content: props?.message,
         role: props?.role,
         sources: props?.sources,
         error: props?.error,
+        chat: {
+          connect: {
+            id: props?.chatId,
+          },
+        },
       },
     });
   }
