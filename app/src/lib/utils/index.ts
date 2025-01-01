@@ -213,3 +213,13 @@ export const capitalizeFirstLetter = (str: string) => {
 export const getTeamLogoWithBg = (teamId?: number | null) => {
 	return `https://midfield.mlbstatic.com/v1/team/${teamId}/spots/500`;
 };
+
+export 	const calculateReadingTime = (text: string, wpm = 200) => {
+  const words = text.split(/\s+/).length;
+  const minutes = words / wpm;
+  const seconds = Math.ceil(minutes * 60);
+  return {
+    min: Math.floor(minutes),
+    sec: seconds
+  };
+}
