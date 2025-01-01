@@ -17,13 +17,13 @@
 3. [x] API Foundation
 
    - [x] Set up Hono.js
-   - [ ] Configure MLB API integration
-   - [ ] Set up basic error handling
+   - [x] Configure MLB API integration
+   - [x] Set up basic error handling
 
-4. [ ] Frontend Foundation
-   - [ ] Initialize SvelteKit
-   - [ ] Set up TailwindCSS
-   - [ ] Configure API client
+4. [x] Frontend Foundation
+   - [x] Initialize SvelteKit
+   - [x] Set up TailwindCSS
+   - [x] Configure API client
 
 ## Features (In Order of Dependencies)
 
@@ -33,37 +33,37 @@
    - [x] Implement login/signup
    - [x] Create protected routes
 
-2. [ ] User Preferences
+2. [x] User Preferences
 
-   - [ ] Team selection
-   - [ ] Player selection
-   - [ ] Content preferences
-   - [ ] Store user preferences
+   - [x] Team selection
+   - [x] Player selection
+   - [x] Content preferences
+   - [x] Store user preferences
 
-3. [ ] MLB Integration
+3. [x] MLB Integration
 
-   - [ ] Fetch game schedules
-   - [ ] Get team rosters
-   - [ ] Retrieve game highlights
-   - [ ] Store game/highlight data
+   - [x] Fetch game schedules
+   - [x] Get team rosters
+   - [x] Retrieve game highlights
+   - [x] Store game/highlight data
 
-4. [ ] Video Processing
+4. [x] Video Processing
 
-   - [ ] Set up FFMPEG
-   - [ ] Create processing queue
-   - [ ] Basic highlight extraction
-   - [ ] Store processed videos
+   - [x] Set up FFMPEG
+   - [x] Create processing queue
+   - [x] Basic highlight extraction
+   - [x] Store processed videos
 
-5. [ ] AI Integration
+5. [x] AI Integration
 
-   - [ ] Configure Gemini
-   - [ ] Process video insights
-   - [ ] Generate strategic analysis
-   - [ ] Store AI insights
+   - [x] Configure Gemini
+   - [x] Process video insights
+   - [x] Generate strategic analysis
+   - [x] Store AI insights
 
-6. [ ] Content Feed
-   - [ ] Create video player
-   - [ ] Implement feed UI
+6. [x] Content Feed
+   - [x] Create video player
+   - [x] Implement feed UI
    - [ ] Add stats overlay
    - [ ] Like/save functionality
 
