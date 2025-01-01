@@ -34,5 +34,5 @@ export type SpotlightContentResponse = {
             title: string | null;
             favicon: string;
         }>
-    }
+    }[]
 }
