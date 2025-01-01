@@ -83,3 +83,13 @@ export const processLastMsg = async (ref: string)=> {
   const res = await $axios.post(`/highlights/chat/${ref}/process`);
   return res.data;
 }
+
+export const getSpotlights = async ()=> {
+  const res = await $axios.get(`/spotlights`);
+  return res.data;
+}
+
+export const getSpotlightContent = async (id: string)=> {
+  const res = await $axios.get(`/spotlight/${id}`);
+  return res.data;
+}
