@@ -1,5 +1,541 @@
 [
   {
+    "id": "cm51ctd7s002j9rq8f7csd94l",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/pirates-vs-marlins/2024/03/31/746090/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/pirates-vs-marlins/2024/03/31/746090/final/box",
+        "title": "MLB Gameday: Pirates 9, Marlins 7 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/pirates-vs-marlins/2024/03/31/746090/final/box",
+        "title": "MLB Gameday: Pirates 9, Marlins 7 Resultado Final (31/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctd7s002j9rq8f7csd94l",
+    "index": 1,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/rowdy-tellez-pirates",
+        "title": "Rowdy Tellez agrees to deal with Pirates - MLB.com",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/rowdy-tellez-shares-expectations-for-2024-pirates",
+        "title": "Rowdy Tellez shares expectations for 2024 Pirates - MLB.com",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/pirates/video/rowdy-tellez-exits-the-game",
+        "title": "Rowdy Tellez exits the game | 07/26/2024 | Pittsburgh Pirates",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/134.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctd7s002j9rq8f7csd94l",
+    "index": 4,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/pirates-vs-marlins/2024/03/28/746089/final/box",
+        "title": "Pirates 6, Marlins 5 Final Score (03/28/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/pirates-vs-marlins/2024/03/28/746089/final/box",
+        "title": "Pirates 6, Marlins 5 Resultado Final (28/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctg87004w9rq8ouumesce",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/yankees-vs-astros/2024/03/31/746413/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/yankees-vs-astros/2024/03/31/746413/final",
+        "title": "MLB Gameday: Yankees 4, Astros 3 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/yankees-vs-astros/2024/03/31/746413/final/box",
+        "title": "Yankees 4, Astros 3 Resultado Final (31/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctg87004w9rq8ouumesce",
+    "index": 8,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/glossary/statcast/catch-probability",
+        "title": "Catch Probability | Glossary",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/glossary/statcast",
+        "title": "Statcast | Glossary",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctauo000u9rq81558yvmu",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/745602/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/braves-vs-phillies/2024/03/31/745602/final/box",
+        "title": "Braves 4, Phillies 5 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/schedule/gameday",
+        "title": "MLB Gameday: Real-time MLB scores for your favorite teams",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/braves-vs-phillies/2024/03/31/745602/final/box",
+        "title": "Braves 4, Phillies 5 Resultado Final (31/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctccq00229rq8ynh4v24p",
+    "index": 1,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/blue-jays-vs-rays/2024/03/31/745115/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/blue-jays-vs-rays/2024/03/31/745115/final/box",
+        "title": "MLB Gameday: Blue Jays 9, Rays 2 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctccq00229rq8ynh4v24p",
+    "index": 2,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/victor-martinez-mark-shapiro-back-together-with-blue-jays",
+        "title": "Victor Martinez, Mark Shapiro back together with Blue Jays - MLB.com",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.reddit.com/r/Torontobluejays/comments/1fsxsj2/bns_blue_jays_announce_that_their_seasonending/",
+        "title": "[BNS] Blue Jays announce that their season-ending media ... - Reddit",
+        "favicon": "https://www.redditstatic.com/shreddit/assets/favicon/76x76.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/mark-shapiro-on-blue-jays-offseason-needs",
+        "title": "Mark Shapiro on Blue Jays offseason needs - MLB.com",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cte0600339rq8sy376m2w",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/brewers-vs-mets/2024/03/31/745845/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/brewers-vs-mets/2024/03/31/745845/final/box",
+        "title": "MLB Gameday: Brewers 4, Mets 1 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/brewers-vs-mets/2024/03/31/745845/final/box",
+        "title": "Brewers 4, Mets 1 Resultado Final (31/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cte0600339rq8sy376m2w",
+    "index": 1,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/pat-murphy-introduced-as-brewers-manager",
+        "title": "Pat Murphy introduced as Brewers' manager",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/pat-murphy-brewers-manager",
+        "title": "Brewers promote Pat Murphy to manager",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/pat-murphy-opens-first-spring-training-as-brewers-manager",
+        "title": "Pat Murphy opens first Spring Training as Brewers manager",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cte0600339rq8sy376m2w",
+    "index": 2,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/mets-brewers-rhys-hoskins-yohan-ramirez",
+        "title": "Mets' Yohan Ramírez ejected after throwing at Rhys Hoskins",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/reds/news/mets-brewers-rhys-hoskins-yohan-ramirez?winker=",
+        "title": "Mets' Yohan Ramírez ejected after throwing at Rhys Hoskins",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/113.png"
+      },
+      {
+        "url": "https://www.mlb.com/brewers/video/yohan-ramirez-throws-behind-rhys-hoskins-is-ejected",
+        "title": "Yohan Ramírez throws behind Rhys Hoskins, is ejected - MLB.com",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/158.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctepz003o9rq8bihw1y8r",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/royals/news/seth-lugo-pitches-six-scoreless-innings-in-royals-debut",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/118.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/seth-lugo-pitches-six-scoreless-innings-in-royals-debut",
+        "title": "Seth Lugo pitches six scoreless innings in Royals debut",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/royals/video/seth-lugo-k-s-four-in-six-scoreless-innings",
+        "title": "Seth Lugo K's four in six scoreless innings | 03/30/2024",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/118.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/seth-lugo-throws-two-scoreless-innings-in-royals-spring-debut",
+        "title": "Seth Lugo throws two scoreless innings in Royals spring ...",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctepz003o9rq8bihw1y8r",
+    "index": 2,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/brady-singer-adds-two-pitches-to-arsenal-in-2024",
+        "title": "Singer breaks out new pitches in Cactus League debut",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/orioles/news/brady-singer-adds-two-pitches-to-arsenal-in-2024",
+        "title": "Brady Singer adds two pitches to arsenal in 2024",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/110.png"
+      },
+      {
+        "url": "https://www.mlb.com/royals/video/breaking-down-brady-singer-s-pitches-x1169",
+        "title": "Breaking down Brady Singer's pitches | 04/17/2024 | Kansas ...",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/118.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cth0c005g9rq8dhx7y8q2",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/cubs-vs-rangers/2024/03/31/745035/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/cubs-vs-rangers/2024/03/31/745035/final/box",
+        "title": "MLB Gameday: Cubs 9, Rangers 5 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctjad006m9rq8nwvzxa3j",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/745279/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/red-sox-vs-mariners/2024/03/31/745279/final/box",
+        "title": "Red Sox 5, Mariners 1 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/schedule/gameday",
+        "title": "MLB Gameday: Real-time MLB scores for your favorite teams",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctjad006m9rq8nwvzxa3j",
+    "index": 4,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/craig-breslow-introduced-by-red-sox",
+        "title": "Craig Breslow introduced by Red Sox - MLB.com",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/redsox/video/breslow-introduced-by-red-sox",
+        "title": "Breslow introduced by Red Sox | 11/02/2023 - MLB.com",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/111.png"
+      },
+      {
+        "url": "https://www.mlb.com/redsox/video/red-sox-introduce-craig-breslow-90000",
+        "title": "Red Sox introduce Craig Breslow - Boston - MLB.com",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/111.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cta2a000a9rq85ocsfljq",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/angels-vs-orioles/2024/03/31/747062/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/angels-vs-orioles/2024/03/31/747062/final/box",
+        "title": "MLB Gameday: Angels 4, Orioles 1 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cta2a000a9rq85ocsfljq",
+    "index": 1,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/griffin-canning-gives-up-five-runs-in-loss-to-orioles",
+        "title": "Griffin Canning gives up five runs in loss to Orioles",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/griffin-canning-gives-up-7-runs-to-braves",
+        "title": "Griffin Canning gives up 7 runs to Braves",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctbjr001f9rq8ngzpyomy",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/nationals-vs-reds/2024/03/31/746739/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/nationals-vs-reds/2024/03/31/746739/final/wrap",
+        "title": "MLB Gameday: Nationals 5, Reds 6 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/nationals-vs-reds/2024/03/31/746739/final/box",
+        "title": "Nationals 5, Reds 6 Resultado Final (31/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctbjr001f9rq8ngzpyomy",
+    "index": 1,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/christian-encarnacion-strand-hits-walk-off-homer-against-blue-jays",
+        "title": "Christian Encarnacion-Strand hits walk-off homer against ...",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/video/encarnacion-strand-s-walk-off-hr",
+        "title": "Christian Encarnacion-Strand hits a walk-off homer | 08/18/2023",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/christian-encarnacion-strand-hits-walk-off-homer-to-secure-series-win",
+        "title": "Rally Reds are back! CES's 3rd walk-off secures 'W'",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctfg200489rq8phexr0fm",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/tigers-vs-white-sox/2024/03/31/746815/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/tigers-vs-white-sox/2024/03/31/746815/final/wrap",
+        "title": "Tigers 3, White Sox 2 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/es/gameday/tigers-vs-white-sox/2024/03/31/746815/final/box",
+        "title": "Tigers 3, White Sox 2 Resultado Final (31/03/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://detroitsportsforum.com/threads/game-3-detroit-tigers-chicago-white-sox-11-15-am-mst-3-31.33959/page-2",
+        "title": "Game 3: Detroit Tigers @ Chicago White Sox 11:15 AM MST 3/31",
+        "favicon": "https://detroitsportsforum.com/data/assets/logo/dsftwitterlogo.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctfg200489rq8phexr0fm",
+    "index": 2,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/tarik-skubal-tigers-opening-day-2024",
+        "title": "Skubal schools White Sox for successful start to 2024",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/tigers-win-al-wild-card-game-1-2024",
+        "title": "Tigers win AL Wild Card Game 1 2024",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/tarik-skubal-tiger-of-the-year-award-2024",
+        "title": "Tarik Skubal wins Tiger of the Year Award 2024",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51cthqf005w9rq8xtca680z",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/745683/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/guardians-vs-athletics/2024/03/31/745683/final/box",
+        "title": "Guardians 3, Athletics 4 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/schedule/gameday",
+        "title": "MLB Gameday: Real-time MLB scores for your favorite teams",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/scores",
+        "title": "MLB Scores: Scoreboard, Results and Highlights",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctk1c00759rq888mv09jp",
+    "index": 0,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/gameday/giants-vs-padres/2024/03/31/745438/final/box",
+        "title": null,
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/gameday/giants-vs-padres/2024/03/31/745438/final/box",
+        "title": "Giants 4, Padres 13 Final Score (03/31/2024)",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://twitter.com/glare5g/status/1774569559426809938",
+        "title": "Big League debut time for Kai-Wei Teng",
+        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctk1c00759rq888mv09jp",
+    "index": 2,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/news/padres-get-michael-king-4-others-for-juan-soto",
+        "title": "Padres get Michael King, 4 others for Juan Soto",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/michael-king-strikes-out-10-in-win-over-pirates",
+        "title": "Michael King strikes out 10 in win over Pirates",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      },
+      {
+        "url": "https://www.mlb.com/news/michael-king-kyle-higashioka-enjoying-playoff-limelight-with-padres",
+        "title": "King-Higgy trade continues to pay dividends for Padres",
+        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
+      }
+    ]
+  },
+  {
+    "id": "cm51ctk1c00759rq888mv09jp",
+    "index": 4,
+    "sources": [
+      {
+        "url": "https://www.mlb.com/prospects/padres/jackson-merrill-701538",
+        "title": "Padres Top Prospects | MiLB.com",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/milb.png"
+      },
+      {
+        "url": "https://www.mlb.com/prospects/jackson-merrill-701538",
+        "title": "Top Prospects, jackson-merrill-701538 | MiLB.com",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/milb.png"
+      },
+      {
+        "url": "https://www.mlb.com/prospects/2023/padres/jackson-merrill-701538",
+        "title": "Padres Top Prospects | MiLB.com",
+        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/milb.png"
+      }
+    ]
+  },
+  {
     "id": "cm51ctkr2007m9rq868j3ooo9",
     "index": 0,
     "sources": [
@@ -64,758 +600,6 @@
         "url": "https://www.mlb.com/glossary/rules",
         "title": "Rules | Glossary",
         "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cta2a000a9rq85ocsfljq",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/angels-vs-orioles/2024/03/31/747062/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/angels-vs-orioles/2024/03/31/747062/final/box",
-        "title": "MLB Gameday: Angels 4, Orioles 1 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cta2a000a9rq85ocsfljq",
-    "index": 1,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/griffin-canning-gives-up-five-runs-in-loss-to-orioles",
-        "title": "'We can't get off track': Angels hold team meeting after falling to 0-2",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/griffin-canning-gives-up-7-runs-to-braves",
-        "title": "Griffin Canning gives up 7 runs to Braves - MLB.com",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctauo000u9rq81558yvmu",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/745602/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/braves-vs-phillies/2024/03/31/745602/final/box",
-        "title": "Braves 4, Phillies 5 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/schedule/gameday",
-        "title": "MLB Gameday: Real-time MLB scores for your favorite teams",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/braves-vs-phillies/2024/03/31/745602/final/box",
-        "title": "Braves 4, Phillies 5 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctbjr001f9rq8ngzpyomy",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/nationals-vs-reds/2024/03/31/746739/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/nationals-vs-reds/2024/03/31/746739/final/wrap",
-        "title": "MLB Gameday: Nationals 5, Reds 6 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/nationals-vs-reds/2024/03/31/746739/final/box",
-        "title": "Nationals 5, Reds 6 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctbjr001f9rq8ngzpyomy",
-    "index": 1,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/christian-encarnacion-strand-hits-walk-off-homer-against-blue-jays",
-        "title": "Christian Encarnacion-Strand hits walk-off homer against ...",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/video/encarnacion-strand-s-walk-off-hr",
-        "title": "Christian Encarnacion-Strand hits a walk-off homer | 08/18/2023",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/christian-encarnacion-strand-hits-walk-off-homer-to-secure-series-win",
-        "title": "Rally Reds are back! CES's 3rd walk-off secures 'W'",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctccq00229rq8ynh4v24p",
-    "index": 1,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/blue-jays-vs-rays/2024/03/31/745115/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/blue-jays-vs-rays/2024/03/31/745115/final/box",
-        "title": "MLB Gameday: Blue Jays 9, Rays 2 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctccq00229rq8ynh4v24p",
-    "index": 2,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/victor-martinez-mark-shapiro-back-together-with-blue-jays",
-        "title": "Victor Martinez, Mark Shapiro back together with Blue Jays",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.reddit.com/r/Torontobluejays/comments/1hpugbq/mcgrath_some_personal_news_to_close_out_2024_im/",
-        "title": "I'm leaving The Athletic and the Blue Jays beat at the end ...",
-        "favicon": "https://www.redditstatic.com/shreddit/assets/favicon/76x76.png"
-      },
-      {
-        "url": "https://www.mlb.com/bluejays/news",
-        "title": "Latest Blue Jays News - Toronto",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/141.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctd7s002j9rq8f7csd94l",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/pirates-vs-marlins/2024/03/31/746090/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/pirates-vs-marlins/2024/03/31/746090/final/box",
-        "title": "MLB Gameday: Pirates 9, Marlins 7 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/pirates-vs-marlins/2024/03/31/746090/final/box",
-        "title": "MLB Gameday: Pirates 9, Marlins 7 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctd7s002j9rq8f7csd94l",
-    "index": 1,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/rowdy-tellez-pirates",
-        "title": "Rowdy Tellez agrees to deal with Pirates",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/pirates/video/rowdy-tellez-exits-the-game",
-        "title": "Rowdy Tellez exits the game | 07/26/2024 | Pittsburgh Pirates",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/134.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/rowdy-tellez-shares-expectations-for-2024-pirates",
-        "title": "Rowdy Tellez shares expectations for 2024 Pirates",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctd7s002j9rq8f7csd94l",
-    "index": 4,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/pirates-vs-marlins/2024/03/28/746089/final/box",
-        "title": "Pirates 6, Marlins 5 Final Score (03/28/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/pirates-vs-marlins/2024/03/28/746089/final/box",
-        "title": "Pirates 6, Marlins 5 Resultado Final (28/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cte0600339rq8sy376m2w",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/brewers-vs-mets/2024/03/31/745845/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/brewers-vs-mets/2024/03/31/745845/final/box",
-        "title": "MLB Gameday: Brewers 4, Mets 1 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/brewers-vs-mets/2024/03/31/745845/final/box",
-        "title": "Brewers 4, Mets 1 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cte0600339rq8sy376m2w",
-    "index": 1,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/pat-murphy-introduced-as-brewers-manager",
-        "title": "Pat Murphy introduced as Brewers' manager",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/video/brewers-introduce-pat-murphy",
-        "title": "The Brewers introduce Pat Murphy as their new manager | 11 ...",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/pat-murphy-brewers-manager",
-        "title": "Brewers promote Pat Murphy to manager",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cte0600339rq8sy376m2w",
-    "index": 2,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/mets-brewers-rhys-hoskins-yohan-ramirez",
-        "title": "Mets' Yohan Ramírez ejected after throwing at Rhys Hoskins",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/reds/news/mets-brewers-rhys-hoskins-yohan-ramirez?winker=",
-        "title": "Mets' Yohan Ramírez ejected after throwing at Rhys Hoskins",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/113.png"
-      },
-      {
-        "url": "https://www.mlb.com/brewers/video/yohan-ramirez-throws-behind-rhys-hoskins-is-ejected",
-        "title": "Yohan Ramírez throws behind Rhys Hoskins, is ejected | 03 ...",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/158.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctepz003o9rq8bihw1y8r",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/royals/news/seth-lugo-pitches-six-scoreless-innings-in-royals-debut",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/118.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/seth-lugo-pitches-six-scoreless-innings-in-royals-debut",
-        "title": "Seth Lugo pitches six scoreless innings in Royals debut",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/royals/video/seth-lugo-k-s-four-in-six-scoreless-innings",
-        "title": "Seth Lugo K's four in six scoreless innings | 03/30/2024",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/118.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/seth-lugo-throws-two-scoreless-innings-in-royals-spring-debut",
-        "title": "Seth Lugo throws two scoreless innings in Royals spring ...",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctepz003o9rq8bihw1y8r",
-    "index": 2,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/brady-singer-adds-two-pitches-to-arsenal-in-2024",
-        "title": "Singer breaks out new pitches in Cactus League debut",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/orioles/news/brady-singer-adds-two-pitches-to-arsenal-in-2024",
-        "title": "Brady Singer adds two pitches to arsenal in 2024",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/110.png"
-      },
-      {
-        "url": "https://www.mlb.com/royals/video/breaking-down-brady-singer-s-pitches-x1169",
-        "title": "Breaking down Brady Singer's pitches | 04/17/2024 | Kansas ...",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/118.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctfg200489rq8phexr0fm",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/tigers-vs-white-sox/2024/03/31/746815/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/tigers-vs-white-sox/2024/03/31/746815/final/wrap",
-        "title": "Tigers 3, White Sox 2 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/tigers-vs-white-sox/2024/03/31/746815/final/box",
-        "title": "Tigers 3, White Sox 2 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://detroitsportsforum.com/threads/game-3-detroit-tigers-chicago-white-sox-11-15-am-mst-3-31.33959/page-2",
-        "title": "Game 3: Detroit Tigers @ Chicago White Sox 11:15 AM MST 3/31",
-        "favicon": "https://detroitsportsforum.com/data/assets/logo/dsftwitterlogo.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctfg200489rq8phexr0fm",
-    "index": 1,
-    "sources": [
-      {
-        "url": "https://twitter.com/tigers?",
-        "title": "Detroit Tigers",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/hashtags",
-        "title": "Hashtags",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctfg200489rq8phexr0fm",
-    "index": 3,
-    "sources": [
-      {
-        "url": "https://twitter.com/tigers?",
-        "title": "Detroit Tigers",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://x.com/tigers",
-        "title": "Detroit Tigers - X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/tigers/status/1841139925271421109",
-        "title": "Detroit Tigers",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctfg200489rq8phexr0fm",
-    "index": 4,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/tarik-skubal-tigers-opening-day-2024",
-        "title": "Skubal schools White Sox for successful start to 2024",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/tarik-skubal-to-start-opening-day-for-tigers",
-        "title": "Tarik Skubal to start Opening Day for Tigers",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/tigers/video/tarik-skubal-s-best-highlights-of-2024",
-        "title": "Tarik Skubal's best highlights of 2024 | 11/02/2024 | Detroit ...",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/116.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctfg200489rq8phexr0fm",
-    "index": 8,
-    "sources": [
-      {
-        "url": "https://twitter.com/tigers/status/1774567948222337293",
-        "title": "Detroit Tigers - X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/tigers/status/1774567948222337293?lang=fa",
-        "title": "Detroit Tigers",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/tigers-sweep-white-sox",
-        "title": "Tigers stick together for sweep, first 3-0 start since 2016",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctfg200489rq8phexr0fm",
-    "index": 10,
-    "sources": [
-      {
-        "url": "https://twitter.com/tigers?",
-        "title": "Detroit Tigers",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://x.com/tigers",
-        "title": "Detroit Tigers - X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/tigers/status/1844845787681046814",
-        "title": "Detroit Tigers - X.com",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctg87004w9rq8ouumesce",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/yankees-vs-astros/2024/03/31/746413/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/yankees-vs-astros/2024/03/31/746413/final",
-        "title": "MLB Gameday: Yankees 4, Astros 3 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/yankees-vs-astros/2024/03/31/746413/final/box",
-        "title": "Yankees 4, Astros 3 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctg87004w9rq8ouumesce",
-    "index": 8,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/glossary/statcast/catch-probability",
-        "title": "Catch Probability | Glossary",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/glossary/statcast",
-        "title": "Statcast | Glossary",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cth0c005g9rq8dhx7y8q2",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/cubs-vs-rangers/2024/03/31/745035/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/cubs-vs-rangers/2024/03/31/745035/final/box",
-        "title": "MLB Gameday: Cubs 9, Rangers 5 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cthqf005w9rq8xtca680z",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/745683/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/guardians-vs-athletics/2024/03/31/745683/final/box",
-        "title": "Guardians 3, Athletics 4 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/schedule/gameday",
-        "title": "MLB Gameday: Real-time MLB scores for your favorite teams",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/scores",
-        "title": "MLB Scores: Scoreboard, Results and Highlights",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cthqf005w9rq8xtca680z",
-    "index": 5,
-    "sources": [
-      {
-        "url": "https://twitter.com/Athletics/status/1774555069859667989",
-        "title": "Athletics on X: \"Pauly B 👀 https://t.co/PNk5E2kTWK\" / X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://x.com/Athletics/status/1774555069859667989?lang=mr",
-        "title": "Oakland A's",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/athletics-pick-up-first-win-of-2024-over-guardians",
-        "title": "A's 'walk' off with win after Blackburn deals",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51cthqf005w9rq8xtca680z",
-    "index": 7,
-    "sources": [
-      {
-        "url": "https://twitter.com/Athletics?",
-        "title": "Oakland Athletics",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/worldathletics",
-        "title": "World Athletics (@WorldAthletics) / X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://x.com/athletics",
-        "title": "Athletics - X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctiif006c9rq8nd4e1zby",
-    "index": 3,
-    "sources": [
-      {
-        "url": "https://twitter.com/Dbacks/status/1774532911590699502",
-        "title": "Arizona Diamondbacks - X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/christian-walker-and-lourdes-gurriel-jr-lead-a-hot-diamondbacks-team",
-        "title": "D-backs play 'downhill baseball' to start season off strong",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://bleacherreport.com/game/colorado-rockies-vs-arizona-diamondbacks-2024-3-31-13-10",
-        "title": "D-Backs beat Rockies 5-1",
-        "favicon": "https://bleacherreport.com/img/favicon/appleTouchIcon.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctiif006c9rq8nd4e1zby",
-    "index": 5,
-    "sources": [
-      {
-        "url": "https://twitter.com/Dbacks?ref_src=twsrc%5Etfw",
-        "title": "Dbacks",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://x.com/dbacks",
-        "title": "Arizona Diamondbacks (@Dbacks) / X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/Dbacks/status/1779221187245322724",
-        "title": "Arizona Diamondbacks - X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctiif006c9rq8nd4e1zby",
-    "index": 6,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/rockies-vs-d-backs/2024/03/31/747222/final/box",
-        "title": "MLB Gameday: Rockies 1, D-backs 5 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/es/gameday/rockies-vs-d-backs/2024/03/31/747222/final/box",
-        "title": "Rockies 1, D-backs 5 Resultado Final (31/03/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctjad006m9rq8nwvzxa3j",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/745279/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/red-sox-vs-mariners/2024/03/31/745279/final/box",
-        "title": "Red Sox 5, Mariners 1 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/schedule/gameday",
-        "title": "MLB Gameday: Real-time MLB scores for your favorite teams",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctjad006m9rq8nwvzxa3j",
-    "index": 3,
-    "sources": [
-      {
-        "url": "https://twitter.com/RedSox/status/1774556299952353504",
-        "title": "Red Sox - Classic Whit.",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/garrett-whitlock-caps-strong-opening-series-for-red-sox-rotation",
-        "title": "Whitlock, 'talented' Sox rotation shines in Opening Series",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctjad006m9rq8nwvzxa3j",
-    "index": 5,
-    "sources": [
-      {
-        "url": "https://twitter.com/redsox?",
-        "title": "RedSox",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://x.com/redsox",
-        "title": "Red Sox (@RedSox) / X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      },
-      {
-        "url": "https://twitter.com/RedSox/status/1785464151415902287",
-        "title": "Red Sox on X: \"Run Wilyer, RUN! https://t.co/Q70xu0ImuQ\" / X",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctjad006m9rq8nwvzxa3j",
-    "index": 6,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/craig-breslow-introduced-by-red-sox",
-        "title": "Craig Breslow introduced by Red Sox",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/redsox/video/breslow-introduced-by-red-sox",
-        "title": "Breslow introduced by Red Sox | 11/02/2023 | Boston Red Sox",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/111.png"
-      },
-      {
-        "url": "https://www.mlb.com/redsox/video/red-sox-introduce-craig-breslow-90000",
-        "title": "Chief baseball officer Craig Breslow introduced | 11/02/2023 ...",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/111.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctk1c00759rq888mv09jp",
-    "index": 0,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/gameday/giants-vs-padres/2024/03/31/745438/final/box",
-        "title": null,
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/gameday/giants-vs-padres/2024/03/31/745438/final/box",
-        "title": "Giants 4, Padres 13 Final Score (03/31/2024)",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://twitter.com/glare5g/status/1774569559426809938",
-        "title": "Big League debut time for Kai-Wei Teng",
-        "favicon": "https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctk1c00759rq888mv09jp",
-    "index": 2,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/news/padres-get-michael-king-4-others-for-juan-soto",
-        "title": "Padres get Michael King, 4 others for Juan Soto",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/michael-king-strikes-out-10-in-win-over-pirates",
-        "title": "Michael King strikes out 10 in win over Pirates",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      },
-      {
-        "url": "https://www.mlb.com/news/michael-king-kyle-higashioka-enjoying-playoff-limelight-with-padres",
-        "title": "King-Higgy trade continues to pay dividends for Padres",
-        "favicon": "https://www.mlbstatic.com/mlb.com/images/logos/apple-touch-icons-180x180/mlb.png"
-      }
-    ]
-  },
-  {
-    "id": "cm51ctk1c00759rq888mv09jp",
-    "index": 4,
-    "sources": [
-      {
-        "url": "https://www.mlb.com/prospects/padres/jackson-merrill-701538",
-        "title": "Padres Top Prospects | MiLB.com - MLB.com",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/milb.png"
-      },
-      {
-        "url": "https://www.mlb.com/prospects/2023/padres/jackson-merrill-701538",
-        "title": "Padres Top Prospects | MiLB.com - MLB.com",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/milb.png"
-      },
-      {
-        "url": "https://www.mlb.com/prospects/jackson-merrill-701538",
-        "title": "Top Prospects, jackson-merrill-701538 | MiLB.com - MLB.com",
-        "favicon": "https://www.mlbstatic.com/team-logos/apple-touch-icons-180x180/milb.png"
       }
     ]
   }
