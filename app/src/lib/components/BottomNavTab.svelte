@@ -4,7 +4,7 @@
 	import Flex from '@/components/Flex.svelte';
 	import { authStore } from '@/store/auth.store';
 	import { cn } from '@/utils';
-	import { BellRing, GalleryHorizontal, Newspaper } from 'lucide-svelte';
+	import { BellRing, GalleryHorizontal, Lightbulb } from 'lucide-svelte';
 	import Gamepad_2 from 'lucide-svelte/icons/gamepad-2';
 	import { afterUpdate, onMount } from 'svelte';
 	import { derived } from 'svelte/store';
@@ -24,9 +24,9 @@
 			href: '/home/feed'
 		},
 		{
-			id: 'articles',
-			title: 'Articles',
-			href: '/home/articles'
+			id: 'spotlight',
+			title: 'Spotlight',
+			href: '/home/spotlight'
 		},
 		{
 			id: 'activities',
@@ -49,7 +49,7 @@
 </script>
 
 <nav class="fixed bottom-0 left-0 right-0 z-[1] bg-dark-103 pb-safe">
-	<div class="max-w-[600px] mx-auto">
+	<div class="max-w-[678px] mx-auto">
 		<Flex className="w-full py-3 border-t-[1px] border-t-gray-100">
 			{#each tabs as tab}
 				<button
@@ -66,8 +66,8 @@
 							size={20}
 							class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
 						/>
-					{:else if tab.id === 'articles'}
-						<Newspaper
+					{:else if tab.id === 'spotlight'}
+						<Lightbulb
 							size={20}
 							class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
 						/>
