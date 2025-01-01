@@ -13,7 +13,7 @@
 
 	<!-- answer content loader -->
 	<Flex className="w-full flex-col">
-		<div class="w-full max-w-[600px] h-[10px] rounded-full bg-gray-101/20 animate-pulse"></div>
+		<div class="w-full max-w-[678px] h-[10px] rounded-full bg-gray-101/20 animate-pulse"></div>
 		<div class="w-full max-w-[450px] h-[10px] rounded-full bg-gray-101/20 animate-pulse"></div>
 		<div class="w-full max-w-[350px] h-[10px] rounded-full bg-gray-101/20 animate-pulse"></div>
 		<div class="w-full max-w-[250px] h-[10px] rounded-full bg-gray-101/20 animate-pulse"></div>
