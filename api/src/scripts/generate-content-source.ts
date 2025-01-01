@@ -230,12 +230,15 @@ async function getSourceMetadata(url: string) {
       {
         retries: 1,
         onRetry(e, attempt) {
-          console.log(`Error searching web (attempt ${attempt}):`, e);
+          console.log(
+            `Error searching web (attempt ${attempt}):`,
+            e?.message as any
+          );
         },
       }
     );
   } catch (e: any) {
-    console.error(`Failed to get metadata for ${url}:`, e);
+    console.error(`Failed to get metadata for ${url}:`, e?.message);
     return null;
   }
 }
