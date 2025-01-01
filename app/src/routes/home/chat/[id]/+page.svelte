@@ -4,7 +4,7 @@
 </script>
 
 <div class="w-screen h-screen fixed inset-0 flex-center z-[999]">
-	<div class="w-screen h-screen max-w-[600px] mx-auto bg-dark-103">
+	<div class="w-screen h-screen max-w-[678px] mx-auto bg-dark-103">
 		<!-- topbar -->
 		<Flex className="w-full h-auto bg-gray-102 items-center justify-between px-4 py-5">
 			<button class="bg-gray-103 p-1 rounded-full flex-center">
