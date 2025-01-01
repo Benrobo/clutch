@@ -8,7 +8,7 @@
 	import type { SpotlightsResponse } from '@/types/spotlight';
 	import { calculateReadingTime, extractAxiosResponseData } from '@/utils';
 	import { createQuery } from '@tanstack/svelte-query';
-	import { Lightbulb } from 'lucide-svelte';
+	import { Lightbulb, X } from 'lucide-svelte';
 
 	let selectedSpotlight: string | null = null;
 	$: selectedSpotlight = null;
@@ -86,12 +86,26 @@
 	isOpen={!!selectedSpotlight}
 	rounded={true}
 	showBackdrop={true}
-	className="bg-dark-107 min-h-[90vh]"
+	className="bg-dark-107 min-h-[95vh] py-0 overflow-hidden"
 	showCloseButton={false}
 	showDragHandle={false}
 	onClose={() => {
 		selectedSpotlight = null;
 	}}
 >
+	<!-- control header -->
+	<Flex
+		className="w-full h-auto flex-row items-center justify-between px-4 py-5 absolute top-0 left-0 z-[3]"
+	>
+		<button
+			on:click={() => {
+				selectedSpotlight = null;
+			}}
+			class="bg-dark-103/60 p-[5px] rounded-full flex-center"
+		>
+			<X size={20} class="stroke-white-100" />
+		</button>
+	</Flex>
+
 	<SpotLightDetail selectedSpotLight={selectedSpotlight} />
 </BottomSheet>
