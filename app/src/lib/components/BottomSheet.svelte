@@ -14,6 +14,8 @@
 	export let onClose = () => {};
 	export let headline = '';
 	export let tagline = '';
+	export let showCloseButton = true;
+	export let showDragHandle = true;
 
 	let y: number;
 	let sheetElement: HTMLDivElement;
@@ -43,17 +45,19 @@
 			style="z-index: 100;"
 			class={cn(
 				'w-full max-w-[678px] mx-auto h-[60vh] bg-white-100',
-				'transform transition-transform duration-300 ease-out fixed bottom-0 left-0 right-0',
+				'fixed bottom-0 left-0 right-0',
 				'flex flex-col',
 				rounded && 'rounded-t-[20px]',
 				className
 			)}
-			transition:fly={{ y: '100%', duration: 300, easing: quintOut }}
+			transition:fly={{ y: 500, duration: 200, easing: quintOut }}
 		>
-			<!-- Drag Handle -->
-			<div class="w-full h-[24px] flex items-center justify-center cursor-grab touch-pan-y">
-				<div class="w-[36px] h-[4px] bg-gray-100 rounded-full" />
-			</div>
+			{#if showDragHandle}
+				<!-- Drag Handle -->
+				<div class="w-full h-[24px] flex items-center justify-center cursor-grab touch-pan-y">
+					<div class="w-[36px] h-[4px] bg-gray-100 rounded-full" />
+				</div>
+			{/if}
 
 			<!-- Header -->
 			<div class="px-4 py-2 flex items-center justify-between">
@@ -65,12 +69,15 @@
 						<span class="text-dark-100/60 text-sm">{tagline}</span>
 					{/if}
 				</div>
-				<button
-					class="p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors"
-					on:click={onClose}
-				>
-					<X size={20} class="stroke-dark-100/60" />
-				</button>
+
+				{#if showCloseButton}
+					<button
+						class="p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors"
+						on:click={onClose}
+					>
+						<X size={20} class="stroke-dark-100/60" />
+					</button>
+				{/if}
 			</div>
 
 			<!-- Content -->
