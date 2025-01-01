@@ -9,6 +9,9 @@
 	import { getSpotlightContent } from '@/http/requests';
 	import type { SpotlightContentResponse } from '@/types/spotlight';
 	import Spinner from '@/components/Spinner.svelte';
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+	dayjs.extend(relativeTime);
 
 	export let selectedSpotLight: string | null = null;
 
@@ -73,11 +76,20 @@
 				<!-- <p class="text-xs font-normal text-white-300 font-poppins">
 				{fakeSpotlightData?.headline}
 			</p> -->
-				<Flex className="w-auto flex flex-row items-center justify-center">
+				<Flex className="w-auto flex flex-row items-center justify-between gap-10">
 					<div class="text-white-300 font-inter flex-center gap-2">
 						<Clock size={15} class="stroke-white-400" />
 						<span class="text-xs font-poppins text-white-400 text-nowrap">
 							{spotlightData?.readingTime?.min} min read
+						</span>
+					</div>
+
+					<div class="text-white-300 font-inter flex-center gap-2">
+						<Clock size={15} class="stroke-white-400" />
+						<span class="text-xs font-poppins text-white-400 text-nowrap">
+							{spotlightData?.publishedDate
+								? dayjs(spotlightData?.publishedDate).fromNow()
+								: '2024'}
 						</span>
 					</div>
 				</Flex>
