@@ -216,7 +216,7 @@
 </script>
 
 <div class="w-full h-full flex items-center justify-center">
-	<div class="w-full h-full max-w-[600px] relative">
+	<div class="w-full h-full max-w-[678px] relative">
 		<!-- Feed Type Selector -->
 		<div
 			class={cn(
@@ -224,7 +224,7 @@
 				deviceInfo?.device?.type === 'smartphone' ? 'py-3 scale-[.90] -translate-x-4' : 'py-3'
 			)}
 		>
-			<Flex className="w-full max-w-[600px] mx-auto h-auto justify-between px-4">
+			<Flex className="w-full max-w-[678px] mx-auto h-auto justify-between px-4">
 				<div class="w-auto flex items-start justify-start bg-gray-101/30 rounded-md">
 					{#each ['foryou', 'explore'] as feed}
 						<button
