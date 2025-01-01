@@ -61,7 +61,7 @@
 	{#if steps > 1}
 		<div class="w-full h-auto flex-center fixed bottom-0 left-0 z-[100]">
 			<Flex
-				className="w-full md:max-w-[600px] h-auto pb-5 bg-dark-103/30 px-10 backdrop-blur-md gap-5"
+				className="w-full md:max-w-[678px] h-auto pb-5 bg-dark-103/30 px-10 backdrop-blur-md gap-5"
 			>
 				<!-- next  -->
 				{#if steps > 2}
