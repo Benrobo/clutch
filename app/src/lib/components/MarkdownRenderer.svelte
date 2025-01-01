@@ -1,25 +1,57 @@
 <script lang="ts">
-  import { cn } from "@/utils";
-  import { marked } from "marked";
-  import type { ClassValue } from "tailwind-variants";
+	import { cn, extractCleanDomain } from '@/utils';
+	import showdown from 'showdown';
+	import type { ClassValue } from 'tailwind-variants';
 
-  export let content: string = "";
-  export let contentClass: ClassValue = "";
+	export let content: string = '';
+	export let contentClass: ClassValue = '';
 
-  $: parsedContent = marked.parse(content?.replace(/\\n/g, "\n") || "", {
-    breaks: true,
-    gfm: true,
-  });
+	// Initialize the Showdown converter with custom options
+	const converter = new showdown.Converter({
+		extensions: [
+			{
+				type: 'lang',
+				regex: /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+				replace: function (match: string, text: string, url: string) {
+					const domain = extractCleanDomain(url);
+					return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+				}
+			}
+		]
+	});
+
+	// Process content:
+	// 1. First handle our custom [text] to <em> conversion
+	// 2. Then let showdown handle the markdown with our custom link extension
+	$: processedContent = content
+		?.replace(/(?<!\[.*?)\[([\s\S]*?)\](?!\()/g, '<em>$2</em>') // Replace [text] with <em>text</em> only if not followed by (url)
+		.replace(/\\/g, ''); // Remove escaped backslashes
+
+	$: convertedContent = converter.makeHtml(processedContent || '');
 </script>
 
 <div
-  class={cn(
-    "markdown-content [&>h2]:first:font-recoleta font-inter [&>h2]:first:text-extrabold [&>h3]:my-2 [&>h2]:text-orange-100 [&>h2]:text-[1.5em] [&>h2]:font-bold [&>h3]:text-[1.1em] [&>h3]:font-recoleta [&>h3]:font-medium [&>p]:text-white-100/80 font-sans [&>ul]:pl-3 [&>ul]:flex-col [&>ul]:flex [&>ul]:pb-9 [&>ul]:space-y-3 [&>ul]:list-disc [&>ul]:text-[15px] [&>ul>li]:text-white-100/70 [&>ul>li>strong]:text-sm [&>ul>li>strong]:text-white-100 [&>ul>li>strong]:font-medium [&>h2]:last:text-sm [&>p]:last:font-inter [&>p]:first:text-md  [&>h2]:last:mt-5",
-    contentClass
-  )}
+	class={cn(
+		'markdown-content font-roboto text-white-200 text-[14px] font-light [&>p>-a]:text-white-100 [&p>em]:text-nowrap',
+		contentClass
+	)}
 >
-  {@html parsedContent}
+	{@html convertedContent}
 </div>
 
 <style lang="postcss">
+	.markdown-content {
+		& > p > a {
+			color: #fff;
+			text-decoration: underline;
+			margin-left: 2px;
+		}
+
+		& > p > em {
+			font-style: italic;
+			color: #fff;
+			font-weight: 300;
+			margin-right: 2px;
+		}
+	}
 </style>
