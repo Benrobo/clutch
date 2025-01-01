@@ -304,21 +304,21 @@
 	</div>
 </div>
 
-{#if observedPlaybackId}
-	{@const highlight = $recommendationStore[activeFeed].items.find(
-		(hl) => hl.id === observedPlaybackId
-	)}
-	<BottomSheet
-		isOpen={$feedStore?.showBottomSheet}
-		onClose={() => {
-			feedStore.toggleShowBottomSheet(false);
-			chatFeedStore.reset();
-			setTimeout(() => feedStore.setVideoPlaying(true), 300);
-		}}
-		headline="Play Insights"
-		tagline=""
-		className="h-auto"
-	>
+<BottomSheet
+	isOpen={$feedStore?.showBottomSheet}
+	onClose={() => {
+		feedStore.toggleShowBottomSheet(false);
+		chatFeedStore.reset();
+		setTimeout(() => feedStore.setVideoPlaying(true), 300);
+	}}
+	headline="Play Insights"
+	tagline=""
+	className="h-auto"
+>
+	{#if observedPlaybackId}
+		{@const highlight = $recommendationStore[activeFeed].items.find(
+			(hl) => hl.id === observedPlaybackId
+		)}
 		<div class="p-1 flex flex-col gap-6">
 			<Flex className={cn('w-full h-auto items-center justify-between gap-5')}>
 				<Flex className={'flex-col items-center justify-center text-center'}>
@@ -417,8 +417,8 @@
 				/>
 			</div>
 		</div>
-	</BottomSheet>
-{/if}
+	{/if}
+</BottomSheet>
 
 {#if $chatFeedStore?.activeConversation?.id}
 	<ChatFeed
