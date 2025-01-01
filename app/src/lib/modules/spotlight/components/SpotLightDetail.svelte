@@ -7,7 +7,7 @@
 	import { capitalizeFirstLetter, cn, extractAxiosResponseData } from '@/utils';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { getSpotlightContent } from '@/http/requests';
-	import type { SpotlightContentResponse, SpotlightsResponse } from '@/types/spotlight';
+	import type { SpotlightContentResponse } from '@/types/spotlight';
 	import Spinner from '@/components/Spinner.svelte';
 
 	export let selectedSpotLight: string | null = null;
@@ -75,9 +75,9 @@
 			</p> -->
 				<Flex className="w-auto flex flex-row items-center justify-center">
 					<div class="text-white-300 font-inter flex-center gap-2">
-						<Clock size={15} class="stroke-white-300" />
-						<span class="text-xs font-poppins text-nowrap">
-							{spotlightData?.readingTime?.min}min read
+						<Clock size={15} class="stroke-white-400" />
+						<span class="text-xs font-poppins text-white-400 text-nowrap">
+							{spotlightData?.readingTime?.min} min read
 						</span>
 					</div>
 				</Flex>
