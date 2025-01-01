@@ -104,7 +104,7 @@
 		<div
 			id="chat-feed"
 			class={cn(
-				'w-full max-w-[643px] mx-auto h-[98vh] bg-dark-107',
+				'w-full max-w-[678px] mx-auto h-[98vh] bg-dark-107',
 				'transform transition-transform duration-500 ease-in-out fixed bottom-0 left-0 right-0 z-[999] rounded-t-[10px]',
 				'flex flex-col overflow-hidden drop-shadow-2xl'
 			)}
