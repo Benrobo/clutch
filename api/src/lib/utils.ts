@@ -94,3 +94,13 @@ export const validateImageUrl = async (url: string) => {
     return false;
   }
 };
+
+export const calculateReadingTime = (text: string, wpm = 200) => {
+  const words = text.split(/\s+/).length;
+  const minutes = words / wpm;
+  const seconds = Math.ceil(minutes * 60);
+  return {
+    min: Math.floor(minutes),
+    sec: seconds,
+  };
+};
