@@ -11,7 +11,8 @@
     "inngest:dev": "npx inngest-cli@latest dev -u http://localhost:4050/api/inngest",
     "scrape-glossary": "tsx src/scripts/scrape-glossary.ts",
     "scrape-glossary-terms": "tsx src/scripts/scrape-glossary-terms.ts",
-    "generate-content-source": "tsx src/scripts/generate-content-source.ts"
+    "generate-content-source": "tsx src/scripts/generate-content-source.ts",
+    "valid-markdown-content": "tsx src/scripts/valid-markdown-content.ts"
   },
   "prisma": {
     "schema": "./src/prisma/schema.prisma"
