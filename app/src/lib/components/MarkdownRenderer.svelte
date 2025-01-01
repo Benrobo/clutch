@@ -47,6 +47,12 @@
 			margin-left: 2px;
 		}
 
+		& > blockquote > p > a {
+			color: #fff;
+			text-decoration: underline;
+			margin-left: 2px;
+		}
+
 		& > p > em {
 			font-style: italic;
 			color: #fff;
