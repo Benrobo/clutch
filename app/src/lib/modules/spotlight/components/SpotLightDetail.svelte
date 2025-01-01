@@ -113,12 +113,12 @@
 			{#if content.join('\n\n').length > 300}
 				<div
 					class={cn(
-						'w-full h-auto absolute bottom-0 z-[10] bg-gradient-to-b from-dark-106/10 to-dark-107 pt-10 pb-4 flex-center enableBounceEffect',
+						'w-full h-auto absolute bottom-0 z-[10] bg-gradient-to-b from-dark-106/10 to-dark-107 pt-10 pb-4 flex-center',
 						shouldExpand ? '-bottom-10 translate-y-5' : 'bottom-0'
 					)}
 				>
 					<button
-						class="w-auto px-4 py-2 rounded-full flex-center text-center text-white-200 bg-dark-106 gap-3 border-[1px] border-white-300/20"
+						class="w-auto px-4 py-2 rounded-full flex-center text-center text-white-200 bg-dark-106 gap-3 border-[1px] border-white-300/20 enableBounceEffect"
 						on:click={() => {
 							shouldExpand = !shouldExpand;
 						}}
