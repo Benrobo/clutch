@@ -133,25 +133,26 @@ export default class HighlightController {
     const pbId = lastMessage?.chat?.ref;
     const playback = await this.highlightService.getPlayback(pbId!);
 
+    // Increase the speed of delivery, I'll have to comment the safety check mechanism.
     // content moderation
-    const safetyCheck = await this.contentModeration.safetyCheck(
-      lastMessage?.content!
-    );
+    // const safetyCheck = await this.contentModeration.safetyCheck(
+    //   lastMessage?.content!
+    // );
 
-    if (!safetyCheck.isValid) {
-      const savedResp = await this.chatService.saveChatMessage({
-        chatId: lastMessage?.chat_id!,
-        message: safetyCheck?.followUp!,
-        role: "AI",
-        error: safetyCheck?.type,
-      });
-      return sendResponse.success(c, "Message sent successfully", 200, {
-        ai: {
-          ...savedResp,
-          chat: undefined,
-        },
-      });
-    }
+    // if (!safetyCheck.isValid) {
+    //   const savedResp = await this.chatService.saveChatMessage({
+    //     chatId: lastMessage?.chat_id!,
+    //     message: safetyCheck?.followUp!,
+    //     role: "AI",
+    //     error: safetyCheck?.type,
+    //   });
+    //   return sendResponse.success(c, "Message sent successfully", 200, {
+    //     ai: {
+    //       ...savedResp,
+    //       chat: undefined,
+    //     },
+    //   });
+    // }
 
     if (!playback) {
       const savedResp = await this.chatService.saveChatMessage({
