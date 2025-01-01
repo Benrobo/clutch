@@ -11,6 +11,7 @@ import feedRoute from "./routes/feed.route.js";
 import recommendationRoute from "./routes/recommendation.route.js";
 import highlightRoute from "./routes/highlight.route.js";
 import baseballInsightRoute from "./routes/baseball-insight.route.js";
+import spotlightRoute from "./routes/spotlight.route.js";
 import "./test.js";
 
 const app = new Hono();
@@ -47,6 +48,7 @@ const routes: any[] = [
   recommendationRoute,
   highlightRoute,
   baseballInsightRoute,
+  spotlightRoute,
 ];
 routes.forEach((route) => {
   app.route("/api", route);
