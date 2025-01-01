@@ -6,12 +6,12 @@
 	import { Pickaxe, X } from 'lucide-svelte';
 
 	export let index: number = 0;
-	export let sources: SpotlightContentResponse['sources'][] = [];
+	export let sources: SpotlightContentResponse['sources'] = [];
 
 	const availableSources = sources.filter((s) => s.sources.length > 0);
 	const taggedSource = availableSources[index];
 
-	let selectedSource: SpotlightContentResponse['sources'] | null = null;
+	let selectedSource: SpotlightContentResponse['sources'][number] | null = null;
 	$: selectedSource = null;
 </script>
 
