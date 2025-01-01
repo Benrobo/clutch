@@ -42,7 +42,7 @@
 			bind:this={sheetElement}
 			style="z-index: 100;"
 			class={cn(
-				'w-full max-w-[600px] mx-auto h-[60vh] bg-white-100',
+				'w-full max-w-[678px] mx-auto h-[60vh] bg-white-100',
 				'transform transition-transform duration-300 ease-out fixed bottom-0 left-0 right-0',
 				'flex flex-col',
 				rounded && 'rounded-t-[20px]',
