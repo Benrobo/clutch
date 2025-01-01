@@ -9,6 +9,7 @@
 
 	export let isOpen = false;
 	export let className: ClassValue = '';
+	export let backdropClassName: ClassValue = '';
 	export let showBackdrop = true;
 	export let rounded = true;
 	export let onClose = () => {};
@@ -31,9 +32,9 @@
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		{#if showBackdrop}
+			<!-- style="z-index: 99;" -->
 			<div
-				class="fixed inset-0 bg-dark-100/5 backdrop-blur-sm"
-				style="z-index: 99;"
+				class={cn('fixed inset-0 bg-dark-100/5 backdrop-blur-sm z-[99]', backdropClassName)}
 				on:click={onClose}
 				transition:fade={{ duration: 50 }}
 			/>
