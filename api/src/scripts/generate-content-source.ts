@@ -66,33 +66,37 @@ async function generateContentSource() {
       continue;
     } else {
       const splitContents = hlCont?.body
-        ?.split("\n")
-        .filter((c) => c?.length > 0)
+        ?.split("\n\n")
+        .filter((c) => c.length > 0)
         .flat();
       for (let i = 0; i < splitContents.length; i++) {
         const content = splitContents[i];
-        const matchedLink = content.match(regex);
-        if (matchedLink && matchedLink.length > 0) {
-          const link = matchedLink[1];
-          const index = i;
+        if (content?.length >= 400 && !content?.startsWith(">")) {
+          const matchedLink = content.match(regex);
+          if (matchedLink && matchedLink.length > 0) {
+            const link = matchedLink[1];
+            const index = i;
 
-          if (parsedContent.has(hlCont?.id)) {
-            parsedContent.get(hlCont?.id)?.push({
-              id: hlCont?.id,
-              index,
-              link,
-              content: content.split(". ").slice(0, 2).join(". "),
-            });
-          } else {
-            parsedContent.set(hlCont?.id, [
-              {
+            if (parsedContent.has(hlCont?.id)) {
+              parsedContent.get(hlCont?.id)?.push({
                 id: hlCont?.id,
                 index,
                 link,
                 content: content.split(". ").slice(0, 2).join(". "),
-              },
-            ]);
+              });
+            } else {
+              parsedContent.set(hlCont?.id, [
+                {
+                  id: hlCont?.id,
+                  index,
+                  link,
+                  content: content.split(". ").slice(0, 2).join(". "),
+                },
+              ]);
+            }
           }
+        } else {
+          console.log(`Skipping content  < 400 with invalid character`);
         }
       }
     }
