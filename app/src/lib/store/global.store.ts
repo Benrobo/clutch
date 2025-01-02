@@ -4,13 +4,15 @@ export type GlobalStore = {
 	isLoading: boolean;
 	isSidebarOpen: boolean;
 	overflowBody: boolean;
+	hideBottomNav: boolean;
 };
 
 // Initial state with required default values
 const initialState: GlobalStore = {
 	isLoading: false,
 	isSidebarOpen: false,
-	overflowBody: false
+	overflowBody: false,
+	hideBottomNav: false
 };
 
 function createGlobalStore() {
@@ -20,6 +22,7 @@ function createGlobalStore() {
 		subscribe,
 		setLoading: (loading: boolean) => update((state) => ({ ...state, isLoading: loading })),
 		toggleSidebar: (value: boolean) => update((state) => ({ ...state, isSidebarOpen: value })),
+		toggleBottomNav: (value: boolean) => update((state) => ({ ...state, hideBottomNav: value })),
 		reset: () => set(initialState)
 	};
 }
