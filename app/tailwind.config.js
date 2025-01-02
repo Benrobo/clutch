@@ -26,7 +26,9 @@ export default {
 				jetbrains: ['JetBrains Mono', 'monospace'],
 				brunoace: ['Bruno Ace', 'system-ui'],
 				montserrat: ['Montserrat Variable', 'sans-serif'],
-				'recoleta-bold': ['Recoleta-Bold', 'sans-serif']
+				'recoleta-bold': ['Recoleta-Bold', 'sans-serif'],
+				'bruceforever': ['BruceForever', 'sans-serif'],
+				'cyber': ['Cyber', 'sans-serif'],
 			},
 			colors: {
 				white: {
