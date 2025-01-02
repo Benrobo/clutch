@@ -98,6 +98,22 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "BruceForever";
+  src: url("/fonts/bruceforever/regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: "Cyber";
+  src: url("/fonts/cyber/regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 /* Utility classes */
 .recoleta {
   font-family: "Recoleta", sans-serif;
@@ -105,6 +121,14 @@
 
 .recoleta-alt {
   font-family: "Recoleta-Alt", sans-serif;
+}
+
+.bruceforever {
+  font-family: "BruceForever", sans-serif;
+}
+
+.cyber {
+  font-family: "Cyber", sans-serif;
 }
 
 /* Font weight utilities */
