@@ -1,10 +1,14 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
+	import { DugoutGames } from '@/data/dugout';
+	import GameCard from '@/modules/dugout/components/GameCard.svelte';
 	import { authStore } from '@/store/auth.store';
 	import { useGlobalStore } from '@/store/global.store';
 	import { CloudLightning, Zap } from 'lucide-svelte';
 
 	$: globalStore = useGlobalStore();
+
+	const games = DugoutGames;
 </script>
 
 <Flex
@@ -75,5 +79,12 @@
 				Hit a Home Run with Fun Games That Teach You Baseball Lingo!
 			</p>
 		</Flex>
+
+		<br />
+
+		<!-- game cards -->
+		{#each games as game}
+			<GameCard />
+		{/each}
 	</Flex>
 </Flex>
