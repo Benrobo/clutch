@@ -1,16 +1,32 @@
+import type { GameType } from "@/types/games";
 
 
 export const DugoutGames = [
     {
-        id: "word-search",
-        title: "Word Search",
-        description: "A word search game",
-        image: "/images/word-search.png",
+        id: "4-pic-one-word",
+        title: "4 Pic 1 Word",
+        description: "Identify the baseball term from four related images!",
+        image: "/images/4-pic-one-word.png",
+        available: true,
     },
     {
-        id: "quizzes",
-        title: "Quizzes",
-        description: "",
+        id: "quiz",
+        title: "Quiz",
+        description: "Test your knowledge of baseball with this fun trivia game!",
         image: "/images/word-search.png",
+        available: true,
     },
-]
+    {
+        id: "word-search",
+        title: "Word Search", 
+        description: "Search for baseball terms and lingo hidden in the puzzle grid",
+        image: "/images/word-search.png",
+        available: false,
+    },
+] satisfies {
+    id: GameType;
+    title: string;
+    description: string;
+    image: string;
+    available: boolean;
+}[]
