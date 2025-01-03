@@ -1,0 +1,32 @@
+[
+  {
+    "id": "apprentice",
+    "name": "Apprentice",
+    "description": "Just starting out and learning the basics.",
+    "min_questions": 5
+  },
+  {
+    "id": "planetary",
+    "name": "Planetary",
+    "description": "You've got the basics down and are ready for tougher challenges.",
+    "min_questions": 10
+  },
+  {
+    "id": "stellar",
+    "name": "Stellar",
+    "description": "You're getting really good and almost there.",
+    "min_questions": 15
+  },
+  {
+    "id": "universe",
+    "name": "Universe",
+    "description": "You're one of the best, dominating the game.",
+    "min_questions": 20
+  },
+  {
+    "id": "domain_master",
+    "name": "Domain Master",
+    "description": "At the top of your game, a true legend.",
+    "min_questions": 25
+  }
+]
