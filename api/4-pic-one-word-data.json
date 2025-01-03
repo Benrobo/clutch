@@ -1,0 +1,234 @@
+{
+  "progression-level": {
+    "apprentice": [
+      {
+        "id": "balk",
+        "name": "Balk"
+      },
+      {
+        "id": "homerun",
+        "name": "Homerun"
+      },
+      {
+        "id": "putout",
+        "name": "Putout"
+      },
+      {
+        "id": "single",
+        "name": "Single"
+      },
+      {
+        "id": "double",
+        "name": "Double"
+      }
+    ],
+    "planetary": [
+      {
+        "id": "at-bat",
+        "name": "At Bat"
+      },
+      {
+        "id": "catcher",
+        "name": "Catcher"
+      },
+      {
+        "id": "game-score",
+        "name": "Game Score"
+      },
+      {
+        "id": "earned-run",
+        "name": "Earned Run"
+      },
+      {
+        "id": "strikeout",
+        "name": "Strikeout"
+      },
+      {
+        "id": "wild-pitch",
+        "name": "Wild Pitch"
+      },
+      {
+        "id": "error",
+        "name": "Error"
+      },
+      {
+        "id": "home-run",
+        "name": "Home Run"
+      },
+      {
+        "id": "triple",
+        "name": "Triple"
+      },
+      {
+        "id": "baseball-age",
+        "name": "Baseball Age"
+      }
+    ],
+    "stellar": [
+      {
+        "id": "win-probability-added",
+        "name": "Win Probability Added"
+      },
+      {
+        "id": "magic-number",
+        "name": "Magic Number"
+      },
+      {
+        "id": "save-percentage",
+        "name": "Save Percentage"
+      },
+      {
+        "id": "earned-run-average",
+        "name": "Earned Run Average"
+      },
+      {
+        "id": "slugging-percentage",
+        "name": "Slugging Percentage"
+      },
+      {
+        "id": "walk-rate",
+        "name": "Walk Rate"
+      },
+      {
+        "id": "strikeout-rate",
+        "name": "Strikeout Rate"
+      },
+      {
+        "id": "balk",
+        "name": "Balk"
+      },
+      {
+        "id": "catcher-framing",
+        "name": "Catcher Framing"
+      },
+      {
+        "id": "spin-rate",
+        "name": "Spin Rate"
+      }
+    ],
+    "universe": [
+      {
+        "id": "wins-above-replacement",
+        "name": "Wins Above Replacement"
+      },
+      {
+        "id": "catch-probability",
+        "name": "Catch Probability"
+      },
+      {
+        "id": "barrel",
+        "name": "Barrel"
+      },
+      {
+        "id": "expected-fielding-independent-pitching",
+        "name": "Expected Fielding Independent Pitching"
+      },
+      {
+        "id": "true-earned-run-average",
+        "name": "True Earned Run Average"
+      },
+      {
+        "id": "weighted-runs-above-average",
+        "name": "Weighted Runs Above Average"
+      },
+      {
+        "id": "ultimate-zone-rating",
+        "name": "Ultimate Zone Rating"
+      },
+      {
+        "id": "three-true-outcomes",
+        "name": "Three True Outcomes"
+      },
+      {
+        "id": "defensive-efficiency-ratio",
+        "name": "Defensive Efficiency Ratio"
+      },
+      {
+        "id": "skill-interactive-earned-run-average",
+        "name": "Skill Interactive Earned Run Average"
+      },
+      {
+        "id": "expected-slugging-percentage",
+        "name": "Expected Slugging Percentage"
+      },
+      {
+        "id": "expected-weighted-on-base-average",
+        "name": "Expected Weighted On Base Average"
+      },
+      {
+        "id": "run-support-per-nine-innings",
+        "name": "Run Support Per Nine"
+      },
+      {
+        "id": "runs-allowed-per-nine-innings-pitched",
+        "name": "Runs Allowed Per Nine"
+      },
+      {
+        "id": "walks-and-hits-per-inning-pitched",
+        "name": "Walks and Hits Per Inning"
+      }
+    ],
+    "domain_master": [
+      {
+        "id": "maddux",
+        "name": "Maddux"
+      },
+      {
+        "id": "pitch-time",
+        "name": "Pitch Time"
+      },
+      {
+        "id": "service-time",
+        "name": "Service Time"
+      },
+      {
+        "id": "designated-hitter",
+        "name": "Designated Hitter"
+      },
+      {
+        "id": "designated-hitter-rule",
+        "name": "Designated Hitter Rule"
+      },
+      {
+        "id": "tommy-john-surgery",
+        "name": "Tommy John Surgery"
+      },
+      {
+        "id": "defensive-shift-limits",
+        "name": "Defensive Shift Limits"
+      },
+      {
+        "id": "vesting-option",
+        "name": "Vesting Option"
+      },
+      {
+        "id": "trade-deadline",
+        "name": "Trade Deadline"
+      },
+      {
+        "id": "trade-waivers-aug-31-deadline",
+        "name": "Trade Waivers Aug 31 Deadline"
+      },
+      {
+        "id": "savant",
+        "name": "Savant"
+      },
+      {
+        "id": "spin-rate",
+        "name": "Spin Rate"
+      },
+      {
+        "id": "doctoring-the-baseball",
+        "name": "Doctoring the Baseball"
+      },
+      {
+        "id": "collisions-at-home-plate",
+        "name": "Collisions at Home Plate"
+      },
+      {
+        "id": "competitive-balance-tax",
+        "name": "Competitive Balance Tax"
+      }
+    ]
+  }
+}
