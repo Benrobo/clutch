@@ -52,7 +52,7 @@
 				<span
 					class="text-[1.5em] font-brunoace font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-red-302"
 				>
-					{$authStore?.user?.name}
+					{$authStore?.user?.name ?? '---'}
 				</span>
 			</Flex>
 			<Flex className="w-auto h-auto flex-row items-center justify-end">
