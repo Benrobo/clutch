@@ -51,7 +51,7 @@
 	];
 
 	$: {
-		if (activeTab === 'dugout') {
+		if (activeTab === 'dugout' || slug.includes('dugout')) {
 			globalStore.toggleBottomNav(false);
 		} else {
 			globalStore.toggleBottomNav(true);
