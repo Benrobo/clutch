@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Flex from '@/components/Flex.svelte';
 	import { DugoutGames } from '@/data/dugout';
 	import GameCard from '@/modules/dugout/components/GameCard.svelte';
@@ -71,7 +72,7 @@
 	</Flex>
 
 	<!-- available playable games -->
-	<Flex className="w-full h-auto flex flex-col px-10 mt-10">
+	<Flex className="w-full h-auto flex flex-col px-10 mt-10 z-[99]">
 		<!-- header -->
 		<Flex className="w-full h-auto flex flex-col gap-1">
 			<h1 class="text-white-100 font-brunoace font-semibold text-lg">Dugout Games</h1>
@@ -83,8 +84,19 @@
 		<br />
 
 		<!-- game cards -->
-		{#each games as game}
-			<GameCard />
-		{/each}
+		<Flex
+			className="w-full h-auto flex flex-row gap-3 pb-4 overflow-x-scroll whitespace-nowrap hideScrollBar2"
+		>
+			{#each games as game}
+				<GameCard
+					{game}
+					onClick={() => {
+						if (game.available) {
+							goto(`/home/dugout/${game.id}`);
+						}
+					}}
+				/>
+			{/each}
+		</Flex>
 	</Flex>
 </Flex>
