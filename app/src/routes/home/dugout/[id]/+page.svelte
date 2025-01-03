@@ -9,7 +9,10 @@
 	const slug = $page.params.id;
 </script>
 
-<div class="w-screen h-screen" transition:fade={{ duration: 500, easing: quintOut }}>
+<div
+	class="w-screen h-screen mx-auto fixed inset-0 flex-center"
+	transition:fade={{ duration: 500, easing: quintOut }}
+>
 	{#if slug === 'word-search'}
 		<WordSearch />
 	{:else if slug === 'quiz'}
