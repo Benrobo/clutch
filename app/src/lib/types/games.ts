@@ -11,3 +11,5 @@ export type MLBGlossary = {
     url: string;
     definition: string;
 }
+
+export type GameType = "4-pic-one-word" | "quiz" | "word-search"
