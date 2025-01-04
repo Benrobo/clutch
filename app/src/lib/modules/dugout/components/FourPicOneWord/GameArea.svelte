@@ -59,7 +59,7 @@
 			</ThreeDButton>
 
 			<!-- level -->
-			<div class="w-auto h-auto text-white text-lg font-poppins font-semibold">Level 1</div>
+			<div class="w-auto h-auto text-white text-2xl font-poppins font-semibold">Level 1</div>
 
 			<!-- score -->
 			<div class="w-auto min-w-[100px] h-auto flex flex-row items-center justify-center relative">
