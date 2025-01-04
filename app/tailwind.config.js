@@ -29,6 +29,7 @@ export default {
 				'recoleta-bold': ['Recoleta-Bold', 'sans-serif'],
 				'bruceforever': ['BruceForever', 'sans-serif'],
 				'cyber': ['Cyber', 'sans-serif'],
+				'shiny': ['Shiny', 'sans-serif'],
 			},
 			colors: {
 				white: {
