@@ -6,15 +6,15 @@
 	import { cn } from '@/utils';
 	import { goto } from '$app/navigation';
 
-	$: hideSplashScreen = true;
+	$: showSplashScreen = true;
 	$: showGameArea = false;
 
 	const onHideSplashScreen = () => {
-		hideSplashScreen = !hideSplashScreen;
+		showSplashScreen = !showSplashScreen;
 	};
 
 	$: {
-		if (!hideSplashScreen) {
+		if (!showSplashScreen) {
 			setTimeout(() => {
 				showGameArea = true;
 			}, 500);
@@ -22,7 +22,7 @@
 	}
 
 	const onLeaveGame = () => {
-		hideSplashScreen = true;
+		showSplashScreen = true;
 		showGameArea = false;
 		setTimeout(() => {
 			goto('/home/dugout');
@@ -33,13 +33,13 @@
 <div
 	class={cn(
 		'w-full h-full flex flex-col items-center justify-center max-w-[678px] mx-auto transition-all duration-1000 relative ',
-		!hideSplashScreen && 'bg-none duration-500'
+		!showSplashScreen && 'bg-none duration-500'
 	)}
 	transition:fade={{ duration: 1000 }}
 >
-	{#if hideSplashScreen}
+	{#if showSplashScreen}
 		<div class="w-full h-full" transition:fade={{ duration: 500 }}>
-			<SplashScreen {onHideSplashScreen} leaveGame={onLeaveGame} />
+			<SplashScreen {onHideSplashScreen} />
 		</div>
 	{/if}
 
