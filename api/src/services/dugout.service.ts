@@ -36,7 +36,7 @@ export default class DugoutService {
         total_challenges:
           GAME_PROGRESSION_CHALLENGES[
             gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
-          ].apprentice,
+          ].apprentice.count,
         completed_challenges: {
           apprentice: [],
           planetary: [],
@@ -46,14 +46,34 @@ export default class DugoutService {
     });
   }
 
+  async getUserGameLevel(gameId: string, userId: string) {
+    return await prisma.dugout_game_progress.findFirst({
+      where: { dugout_game_id: gameId, user_id: userId },
+      select: { level: true, completed_challenges: true },
+    });
+  }
+
+  async getGameChallenge(
+    gameId: string,
+    level: GameLevel,
+    challengeId: number
+  ) {
+    const gameChallenges =
+      GAME_PROGRESSION_CHALLENGES[
+        gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+      ][level as keyof CompletedChallenges]?.challenges;
+
+    return gameChallenges?.find((challenge) => challenge.id === challengeId);
+  }
+
   async completeChallenge(
     gameId: string,
     userId: string,
     level: GameLevel,
     challengeId: number
   ) {
-    const game = await prisma.dugout_game_progress.findUnique({
-      where: { id: gameId },
+    const game = await prisma.dugout_game_progress.findFirst({
+      where: { dugout_game_id: gameId, user_id: userId },
     });
 
     if (!game) {
@@ -63,15 +83,27 @@ export default class DugoutService {
     const completedChallenges =
       game.completed_challenges as CompletedChallenges;
 
+    const nonDuplicateChallenges = [
+      ...completedChallenges[level as keyof CompletedChallenges],
+      challengeId,
+    ].filter((id, index, self) => self.indexOf(id) === index);
+
     const updatedGame = await prisma.dugout_game_progress.update({
-      where: { id: gameId, user_id: userId },
+      where: {
+        dugout_game_id: gameId,
+        id: game?.id,
+        user_id: userId,
+      },
       data: {
         completed_challenges: {
           ...completedChallenges,
-          [level as keyof CompletedChallenges]: [
-            ...(completedChallenges[level as keyof CompletedChallenges] || []),
-            challengeId,
-          ],
+          [level as keyof CompletedChallenges]: nonDuplicateChallenges,
+        },
+        points: {
+          increment:
+            GAME_PROGRESSION_CHALLENGES[
+              gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+            ][level as keyof CompletedChallenges].points,
         },
       },
     });
@@ -106,7 +138,7 @@ export default class DugoutService {
       const totalChallenges =
         GAME_PROGRESSION_CHALLENGES[
           game.dugout_game_id as keyof typeof GAME_PROGRESSION_CHALLENGES
-        ][level as keyof CompletedChallenges];
+        ][level as keyof CompletedChallenges].count;
 
       if (
         completedChallenges[level as keyof CompletedChallenges].length ===
@@ -132,5 +164,11 @@ export default class DugoutService {
 
       return result;
     });
+  }
+
+  async getGameLevelChallenges(gameId: string, level: GameLevel) {
+    return GAME_PROGRESSION_CHALLENGES[
+      gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+    ][level as keyof CompletedChallenges]?.challenges;
   }
 }
