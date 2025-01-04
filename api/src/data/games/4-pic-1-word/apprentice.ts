@@ -1,3 +1,5 @@
+import { FourPicOneWordChallenges } from "../../../types/dugout.types.js";
+
 const APPENTICE_GAME_DATA = [
   {
     id: 1,
@@ -299,6 +301,6 @@ const APPENTICE_GAME_DATA = [
       },
     ],
   },
-];
+] as FourPicOneWordChallenges[];
 
 export default APPENTICE_GAME_DATA;
