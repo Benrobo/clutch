@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
 	import { cn, shuffleArray } from '@/utils';
+	import ThreeDButton from '../ThreeDButton.svelte';
+	import SuccessPopup from './SuccessPopup.svelte';
 
 	export let secretWord: string = '';
 
@@ -14,6 +16,8 @@
 			.join('')
 			.split('')
 	);
+
+	$: challengeCompleted = false;
 </script>
 
 <div class="w-full h-full flex flex-col items-center justify-between">
@@ -50,7 +54,25 @@
 	</Flex>
 
 	<!-- keyboard -->
-	<div class="w-full h-auto min-h-[250px] flex flex-col items-center justify-center bg-[#23203c]">
+	<div
+		class="w-full h-auto min-h-[250px] flex flex-col items-center justify-start bg-[#23203c] relative"
+	>
+		<!-- hints container -->
+		<Flex className="w-full h-auto flex-center absolute top-0 left-0 -translate-y-[5em]">
+			<div
+				class="w-auto max-w-[200px] px-4 min-h-[50px] py-3 bg-[#242240] border-t-[4px] border-t-[#5D5081]"
+			>
+				<button class="w-[40px] h-[40px] rounded-full flex-center relative enableBounceEffect">
+					<img src="/light-bulb.svg" alt="graph" class="w-[45px] h-[45px]" />
+					<div
+						class="text-white text-nowrap text-lg scale-[.80] font-bold absolute right-0 -bottom-1 translate-x-[2.5em] gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]"
+					>
+						⭐️ 25
+					</div>
+				</button>
+			</div>
+		</Flex>
+
 		<Flex className="w-full h-auto gap-2 px-2 mt-5 flex-wrap items-center justify-center">
 			{#each shuffledLetters as letter}
 				<button
@@ -69,3 +91,7 @@
 		</Flex>
 	</div>
 </div>
+
+{#if challengeCompleted}
+	<SuccessPopup score={25} level="LEVEL 1" />
+{/if}
