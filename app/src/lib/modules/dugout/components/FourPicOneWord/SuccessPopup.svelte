@@ -49,6 +49,9 @@
 			<div class="w-[300px] h-[300px] bg-[#81b6ff] blur-[100px] rounded-full" />
 		</div>
 
+		<h1>
+			{level}
+		</h1>
 		<div
 			class="w-full max-w-[400px] h-[350px] border-[3px] border-white/20 outline outline-[10px] outline-dark-100/30 rounded-lg relative"
 		>
