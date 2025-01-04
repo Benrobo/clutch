@@ -14,22 +14,22 @@
 	const fakeMedia = [
 		{
 			type: 'image',
-			url: '/4-pic-one-word/batter.jpg',
+			url: '/4-pic-1-word/batter.jpg',
 			description: 'A batter'
 		},
 		{
 			type: 'image',
-			url: '/4-pic-one-word/baseball.jpeg',
+			url: '/4-pic-1-word/baseball.jpeg',
 			description: 'A baseball'
 		},
 		{
 			type: 'image',
-			url: '/4-pic-one-word/pitcher.jpg',
+			url: '/4-pic-1-word/pitcher.jpg',
 			description: 'A pitcher'
 		},
 		{
 			type: 'image',
-			url: '/4-pic-one-word/plate.jpeg',
+			url: '/4-pic-1-word/plate.jpeg',
 			description: 'Home plate'
 		}
 	];
