@@ -107,3 +107,47 @@ Here's what I think the structure to look like:
   "spin",
 ];
 ```
+
+## DB MODELS
+
+```js
+model user {
+    id          String          @id @default(cuid())
+    name        String
+    email       String          @unique
+    created_at  DateTime       @default(now())
+    game_progress dugout_game_progress[] // Relation to track progress in various dugout games
+}
+
+model dugout_game_progress {
+    id                String   @id @default(cuid())
+    user_id           String
+    game_name         String   // Name of the dugout game (e.g., "4-pic-one-word", "Quiz")
+    level             GameLevel // Current level as an enum
+    total_challenges  Int?     // Total challenges in the level (optional)
+    completed_challenges Int?   // Challenges answered correctly (optional)
+    created_at        DateTime @default(now())
+
+    user user @relation(fields: [user_id], references: [id])
+}
+
+model user_progress {
+    id          String   @id @default(cuid())
+    user_id     String
+    game_name   String   // Name of the dugout game
+    score       Int      // Score based on performance
+    created_at  DateTime @default(now())
+
+    user user @relation(fields: [user_id], references: [id])
+}
+
+// Enum for game levels
+enum GameLevel {
+    APPRENTICE
+    INTERMEDIATE
+    ADVANCED
+    EXPERT
+}
+```
+
+For now, Hint Usage would be preserved on the client side in localstorage.
