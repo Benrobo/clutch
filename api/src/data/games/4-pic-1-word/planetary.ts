@@ -1,3 +1,5 @@
+import { FourPicOneWordChallenges } from "../../../types/dugout.types.js";
+
 const PLANETARY_GAME_DATA = [
   {
     id: 1,
@@ -299,6 +301,6 @@ const PLANETARY_GAME_DATA = [
       },
     ],
   },
-];
+] as FourPicOneWordChallenges[];
 
 export default PLANETARY_GAME_DATA;
