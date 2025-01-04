@@ -13,9 +13,21 @@ export const VALID_GAME_IDS: VALID_GAME_IDS_TYPE[] = ["4-pic-1-word", "quiz"];
 
 export const GAME_PROGRESSION_CHALLENGES = {
   "4-pic-1-word": {
-    apprentice: apprentice.length,
-    planetary: planetary.length,
-    stellar: stellar.length,
+    apprentice: {
+      count: apprentice.length,
+      challenges: apprentice,
+      points: 10,
+    },
+    planetary: {
+      count: planetary.length,
+      challenges: planetary,
+      points: 20,
+    },
+    stellar: {
+      count: stellar.length,
+      challenges: stellar,
+      points: 30,
+    },
   },
 } satisfies GameProgressionChallenges;
 
