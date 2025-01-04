@@ -23,4 +23,11 @@ router.get(
   )
 );
 
+router.post(
+  `${basePath}/:gameId/upgrade-level`,
+  useCatchErrors(
+    isAuthenticated(dugoutController.upgradeLevel.bind(dugoutController))
+  )
+);
+
 export default router;
