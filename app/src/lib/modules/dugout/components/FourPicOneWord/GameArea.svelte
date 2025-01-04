@@ -3,7 +3,8 @@
 	import { cn } from '@/utils';
 	import ThreeDButton from '../ThreeDButton.svelte';
 	import { Star } from 'lucide-svelte';
-	import TileDisplay from './TileDisplay.svelte';
+	import TileDisplay from './GameControl.svelte';
+	import GameControl from './GameControl.svelte';
 
 	const fakeMedia = [
 		{
@@ -31,7 +32,7 @@
 
 <div
 	class={cn(
-		'w-full h-full flex flex-col items-start justify-start max-w-[678px] mx-auto transition-all duration-1000 relative bg-[#37325C]'
+		'w-full h-full flex flex-col items-start justify-start max-w-[678px] mx-auto transition-all duration-1000 relative bg-[#302c51]'
 	)}
 >
 	<!-- header -->
@@ -100,14 +101,15 @@
 				class="w-full h-auto bg-gradient-to-b from-[#8C85F5] to-[#9472E9] rounded-t-xs p-4 border-t-[4px] border-t-[#EEDFF4]/30 text-center"
 			>
 				<span class="text-white text-sm font-poppins font-semibold">
-					A player's turn to hit the ball against the pitcher.
+					A statistic measuring how a player's actions impact their team's chance of winning.
 				</span>
 			</div>
 		</Flex>
 	</div>
 
 	<!-- tile display -->
-	<div class="w-full h-auto flex flex-col items-center justify-center">
-		<TileDisplay />
-	</div>
+	<!-- <div class="w-full h-full"> -->
+	<!-- <TileDisplay secretWord="Game Score" /> -->
+	<GameControl secretWord="Win Probability" />
+	<!-- </div> -->
 </div>
