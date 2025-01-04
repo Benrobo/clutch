@@ -113,6 +113,13 @@
   font-style: normal;
 }
 
+/* Sunglass Gamified Font */
+@font-face {
+  font-family: "Shiny";
+  src: url("/fonts/shiny/default.ttf");
+  /* font-weight: 900;
+  font-style: normal; */
+}
 
 /* Utility classes */
 .recoleta {
@@ -129,6 +136,10 @@
 
 .cyber {
   font-family: "Cyber", sans-serif;
+}
+
+.shiny {
+  font-family: "Shiny", sans-serif;
 }
 
 /* Font weight utilities */
