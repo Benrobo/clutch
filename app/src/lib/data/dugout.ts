@@ -3,7 +3,7 @@ import type { GameType } from "@/types/games";
 
 export const DugoutGames = [
     {
-        id: "4-pic-one-word",
+        id: "4-pic-1-word",
         title: "4 Pic 1 Word",
         description: "Identify the baseball term from four related images!",
         image: "/images/4-pic-one-word.png",
