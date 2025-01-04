@@ -32,7 +32,6 @@ model users {
     liked_highlights     user_highlight_likes[]
     chat                 chat[]
     dugout_game_progress dugout_game_progress[]
-    your_progress        user_progress[]
 
     @@index([email])
 }
@@ -243,38 +242,28 @@ model chat_messages {
 
 // DUGOUT GAMES MODELS
 
-// Enum for game levels
 enum GameLevel {
-    APPRENTICE
-    INTERMEDIATE
-    ADVANCED
-    EXPERT
+    apprentice
+    planetary
+    stellar
+    universe
+    domain_master
 }
 
 model dugout_game_progress {
     id                   String    @id @default(cuid())
     user_id              String
-    game_name            String // Name of the dugout game (e.g., "4-pic-one-word", "Quiz")
+    dugout_game_id       String // ID of the dugout game (e.g., "4-pic-1-word", "quiz")
     level                GameLevel
-    total_challenges     Int?
-    completed_challenges Int?
+    total_challenges     Int?      @default(0)
+    completed_challenges Int?      @default(0)
+    points               Int?      @default(0)
     created_at           DateTime  @default(now())
 
     user users @relation(fields: [user_id], references: [id])
 
     @@index([user_id])
-}
-
-model user_progress {
-    id         String   @id @default(cuid())
-    user_id    String
-    game_name  String // Name of the dugout game
-    score      Int // Score based on performance
-    created_at DateTime @default(now())
-
-    user users @relation(fields: [user_id], references: [id])
-
-    @@index([user_id])
+    @@index([dugout_game_id])
 }
 
 enum JobType {
