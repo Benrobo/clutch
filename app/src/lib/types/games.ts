@@ -12,4 +12,4 @@ export type MLBGlossary = {
     definition: string;
 }
 
-export type GameType = "4-pic-one-word" | "quiz" | "word-search"
+export type GameType = "4-pic-1-word" | "quiz" | "word-search"
