@@ -17,7 +17,7 @@
 		<WordSearch />
 	{:else if slug === 'quiz'}
 		<Quiz />
-	{:else if slug === '4-pic-one-word'}
+	{:else if slug === '4-pic-1-word'}
 		<FourPicOneWord />
 	{/if}
 </div>
