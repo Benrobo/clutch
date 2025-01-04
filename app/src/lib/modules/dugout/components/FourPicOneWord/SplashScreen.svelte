@@ -2,8 +2,10 @@
 	import Flex from '@/components/Flex.svelte';
 	import ThreeDButton from '../ThreeDButton.svelte';
 	import { fade } from 'svelte/transition';
+	import { X } from 'lucide-svelte';
 
 	export let onHideSplashScreen: () => void = () => {};
+	export let leaveGame: () => void = () => {};
 </script>
 
 <div class="w-full h-full bg-gradient-to-b from-[#5430B7] via-[#0063D8] to-[#00AAEF]">
@@ -11,6 +13,14 @@
 		class="w-full h-full absolute top-0 left-0"
 		style="background-image: url('/images/4snap/splash-screen-transparent.png'); background-size: contain; background-position: center;"
 	/>
+
+	<!-- <ThreeDButton
+		colorType="orange"
+		className="w-[45px] h-[45px] flex-center rounded-full absolute top-2 left-2 scale-[.70] transition-all"
+		onClick={leaveGame}
+	>
+		<X class="stroke-white-100" />
+	</ThreeDButton> -->
 </div>
 
 <!-- splash action button -->
