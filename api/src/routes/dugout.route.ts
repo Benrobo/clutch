@@ -30,4 +30,20 @@ router.post(
   )
 );
 
+router.get(
+  `${basePath}/:gameId/challenges`,
+  useCatchErrors(
+    isAuthenticated(
+      dugoutController.getGameLevelChallenges.bind(dugoutController)
+    )
+  )
+);
+
+router.post(
+  `${basePath}/:gameId/challenges/:challengeId/complete`,
+  useCatchErrors(
+    isAuthenticated(dugoutController.completeChallenge.bind(dugoutController))
+  )
+);
+
 export default router;
