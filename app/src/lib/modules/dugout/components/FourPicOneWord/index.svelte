@@ -4,6 +4,7 @@
 	import GameArea from './GameArea.svelte';
 	import { fade } from 'svelte/transition';
 	import { cn } from '@/utils';
+	import { goto } from '$app/navigation';
 
 	$: hideSplashScreen = true;
 	$: showGameArea = false;
@@ -19,6 +20,14 @@
 			}, 500);
 		}
 	}
+
+	const onLeaveGame = () => {
+		hideSplashScreen = true;
+		showGameArea = false;
+		setTimeout(() => {
+			goto('/home/dugout');
+		}, 1000);
+	};
 </script>
 
 <div
@@ -30,12 +39,12 @@
 >
 	{#if hideSplashScreen}
 		<div class="w-full h-full" transition:fade={{ duration: 500 }}>
-			<SplashScreen {onHideSplashScreen} />
+			<SplashScreen {onHideSplashScreen} leaveGame={onLeaveGame} />
 		</div>
 	{/if}
 
 	{#if showGameArea}
-		<GameArea />
+		<GameArea leaveGame={onLeaveGame} />
 	{/if}
 </div>
 
