@@ -27,10 +27,12 @@ model users {
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 
-    preferences      Json? // { teams: number[], players: number[] }
-    saved_highlights saved_highlights[]
-    liked_highlights user_highlight_likes[]
-    chat             chat[]
+    preferences          Json? // { teams: number[], players: number[] }
+    saved_highlights     saved_highlights[]
+    liked_highlights     user_highlight_likes[]
+    chat                 chat[]
+    dugout_game_progress dugout_game_progress[]
+    your_progress        user_progress[]
 
     @@index([email])
 }
@@ -237,6 +239,42 @@ model chat_messages {
     chat chat @relation(fields: [chat_id], references: [id], onDelete: Cascade)
 
     @@index([chat_id])
+}
+
+// DUGOUT GAMES MODELS
+
+// Enum for game levels
+enum GameLevel {
+    APPRENTICE
+    INTERMEDIATE
+    ADVANCED
+    EXPERT
+}
+
+model dugout_game_progress {
+    id                   String    @id @default(cuid())
+    user_id              String
+    game_name            String // Name of the dugout game (e.g., "4-pic-one-word", "Quiz")
+    level                GameLevel
+    total_challenges     Int?
+    completed_challenges Int?
+    created_at           DateTime  @default(now())
+
+    user users @relation(fields: [user_id], references: [id])
+
+    @@index([user_id])
+}
+
+model user_progress {
+    id         String   @id @default(cuid())
+    user_id    String
+    game_name  String // Name of the dugout game
+    score      Int // Score based on performance
+    created_at DateTime @default(now())
+
+    user users @relation(fields: [user_id], references: [id])
+
+    @@index([user_id])
 }
 
 enum JobType {
