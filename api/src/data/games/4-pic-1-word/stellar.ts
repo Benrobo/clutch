@@ -1,3 +1,5 @@
+import { FourPicOneWordChallenges } from "../../../types/dugout.types.js";
+
 const STELLAR_GAME_DATA = [
   {
     id: 1,
@@ -308,6 +310,6 @@ const STELLAR_GAME_DATA = [
       },
     ],
   },
-];
+] as FourPicOneWordChallenges[];
 
 export default STELLAR_GAME_DATA;
