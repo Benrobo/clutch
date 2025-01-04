@@ -5,7 +5,7 @@
 	import { X } from 'lucide-svelte';
 
 	export let onHideSplashScreen: () => void = () => {};
-	export let leaveGame: () => void = () => {};
+	// export let leaveGame: () => void = () => {};
 </script>
 
 <div class="w-full h-full bg-gradient-to-b from-[#5430B7] via-[#0063D8] to-[#00AAEF]">
