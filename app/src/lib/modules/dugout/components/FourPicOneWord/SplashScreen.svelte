@@ -19,6 +19,6 @@
 		className="w-full max-w-[200px] h-auto py-4 px-4 rounded-lg"
 		onClick={onHideSplashScreen}
 	>
-		<span class="text-white text-lg font-bold">Start</span>
+		<span class="text-white text-lg font-bold">Play</span>
 	</ThreeDButton>
 </Flex>
