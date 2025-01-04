@@ -33,7 +33,7 @@
 						🔍
 					{:else if game?.id === 'quiz'}
 						🎲
-					{:else if game?.id === '4-pic-one-word'}
+					{:else if game?.id === '4-pic-1-word'}
 						🖼️
 					{/if}
 				</span>
