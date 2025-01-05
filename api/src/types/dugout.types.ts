@@ -41,3 +41,9 @@ export type CompletedChallenges = {
   planetary: number[];
   stellar: number[];
 };
+
+export type DugoutUserStats = {
+  points: number;
+  dugout_game_id: string;
+  level: GameLevel;
+};
