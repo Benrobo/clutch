@@ -38,3 +38,9 @@ export const GAME_LEVELS = [
   "universe",
   "domain_master",
 ] as const;
+
+export const USER_GAME_LEVELS_MAP_TOTAL_POINTS = {
+  apprentice: 100,
+  planetary: 400,
+  stellar: 900,
+};
