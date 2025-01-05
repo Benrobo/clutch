@@ -2,12 +2,51 @@
 	import { goto } from '$app/navigation';
 	import Flex from '@/components/Flex.svelte';
 	import { DugoutGames } from '@/data/dugout';
+	import { getGamesProgress, getUserStats } from '@/http/requests';
 	import GameCard from '@/modules/dugout/components/GameCard.svelte';
 	import { authStore } from '@/store/auth.store';
 	import { useGlobalStore } from '@/store/global.store';
-	import { CloudLightning, Zap } from 'lucide-svelte';
+	import type { DugoutGameProgress, DugoutUserStats } from '@/types/dugout';
+	import { capitalizeFirstLetter, extractAxiosResponseData } from '@/utils';
+	import { createQuery } from '@tanstack/svelte-query';
 
 	$: globalStore = useGlobalStore();
+
+	$: getDugoutGamesProgressQuery = createQuery({
+		queryKey: ['dugout-games-progress'],
+		queryFn: getGamesProgress
+	});
+
+	$: getDugoutUserStatsQuery = createQuery({
+		queryKey: ['dugout-user-stats'],
+		queryFn: getUserStats
+	});
+
+	let gameProgress: DugoutGameProgress[] = [];
+	$: gameProgress = [];
+
+	let userStats: DugoutUserStats = {
+		highest_level: null,
+		stats: []
+	};
+	$: userStats = {
+		highest_level: null,
+		stats: []
+	};
+
+	$: {
+		if ($getDugoutGamesProgressQuery.data) {
+			const data = extractAxiosResponseData($getDugoutGamesProgressQuery.data, 'success')
+				?.data as unknown as DugoutGameProgress[];
+			gameProgress = data;
+		}
+
+		if ($getDugoutUserStatsQuery.data) {
+			const data = extractAxiosResponseData($getDugoutUserStatsQuery.data, 'success')
+				?.data as unknown as DugoutUserStats;
+			userStats = data;
+		}
+	}
 
 	const games = DugoutGames;
 </script>
@@ -39,11 +78,20 @@
 					class="px-1 pr-3 py-1 rounded-full flex gap-2 flex-center bg-white-100/10 border-[1px] border-white-400/30"
 				>
 					<span class="w-[30px] h-[30px] rounded-full bg-yellow-200/10 flex-center">
-						<!-- <Zap size={15} class="" /> -->
-						<!-- 💎 -->
-						👑
+						{#if userStats?.highest_level === 'apprentice'}
+							<span>💎</span>
+						{:else if userStats?.highest_level === 'planetary'}
+							<span>💠</span>
+						{:else if userStats?.highest_level === 'stellar'}
+							<span>🌟</span>
+						{:else}
+							<span>🌌</span>
+						{/if}
 					</span>
-					<span class="font-jetbrains text-xs text-white-200"> Expert </span>
+					<span class="font-jetbrains text-xs text-white-200">
+						<!-- We need to determine the average level of all the games later -->
+						{capitalizeFirstLetter(userStats?.highest_level ?? '---')}
+					</span>
 				</button>
 			</Flex>
 			<Flex className="w-auto h-auto flex-col items-center justify-center -translate-y-[1em]">
@@ -61,11 +109,10 @@
 				<button
 					class="px-1 pr-3 py-1 rounded-full flex gap-2 flex-center bg-white-100/10 border-[1px] border-white-400/30"
 				>
-					<span class="w-[30px] h-[30px] rounded-full bg-yellow-200/10 flex-center">
-						<!-- <Zap size={15} class="" /> -->
-						⭐️
+					<span class="w-[30px] h-[30px] rounded-full bg-yellow-200/10 flex-center"> ⭐️ </span>
+					<span class="font-jetbrains text-xs font-semibold text-white-200">
+						{userStats?.stats.reduce((acc, curr) => acc + curr.points, 0)}
 					</span>
-					<span class="font-jetbrains text-xs font-semibold text-white-200">3000</span>
 				</button>
 			</Flex>
 		</Flex>
@@ -90,6 +137,7 @@
 			{#each games as game}
 				<GameCard
 					{game}
+					gameProgress={gameProgress.find((gp) => gp.dugout_game_id === game.id)}
 					onClick={() => {
 						if (game.available) {
 							goto(`/home/dugout/${game.id}`);
