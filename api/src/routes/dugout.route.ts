@@ -46,4 +46,20 @@ router.post(
   )
 );
 
+router.get(
+  `${basePath}/stats`,
+  useCatchErrors(
+    isAuthenticated(dugoutController.getUserStats.bind(dugoutController))
+  )
+);
+
+router.get(
+  `${basePath}/points/:gameId`,
+  useCatchErrors(
+    isAuthenticated(
+      dugoutController.getUserPointsByGameId.bind(dugoutController)
+    )
+  )
+);
+
 export default router;
