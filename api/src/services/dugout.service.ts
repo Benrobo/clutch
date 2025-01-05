@@ -171,4 +171,18 @@ export default class DugoutService {
       gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
     ][level as keyof CompletedChallenges]?.challenges;
   }
+
+  async getUserStats(userId: string) {
+    return await prisma.dugout_game_progress.findMany({
+      where: { user_id: userId },
+      select: { points: true, level: true, dugout_game_id: true },
+    });
+  }
+
+  async getUserPointsByGameId(gameId: string, userId: string) {
+    return await prisma.dugout_game_progress.findFirst({
+      where: { dugout_game_id: gameId, user_id: userId },
+      select: { points: true },
+    });
+  }
 }
