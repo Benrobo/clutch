@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
+	import type { DugoutGameProgress } from '@/types/dugout';
 	import type { GameType } from '@/types/games';
 	import { cn } from '@/utils';
+	import { afterUpdate, onMount } from 'svelte';
 
 	export let game: {
 		id: GameType;
@@ -11,6 +13,11 @@
 		available: boolean;
 	} | null = null;
 	export let onClick: () => void;
+	export let gameProgress: DugoutGameProgress | null = null;
+
+	afterUpdate(() => {
+		console.log({ gameProgress });
+	});
 </script>
 
 <button
@@ -40,6 +47,22 @@
 			</div>
 		</Flex>
 		<Flex className="w-full h-auto flex-col text-start p-3">
+			{#if gameProgress}
+				<Flex className="w-full h-auto flex-row items-center gap-2">
+					<span
+						class="text-white-200 px-[5px] py-[2px] border-[.5px] border-white-400/80 bg-dark-103 rounded-full text-[10px]"
+					>
+						🔰 {gameProgress.level}
+					</span>
+					<span class="text-white-300 font-poppins font-light text-xs">
+						{gameProgress.level in gameProgress.completed_challenges
+							? // @ts-expect-error
+								gameProgress.completed_challenges[gameProgress.level].length
+							: 0} -
+						{gameProgress.total_challenges}
+					</span>
+				</Flex>
+			{/if}
 			<h1 class="text-white-100 font-jetbrains font-semibold text-sm">{game?.title}</h1>
 			<p class="text-white-300 font-poppins font-light text-wrap text-xs">
 				{game?.description}
