@@ -93,3 +93,41 @@ export const getSpotlightContent = async (id: string)=> {
   const res = await $axios.get(`/spotlight/${id}`);
   return res.data;
 }
+
+// GAME REQUESTS
+
+export const getUserStats = async ()=> {
+  const res = await $axios.get(`/dugout/stats`);
+  return res.data;
+}
+
+export const getUserPointsByGameId = async (gameId: string)=> {
+  const res = await $axios.get(`/dugout/points/${gameId}`);
+  return res.data;
+}
+
+export const joinGame = async (gameId: string)=> {
+  const res = await $axios.post(`/dugout/${gameId}/join`);
+  return res.data;
+}
+
+export const getGamesProgress = async ()=> {
+  const res = await $axios.get(`/dugout/games-progress`);
+  return res.data;
+}
+
+export const upgradeLevel = async (gameId: string)=> {
+  const res = await $axios.post(`/dugout/${gameId}/upgrade-level`);
+  return res.data;
+}
+
+export const getGameLevelChallenges = async (gameId: string)=> {
+  const res = await $axios.get(`/dugout/${gameId}/challenges`);
+  return res.data;
+}
+
+
+export const completeChallenge = async (gameId: string, challengeId: string)=> {
+  const res = await $axios.post(`/dugout/${gameId}/challenges/${challengeId}/complete`);
+  return res.data;
+}
