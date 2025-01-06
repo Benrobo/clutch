@@ -191,7 +191,7 @@
 
 	<!-- keyboard -->
 	<div
-		class="w-full h-auto min-h-[250px] flex flex-col items-center justify-start bg-[#23203c] relative"
+		class="w-full h-auto min-h-[250px] px-5 flex flex-col items-center justify-start bg-[#23203c] relative"
 	>
 		<!-- (hints, shuffle) container -->
 		<Flex
