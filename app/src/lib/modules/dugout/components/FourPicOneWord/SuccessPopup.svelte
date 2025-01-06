@@ -26,18 +26,17 @@
 >
 	<div class="w-full h-auto flex-center relative flex-col">
 		<!-- radial blur -->
-		<div class="w-full absolute left-0 top-10 flex-center">
+		<div class="w-full absolute left-0 top-[1rem] flex-center">
 			<div class="w-[300px] h-[300px] bg-[#81b6ff] blur-[100px] rounded-full" />
 		</div>
 
-		<Flex className="w-full h-auto flex-col items-center justify-center -translate-y-[4em]">
-			<h1 class="text-white text-4xl font-bold">{level.toUpperCase()}</h1>
-			<ThreeDButton
-				colorType="hotpink"
-				className="w-full h-[70px] max-w-[200px] flex items-center justify-between px-6 py-4 rounded-lg"
-			>
-				COMPLETE
-			</ThreeDButton>
+		<Flex
+			className="w-full h-auto gap-0 flex-col items-center justify-center -translate-y-[14em] absolute top-0 left-0"
+		>
+			<h1 class="text-white text-2xl font-light font-cyber">
+				{level.toUpperCase()}
+			</h1>
+			<img src="/level-complete-ribbon.svg" alt="ribbon" class="w-[14em]" />
 		</Flex>
 		<div
 			class="w-full max-w-[400px] h-[350px] border-[3px] border-white/20 outline outline-[10px] outline-dark-100/30 rounded-lg relative"
