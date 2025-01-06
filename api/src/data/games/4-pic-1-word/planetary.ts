@@ -46,7 +46,7 @@ const PLANETARY_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/mitt.jpg",
+        url: "/4-pic-1-word/mitt.jpeg",
         description: "A mitt",
       },
       {
@@ -81,7 +81,7 @@ const PLANETARY_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/team.jpg",
+        url: "/4-pic-1-word/team.webp",
         description: "A team",
       },
       {
@@ -191,7 +191,7 @@ const PLANETARY_GAME_DATA = [
     media: [
       {
         type: "image",
-        url: "/4-pic-1-word/fielder.jpg",
+        url: "/4-pic-1-word/fielder.webp",
         description: "A fielder",
       },
       {
@@ -231,12 +231,12 @@ const PLANETARY_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/fence.jpg",
+        url: "/4-pic-1-word/fence.webp",
         description: "A fence",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/crowd.jpg",
+        url: "/4-pic-1-word/crowd.webp",
         description: "A crowd",
       },
     ],
@@ -281,7 +281,7 @@ const PLANETARY_GAME_DATA = [
     media: [
       {
         type: "image",
-        url: "/4-pic-1-word/player.jpg",
+        url: "/4-pic-1-word/player.webp",
         description: "A player",
       },
       {
