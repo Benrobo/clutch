@@ -236,7 +236,7 @@
 	</div>
 </div>
 
-{#if isAllSlotsFilled && isSelectedLettersCorrect()}
+{#if true}
 	<SuccessPopup
 		score={awardedPoints}
 		level={gameLevel}
@@ -244,3 +244,11 @@
 		media={currentChallenge?.media}
 	/>
 {/if}
+<!-- {#if isAllSlotsFilled && isSelectedLettersCorrect()}
+	<SuccessPopup
+		score={awardedPoints}
+		level={gameLevel}
+		secretWord={formattedSecretWord}
+		media={currentChallenge?.media}
+	/>
+{/if} -->
