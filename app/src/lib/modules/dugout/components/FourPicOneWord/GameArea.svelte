@@ -3,26 +3,12 @@
 	import { cn } from '@/utils';
 	import ThreeDButton from '../ThreeDButton.svelte';
 	import { Star, X } from 'lucide-svelte';
-	import TileDisplay from './GameControl.svelte';
 	import GameControl from './GameControl.svelte';
-	import { useLocalStorage } from '@/hooks/useLocalStorage';
-	import type { FourPicOneWordChallenge } from '@/types/dugout';
+	import type { FourPicOneWordGameSession } from '@/types/dugout';
 
 	export let slug: string = '';
-
-	$: gameSession = useLocalStorage<{
-		challenges: FourPicOneWordChallenge[];
-		hint_points: number;
-		current_challenge: FourPicOneWordChallenge | null;
-		level: string;
-	}>('4-pic-1-word', {
-		challenges: [],
-		hint_points: 10,
-		current_challenge: null,
-		level: 'level 1'
-	});
-
-	$: currentChallenge = $gameSession.current_challenge;
+	export let currentChallenge: FourPicOneWordGameSession['current_challenge'] | null = null;
+	export let gameSession: FourPicOneWordGameSession | null = null;
 
 	export let leaveGame: () => void = () => {};
 </script>
@@ -67,7 +53,7 @@
 
 			<!-- level -->
 			<div class="w-auto h-auto text-white text-2xl font-poppins font-semibold">
-				{$gameSession.level}
+				{gameSession?.level}
 			</div>
 
 			<!-- score -->
@@ -124,8 +110,8 @@
 	<!-- <TileDisplay secretWord="Game Score" /> -->
 	<GameControl
 		secretWord={currentChallenge?.secret?.display}
-		gameLevel={$gameSession.level}
-		hintPoints={$gameSession.hint_points}
+		gameLevel={gameSession?.level}
+		hintPoints={gameSession?.hint_points}
 		{currentChallenge}
 		{slug}
 	/>
