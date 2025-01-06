@@ -4,8 +4,11 @@
 	import ThreeDButton from '../ThreeDButton.svelte';
 	import SuccessPopup from './SuccessPopup.svelte';
 	import { afterUpdate } from 'svelte';
+	import { Shuffle } from 'lucide-svelte';
 
 	export let secretWord: string = '';
+	export let gameLevel: string = '';
+	export let hintPoints: number = 0;
 
 	const formattedSecretWord = secretWord.toUpperCase();
 
@@ -20,62 +23,126 @@
 	const secretWordLetters = formattedSecretWord.split('');
 	const totalLetters = splitted.reduce((acc, curr) => acc + curr.length, 0);
 	const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	// random letters & make sure they are not in the secret word
 	const randomLetters = shuffleArray(alphabet.split('').slice(0, getRandomLettersLength()));
-	const shuffledLetters = shuffleArray(
-		[...splitted, ...randomLetters]
+	let shuffledLetters: { id: number; letter: string; sourceIndex: number; isUsed: boolean }[] = [];
+	$: shuffledLetters = shuffleArray(
+		[...secretWordLetters, ...randomLetters]
 			.filter((l) => l.length > 0)
 			.join('')
 			.split('')
-	).map((letter, index) => ({ id: index, letter })); // Add unique id to each letter
+	).map((letter, index) => ({
+		id: index,
+		letter,
+		sourceIndex: index,
+		isUsed: false
+	}));
 
-	let selectedLetters: { id: number; letter: string | null }[] = new Array(
+	// Initialize selectedLetters with empty tiles
+	let selectedLetters: { id: number; letter: string | null; sourceIndex?: number }[] = new Array(
 		formattedSecretWord.length
 	)
 		.fill(null)
 		.map((_, index) => ({ id: index, letter: null })); // Initialize with empty tiles
-	$: selectedLetters = new Array(formattedSecretWord.length)
-		.fill(null)
-		.map((_, index) => ({ id: index, letter: null }));
-	$: challengeCompleted = false;
 
-	const onWordSelect = (letterObj: { id: number; letter: string }) => {
-		// Find the first available slot with letter: null
+	// Add this reactive statement to track when all slots are filled
+	$: isAllSlotsFilled = selectedLetters.every((letter) => letter.letter !== null);
+	$: isWrong = isAllSlotsFilled && !isSelectedLettersCorrect();
+	$: shouldShake = isWrong;
+
+	$: shuffleAnimation = true;
+
+	const onWordSelect = (letterObj: {
+		id: number;
+		letter: string;
+		sourceIndex: number;
+		isUsed: boolean;
+	}) => {
 		const nullIndex = selectedLetters.findIndex((item) => item.letter === null);
 
 		if (nullIndex !== -1) {
-			// Reuse the slot with letter: null
-			selectedLetters[nullIndex] = {
-				...selectedLetters[nullIndex],
-				letter: letterObj.letter,
-				id: letterObj.id
-			};
-		}
+			// Mark this specific letter instance as used
+			const letterIndex = shuffledLetters.findIndex((l) => l.sourceIndex === letterObj.sourceIndex);
+			if (letterIndex !== -1) {
+				shuffledLetters[letterIndex].isUsed = true;
+			}
 
-		selectedLetters = [...selectedLetters]; // Trigger reactivity
+			selectedLetters[nullIndex] = {
+				letter: letterObj.letter,
+				id: nullIndex,
+				sourceIndex: letterObj.sourceIndex
+			};
+			selectedLetters = [...selectedLetters];
+		}
+	};
+
+	const shuffleLetters = () => {
+		shuffleAnimation = true;
+		shuffledLetters = shuffleArray(shuffledLetters);
 	};
 
 	const removeLetter = (index: number) => {
+		const removedLetter = selectedLetters[index];
+		if (removedLetter.sourceIndex !== undefined) {
+			// Re-enable the specific letter instance in shuffledLetters
+			const letterIndex = shuffledLetters.findIndex(
+				(l) => l.sourceIndex === removedLetter.sourceIndex
+			);
+			if (letterIndex !== -1) {
+				shuffledLetters[letterIndex].isUsed = false;
+			}
+		}
 		selectedLetters[index].letter = null;
 		selectedLetters = [...selectedLetters];
 	};
 
-	afterUpdate(() => {
-		console.log({ selectedLetters, shuffledLetters });
-	});
+	const isLetterDisabled = (letterObj: {
+		id: number;
+		letter: string;
+		sourceIndex: number;
+		isUsed: boolean;
+	}) => {
+		return letterObj.isUsed;
+	};
+
+	const isSelectedLettersCorrect = () => {
+		const _selectedLetters = selectedLetters
+			.filter((letter) => letter.letter !== null)
+			?.map((letter) => letter.letter)
+			?.join('');
+		return _selectedLetters === formattedSecretWord;
+	};
+
+	$: {
+		if (isWrong) {
+			setTimeout(() => {
+				shouldShake = false;
+			}, 1000);
+		}
+
+		if (shuffleAnimation) {
+			setTimeout(() => {
+				shuffleAnimation = false;
+			}, 100);
+		}
+	}
+
+	afterUpdate(() => {});
 </script>
 
 <div class="w-full h-full flex flex-col items-center justify-between">
 	<!-- display letters area -->
-	<Flex className="w-full h-auto gap-2 px-10 mt-10 flex-wrap flex-center relative">
+	<Flex className={cn('w-auto h-auto gap-2 mt-10 flex-wrap flex-center relative')}>
 		{#each selectedLetters as letterObj, i}
 			<button
 				class={cn(
+					' rounded-sm overflow-hidden',
 					totalLetters <= 10 && 'w-[35px] h-[35px]',
 					totalLetters <= 15 && 'w-[45px] h-[45px]',
-					letterObj.letter
-						? 'bg-gradient-to-b from-[#5C7DDF] to-[#565FCA] outline-none border-t-[5px] border-t-[#95D5FE]/80 text-white'
-						: 'bg-[#1c1a31] border-[2px] border-[#5D5081] rounded-sm overflow-hidden'
+					shouldShake
+						? 'animate-shake !bg-red-305/50 text-white border-[3px] border-red-200'
+						: letterObj.letter
+							? 'bg-gradient-to-b from-[#5C7DDF] to-[#565FCA] outline-none border-t-[5px] border-t-[#95D5FE]/80 text-white'
+							: 'bg-[#1c1a31] border-[2px] border-[#5D5081]'
 				)}
 				on:click={() => removeLetter(i)}
 			>
@@ -99,35 +166,53 @@
 	<div
 		class="w-full h-auto min-h-[250px] flex flex-col items-center justify-start bg-[#23203c] relative"
 	>
-		<!-- hints container -->
-		<Flex className="w-full h-auto flex-center absolute top-0 left-0 -translate-y-[5em]">
+		<!-- (hints, shuffle) container -->
+		<Flex
+			className="w-full h-auto flex-center absolute top-0 left-0 -translate-y-[6em] scale-[.75]"
+		>
 			<div
-				class="w-auto max-w-[200px] px-4 min-h-[50px] py-3 bg-[#242240] border-t-[4px] border-t-[#5D5081]"
+				class="w-full max-w-[200px] px-4 min-h-[50px] py-3 bg-[#242240] border-t-[4px] border-t-[#5D5081] flex-center gap-10"
 			>
-				<button class="w-[40px] h-[40px] rounded-full flex-center relative enableBounceEffect">
-					<img src="/light-bulb.svg" alt="graph" class="w-[45px] h-[45px]" />
+				<button
+					class="w-[60px] h-[60px] rounded-full flex flex-col flex-center relative enableBounceEffect"
+				>
+					<img src="/light-bulb.svg" alt="graph" class="w-[65px] h-[65px]" />
 					<div
-						class="text-white text-nowrap text-lg scale-[.80] font-bold absolute right-0 -bottom-1 translate-x-[2.5em] gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]"
+						class={cn(
+							'text-white text-nowrap scale-[.80] font-normal gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]',
+							hintPoints > 100 ? 'text-xs' : 'text-lg'
+						)}
 					>
-						⭐️ 25
+						⭐️ {hintPoints}
 					</div>
 				</button>
+
+				<ThreeDButton
+					colorType="pink"
+					className="w-[60px] h-[60px] rounded-full flex-center relative enableBounceEffect"
+					onClick={() => shuffleLetters()}
+				>
+					<Shuffle size={35} />
+				</ThreeDButton>
 			</div>
 		</Flex>
 
-		<Flex className="w-full h-auto gap-2 px-2 mt-5 flex-wrap items-center justify-center">
+		<Flex
+			className={cn(
+				'w-full h-auto gap-2 px-2 mt-5 flex-wrap items-center justify-center transition-all',
+				shuffleAnimation ? 'scale-[.10]' : 'scale-[1]'
+			)}
+		>
 			{#each shuffledLetters as letterObj}
 				<button
 					class={cn(
-						'w-[60px] h-[60px] overflow-hidden enableBounceEffect font-bruceforever drop-shadow-md',
-						secretWordLetters.includes(letterObj.letter) &&
-							selectedLetters.some((selected) => selected.letter === letterObj.letter)
+						'w-[60px] h-[60px] overflow-hidden font-bruceforever drop-shadow-md',
+						isLetterDisabled(letterObj)
 							? 'bg-[#394781] text-[#262655] border-none outline-none' // Disabled state
-							: 'bg-gradient-to-b from-[#5C7DDF] to-[#565FCA] outline-none border-t-[5px] border-t-[#95D5FE]/80 text-white' // Enabled state
+							: 'enableBounceEffect bg-gradient-to-b from-[#5C7DDF] to-[#565FCA] outline-none border-t-[5px] border-t-[#95D5FE]/80 text-white' // Enabled state
 					)}
 					on:click={() => onWordSelect(letterObj)}
-					disabled={secretWordLetters.includes(letterObj.letter) &&
-						selectedLetters.some((selected) => selected.letter === letterObj.letter)}
+					disabled={isLetterDisabled(letterObj)}
 				>
 					<span class="text-white text-2xl font-bold">{letterObj.letter}</span>
 				</button>
@@ -136,6 +221,6 @@
 	</div>
 </div>
 
-{#if challengeCompleted}
-	<SuccessPopup score={25} level="LEVEL 1" />
+{#if isAllSlotsFilled && isSelectedLettersCorrect()}
+	<SuccessPopup score={25} level={gameLevel} />
 {/if}
