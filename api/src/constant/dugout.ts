@@ -40,7 +40,7 @@ export const GAME_LEVELS = [
 ] as const;
 
 export const USER_GAME_LEVELS_MAP_TOTAL_POINTS = {
-  apprentice: 100,
-  planetary: 400,
-  stellar: 900,
+  apprentice: 10,
+  planetary: 20,
+  stellar: 40,
 };
