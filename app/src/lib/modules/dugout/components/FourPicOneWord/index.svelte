@@ -9,6 +9,8 @@
 	import { getGameLevelChallenges, joinGame } from '@/http/requests';
 	import type { FourPicOneWordChallenge } from '@/types/dugout';
 	import { useLocalStorage } from '@/hooks/useLocalStorage';
+	import { onMount } from 'svelte';
+	import { dugoutStore } from '@/store/dugout.store';
 
 	export let slug: string;
 
@@ -81,6 +83,13 @@
 			goto('/home/dugout');
 		}, 1000);
 	};
+
+	onMount(() => {
+		const storedSession = localStorage.getItem('user-game-level');
+		if (storedSession) {
+			dugoutStore.setUserGameLevelSession(JSON.parse(storedSession));
+		}
+	});
 </script>
 
 <div
@@ -102,7 +111,7 @@
 	{/if}
 
 	{#if showGameArea}
-		<GameArea leaveGame={onLeaveGame} />
+		<GameArea leaveGame={onLeaveGame} {slug} />
 	{/if}
 </div>
 
