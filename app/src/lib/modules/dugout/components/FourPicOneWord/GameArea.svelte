@@ -5,36 +5,29 @@
 	import { Star, X } from 'lucide-svelte';
 	import TileDisplay from './GameControl.svelte';
 	import GameControl from './GameControl.svelte';
+	import { useLocalStorage } from '@/hooks/useLocalStorage';
+	import type { FourPicOneWordChallenge } from '@/types/dugout';
 
-	const fakeMedia = [
-		{
-			type: 'image',
-			url: '/4-pic-1-word/batter.jpg',
-			description: 'A batter'
-		},
-		{
-			type: 'image',
-			url: '/4-pic-1-word/baseball.jpeg',
-			description: 'A baseball'
-		},
-		{
-			type: 'image',
-			url: '/4-pic-1-word/pitcher.jpg',
-			description: 'A pitcher'
-		},
-		{
-			type: 'image',
-			url: '/4-pic-1-word/plate.jpeg',
-			description: 'Home plate'
-		}
-	];
+	$: gameSession = useLocalStorage<{
+		challenges: FourPicOneWordChallenge[];
+		hint_points: number;
+		current_challenge: FourPicOneWordChallenge | null;
+		level: string;
+	}>('4-pic-1-word', {
+		challenges: [],
+		hint_points: 10,
+		current_challenge: null,
+		level: 'level 1'
+	});
+
+	$: currentChallenge = $gameSession.current_challenge;
 
 	export let leaveGame: () => void = () => {};
 </script>
 
 <div
 	class={cn(
-		'w-full h-full flex flex-col items-start justify-start max-w-[678px] mx-auto transition-all duration-1000 relative bg-[#302c51]'
+		'w-full h-screen flex flex-col items-start justify-start max-w-[678px] mx-auto transition-all duration-1000 bg-[#302c51] fixed'
 	)}
 >
 	<!-- header -->
@@ -71,7 +64,9 @@
 			</Flex>
 
 			<!-- level -->
-			<div class="w-auto h-auto text-white text-2xl font-poppins font-semibold">Level 1</div>
+			<div class="w-auto h-auto text-white text-2xl font-poppins font-semibold">
+				{$gameSession.level}
+			</div>
 
 			<!-- score -->
 			<div class="w-auto min-w-[100px] h-auto flex flex-row items-center justify-center relative">
@@ -94,17 +89,19 @@
 		class="w-full h-full max-h-[480px] pb-[2em] bg-[#19172a] flex flex-col items-center justify-center p-3 relative border-b-[2px] border-b-[#61488f]"
 	>
 		<div class="w-full h-full grid grid-cols-2 gap-2">
-			{#each fakeMedia as media}
-				<div
-					class="w-full h-full border-[1px] bg-[#241a35] border-[#533971]/50 rounded-lg overflow-hidden"
-				>
-					<img
-						src={`/assets/${media.url}`}
-						alt={media.description}
-						class="w-full h-full object-cover"
-					/>
-				</div>
-			{/each}
+			{#if currentChallenge}
+				{#each currentChallenge?.media as media}
+					<div
+						class="w-full h-full border-[1px] bg-[#241a35] border-[#533971]/50 rounded-lg overflow-hidden"
+					>
+						<img
+							src={`/assets/${media.url}`}
+							alt={media.description}
+							class="w-full h-full object-cover"
+						/>
+					</div>
+				{/each}
+			{/if}
 		</div>
 
 		<!-- definition -->
@@ -113,7 +110,8 @@
 				class="w-full h-auto bg-gradient-to-b from-[#8C85F5] to-[#9472E9] rounded-t-xs p-4 border-t-[4px] border-t-[#EEDFF4]/30 text-center"
 			>
 				<span class="text-white text-sm font-poppins font-semibold">
-					A statistic measuring how a player's actions impact their team's chance of winning.
+					<!-- A statistic measuring how a player's actions impact their team's chance of winning. -->
+					{currentChallenge?.definition}
 				</span>
 			</div>
 		</Flex>
@@ -122,6 +120,6 @@
 	<!-- tile display -->
 	<!-- <div class="w-full h-full"> -->
 	<!-- <TileDisplay secretWord="Game Score" /> -->
-	<GameControl secretWord="Win Probability" />
+	<GameControl secretWord={currentChallenge?.secret?.display} />
 	<!-- </div> -->
 </div>
