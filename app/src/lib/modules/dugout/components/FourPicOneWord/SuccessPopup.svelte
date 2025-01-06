@@ -5,34 +5,15 @@
 	import { Star } from 'lucide-svelte';
 	import { useConfetti } from '$lib/modules/dugout/hooks/useConfetti';
 	import { onMount } from 'svelte';
+	import type { FourPicOneWordChallenge } from '@/types/dugout';
+	import Flex from '@/components/Flex.svelte';
 
+	export let secretWord: string = '';
+	export let media: FourPicOneWordChallenge['media'] = [];
 	export let score: number = 0;
 	export let level: string = '';
 
 	const { startConfetti } = useConfetti(15000);
-
-	const fakeMedia = [
-		{
-			type: 'image',
-			url: '/4-pic-1-word/batter.jpg',
-			description: 'A batter'
-		},
-		{
-			type: 'image',
-			url: '/4-pic-1-word/baseball.jpeg',
-			description: 'A baseball'
-		},
-		{
-			type: 'image',
-			url: '/4-pic-1-word/pitcher.jpg',
-			description: 'A pitcher'
-		},
-		{
-			type: 'image',
-			url: '/4-pic-1-word/plate.jpeg',
-			description: 'Home plate'
-		}
-	];
 
 	onMount(() => {
 		startConfetti();
@@ -49,14 +30,20 @@
 			<div class="w-[300px] h-[300px] bg-[#81b6ff] blur-[100px] rounded-full" />
 		</div>
 
-		<h1>
-			{level}
-		</h1>
+		<Flex className="w-full h-auto flex-col items-center justify-center -translate-y-[4em]">
+			<h1 class="text-white text-4xl font-bold">{level.toUpperCase()}</h1>
+			<ThreeDButton
+				colorType="hotpink"
+				className="w-full h-[70px] max-w-[200px] flex items-center justify-between px-6 py-4 rounded-lg"
+			>
+				COMPLETE
+			</ThreeDButton>
+		</Flex>
 		<div
 			class="w-full max-w-[400px] h-[350px] border-[3px] border-white/20 outline outline-[10px] outline-dark-100/30 rounded-lg relative"
 		>
 			<div class="w-full h-full grid grid-cols-2 gap-0">
-				{#each fakeMedia as media, index}
+				{#each media as media, index}
 					<div
 						class={cn(
 							'w-full h-full overflow-hidden',
@@ -82,7 +69,7 @@
 						'text-xl font-medium'
 					)}
 				>
-					<span class="px-4"> SECRET WORD </span>
+					<span class="px-4"> {secretWord.toUpperCase()} </span>
 				</p>
 			</div>
 		</div>
