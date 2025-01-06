@@ -16,17 +16,17 @@ export const GAME_PROGRESSION_CHALLENGES = {
     apprentice: {
       count: apprentice.length,
       challenges: apprentice,
-      points: 10,
+      points: 50,
     },
     planetary: {
       count: planetary.length,
       challenges: planetary,
-      points: 20,
+      points: 100,
     },
     stellar: {
       count: stellar.length,
       challenges: stellar,
-      points: 30,
+      points: 200,
     },
   },
 } satisfies GameProgressionChallenges;
