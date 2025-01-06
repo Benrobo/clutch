@@ -6,12 +6,14 @@ export type DugoutStore = {
 	userGameLevelSession: {
 		level: string;
 		game_id: string;
-	}[]
+	}[];
+    joinedGames: string[];
 };
 
 // Initial state with required default values
 const initialState: DugoutStore = {
-    userGameLevelSession: []
+    userGameLevelSession: [],
+    joinedGames: []
 };
 
 function createDugoutStore() {
@@ -23,6 +25,7 @@ function createDugoutStore() {
             level: string;
             game_id: string;
         }[]) => update((state) => ({ ...state, userGameLevelSession: session })),
+        setJoinedGames: (games: string[]) => update((state) => ({ ...state, joinedGames: games })),
 		reset: () => set(initialState)
 	};
 }
