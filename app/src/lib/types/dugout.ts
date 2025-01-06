@@ -61,3 +61,11 @@ export type FourPicOneWordGameLevelChallenges = {
     planetary: FourPicOneWordChallenge[];
     apprentice: FourPicOneWordChallenge[];
 };
+
+
+export type FourPicOneWordGameSession = {
+  challenges: FourPicOneWordChallenge[];
+  hint_points: number;
+  current_challenge: FourPicOneWordChallenge | null;
+  level: string;
+};
