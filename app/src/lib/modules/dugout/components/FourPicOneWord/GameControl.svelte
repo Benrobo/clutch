@@ -5,10 +5,15 @@
 	import SuccessPopup from './SuccessPopup.svelte';
 	import { afterUpdate } from 'svelte';
 	import { Shuffle } from 'lucide-svelte';
+	import { dugoutStore, useDugoutStore } from '@/store/dugout.store';
+	import { USER_GAME_LEVELS_MAP_TOTAL_POINTS } from '@/constant/dugout';
+	import type { FourPicOneWordChallenge } from '@/types/dugout';
 
 	export let secretWord: string = '';
+	export let currentChallenge: FourPicOneWordChallenge | null = null;
 	export let gameLevel: string = '';
 	export let hintPoints: number = 0;
+	export let slug: string = '';
 
 	const formattedSecretWord = secretWord.toUpperCase();
 
@@ -50,6 +55,14 @@
 	$: shouldShake = isWrong;
 
 	$: shuffleAnimation = true;
+
+	const userLevel = $dugoutStore?.userGameLevelSession?.find(
+		(session) => session.game_id === slug
+	) ?? { level: 'apprentice', game_id: slug };
+	$: awardedPoints =
+		USER_GAME_LEVELS_MAP_TOTAL_POINTS[
+			userLevel?.level as keyof typeof USER_GAME_LEVELS_MAP_TOTAL_POINTS
+		];
 
 	const onWordSelect = (letterObj: {
 		id: number;
@@ -126,7 +139,9 @@
 		}
 	}
 
-	afterUpdate(() => {});
+	afterUpdate(() => {
+		console.log($dugoutStore);
+	});
 </script>
 
 <div class="w-full h-full flex flex-col items-center justify-between">
@@ -206,7 +221,7 @@
 			{#each shuffledLetters as letterObj}
 				<button
 					class={cn(
-						'w-[60px] h-[60px] overflow-hidden font-bruceforever drop-shadow-md',
+						'w-[60px] h-[60px] overflow-hidden font-poppins drop-shadow-md',
 						isLetterDisabled(letterObj)
 							? 'bg-[#394781] text-[#262655] border-none outline-none' // Disabled state
 							: 'enableBounceEffect bg-gradient-to-b from-[#5C7DDF] to-[#565FCA] outline-none border-t-[5px] border-t-[#95D5FE]/80 text-white' // Enabled state
@@ -222,5 +237,10 @@
 </div>
 
 {#if isAllSlotsFilled && isSelectedLettersCorrect()}
-	<SuccessPopup score={25} level={gameLevel} />
+	<SuccessPopup
+		score={awardedPoints}
+		level={gameLevel}
+		secretWord={formattedSecretWord}
+		media={currentChallenge?.media}
+	/>
 {/if}
