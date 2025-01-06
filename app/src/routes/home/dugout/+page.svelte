@@ -49,23 +49,35 @@
 			const data = extractAxiosResponseData($getDugoutGamesProgressQuery.data, 'success')
 				?.data as unknown as DugoutGameProgress[];
 			gameProgress = data;
-			userGameLevelSession.update((prev) => [
-				...prev,
-				...data.map((game) => {
-					const activeGameSession = $userGameLevelSession.find(
-						(session) => session.game_id === game.dugout_game_id
-					);
-					return {
-						game_id: activeGameSession ? activeGameSession.game_id : game.dugout_game_id,
-						level: game.level
-					};
-				})
-			]);
-			dugoutStore.setUserGameLevelSession(
-				gameProgress.map((game) => ({
-					game_id: game.dugout_game_id,
-					level: game.level
-				}))
+			userGameLevelSession.update((prev) => {
+				const existingGameIds = new Set(prev.map((session) => session.game_id));
+				const newSessions = data
+					.map((game) => {
+						const activeGameSession = $userGameLevelSession.find(
+							(session) => session.game_id === game.dugout_game_id
+						);
+						const gameId = activeGameSession ? activeGameSession.game_id : game.dugout_game_id;
+						return {
+							game_id: gameId,
+							level: game.level
+						};
+					})
+					.filter((session) => !existingGameIds.has(session.game_id));
+
+				return [...prev, ...newSessions];
+			});
+			const uniqueGameLevels = Array.from(
+				new Map(gameProgress.map((game) => [game.dugout_game_id, game.level])).entries()
+			).map(([game_id, level]) => ({ game_id, level }));
+
+			dugoutStore.setUserGameLevelSession(uniqueGameLevels);
+
+			dugoutStore.setJoinedGames(gameProgress.map((game) => game.dugout_game_id));
+
+			// save to local storage
+			localStorage.setItem(
+				'joined-games',
+				JSON.stringify(gameProgress.map((game) => game.dugout_game_id))
 			);
 		}
 
