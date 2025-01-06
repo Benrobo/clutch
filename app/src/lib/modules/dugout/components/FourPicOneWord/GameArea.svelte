@@ -8,6 +8,8 @@
 	import { useLocalStorage } from '@/hooks/useLocalStorage';
 	import type { FourPicOneWordChallenge } from '@/types/dugout';
 
+	export let slug: string = '';
+
 	$: gameSession = useLocalStorage<{
 		challenges: FourPicOneWordChallenge[];
 		hint_points: number;
@@ -124,6 +126,8 @@
 		secretWord={currentChallenge?.secret?.display}
 		gameLevel={$gameSession.level}
 		hintPoints={$gameSession.hint_points}
+		{currentChallenge}
+		{slug}
 	/>
 	<!-- </div> -->
 </div>
