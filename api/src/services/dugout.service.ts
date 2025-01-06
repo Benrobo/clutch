@@ -88,6 +88,17 @@ export default class DugoutService {
       challengeId,
     ].filter((id, index, self) => self.indexOf(id) === index);
 
+    // Check if this completion means all challenges are done
+    const totalChallenges =
+      GAME_PROGRESSION_CHALLENGES[
+        gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+      ][level as keyof CompletedChallenges].count;
+
+    const isLevelComplete = nonDuplicateChallenges.length === totalChallenges;
+    const nextLevel = isLevelComplete
+      ? GAME_LEVELS[GAME_LEVELS.indexOf(level) + 1]
+      : level;
+
     const updatedGame = await prisma.dugout_game_progress.update({
       where: {
         dugout_game_id: gameId,
@@ -105,6 +116,8 @@ export default class DugoutService {
               gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
             ][level as keyof CompletedChallenges].points,
         },
+        // Update level if all challenges are completed and next level exists
+        ...(isLevelComplete && nextLevel && { level: nextLevel }),
       },
     });
 
