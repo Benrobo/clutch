@@ -120,6 +120,10 @@
 	<!-- tile display -->
 	<!-- <div class="w-full h-full"> -->
 	<!-- <TileDisplay secretWord="Game Score" /> -->
-	<GameControl secretWord={currentChallenge?.secret?.display} />
+	<GameControl
+		secretWord={currentChallenge?.secret?.display}
+		gameLevel={$gameSession.level}
+		hintPoints={$gameSession.hint_points}
+	/>
 	<!-- </div> -->
 </div>
