@@ -16,25 +16,26 @@
 	export let slug: string = '';
 
 	const formattedSecretWord = secretWord.toUpperCase();
+	const secretWordWithoutSpaces = formattedSecretWord.replace(/\s/g, '');
 
 	const getRandomLettersLength = () => {
-		if (formattedSecretWord.length <= 10) return 6;
-		if (formattedSecretWord.length <= 15) return 8;
-		if (formattedSecretWord.length <= 20) return 10;
-		return 12;
+		if (secretWordWithoutSpaces.length <= 5) return 6;
+		if (secretWordWithoutSpaces.length <= 10) return 5;
+		if (secretWordWithoutSpaces.length <= 15) return 4;
+		if (secretWordWithoutSpaces.length <= 20) return 3;
+		return 2;
 	};
 
-	const splitted = formattedSecretWord.split(' ');
-	const secretWordLetters = formattedSecretWord.split('');
-	const totalLetters = splitted.reduce((acc, curr) => acc + curr.length, 0);
+	$: secretWordLetters = secretWordWithoutSpaces.split('');
+	$: totalLetters = secretWordLetters.reduce((acc, curr) => acc + curr.length, 0);
 	const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	const randomLetters = shuffleArray(alphabet.split('').slice(0, getRandomLettersLength()));
+	const randomLetters = shuffleArray(alphabet.trim().split('').slice(0, getRandomLettersLength()));
 	let shuffledLetters: { id: number; letter: string; sourceIndex: number; isUsed: boolean }[] = [];
 	$: shuffledLetters = shuffleArray(
 		[...secretWordLetters, ...randomLetters]
-			.filter((l) => l.length > 0)
 			.join('')
 			.split('')
+			.filter((letter) => letter.trim().length > 0)
 	).map((letter, index) => ({
 		id: index,
 		letter,
@@ -42,16 +43,13 @@
 		isUsed: false
 	}));
 
-	// Initialize selectedLetters with empty tiles
-	let selectedLetters: { id: number; letter: string | null; sourceIndex?: number }[] = new Array(
-		formattedSecretWord.length
-	)
+	let selectedLetters: { id: number; letter: string | null; sourceIndex?: number }[] = [];
+	$: selectedLetters = new Array(secretWordWithoutSpaces.length)
 		.fill(null)
-		.map((_, index) => ({ id: index, letter: null })); // Initialize with empty tiles
-
-	// Add this reactive statement to track when all slots are filled
+		.map((_, index) => ({ id: index, letter: null }));
 	$: isAllSlotsFilled = selectedLetters.every((letter) => letter.letter !== null);
 	$: isWrong = isAllSlotsFilled && !isSelectedLettersCorrect();
+	$: isSuccess = isAllSlotsFilled && isSelectedLettersCorrect();
 	$: shouldShake = isWrong;
 
 	$: shuffleAnimation = true;
@@ -122,7 +120,14 @@
 			.filter((letter) => letter.letter !== null)
 			?.map((letter) => letter.letter)
 			?.join('');
-		return _selectedLetters === formattedSecretWord;
+		return _selectedLetters === secretWordWithoutSpaces;
+	};
+
+	const resetGame = () => {
+		selectedLetters = new Array(secretWordWithoutSpaces.length)
+			.fill(null)
+			.map((_, index) => ({ id: index, letter: null }));
+		shuffleLetters();
 	};
 
 	$: {
@@ -139,20 +144,27 @@
 		}
 	}
 
+	// WORK ON INCREASING HINT_POINTS EACH TIME IT USED.
+
 	afterUpdate(() => {
-		console.log($dugoutStore);
+		console.log({ shuffledLetters, selectedLetters, formattedSecretWord });
+
+		// setTimeout(() => {
+		// 	resetGame();
+		// }, 3000);
 	});
 </script>
 
 <div class="w-full h-full flex flex-col items-center justify-between">
 	<!-- display letters area -->
-	<Flex className={cn('w-auto h-auto gap-2 mt-10 flex-wrap flex-center relative')}>
+	<Flex className={cn('w-auto h-auto px-10 gap-2 mt-10 flex-wrap flex-center relative')}>
 		{#each selectedLetters as letterObj, i}
 			<button
 				class={cn(
 					' rounded-sm overflow-hidden',
-					totalLetters <= 10 && 'w-[35px] h-[35px]',
-					totalLetters <= 15 && 'w-[45px] h-[45px]',
+					totalLetters <= 10 && 'w-[45px] h-[45px]',
+					totalLetters <= 15 && 'w-[30px] h-[30px]',
+					totalLetters <= 20 && 'w-[35px] h-[35px]',
 					shouldShake
 						? 'animate-shake !bg-red-305/50 text-white border-[3px] border-red-200'
 						: letterObj.letter
@@ -192,14 +204,16 @@
 					class="w-[60px] h-[60px] rounded-full flex flex-col flex-center relative enableBounceEffect"
 				>
 					<img src="/light-bulb.svg" alt="graph" class="w-[65px] h-[65px]" />
-					<div
+
+					<!-- For now ratelimit would be used on the backend to control the hints invoked -->
+					<!-- <div
 						class={cn(
 							'text-white text-nowrap scale-[.80] font-normal gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]',
 							hintPoints > 100 ? 'text-xs' : 'text-lg'
 						)}
 					>
 						⭐️ {hintPoints}
-					</div>
+					</div> -->
 				</button>
 
 				<ThreeDButton
@@ -236,19 +250,30 @@
 	</div>
 </div>
 
-{#if true}
+<!-- {#if true}
 	<SuccessPopup
 		score={awardedPoints}
 		level={gameLevel}
 		secretWord={formattedSecretWord}
 		media={currentChallenge?.media}
-	/>
-{/if}
-<!-- {#if isAllSlotsFilled && isSelectedLettersCorrect()}
-	<SuccessPopup
-		score={awardedPoints}
-		level={gameLevel}
-		secretWord={formattedSecretWord}
-		media={currentChallenge?.media}
+		gameId={slug}
+		{currentChallenge}
+		onClose={() => {
+			isSuccess = false;			
+		}}
 	/>
 {/if} -->
+{#if isSuccess}
+	<SuccessPopup
+		score={awardedPoints}
+		level={gameLevel}
+		secretWord={formattedSecretWord}
+		media={currentChallenge?.media}
+		gameId={slug}
+		{currentChallenge}
+		onClose={() => {
+			resetGame();
+			isSuccess = false;
+		}}
+	/>
+{/if}
