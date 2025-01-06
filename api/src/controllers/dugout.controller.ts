@@ -113,11 +113,13 @@ class DugoutController {
       (currentLevel?.level ?? "apprentice") as GameLevel
     );
 
-    const formattedChallenges = challenges.map((challenge) => {
+    const formattedChallenges = (challenges ?? []).map((challenge) => {
       return {
-        completed: completedChallenges[
-          currentLevel?.level as keyof CompletedChallenges
-        ].includes(challenge.id),
+        completed: completedChallenges
+          ? completedChallenges[
+              currentLevel?.level as keyof CompletedChallenges
+            ].includes(challenge.id)
+          : false,
         ...challenge,
       };
     });
