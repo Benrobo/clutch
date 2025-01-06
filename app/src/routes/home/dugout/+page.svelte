@@ -2,15 +2,25 @@
 	import { goto } from '$app/navigation';
 	import Flex from '@/components/Flex.svelte';
 	import { DugoutGames } from '@/data/dugout';
+	import { useLocalStorage } from '@/hooks/useLocalStorage';
 	import { getGamesProgress, getUserStats } from '@/http/requests';
 	import GameCard from '@/modules/dugout/components/GameCard.svelte';
 	import { authStore } from '@/store/auth.store';
+	import { useDugoutStore } from '@/store/dugout.store';
 	import { useGlobalStore } from '@/store/global.store';
 	import type { DugoutGameProgress, DugoutUserStats } from '@/types/dugout';
 	import { capitalizeFirstLetter, extractAxiosResponseData } from '@/utils';
 	import { createQuery } from '@tanstack/svelte-query';
 
 	$: globalStore = useGlobalStore();
+	$: dugoutStore = useDugoutStore();
+
+	$: userGameLevelSession = useLocalStorage<
+		{
+			level: string;
+			game_id: string;
+		}[]
+	>('user-game-level', []);
 
 	$: getDugoutGamesProgressQuery = createQuery({
 		queryKey: ['dugout-games-progress'],
@@ -39,6 +49,24 @@
 			const data = extractAxiosResponseData($getDugoutGamesProgressQuery.data, 'success')
 				?.data as unknown as DugoutGameProgress[];
 			gameProgress = data;
+			userGameLevelSession.update((prev) => [
+				...prev,
+				...data.map((game) => {
+					const activeGameSession = $userGameLevelSession.find(
+						(session) => session.game_id === game.dugout_game_id
+					);
+					return {
+						game_id: activeGameSession ? activeGameSession.game_id : game.dugout_game_id,
+						level: game.level
+					};
+				})
+			]);
+			dugoutStore.setUserGameLevelSession(
+				gameProgress.map((game) => ({
+					game_id: game.dugout_game_id,
+					level: game.level
+				}))
+			);
 		}
 
 		if ($getDugoutUserStatsQuery.data) {
