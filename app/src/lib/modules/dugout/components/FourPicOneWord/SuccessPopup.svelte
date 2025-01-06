@@ -7,15 +7,45 @@
 	import { onMount } from 'svelte';
 	import type { FourPicOneWordChallenge } from '@/types/dugout';
 	import Flex from '@/components/Flex.svelte';
+	import { createMutation } from '@tanstack/svelte-query';
+	import { completeChallenge } from '@/http/requests';
+	import queryClient from '@/config/tanstack-query';
+	import toast from 'svelte-french-toast';
 
 	export let secretWord: string = '';
 	export let media: FourPicOneWordChallenge['media'] = [];
 	export let score: number = 0;
 	export let level: string = '';
+	export let currentChallenge: FourPicOneWordChallenge | null = null;
+	export let gameId: string = '';
+	export let onClose: () => void = () => {};
 
 	const { startConfetti } = useConfetti(15000);
 
+	$: markChallengeLevelComplete = createMutation({
+		mutationFn: async () => completeChallenge(gameId, currentChallenge?.id?.toString() as string),
+		onSuccess: () => {
+			window.location.reload();
+			// // First invalidate queries to get new data
+			// queryClient.invalidateQueries({ queryKey: ['game-challenges', gameId] });
+			// queryClient.invalidateQueries({ queryKey: ['dugout-games-progress'] });
+			// queryClient.invalidateQueries({ queryKey: ['dugout-user-stats'] });
+
+			// // Wait for a tick to ensure queries have been processed
+			// setTimeout(() => {
+			// 	// Then remove from localStorage
+			// 	localStorage.removeItem(gameId);
+			// 	onClose();
+			// }, 1000);
+		},
+		onError: () => {
+			toast.error('Something went wrong.');
+			onClose();
+		}
+	});
+
 	onMount(() => {
+		console.log({ currentChallenge });
 		startConfetti();
 	});
 </script>
@@ -79,10 +109,20 @@
 	<br />
 	<ThreeDButton
 		colorType="orange"
-		className="w-full h-[70px] max-w-[200px] flex items-center justify-between px-6 py-4 rounded-lg"
+		className={cn(
+			'w-full h-[70px] max-w-[200px] flex items-center justify-between px-6 py-4 rounded-lg',
+			$markChallengeLevelComplete.isPending && 'animate-pulse pointer-events-none'
+		)}
+		disabled={$markChallengeLevelComplete.isPending}
+		onClick={() => {
+			$markChallengeLevelComplete.mutate();
+		}}
 	>
 		<span
-			class=" p-2 bg-gradient-to-b from-[#FFE442] fromn-10% to-90% to-[#FCAB1B] border-t-[1px] border-t-[#FFFF7E] border-l-[1px] border-l-[#FFFF7E] border-r-[1px] border-r-[#FFFF7E] rounded-full shadow-dark-100/30 shadow-md"
+			class={cn(
+				' p-2 bg-gradient-to-b from-[#FFE442] fromn-10% to-90% to-[#FCAB1B] border-t-[1px] border-t-[#FFFF7E] border-l-[1px] border-l-[#FFFF7E] border-r-[1px] border-r-[#FFFF7E] rounded-full shadow-dark-100/30 shadow-md',
+				$markChallengeLevelComplete.isPending && 'animate-spin'
+			)}
 		>
 			<Star class="fill-[#ef9e11] stroke-[#a16a0a]" strokeWidth={0.5} />
 		</span>
