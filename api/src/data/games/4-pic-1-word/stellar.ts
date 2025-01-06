@@ -17,17 +17,17 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/percentage.jpg",
+        url: "/4-pic-1-word/percentage.jpeg",
         description: "A percentage",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/team.jpg",
+        url: "/4-pic-1-word/team.webp",
         description: "A team",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/victory.jpg",
+        url: "/4-pic-1-word/victory.jpeg",
         description: "A victory",
       },
     ],
@@ -43,17 +43,17 @@ const STELLAR_GAME_DATA = [
     media: [
       {
         type: "image",
-        url: "/4-pic-1-word/number.jpg",
+        url: "/4-pic-1-word/numbers.webp",
         description: "A number",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/team.jpg",
+        url: "/4-pic-1-word/team.webp",
         description: "A team",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/playoffs.jpg",
+        url: "/4-pic-1-word/playoffs.jpeg",
         description: "Playoffs",
       },
       {
@@ -79,12 +79,12 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/percentage.jpg",
+        url: "/4-pic-1-word/percentage.jpeg",
         description: "A percentage",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/game.jpg",
+        url: "/4-pic-1-word/game.png",
         description: "A game",
       },
       {
@@ -110,7 +110,7 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/runs.jpg",
+        url: "/4-pic-1-word/runs.jpeg",
         description: "Runs",
       },
       {
@@ -146,12 +146,12 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/percentage.jpg",
+        url: "/4-pic-1-word/percentage.jpeg",
         description: "A percentage",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/hit.jpg",
+        url: "/4-pic-1-word/hit.webp",
         description: "A hit",
       },
     ],
@@ -177,12 +177,12 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/walk.jpg",
+        url: "/4-pic-1-word/walk.webp",
         description: "A walk",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/rate.jpg",
+        url: "/4-pic-1-word/rate.jpeg",
         description: "A rate",
       },
     ],
@@ -208,7 +208,7 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/rate.jpg",
+        url: "/4-pic-1-word/rate.jpeg",
         description: "A rate",
       },
       {
@@ -264,7 +264,7 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/mitt.jpg",
+        url: "/4-pic-1-word/mitt.jpeg",
         description: "A mitt",
       },
       {
@@ -295,12 +295,12 @@ const STELLAR_GAME_DATA = [
       },
       {
         type: "image",
-        url: "/4-pic-1-word/spin.jpg",
+        url: "/4-pic-1-word/spin.jpeg",
         description: "A spin",
       },
       {
         type: "image",
-        url: "/4-pic-1-word/rate.jpg",
+        url: "/4-pic-1-word/rate.jpeg",
         description: "A rate",
       },
       {
