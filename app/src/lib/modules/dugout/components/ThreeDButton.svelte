@@ -18,7 +18,7 @@
 		colorType === 'pink' &&
 			'bg-gradient-to-b from-[#FD7FA5] to-[#E54376] border-t-[#FFD4FF] border-t-[2px] active:brightness-90 active:translate-y-[1px] active:border-t-[2px] transition-all drop-shadow-md shadow-dark-100',
 		colorType === 'hotpink' &&
-			'bg-gradient-to-b from-[#D61B44] to-[#DA205D] border-t-[#FFD4FF] border-t-[2px] active:brightness-90 active:translate-y-[1px] active:border-t-[2px] transition-all drop-shadow-md shadow-dark-100',
+			'bg-gradient-to-r from-[#D61B44] to-[#DA205D] border-t-[#FF5FC7] border-t-[2px] outline outline-[#FF5FC7] outline-1 active:brightness-90 active:translate-y-[1px] active:border-t-[2px] transition-all drop-shadow-md shadow-dark-100',
 		className
 	)}
 	on:click={onClick}
