@@ -5,6 +5,14 @@ import {
 import prisma from "../prisma/index.js";
 import { CompletedChallenges, GameLevel } from "../types/dugout.types.js";
 
+type ResultCode =
+  | "CURRENT_CHALLENGE"
+  | "NEW_CHALLENGE"
+  | "LEVEL_UP"
+  | "GAME_COMPLETE"
+  | "GAME_NOT_FOUND"
+  | "INVALID_GAME_STATE";
+
 export default class DugoutService {
   async getUserGamesProgress(userId: string) {
     const user = await prisma.users.findUnique({
@@ -26,7 +34,12 @@ export default class DugoutService {
     });
   }
 
-  async joinGame(gameId: string, userId: string, uuid?: string) {
+  async joinGame(
+    gameId: string,
+    userId: string,
+    uuid?: string,
+    challengeId?: number
+  ) {
     return await prisma.dugout_game_progress.create({
       data: {
         dugout_game_id: gameId,
@@ -38,10 +51,20 @@ export default class DugoutService {
             gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
           ].apprentice.count,
         completed_challenges: {
-          apprentice: [],
-          planetary: [],
-          stellar: [],
+          apprentice: {
+            completed: false,
+            played_challenges: [],
+          },
+          planetary: {
+            completed: false,
+            played_challenges: [],
+          },
+          stellar: {
+            completed: false,
+            played_challenges: [],
+          },
         },
+        current_challenge: challengeId ? challengeId.toString() : null,
       },
     });
   }
@@ -83,12 +106,12 @@ export default class DugoutService {
     const completedChallenges =
       game.completed_challenges as CompletedChallenges;
 
-    const nonDuplicateChallenges = [
-      ...completedChallenges[level as keyof CompletedChallenges],
-      challengeId,
-    ].filter((id, index, self) => self.indexOf(id) === index);
+    const playedChallenges =
+      completedChallenges[level as keyof CompletedChallenges].played_challenges;
+    const nonDuplicateChallenges = [...playedChallenges, challengeId].filter(
+      (id, index, self) => self.indexOf(id) === index
+    );
 
-    // Check if this completion means all challenges are done
     const totalChallenges =
       GAME_PROGRESSION_CHALLENGES[
         gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
@@ -99,6 +122,14 @@ export default class DugoutService {
       ? GAME_LEVELS[GAME_LEVELS.indexOf(level) + 1]
       : level;
 
+    const updatedCompletedChallenges = {
+      ...completedChallenges,
+      [level as keyof CompletedChallenges]: {
+        completed: isLevelComplete,
+        played_challenges: nonDuplicateChallenges,
+      },
+    };
+
     const updatedGame = await prisma.dugout_game_progress.update({
       where: {
         dugout_game_id: gameId,
@@ -106,17 +137,13 @@ export default class DugoutService {
         user_id: userId,
       },
       data: {
-        completed_challenges: {
-          ...completedChallenges,
-          [level as keyof CompletedChallenges]: nonDuplicateChallenges,
-        },
+        completed_challenges: updatedCompletedChallenges,
         points: {
           increment:
             GAME_PROGRESSION_CHALLENGES[
               gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
             ][level as keyof CompletedChallenges].points,
         },
-        // Update level if all challenges are completed and next level exists
         ...(isLevelComplete && nextLevel && { level: nextLevel }),
       },
     });
@@ -154,8 +181,8 @@ export default class DugoutService {
         ][level as keyof CompletedChallenges].count;
 
       if (
-        completedChallenges[level as keyof CompletedChallenges].length ===
-        totalChallenges
+        completedChallenges[level as keyof CompletedChallenges]
+          .played_challenges.length === totalChallenges
       ) {
         const nextLevel = GAME_LEVELS[GAME_LEVELS.indexOf(level) + 1];
         if (nextLevel) {
@@ -197,5 +224,134 @@ export default class DugoutService {
       where: { dugout_game_id: gameId, user_id: userId },
       select: { points: true },
     });
+  }
+
+  async getGamePoints(gameId: string, userId: string) {
+    return await prisma.dugout_game_progress.findFirst({
+      where: { dugout_game_id: gameId, user_id: userId },
+      select: { points: true },
+    });
+  }
+
+  async getCurrentOrNextChallenge(gameId: string, userId: string) {
+    let result: {
+      error: string | null;
+      success: boolean;
+      data: any | null;
+      code: ResultCode;
+    } = {
+      error: null,
+      success: false,
+      data: null,
+      code: "INVALID_GAME_STATE",
+    };
+
+    const game = await prisma.dugout_game_progress.findFirst({
+      where: { dugout_game_id: gameId, user_id: userId },
+    });
+
+    if (!game) {
+      result.error = "Game not found";
+      result.code = "GAME_NOT_FOUND";
+      return result;
+    }
+
+    const currentLevel = game.level as GameLevel;
+    const completedChallenges =
+      game.completed_challenges as CompletedChallenges;
+    const playedChallenges =
+      completedChallenges[currentLevel].played_challenges;
+
+    // If there's a current challenge, return that challenge
+    if (game.current_challenge) {
+      const currentChallengeId = parseInt(game.current_challenge);
+      const challenge = await this.getGameChallenge(
+        gameId,
+        currentLevel,
+        currentChallengeId
+      );
+      result.success = true;
+      result.data = challenge;
+      result.code = "CURRENT_CHALLENGE";
+      return result;
+    }
+
+    // Get all challenges for the current level
+    const allChallenges =
+      GAME_PROGRESSION_CHALLENGES[
+        gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+      ][currentLevel].challenges;
+
+    // Filter out played challenges
+    const unplayedChallenges = allChallenges.filter(
+      (challenge) => !playedChallenges.includes(challenge.id)
+    );
+
+    // If no unplayed challenges in current level, try to level up
+    if (unplayedChallenges.length === 0) {
+      const nextLevel = GAME_LEVELS[GAME_LEVELS.indexOf(currentLevel) + 1];
+
+      // Check if next level exists AND has challenges defined
+      if (
+        !nextLevel ||
+        !GAME_PROGRESSION_CHALLENGES[
+          gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+        ][nextLevel as GameLevel]
+      ) {
+        result.error = "No more challenges or levels available";
+        result.code = "GAME_COMPLETE";
+        return result;
+      }
+
+      // Update user's level
+      await prisma.dugout_game_progress.update({
+        where: { id: game.id },
+        data: {
+          level: nextLevel,
+          current_challenge: null,
+        },
+      });
+
+      // Get challenges for the new level
+      const nextLevelChallenges =
+        GAME_PROGRESSION_CHALLENGES[
+          gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+        ][nextLevel as GameLevel].challenges;
+
+      const selectedChallenge =
+        nextLevelChallenges[
+          Math.floor(Math.random() * nextLevelChallenges.length)
+        ];
+
+      // Update the current challenge
+      await prisma.dugout_game_progress.update({
+        where: { id: game.id },
+        data: {
+          current_challenge: selectedChallenge.id.toString(),
+        },
+      });
+
+      result.success = true;
+      result.data = selectedChallenge;
+      result.code = "LEVEL_UP";
+      return result;
+    }
+
+    // Randomly select a challenge from unplayed challenges in current level
+    const selectedChallenge =
+      unplayedChallenges[Math.floor(Math.random() * unplayedChallenges.length)];
+
+    // Update the current challenge in the database
+    await prisma.dugout_game_progress.update({
+      where: { id: game.id },
+      data: {
+        current_challenge: selectedChallenge.id.toString(),
+      },
+    });
+
+    result.success = true;
+    result.data = selectedChallenge;
+    result.code = "NEW_CHALLENGE";
+    return result;
   }
 }
