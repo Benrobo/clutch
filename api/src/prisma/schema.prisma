@@ -248,8 +248,8 @@ model dugout_game_progress {
     dugout_game_id       String // ID of the dugout game (e.g., "4-pic-1-word", "quiz")
     level                String
     total_challenges     Int?     @default(0)
-    completed_challenges Json? // {'game_id': {<level>: [challenge_ids]}}
-    // completed_challenges         Int?      @default(0)
+    completed_challenges Json? // {'game_id': {<level>: {completed: boolean, played_challenges: number[]}}}
+    current_challenge    String?
     points               Int?     @default(0)
     created_at           DateTime @default(now())
 
