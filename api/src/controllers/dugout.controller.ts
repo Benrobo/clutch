@@ -14,6 +14,7 @@ import {
   GameLevel,
   VALID_GAME_IDS as VALID_GAME_IDS_TYPE,
 } from "../types/dugout.types.js";
+import { shuffleArray } from "../lib/utils.js";
 
 class DugoutController {
   private dugoutService: DugoutService;
@@ -55,8 +56,23 @@ class DugoutController {
     let game = await this.dugoutService.getGameProgress(gameId, user.id);
 
     if (!game) {
+      // Get challenges for apprentice level (default level for new players)
+      const challenges = await this.dugoutService.getGameLevelChallenges(
+        gameId,
+        "apprentice"
+      );
+
+      // Shuffle challenges and select the first one
+      const shuffledChallenges = shuffleArray(challenges || []);
+      const selectedChallenge = shuffledChallenges[0];
+
       const id = shortUUID.generate();
-      game = await this.dugoutService.joinGame(gameId, user.id, id);
+      game = await this.dugoutService.joinGame(
+        gameId,
+        user.id,
+        id,
+        selectedChallenge?.id
+      );
     }
 
     return sendResponse.success(c, "Game joined successfully", 200, game);
@@ -88,7 +104,7 @@ class DugoutController {
     );
   }
 
-  async getGameLevelChallenges(c: Context) {
+  async getGameChallenge(c: Context) {
     const { gameId } = c.req.param();
     const user = c.get("user");
 
@@ -100,35 +116,20 @@ class DugoutController {
       throw new HttpException("Invalid game id", 400);
     }
 
-    const currentLevel = await this.dugoutService.getUserGameLevel(
+    const result = await this.dugoutService.getCurrentOrNextChallenge(
       gameId,
       user.id
     );
 
-    const completedChallenges =
-      currentLevel?.completed_challenges as CompletedChallenges;
-
-    const challenges = await this.dugoutService.getGameLevelChallenges(
-      gameId,
-      (currentLevel?.level ?? "apprentice") as GameLevel
-    );
-
-    const formattedChallenges = (challenges ?? []).map((challenge) => {
-      return {
-        completed: completedChallenges
-          ? completedChallenges[
-              currentLevel?.level as keyof CompletedChallenges
-            ].includes(challenge.id)
-          : false,
-        ...challenge,
-      };
-    });
+    if (result.error) {
+      throw new HttpException(result.code, 400);
+    }
 
     return sendResponse.success(
       c,
-      "Challenges fetched successfully",
+      "Challenge fetched successfully",
       200,
-      formattedChallenges
+      result.data
     );
   }
 
@@ -221,6 +222,19 @@ class DugoutController {
       gameId,
       user.id
     );
+
+    return sendResponse.success(c, "Points fetched successfully", 200, points);
+  }
+
+  async getGamePoints(c: Context) {
+    const { gameId } = c.req.param();
+    const user = c.get("user");
+
+    if (!user?.id) {
+      throw new HttpException("Unauthorized", 401);
+    }
+
+    const points = await this.dugoutService.getGamePoints(gameId, user.id);
 
     return sendResponse.success(c, "Points fetched successfully", 200, points);
   }
