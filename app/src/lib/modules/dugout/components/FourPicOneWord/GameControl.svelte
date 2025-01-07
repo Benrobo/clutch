@@ -124,10 +124,36 @@
 	};
 
 	const resetGame = () => {
+		// Reset selected letters array based on current secret word
 		selectedLetters = new Array(secretWordWithoutSpaces.length)
 			.fill(null)
 			.map((_, index) => ({ id: index, letter: null }));
+
+		// Reset keyboard letters using the current secret word
+		const letters = secretWordWithoutSpaces.split('');
+		const randomLetters = shuffleArray(
+			alphabet.trim().split('').slice(0, getRandomLettersLength())
+		);
+		shuffledLetters = shuffleArray(
+			[...letters, ...randomLetters]
+				.join('')
+				.split('')
+				.filter((letter) => letter.trim().length > 0)
+		).map((letter, index) => ({
+			id: index,
+			letter,
+			sourceIndex: index,
+			isUsed: false
+		}));
+
+		// Shuffle the letters
 		shuffleLetters();
+	};
+
+	// Update the onClose handler in SuccessPopup
+	const handleSuccessClose = () => {
+		resetGame();
+		isSuccess = false;
 	};
 
 	$: {
@@ -261,7 +287,7 @@
 		}}
 	/>
 {/if} -->
-{#if true}
+{#if isSuccess}
 	<SuccessPopup
 		score={awardedPoints}
 		level={gameLevel}
@@ -269,9 +295,6 @@
 		media={currentChallenge?.media}
 		gameId={slug}
 		{currentChallenge}
-		onClose={() => {
-			resetGame();
-			isSuccess = false;
-		}}
+		onClose={handleSuccessClose}
 	/>
 {/if}
