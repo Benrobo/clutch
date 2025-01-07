@@ -102,7 +102,7 @@ export const getUserStats = async ()=> {
 }
 
 export const getUserPointsByGameId = async (gameId: string)=> {
-  const res = await $axios.get(`/dugout/points/${gameId}`);
+  const res = await $axios.get(`/dugout/${gameId}/points`);
   return res.data;
 }
 
@@ -121,13 +121,12 @@ export const upgradeLevel = async (gameId: string)=> {
   return res.data;
 }
 
-export const getGameLevelChallenges = async (gameId: string)=> {
-  const res = await $axios.get(`/dugout/${gameId}/challenges`);
+export const getGameChallenge = async (gameId: string) => {
+  const res = await $axios.get(`/dugout/${gameId}/challenge`);
   return res.data;
 }
 
-
-export const completeChallenge = async (gameId: string, challengeId: string)=> {
+export const completeChallenge = async (gameId: string, challengeId: string) => {
   const res = await $axios.post(`/dugout/${gameId}/challenges/${challengeId}/complete`);
   return res.data;
 }
