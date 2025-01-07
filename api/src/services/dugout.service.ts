@@ -105,26 +105,30 @@ export default class DugoutService {
 
     const completedChallenges =
       game.completed_challenges as CompletedChallenges;
-
-    const playedChallenges =
-      completedChallenges[level as keyof CompletedChallenges].played_challenges;
+    const playedChallenges = completedChallenges[level].played_challenges;
     const nonDuplicateChallenges = [...playedChallenges, challengeId].filter(
       (id, index, self) => self.indexOf(id) === index
     );
 
-    const totalChallenges =
-      GAME_PROGRESSION_CHALLENGES[
-        gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
-      ][level as keyof CompletedChallenges].count;
+    const allChallenges = GAME_PROGRESSION_CHALLENGES[
+      gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+    ][level].challenges.sort((a, b) => a.id - b.id); // Sort challenges by ID
 
+    const totalChallenges = allChallenges.length;
     const isLevelComplete = nonDuplicateChallenges.length === totalChallenges;
     const nextLevel = isLevelComplete
       ? GAME_LEVELS[GAME_LEVELS.indexOf(level) + 1]
       : level;
 
+    // Find the next challenge in sequence
+    const currentChallengeIndex = allChallenges.findIndex(
+      (c) => c.id === challengeId
+    );
+    const nextChallenge = allChallenges[currentChallengeIndex + 1];
+
     const updatedCompletedChallenges = {
       ...completedChallenges,
-      [level as keyof CompletedChallenges]: {
+      [level]: {
         completed: isLevelComplete,
         played_challenges: nonDuplicateChallenges,
       },
@@ -142,9 +146,13 @@ export default class DugoutService {
           increment:
             GAME_PROGRESSION_CHALLENGES[
               gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
-            ][level as keyof CompletedChallenges].points,
+            ][level].points,
         },
         ...(isLevelComplete && nextLevel && { level: nextLevel }),
+        // Set the next challenge ID, or null if level is complete
+        current_challenge: isLevelComplete
+          ? null
+          : nextChallenge?.id.toString() ?? null,
       },
     });
 
@@ -282,10 +290,10 @@ export default class DugoutService {
         gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
       ][currentLevel].challenges;
 
-    // Filter out played challenges
-    const unplayedChallenges = allChallenges.filter(
-      (challenge) => !playedChallenges.includes(challenge.id)
-    );
+    // Filter out played challenges and sort by ID
+    const unplayedChallenges = allChallenges
+      .filter((challenge) => !playedChallenges.includes(challenge.id))
+      .sort((a, b) => a.id - b.id); // Sort in ascending order by ID
 
     // If no unplayed challenges in current level, try to level up
     if (unplayedChallenges.length === 0) {
@@ -312,16 +320,12 @@ export default class DugoutService {
         },
       });
 
-      // Get challenges for the new level
-      const nextLevelChallenges =
-        GAME_PROGRESSION_CHALLENGES[
-          gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
-        ][nextLevel as GameLevel].challenges;
+      // Get challenges for the new level and select first one
+      const nextLevelChallenges = GAME_PROGRESSION_CHALLENGES[
+        gameId as keyof typeof GAME_PROGRESSION_CHALLENGES
+      ][nextLevel as GameLevel].challenges.sort((a, b) => a.id - b.id); // Sort in ascending order by ID
 
-      const selectedChallenge =
-        nextLevelChallenges[
-          Math.floor(Math.random() * nextLevelChallenges.length)
-        ];
+      const selectedChallenge = nextLevelChallenges[0]; // Take first challenge after sorting
 
       // Update the current challenge
       await prisma.dugout_game_progress.update({
@@ -337,13 +341,14 @@ export default class DugoutService {
       return result;
     }
 
-    // Randomly select a challenge from unplayed challenges in current level
-    const selectedChallenge =
-      unplayedChallenges[Math.floor(Math.random() * unplayedChallenges.length)];
+    // Select the first challenge after sorting
+    const selectedChallenge = unplayedChallenges[0];
 
     // Update the current challenge in the database
     await prisma.dugout_game_progress.update({
-      where: { id: game.id },
+      where: {
+        id: game.id,
+      },
       data: {
         current_challenge: selectedChallenge.id.toString(),
       },
