@@ -25,18 +25,11 @@
 	$: markChallengeLevelComplete = createMutation({
 		mutationFn: async () => completeChallenge(gameId, currentChallenge?.id?.toString() as string),
 		onSuccess: () => {
-			window.location.reload();
-			// // First invalidate queries to get new data
-			// queryClient.invalidateQueries({ queryKey: ['game-challenges', gameId] });
-			// queryClient.invalidateQueries({ queryKey: ['dugout-games-progress'] });
-			// queryClient.invalidateQueries({ queryKey: ['dugout-user-stats'] });
-
-			// // Wait for a tick to ensure queries have been processed
-			// setTimeout(() => {
-			// 	// Then remove from localStorage
-			// 	localStorage.removeItem(gameId);
-			// 	onClose();
-			// }, 1000);
+			// Invalidate queries to refresh the data
+			queryClient.invalidateQueries({ queryKey: ['current-challenge', gameId] });
+			queryClient.invalidateQueries({ queryKey: ['dugout-games-progress'] });
+			queryClient.invalidateQueries({ queryKey: ['dugout-user-stats'] });
+			onClose();
 		},
 		onError: () => {
 			toast.error('Something went wrong.');
