@@ -62,16 +62,16 @@ class DugoutController {
         "apprentice"
       );
 
-      // Shuffle challenges and select the first one
-      const shuffledChallenges = shuffleArray(challenges || []);
-      const selectedChallenge = shuffledChallenges[0];
+      // Sort challenges by ID and select the first one
+      const sortedChallenges = (challenges || []).sort((a, b) => a.id - b.id);
+      const firstChallenge = sortedChallenges[0];
 
       const id = shortUUID.generate();
       game = await this.dugoutService.joinGame(
         gameId,
         user.id,
         id,
-        selectedChallenge?.id
+        firstChallenge?.id
       );
     }
 
