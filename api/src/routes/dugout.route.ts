@@ -31,11 +31,9 @@ router.post(
 );
 
 router.get(
-  `${basePath}/:gameId/challenges`,
+  `${basePath}/:gameId/challenge`,
   useCatchErrors(
-    isAuthenticated(
-      dugoutController.getGameLevelChallenges.bind(dugoutController)
-    )
+    isAuthenticated(dugoutController.getGameChallenge.bind(dugoutController))
   )
 );
 
@@ -54,7 +52,7 @@ router.get(
 );
 
 router.get(
-  `${basePath}/points/:gameId`,
+  `${basePath}/:gameId/points`,
   useCatchErrors(
     isAuthenticated(
       dugoutController.getUserPointsByGameId.bind(dugoutController)
