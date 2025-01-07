@@ -26,7 +26,9 @@
 
 	// Get game from query parameter
 	$: gameId = $page.url.searchParams.get('game');
-	$: currentChallenge = $dugoutStore?.currentGame?.currentChallenge;
+
+	let currentChallenge: FourPicOneWordChallenge | null = null;
+	$: currentChallenge = null;
 
 	$: userGameLevelSession = useLocalStorage<
 		{
