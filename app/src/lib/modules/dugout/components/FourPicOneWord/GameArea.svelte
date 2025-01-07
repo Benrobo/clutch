@@ -32,8 +32,6 @@
 		}
 	}
 
-	// $: currentChallenge = $dugoutStore?.currentGame?.currentChallenge;
-
 	onMount(() => {
 		console.log({ currentChallenge });
 	});
