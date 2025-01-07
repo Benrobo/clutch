@@ -147,8 +147,6 @@
 	// WORK ON INCREASING HINT_POINTS EACH TIME IT USED.
 
 	afterUpdate(() => {
-		console.log({ shuffledLetters, selectedLetters, formattedSecretWord });
-
 		// setTimeout(() => {
 		// 	resetGame();
 		// }, 3000);
@@ -203,17 +201,17 @@
 				<button
 					class="w-[60px] h-[60px] rounded-full flex flex-col flex-center relative enableBounceEffect"
 				>
-					<img src="/light-bulb.svg" alt="graph" class="w-[65px] h-[65px]" />
+					<img src="/light-bulb.svg" alt="graph" class="w-[45px] h-[45px]" />
 
 					<!-- For now ratelimit would be used on the backend to control the hints invoked -->
-					<!-- <div
+					<div
 						class={cn(
-							'text-white text-nowrap scale-[.80] font-normal gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]',
+							'text-white text-nowrap scale-[.80] font-semibold gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]',
 							hintPoints > 100 ? 'text-xs' : 'text-lg'
 						)}
 					>
 						⭐️ {hintPoints}
-					</div> -->
+					</div>
 				</button>
 
 				<ThreeDButton
@@ -263,7 +261,7 @@
 		}}
 	/>
 {/if} -->
-{#if isSuccess}
+{#if true}
 	<SuccessPopup
 		score={awardedPoints}
 		level={gameLevel}
