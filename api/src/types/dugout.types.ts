@@ -37,9 +37,18 @@ export type GameProgressionChallenges = {
 };
 
 export type CompletedChallenges = {
-  apprentice: number[];
-  planetary: number[];
-  stellar: number[];
+  apprentice: {
+    completed: boolean;
+    played_challenges: number[];
+  };
+  planetary: {
+    completed: boolean;
+    played_challenges: number[];
+  };
+  stellar: {
+    completed: boolean;
+    played_challenges: number[];
+  };
 };
 
 export type DugoutUserStats = {
