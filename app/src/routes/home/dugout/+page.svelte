@@ -3,17 +3,30 @@
 	import Flex from '@/components/Flex.svelte';
 	import { DugoutGames } from '@/data/dugout';
 	import { useLocalStorage } from '@/hooks/useLocalStorage';
-	import { getGamesProgress, getUserStats } from '@/http/requests';
+	import { getGameChallenge, getGamesProgress, getUserStats } from '@/http/requests';
 	import GameCard from '@/modules/dugout/components/GameCard.svelte';
 	import { authStore } from '@/store/auth.store';
 	import { useDugoutStore } from '@/store/dugout.store';
 	import { useGlobalStore } from '@/store/global.store';
-	import type { DugoutGameProgress, DugoutUserStats } from '@/types/dugout';
+	import type {
+		DugoutGameProgress,
+		DugoutUserStats,
+		FourPicOneWordChallenge
+	} from '@/types/dugout';
 	import { capitalizeFirstLetter, extractAxiosResponseData } from '@/utils';
 	import { createQuery } from '@tanstack/svelte-query';
+	import FourPicOneWord from '@/modules/dugout/components/FourPicOneWord/index.svelte';
+	import WordSearch from '@/modules/dugout/components/WordSearch/index.svelte';
+	import Quiz from '@/modules/dugout/components/Quiz/index.svelte';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 
 	$: globalStore = useGlobalStore();
 	$: dugoutStore = useDugoutStore();
+
+	// Get game from query parameter
+	$: gameId = $page.url.searchParams.get('game');
+	$: currentChallenge = $dugoutStore?.currentGame?.currentChallenge;
 
 	$: userGameLevelSession = useLocalStorage<
 		{
@@ -30,6 +43,12 @@
 	$: getDugoutUserStatsQuery = createQuery({
 		queryKey: ['dugout-user-stats'],
 		queryFn: getUserStats
+	});
+
+	$: getCurrentChallenge = createQuery({
+		queryKey: ['current-challenge', gameId],
+		queryFn: () => getGameChallenge(gameId ?? ''),
+		enabled: !!gameId
 	});
 
 	let gameProgress: DugoutGameProgress[] = [];
@@ -86,9 +105,27 @@
 				?.data as unknown as DugoutUserStats;
 			userStats = data;
 		}
+
+		if ($getCurrentChallenge.data) {
+			const data = extractAxiosResponseData($getCurrentChallenge.data, 'success')
+				?.data as FourPicOneWordChallenge;
+			dugoutStore.updateCurrentChallenge(data);
+			currentChallenge = data;
+		}
 	}
 
 	const games = DugoutGames;
+
+	// Update the GameCard click handler
+	const handleGameClick = (game: any) => {
+		if (game.available) {
+			goto(`/home/dugout?game=${game.id}`);
+		}
+	};
+
+	onMount(() => {
+		console.log({ gameId });
+	});
 </script>
 
 <Flex
@@ -178,13 +215,21 @@
 				<GameCard
 					{game}
 					gameProgress={gameProgress.find((gp) => gp.dugout_game_id === game.id)}
-					onClick={() => {
-						if (game.available) {
-							goto(`/home/dugout/${game.id}`);
-						}
-					}}
+					onClick={() => handleGameClick(game)}
 				/>
 			{/each}
 		</Flex>
 	</Flex>
 </Flex>
+
+{#if gameId}
+	<div class="w-screen h-screen fixed inset-0 z-[99]">
+		{#if gameId === 'word-search'}
+			<!-- <WordSearch /> -->
+		{:else if gameId === 'quiz'}
+			<!-- <Quiz /> -->
+		{:else if gameId === '4-pic-1-word'}
+			<FourPicOneWord slug={gameId} isLoading={$getCurrentChallenge.isLoading} {currentChallenge} />
+		{/if}
+	</div>
+{/if}
