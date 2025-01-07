@@ -19,7 +19,7 @@
 	let showSplashScreen = true;
 	let showGameArea = false;
 
-	$: gameLevel = $dugoutStore?.currentGame?.level;
+	$: gameLevel = currentChallenge?.id ? `Level ${currentChallenge?.id}` : 'Level 1';
 
 	$: joinGameMut = createMutation({
 		mutationFn: (slug: string) => joinGame(slug),
