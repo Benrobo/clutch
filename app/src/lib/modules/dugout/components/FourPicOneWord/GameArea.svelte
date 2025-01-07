@@ -1,16 +1,42 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import { cn } from '@/utils';
+	import { cn, extractAxiosResponseData } from '@/utils';
 	import ThreeDButton from '../ThreeDButton.svelte';
 	import { Star, X } from 'lucide-svelte';
 	import GameControl from './GameControl.svelte';
-	import type { FourPicOneWordGameSession } from '@/types/dugout';
+	import type { FourPicOneWordGameSession, FourPicOneWordChallenge } from '@/types/dugout';
+	import { getUserPointsByGameId } from '@/http/requests';
+	import { createQuery } from '@tanstack/svelte-query';
+	import { dugoutStore } from '@/store/dugout.store';
+	import { onMount } from 'svelte';
 
 	export let slug: string = '';
-	export let currentChallenge: FourPicOneWordGameSession['current_challenge'] | null = null;
-	export let gameSession: FourPicOneWordGameSession | null = null;
-
+	export let gameLevel: string = '';
+	export let currentChallenge: FourPicOneWordChallenge | null = null;
 	export let leaveGame: () => void = () => {};
+
+	$: getGamePointsQuery = createQuery({
+		queryKey: ['get-game-points', slug],
+		queryFn: () => getUserPointsByGameId(slug)
+	});
+
+	let gamePoints: string | number = 0;
+
+	$: {
+		if ($getGamePointsQuery.data) {
+			const data = extractAxiosResponseData($getGamePointsQuery.data, 'success')
+				?.data as unknown as { points: number };
+			if (data) {
+				gamePoints = data.points;
+			}
+		}
+	}
+
+	// $: currentChallenge = $dugoutStore?.currentGame?.currentChallenge;
+
+	onMount(() => {
+		console.log({ currentChallenge });
+	});
 </script>
 
 <div
@@ -53,7 +79,7 @@
 
 			<!-- level -->
 			<div class="w-auto h-auto text-white text-2xl font-poppins font-semibold">
-				{gameSession?.level}
+				{gameLevel}
 			</div>
 
 			<!-- score -->
@@ -66,7 +92,9 @@
 				<div
 					class="w-full max-w-[20em] min-h-[35px] bg-[#3F2F5D] pl-10 border-[2px] border-[#7b5b96]/50 rounded-r-full flex items-center justify-end pr-6 text-yellow-102"
 				>
-					<span class="text-white text-sm font-poppins font-semibold"> 20000 </span>
+					<span class="text-white text-sm font-poppins font-semibold">
+						{$getGamePointsQuery?.isLoading ? '---' : gamePoints}
+					</span>
 				</div>
 			</div>
 		</Flex>
@@ -110,8 +138,7 @@
 	<!-- <TileDisplay secretWord="Game Score" /> -->
 	<GameControl
 		secretWord={currentChallenge?.secret?.display}
-		gameLevel={gameSession?.level}
-		hintPoints={gameSession?.hint_points}
+		{gameLevel}
 		{currentChallenge}
 		{slug}
 	/>
