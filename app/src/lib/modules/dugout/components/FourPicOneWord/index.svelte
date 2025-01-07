@@ -6,31 +6,20 @@
 	import { cn, extractAxiosResponseData } from '@/utils';
 	import { goto } from '$app/navigation';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
-	import { getGameLevelChallenges, joinGame } from '@/http/requests';
-	import type { FourPicOneWordChallenge, FourPicOneWordGameSession } from '@/types/dugout';
-	import { useLocalStorage } from '@/hooks/useLocalStorage';
+	import { getGameChallenge, joinGame } from '@/http/requests';
+	import type { FourPicOneWordChallenge } from '@/types/dugout';
 	import { onMount } from 'svelte';
-	import { dugoutStore, useDugoutStore } from '@/store/dugout.store';
+	import { dugoutStore } from '@/store/dugout.store';
 
 	export let slug: string;
+	export let currentChallenge: FourPicOneWordChallenge | null = null;
+	export let isLoading: boolean = false;
 
-	$: gameSession = useLocalStorage<FourPicOneWordGameSession>('4-pic-1-word', {
-		challenges: [],
-		hint_points: 10,
-		current_challenge: null,
-		level: 'level 1'
-	});
+	let joinedGames: string[] = [];
+	let showSplashScreen = true;
+	let showGameArea = false;
 
-	let joinedGames: string[] = $dugoutStore?.joinedGames ?? [];
-
-	$: showSplashScreen = true;
-	$: showGameArea = false;
-
-	$: getGameChallenges = createQuery({
-		queryKey: ['game-challenges', slug],
-		queryFn: () => getGameLevelChallenges(slug),
-		enabled: joinedGames.includes(slug)
-	});
+	$: gameLevel = $dugoutStore?.currentGame?.level;
 
 	$: joinGameMut = createMutation({
 		mutationFn: (slug: string) => joinGame(slug),
@@ -44,71 +33,19 @@
 		}
 	});
 
-	const onHideSplashScreen = () => {};
-
-	$: {
-		if (!showSplashScreen) {
-			setTimeout(() => {
-				showGameArea = true;
-			}, 500);
-		}
-
-		// game challenges
-		if ($getGameChallenges.data) {
-			const data = extractAxiosResponseData($getGameChallenges.data, 'success')
-				?.data as unknown as FourPicOneWordChallenge[];
-			const sortByCompleted = data?.sort((a: any, b: any) => a?.completed - b?.completed);
-			const currentLevel = sortByCompleted[0]?.id;
-
-			// Get current challenge ID from session
-			const currentChallengeId = $gameSession?.current_challenge?.id;
-
-			// If current challenge exists in new data and is completed, select next challenge
-			const shouldSelectNewChallenge =
-				currentChallengeId && data.find((c) => c.id === currentChallengeId)?.completed;
-
-			if (shouldSelectNewChallenge) {
-				// Filter non-completed challenges from new data
-				const filteredNonCompletedChallenges = data.filter((challenge) => !challenge.completed);
-				const shuffledChallenges = filteredNonCompletedChallenges.sort(() => Math.random() - 0.5);
-
-				gameSession.update((prev) => ({
-					...prev,
-					challenges: data,
-					hint_points: prev.hint_points,
-					current_challenge: shuffledChallenges[0],
-					level: currentLevel ? `level ${currentLevel}` : 'level 1'
-				}));
-			} else {
-				// Keep current challenge if it exists and isn't completed
-				gameSession.update((prev) => ({
-					...prev,
-					challenges: data,
-					hint_points: prev.hint_points,
-					current_challenge: prev.current_challenge ?? sortByCompleted[0],
-					level: currentLevel ? `level ${currentLevel}` : 'level 1'
-				}));
-			}
-		}
-	}
-
 	const onLeaveGame = () => {
 		showSplashScreen = true;
 		showGameArea = false;
 		setTimeout(() => {
-			goto('/home/dugout');
+			// delete the game from the query parameter
+			goto('/home/dugout', { invalidateAll: true });
 		}, 10);
 	};
 
 	onMount(() => {
-		const storedSession = localStorage.getItem('user-game-level');
-		if (storedSession) {
-			dugoutStore.setUserGameLevelSession(JSON.parse(storedSession));
-		}
-
-		const storedJoinedGames = localStorage.getItem('joined-games');
-		if (storedJoinedGames) {
-			joinedGames = JSON.parse(storedJoinedGames);
+		const storedJoinedGames = JSON.parse(localStorage.getItem('joined-games') || '[]');
+		joinedGames = storedJoinedGames;
+		if (storedJoinedGames?.includes(slug)) {
 			showSplashScreen = false;
 			showGameArea = true;
 		}
@@ -132,18 +69,13 @@
 						$joinGameMut.mutate(slug);
 					}
 				}}
-				loading={$joinGameMut.isPending || $getGameChallenges.isLoading}
+				loading={$joinGameMut.isPending || isLoading}
 			/>
 		</div>
 	{/if}
 
-	{#if showGameArea}
-		<GameArea
-			leaveGame={onLeaveGame}
-			{slug}
-			gameSession={$gameSession}
-			currentChallenge={$gameSession.current_challenge}
-		/>
+	{#if showGameArea && !isLoading}
+		<GameArea leaveGame={onLeaveGame} {slug} {gameLevel} {currentChallenge} />
 	{/if}
 </div>
 
