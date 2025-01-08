@@ -7,9 +7,18 @@ export type DugoutGameProgress = {
   level: string;
   total_challenges: number;
   completed_challenges: {
-    stellar: number[];
-    planetary: number[];
-    apprentice: number[];
+    apprentice: {
+    completed: boolean;
+    played_challenges: number[];
+  };
+  planetary: {
+    completed: boolean;
+    played_challenges: number[];
+  };
+  stellar: {
+    completed: boolean;
+    played_challenges: number[];
+  };
   };
   points: number;
   created_at: string;
