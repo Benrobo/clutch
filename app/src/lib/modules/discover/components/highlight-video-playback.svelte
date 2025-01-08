@@ -132,7 +132,7 @@
 			<video
 				bind:this={videoElement}
 				class={cn(
-					'w-full h-full object-cover',
+					'w-full h-full min-h-[450px] object-cover',
 					$feedStore.isInitialVideoLoading ? 'hidden' : 'flex'
 				)}
 				playsinline
