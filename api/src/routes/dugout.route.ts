@@ -60,4 +60,13 @@ router.get(
   )
 );
 
+router.post(
+  `${basePath}/hint`,
+  useCatchErrors(
+    isAuthenticated(
+      dugoutController.getGameChallengeHint.bind(dugoutController)
+    )
+  )
+);
+
 export default router;
