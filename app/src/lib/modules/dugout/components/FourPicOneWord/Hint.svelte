@@ -5,7 +5,7 @@
 	import type { FourPicOneWordGameHintResponse } from '@/types/dugout';
 	import { cn, extractAxiosResponseData } from '@/utils';
 	import { createQuery } from '@tanstack/svelte-query';
-	import { X } from 'lucide-svelte';
+	import { RefreshCcw, X } from 'lucide-svelte';
 	import Spinner from '@/components/Spinner.svelte';
 	import Highlighter from '@/highlighter';
 	import toast from 'svelte-french-toast';
@@ -60,6 +60,18 @@
 	showCloseButton={false}
 >
 	<Flex class="w-full h-full flex-center relative flex-col text-center px-10 pb-10">
+		<button
+			class={cn(
+				'p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors stroke-dark-100 absolute top-0 left-0 enableBounceEffect',
+				$getGameHintQuery.isFetching ? 'animate-pulse' : ''
+			)}
+			on:click={() => {
+				$getGameHintQuery.refetch();
+			}}
+		>
+			<RefreshCcw size={20} strokeWidth={2} class="stroke-blue-200" />
+		</button>
+
 		<button
 			class={cn(
 				'p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors stroke-dark-100 absolute top-0 right-0 enableBounceEffect'
