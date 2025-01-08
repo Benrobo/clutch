@@ -69,3 +69,11 @@ export type FourPicOneWordGameSession = {
   current_challenge: FourPicOneWordChallenge | null;
   level: string;
 };
+
+
+export type FourPicOneWordGameHintResponse = {
+	hint: string;
+	tips: string[];
+	suggested_letters: string[];
+	highlight_words: string[];
+};
