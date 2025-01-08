@@ -25,36 +25,15 @@ export default class DugoutAIEngine {
             enable_call_history: false,
           });
 
-          if (!hint) {
+          if (!hint?.data) {
             throw new Error("Failed to get hint");
           }
 
-          const strippedHint = (hint?.data ?? "")
-            .replace(/^```json\s*\n|\n```$/g, "")
-            .replace(/```\n$/g, "");
+          const strippedHint = hint.data.replace(/^```json\s*\n|\n```$/g, "");
+          const parsedHint = JSON.parse(strippedHint);
 
-          let parsedHint: {
-            hint: string;
-            highlight_words: string[];
-            suggested_letters: string[];
-            tip: string;
-          } | null = null;
-          try {
-            parsedHint = JSON.parse(strippedHint);
-          } catch (e: any) {
-            throw new Error("Failed to parse hint");
-          }
-
-          if (!parsedHint) {
-            throw new Error("Failed to parse hint. retrying...");
-          }
-
-          if (parsedHint.suggested_letters?.length === 0) {
-            throw new Error("No suggested letters found. retrying...");
-          }
-
-          if (parsedHint.tip?.length === 0) {
-            throw new Error("No tip found. retrying...");
+          if (!parsedHint?.suggested_letters?.length || !parsedHint?.tip) {
+            throw new Error("Invalid hint format");
           }
 
           return parsedHint;
