@@ -13,13 +13,17 @@
 		DugoutUserStats,
 		FourPicOneWordChallenge
 	} from '@/types/dugout';
-	import { capitalizeFirstLetter, extractAxiosResponseData } from '@/utils';
+	import { capitalizeFirstLetter, cn, extractAxiosResponseData } from '@/utils';
 	import { createQuery } from '@tanstack/svelte-query';
 	import FourPicOneWord from '@/modules/dugout/components/FourPicOneWord/index.svelte';
 	import WordSearch from '@/modules/dugout/components/WordSearch/index.svelte';
 	import Quiz from '@/modules/dugout/components/Quiz/index.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { ArrowLeft, MoveLeft } from 'lucide-svelte';
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+	dayjs.extend(relativeTime);
 
 	$: globalStore = useGlobalStore();
 	$: dugoutStore = useDugoutStore();
@@ -133,6 +137,13 @@
 		}
 	};
 
+	const getGreeting = () => {
+		const hour = dayjs().hour();
+		if (hour < 12) return 'Good Morning';
+		if (hour < 18) return 'Good Afternoon';
+		return 'Good Evening';
+	};
+
 	onMount(() => {
 		console.log({ gameId });
 	});
@@ -152,10 +163,29 @@
 		>
 			<div class="w-full min-h-[15em] absolute top-0 left-0">
 				<div
-					class="w-full h-[33em] -translate-y-[14em] rounded-b-full scale-[1.3] grayscale opacity-50 object-bottom"
+					class="w-full h-[33em] -translate-y-[14em] rounded-b-full scale-[1.3] grayscale opacity-30 object-bottom"
 					style={`background-image: url('/pattern-2.jpg');`}
 				></div>
 			</div>
+
+			<!-- back btn -->
+			<button
+				class={cn(
+					'p-2 rounded-full bg-white-100/5 hover:bg-white-100/10 transition-colors stroke-dark-100 absolute top-4 left-4 enableBounceEffect'
+				)}
+				on:click={() => {
+					goto('/home/feed');
+				}}
+			>
+				<MoveLeft size={20} strokeWidth={2} class="stroke-white-100" />
+			</button>
+
+			<!-- greet header -->
+			<Flex className="w-full h-auto flex-col items-center justify-center absolute top-[5em]">
+				<h1 class="text-white-100 font-brunoace font-semibold text-lg">
+					<span class="opacity-80">{getGreeting()}</span>, {$authStore?.user?.name ?? '---'}
+				</h1>
+			</Flex>
 
 			<Flex
 				className="w-full h-auto flex-row items-end justify-between relative top-[4em] min-h-[20em] px-10"
