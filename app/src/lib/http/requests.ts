@@ -130,3 +130,18 @@ export const completeChallenge = async (gameId: string, challengeId: string) => 
   const res = await $axios.post(`/dugout/${gameId}/challenges/${challengeId}/complete`);
   return res.data;
 }
+
+export const getGameHint = async (payload: {
+	gameId: string;
+	challengeId: string;
+	selectedLetters?: string[];
+	secretWord?: string;
+}) => {
+  const res = await $axios.post(`/dugout/hint`, {
+    gameId: payload.gameId,
+    challengeId: payload.challengeId,
+    selectedLetters: payload.selectedLetters,
+    secretWord: payload.secretWord
+  });
+  return res.data;
+}
