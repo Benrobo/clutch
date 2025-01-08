@@ -10,6 +10,7 @@
 	export let isOpen = false;
 	export let className: ClassValue = '';
 	export let backdropClassName: ClassValue = '';
+	export let closeBtnClassName: ClassValue = '';
 	export let showBackdrop = true;
 	export let rounded = true;
 	export let onClose = () => {};
@@ -73,7 +74,10 @@
 
 				{#if showCloseButton}
 					<button
-						class="p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors"
+						class={cn(
+							'p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors',
+							closeBtnClassName
+						)}
 						on:click={onClose}
 					>
 						<X size={20} class="stroke-dark-100/60" />
