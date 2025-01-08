@@ -29,6 +29,7 @@
 			queryClient.invalidateQueries({ queryKey: ['current-challenge', gameId] });
 			queryClient.invalidateQueries({ queryKey: ['dugout-games-progress'] });
 			queryClient.invalidateQueries({ queryKey: ['dugout-user-stats'] });
+			queryClient.invalidateQueries({ queryKey: ['get-game-points', gameId] });
 			onClose();
 		},
 		onError: () => {
