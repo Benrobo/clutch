@@ -57,7 +57,7 @@
 					<span class="text-white-300 font-poppins font-light text-xs">
 						{gameProgress.level in gameProgress.completed_challenges
 							? // @ts-expect-error
-								gameProgress.completed_challenges[gameProgress.level].length
+								gameProgress.completed_challenges[gameProgress.level].played_challenges.length
 							: 0} -
 						{gameProgress.total_challenges}
 					</span>
