@@ -13,7 +13,6 @@ export default class DugoutAIEngine {
     secretWord: string;
   }) {
     try {
-      console.log({ payload });
       return await retry(
         async () => {
           const { selectedLetters, secretWord } = payload;
