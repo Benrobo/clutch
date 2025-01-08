@@ -8,6 +8,7 @@
 	import { dugoutStore, useDugoutStore } from '@/store/dugout.store';
 	import { USER_GAME_LEVELS_MAP_TOTAL_POINTS } from '@/constant/dugout';
 	import type { FourPicOneWordChallenge } from '@/types/dugout';
+	import Hint from './Hint.svelte';
 
 	export let secretWord: string = '';
 	export let currentChallenge: FourPicOneWordChallenge | null = null;
@@ -15,8 +16,8 @@
 	export let hintPoints: number = 0;
 	export let slug: string = '';
 
-	const formattedSecretWord = secretWord.toUpperCase();
-	const secretWordWithoutSpaces = formattedSecretWord.replace(/\s/g, '');
+	let formattedSecretWord = secretWord.toUpperCase();
+	let secretWordWithoutSpaces = formattedSecretWord.replace(/\s/g, '');
 
 	const getRandomLettersLength = () => {
 		if (secretWordWithoutSpaces.length <= 5) return 6;
@@ -47,12 +48,13 @@
 	$: selectedLetters = new Array(secretWordWithoutSpaces.length)
 		.fill(null)
 		.map((_, index) => ({ id: index, letter: null }));
+
 	$: isAllSlotsFilled = selectedLetters.every((letter) => letter.letter !== null);
 	$: isWrong = isAllSlotsFilled && !isSelectedLettersCorrect();
 	$: isSuccess = isAllSlotsFilled && isSelectedLettersCorrect();
 	$: shouldShake = isWrong;
-
 	$: shuffleAnimation = true;
+	$: isHintOpen = false;
 
 	const userLevel = $dugoutStore?.userGameLevelSession?.find(
 		(session) => session.game_id === slug
@@ -115,7 +117,7 @@
 		return letterObj.isUsed;
 	};
 
-	const isSelectedLettersCorrect = () => {
+	$: isSelectedLettersCorrect = () => {
 		const _selectedLetters = selectedLetters
 			.filter((letter) => letter.letter !== null)
 			?.map((letter) => letter.letter)
@@ -123,32 +125,7 @@
 		return _selectedLetters === secretWordWithoutSpaces;
 	};
 
-	const resetGame = () => {
-		// Reset selected letters array based on current secret word
-		selectedLetters = new Array(secretWordWithoutSpaces.length)
-			.fill(null)
-			.map((_, index) => ({ id: index, letter: null }));
-
-		// Reset keyboard letters using the current secret word
-		const letters = secretWordWithoutSpaces.split('');
-		const randomLetters = shuffleArray(
-			alphabet.trim().split('').slice(0, getRandomLettersLength())
-		);
-		shuffledLetters = shuffleArray(
-			[...letters, ...randomLetters]
-				.join('')
-				.split('')
-				.filter((letter) => letter.trim().length > 0)
-		).map((letter, index) => ({
-			id: index,
-			letter,
-			sourceIndex: index,
-			isUsed: false
-		}));
-
-		// Shuffle the letters
-		shuffleLetters();
-	};
+	const resetGame = () => {};
 
 	// Update the onClose handler in SuccessPopup
 	const handleSuccessClose = () => {
@@ -169,13 +146,40 @@
 			}, 100);
 		}
 	}
+	// check for secret word change and reset the game
+	$: if (secretWord) {
+		const formattedWord = secretWord.toUpperCase();
+		const wordWithoutSpaces = formattedWord.replace(/\s/g, '');
+
+		// Reset selected letters array
+		selectedLetters = new Array(wordWithoutSpaces.length)
+			.fill(null)
+			.map((_, index) => ({ id: index, letter: null }));
+
+		// Reset keyboard letters
+		const letters = wordWithoutSpaces.split('');
+		const randomLetters = shuffleArray(
+			alphabet.trim().split('').slice(0, getRandomLettersLength())
+		);
+		shuffledLetters = shuffleArray(
+			[...letters, ...randomLetters]
+				.join('')
+				.split('')
+				.filter((letter) => letter.trim().length > 0)
+		).map((letter, index) => ({
+			id: index,
+			letter,
+			sourceIndex: index,
+			isUsed: false
+		}));
+
+		secretWordWithoutSpaces = wordWithoutSpaces;
+	}
 
 	// WORK ON INCREASING HINT_POINTS EACH TIME IT USED.
 
 	afterUpdate(() => {
-		// setTimeout(() => {
-		// 	resetGame();
-		// }, 3000);
+		// console.log(selectedLetters);
 	});
 </script>
 
@@ -226,18 +230,22 @@
 			>
 				<button
 					class="w-[60px] h-[60px] rounded-full flex flex-col flex-center relative enableBounceEffect"
+					on:click={() => {
+						isHintOpen = true;
+						hintPoints = 0;
+					}}
 				>
 					<img src="/light-bulb.svg" alt="graph" class="w-[45px] h-[45px]" />
 
 					<!-- For now ratelimit would be used on the backend to control the hints invoked -->
-					<div
+					<!-- <div
 						class={cn(
 							'text-white text-nowrap scale-[.80] font-semibold gap-2 px-[8px] py-[1px] rounded-full text-[#19172a] bg-[#C9C6F0] border-t-[2px] border-t-[#EFEFF1]',
 							hintPoints > 100 ? 'text-xs' : 'text-lg'
 						)}
 					>
 						⭐️ {hintPoints}
-					</div>
+					</div> -->
 				</button>
 
 				<ThreeDButton
@@ -291,10 +299,21 @@
 	<SuccessPopup
 		score={awardedPoints}
 		level={gameLevel}
-		secretWord={formattedSecretWord}
+		{secretWord}
 		media={currentChallenge?.media}
 		gameId={slug}
 		{currentChallenge}
 		onClose={handleSuccessClose}
 	/>
 {/if}
+
+<Hint
+	gameId={slug}
+	selectedLetters={selectedLetters
+		.map((letter) => letter.letter)
+		.filter((letter) => letter !== null)}
+	{secretWord}
+	onClose={() => (isHintOpen = false)}
+	isOpen={isHintOpen}
+	challengeId={currentChallenge?.id?.toString() ?? ''}
+/>
