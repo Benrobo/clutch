@@ -9,6 +9,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import { dugoutStore } from '@/store/dugout.store';
 	import { onMount } from 'svelte';
+	import toast from 'svelte-french-toast';
 
 	export let slug: string = '';
 	export let gameLevel: string = '';
@@ -17,7 +18,11 @@
 
 	$: getGamePointsQuery = createQuery({
 		queryKey: ['get-game-points', slug],
-		queryFn: () => getUserPointsByGameId(slug)
+		queryFn: () => getUserPointsByGameId(slug),
+		retryOnMount: false,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false
 	});
 
 	let gamePoints: string | number = 0;
@@ -33,7 +38,7 @@
 	}
 
 	onMount(() => {
-		console.log({ currentChallenge });
+		// console.log({ currentChallenge });
 	});
 </script>
 
@@ -56,7 +61,13 @@
 					<X />
 				</ThreeDButton>
 
-				<ThreeDButton colorType="pink" className="w-[45px] h-[45px] flex-center rounded-full">
+				<ThreeDButton
+					colorType="pink"
+					className="w-[45px] h-[45px] flex-center rounded-full"
+					onClick={() => {
+						toast.error('Coming Soon!!');
+					}}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="30"
@@ -106,8 +117,16 @@
 			{#if currentChallenge}
 				{#each currentChallenge?.media as media}
 					<div
-						class="w-full h-full border-[1px] bg-[#241a35] border-[#533971]/50 rounded-lg overflow-hidden"
+						class="w-full h-full border-[1px] bg-[#241a35] border-[#533971]/50 rounded-lg overflow-hidden relative"
 					>
+						<div class="w-full flex-center absolute top-1 left-1">
+							<span
+								class="px-3 py-2 rounded-sm text-white text-xs font-poppins font-semibold bg-dark-100/30 backdrop-blur-sm"
+							>
+								{media.description}
+							</span>
+						</div>
+
 						<img
 							src={`/assets/${media.url}`}
 							alt={media.description}
