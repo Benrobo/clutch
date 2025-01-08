@@ -39,7 +39,11 @@
 
 	$: getDugoutGamesProgressQuery = createQuery({
 		queryKey: ['dugout-games-progress'],
-		queryFn: getGamesProgress
+		queryFn: getGamesProgress,
+		retryOnMount: false,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false
 	});
 
 	$: getDugoutUserStatsQuery = createQuery({
@@ -50,7 +54,11 @@
 	$: getCurrentChallenge = createQuery({
 		queryKey: ['current-challenge', gameId],
 		queryFn: () => getGameChallenge(gameId ?? ''),
-		enabled: !!gameId
+		enabled: !!gameId,
+		retryOnMount: false,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false
 	});
 
 	let gameProgress: DugoutGameProgress[] = [];
@@ -225,7 +233,7 @@
 		</Flex>
 	</Flex>
 {:else}
-	<div class="w-screen h-screen">
+	<div class="w-full h-screen flex flex-col items-center justify-center mx-auto">
 		{#if gameId === 'word-search'}
 			<!-- <WordSearch /> -->
 		{:else if gameId === 'quiz'}
