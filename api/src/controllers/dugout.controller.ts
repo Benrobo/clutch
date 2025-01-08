@@ -15,12 +15,40 @@ import {
   VALID_GAME_IDS as VALID_GAME_IDS_TYPE,
 } from "../types/dugout.types.js";
 import { shuffleArray } from "../lib/utils.js";
+import DugoutAIEngine from "../services/RAG/dugout-ai.engine.js";
+
+interface GameHintPayload {
+  // Base properties for all game types
+  challengeId: string;
+  gameId: string; // 4-pic-1-word, word-search, quiz
+}
+
+interface FourPicOneWordHintPayload extends GameHintPayload {
+  selectedLetters: string[];
+}
+
+interface WordSearchHintPayload extends GameHintPayload {
+  gameType: "word-search";
+  // Add word-search specific properties
+}
+
+interface QuizHintPayload extends GameHintPayload {
+  gameType: "quiz";
+  // Add quiz specific properties
+}
+
+type HintPayload =
+  | FourPicOneWordHintPayload
+  | WordSearchHintPayload
+  | QuizHintPayload;
 
 class DugoutController {
   private dugoutService: DugoutService;
+  private dugoutAIEngine: DugoutAIEngine;
 
   constructor() {
     this.dugoutService = new DugoutService();
+    this.dugoutAIEngine = new DugoutAIEngine();
   }
 
   async getUserGamesProgress(c: Context) {
@@ -237,6 +265,82 @@ class DugoutController {
     const points = await this.dugoutService.getGamePoints(gameId, user.id);
 
     return sendResponse.success(c, "Points fetched successfully", 200, points);
+  }
+
+  private async checkChallengeCompleted(
+    gameId: string,
+    userId: string,
+    challengeId: number
+  ) {
+    const gameProgress = await this.dugoutService.getGameProgress(
+      gameId,
+      userId
+    );
+    const completedChallenges =
+      (gameProgress?.completed_challenges as CompletedChallenges)?.[
+        gameProgress?.level as GameLevel
+      ]?.played_challenges ?? [];
+    return completedChallenges.includes(challengeId);
+  }
+
+  // use Gemini to get the hint
+  async getGameChallengeHint(c: Context) {
+    const user = c.get("user");
+    const payload = (await c.req.json()) as HintPayload;
+
+    if (!user?.id) {
+      throw new HttpException("Unauthorized", 401);
+    }
+
+    if (!payload.challengeId || !payload.gameId) {
+      throw new HttpException("Challenge id and game id are required", 400);
+    }
+
+    if (payload.gameId === "4-pic-1-word") {
+      // Handle 4-pic-1-word hint logic with typed payload
+      const { selectedLetters } = payload as FourPicOneWordHintPayload;
+      const currentLevel = await this.dugoutService.getUserGameLevel(
+        payload.gameId,
+        user.id
+      );
+      const currentChallenge = await this.dugoutService.getGameChallenge(
+        payload.gameId,
+        currentLevel?.level as GameLevel,
+        Number(payload.challengeId)
+      );
+
+      if (!currentChallenge) {
+        throw new HttpException("Challenge not found", 404);
+      }
+
+      const isChallengeCompleted = await this.checkChallengeCompleted(
+        payload.gameId,
+        user.id,
+        Number(payload.challengeId)
+      );
+
+      if (isChallengeCompleted) {
+        throw new HttpException("Challenge already completed", 400);
+      }
+
+      const hint = await this.dugoutAIEngine.getFourPicOneWordHint({
+        selectedLetters,
+        secretWord: currentChallenge?.secret?.display ?? "",
+      });
+
+      return sendResponse.success(
+        c,
+        "Hint fetched successfully",
+        200,
+
+        {
+          hint: hint?.hint,
+          tips: hint?.tip.split("\n\n"),
+          suggested_letters: hint?.suggested_letters,
+          highlight_words: hint?.highlight_words,
+        }
+      );
+    }
   }
 }
 
