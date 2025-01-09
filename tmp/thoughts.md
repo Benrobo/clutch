@@ -369,3 +369,7 @@ Here's what i think would be the goto workflow:
 - **Version 8 (Final):** Combined audio and visual with baseball keywords - still has overlap issues but at least it catches the important moments now 🎯
 
 - **Version 9 (Latest):** Completely new approach focusing on transcript-first, using subtitles as source of truth, and LLM for context analysis - no more scene detection headaches! 🎉
+
+## Player Stats Endpoint
+
+https://statsapi.mlb.com/api/v1/people/700363/stats?stats=gameLog
