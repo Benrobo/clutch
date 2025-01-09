@@ -20,15 +20,15 @@
 	)}
 >
 	<!-- pattern -->
-	<div class="w-full max-w-[30em] absolute top-0">
+	<div class="w-full max-w-[50em] absolute top-0">
 		<img src="/pattern-2.jpg" alt="pattern" class="w-full h-full grayscale opacity-10" />
 	</div>
 
 	<!-- basic info -->
-	<div class="w-full flex flex-col items-start justify-start pl-8 bg-gradient-to-b relative">
+	<div class="w-full flex flex-col items-start justify-start pl-8">
 		<!-- gradient -->
 		<div
-			class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-dark-100/20 from-30% to-transparent -translate-y-10"
+			class="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-dark-100/20 from-30% to-transparent -translate-y-10"
 		></div>
 
 		<Flex className="w-auto flex-row items-center justify-between gap-2">
