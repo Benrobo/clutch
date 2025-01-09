@@ -12,6 +12,7 @@
 	import '@fontsource/poppins/700.css';
 	import '@fontsource/bruno-ace/400.css';
 	import '@fontsource-variable/montserrat';
+	import '@fontsource/dela-gothic-one';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { Toaster } from 'svelte-french-toast';
 </script>
