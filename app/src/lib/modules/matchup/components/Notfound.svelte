@@ -8,6 +8,7 @@
 	export let ctaText = 'Compare Players';
 	export let ctaClassName = '';
 	export let isSearch = false;
+	export let onClick = () => {};
 </script>
 
 <Flex className="w-full h-auto min-h-[70vh] flex-col items-center justify-center ">
@@ -44,6 +45,7 @@
 				'w-auto max-w-[300px] bg-orange-101 text-white-100 font-gothic-one px-6 py-3 mt-5 rounded-full text-lg enableBounceEffect',
 				ctaClassName
 			)}
+			on:click={onClick}
 		>
 			{ctaText}
 		</button>
