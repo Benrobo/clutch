@@ -11,6 +11,7 @@
 	export let className: ClassValue = '';
 	export let backdropClassName: ClassValue = '';
 	export let closeBtnClassName: ClassValue = '';
+	export let closeBtnIconClassName: ClassValue = '';
 	export let showBackdrop = true;
 	export let rounded = true;
 	export let onClose = () => {};
@@ -80,7 +81,7 @@
 						)}
 						on:click={onClose}
 					>
-						<X size={20} class="stroke-dark-100/60" />
+						<X size={20} class={cn('stroke-dark-100/60', closeBtnIconClassName)} />
 					</button>
 				{/if}
 			</div>
