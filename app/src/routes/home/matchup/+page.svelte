@@ -4,7 +4,7 @@
 	import Input from '@/components/ui/input.svelte';
 	import { GAME_SEASONS } from '@/constant/matchup';
 	import { players, teams } from '@/data/matchup';
-	import ComparePlayers from '@/modules/matchup/components/ComparePlayers.svelte';
+	import ConfigureMatchup from '@/modules/matchup/components/ConfigureMatchup.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import type { Player } from '@/types/matchup';
@@ -13,13 +13,10 @@
 	import { afterUpdate } from 'svelte';
 
 	let selectedTeam: number = teams[0]?.id;
+	let showSearchFilter = false;
 
 	let selectedPlayers: Player[] = [];
 	$: selectedPlayers = [];
-
-	let showSearchFilter = false;
-
-	$: seasonValue = '2024';
 
 	let filters: {
 		season: string;
@@ -28,8 +25,12 @@
 		season: '2024'
 	};
 
+	let showConfigureMatchup = false;
+
+	$: seasonValue = '2024';
+
 	afterUpdate(() => {
-		console.log(selectedPlayers);
+		// console.log(selectedPlayers);
 	});
 </script>
 
@@ -48,7 +49,7 @@
 			</Flex>
 
 			<!-- search bar -->
-			{#if true}
+			{#if showConfigureMatchup}
 				<Flex className="w-full justify-between mt-2">
 					<div
 						class="w-full h-full max-h-[50px] bg-none rounded-lg flex items-center justify-center"
@@ -77,6 +78,17 @@
 								class="p-1 rounded-full bg-orange-101 absolute top-0 -translate-y-1 translate-x-1 right-0"
 							/>
 						{/if}
+					</button>
+
+					<button
+						class={cn(
+							'flex-center w-[45px] h-[42px] p-2 bg-none border-[1px] border-white-200/20 rounded-lg relative'
+						)}
+						on:click={() => {
+							showConfigureMatchup = false;
+						}}
+					>
+						<X size={20} class="stroke-white-100" />
 					</button>
 				</Flex>
 
@@ -123,37 +135,29 @@
 			{/if}
 		</div>
 
-		<div class="h-screen -translate-y-10">
-			<ComparePlayers
-				{players}
-				{selectedPlayers}
-				onSelectPlayer={(player) => {
-					const isMax = selectedPlayers.length === 2;
-					const idExists = selectedPlayers.find((p) => p.id === player?.id);
-					if (isMax && !idExists) return;
+		{#if showConfigureMatchup}
+			<div class="h-screen -translate-y-10">
+				<ConfigureMatchup
+					{players}
+					{selectedPlayers}
+					onSelectPlayer={(player) => {
+						const isMax = selectedPlayers.length === 2;
+						const idExists = selectedPlayers.find((p) => p.id === player?.id);
+						if (isMax && !idExists) return;
 
-					if (idExists) {
+						if (idExists) {
+							selectedPlayers = selectedPlayers.filter((p) => p.id !== player?.id);
+						} else {
+							selectedPlayers = [...selectedPlayers, player];
+						}
+					}}
+					removeSelectedPlayer={(player) => {
 						selectedPlayers = selectedPlayers.filter((p) => p.id !== player?.id);
-					} else {
-						selectedPlayers = [...selectedPlayers, player];
-					}
-				}}
-				removeSelectedPlayer={(player) => {
-					selectedPlayers = selectedPlayers.filter((p) => p.id !== player?.id);
-				}}
-			/>
-		</div>
+					}}
+					{selectedTeam}
+				/>
+			</div>
 
-		<!-- empty state when no players are found or no recent matchup -->
-
-		<!-- <Notfound
-			title="No recent matchups found"
-			description="Start a new matchup by searching for a player."
-			showCTA={true}
-			ctaText="Compare Players"
-		/> -->
-		<!-- Finalize Lineup -->
-		{#if true}
 			<div
 				class="w-full h-[100px] flex flex-col items-center justify-center gap-2 absolute left-0 right-0 bottom-0 z-[10] bg-gradient-to-t from-dark-103 to-transparent px-10"
 			>
@@ -170,6 +174,19 @@
 				</button>
 			</div>
 		{/if}
+
+		<!-- empty state when no players are found or no recent matchup -->
+
+		<Notfound
+			title="No recent matchups found"
+			description="Start a new matchup by searching for a player."
+			showCTA={true}
+			ctaClassName="py-2"
+			ctaText="Compare Players"
+			onClick={() => {
+				showConfigureMatchup = true;
+			}}
+		/>
 	</div>
 </div>
 
