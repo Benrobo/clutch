@@ -143,6 +143,10 @@
   font-family: "Shiny", sans-serif;
 }
 
+.gothic-one {
+  font-family: "Dela Gothic One", system-ui;
+}
+
 
 /* Font weight utilities */
 .font-thin {
