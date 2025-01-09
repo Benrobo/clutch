@@ -54,6 +54,7 @@
 		"@fontsource-variable/jetbrains-mono": "^5.1.0",
 		"@fontsource-variable/montserrat": "^5.1.0",
 		"@fontsource/bruno-ace": "^5.1.0",
+		"@fontsource/dela-gothic-one": "^5.1.1",
 		"@fontsource/poppins": "^5.1.0",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tanstack/svelte-query": "^5.56.2",
