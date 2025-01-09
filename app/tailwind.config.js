@@ -30,6 +30,7 @@ export default {
 				'bruceforever': ['BruceForever', 'sans-serif'],
 				'cyber': ['Cyber', 'sans-serif'],
 				'shiny': ['Shiny', 'sans-serif'],
+				'gothic-one': ['Dela Gothic One', 'system-ui'],
 			},
 			colors: {
 				white: {
@@ -52,6 +53,7 @@ export default {
 					106: '#222222',
 					107: '#161616',
 					108: "#24262c",
+					109: "#25272d",
 					500: 'rgba(0,0,0,.4)'
 				},
 				gray: {
@@ -79,6 +81,7 @@ export default {
 				},
 				orange: {
 					100: '#FF8A65',
+					101: '#fe5e2a',
 					102: '#ff5518',
 					103: '#ff4723',
 					200: 'rgba(255, 138, 101, 0.3)',
