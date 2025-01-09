@@ -4,7 +4,7 @@
 	import Flex from '@/components/Flex.svelte';
 	import { authStore } from '@/store/auth.store';
 	import { cn } from '@/utils';
-	import { BellRing, GalleryHorizontal, Lightbulb } from 'lucide-svelte';
+	import { BellRing, GalleryHorizontal, Lightbulb, Scale } from 'lucide-svelte';
 	import Gamepad_2 from 'lucide-svelte/icons/gamepad-2';
 	import { afterUpdate, onMount } from 'svelte';
 	import { derived } from 'svelte/store';
@@ -33,10 +33,15 @@
 			title: 'Spotlight',
 			href: '/home/spotlight'
 		},
+		// {
+		// 	id: 'activities',
+		// 	title: 'Activities',
+		// 	href: '/home/activities'
+		// },
 		{
-			id: 'activities',
-			title: 'Activities',
-			href: '/home/activities'
+			id: 'matchup',
+			title: 'Matchup',
+			href: '/home/matchup'
 		},
 		{
 			id: 'dugout',
@@ -51,7 +56,13 @@
 	];
 
 	$: {
-		if (activeTab === 'dugout' || slug.includes('dugout')) {
+		const hideBottomNavMap = {
+			dugout: true,
+			matchup: true
+		};
+		const isMatchup = slug.includes('matchup');
+		const isDugout = slug.includes('dugout');
+		if (hideBottomNavMap[activeTab as keyof typeof hideBottomNavMap] || isDugout || isMatchup) {
 			globalStore.toggleBottomNav(false);
 		} else {
 			globalStore.toggleBottomNav(true);
@@ -90,6 +101,11 @@
 							/>
 						{:else if tab.id === 'activities'}
 							<BellRing
+								size={20}
+								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+							/>
+						{:else if tab.id === 'matchup'}
+							<Scale
 								size={20}
 								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
 							/>
