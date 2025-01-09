@@ -179,6 +179,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/bruno-ace/-/bruno-ace-5.1.0.tgz#aca399fcd862a9cfb2861e35ffb8919df9985ecd"
   integrity sha512-W6MBh71zkKWqfO9gQ6Be4pTO5rwdvznl7CsYQc3fnyRN16/8iDIm55Wgs53Q952pDpFsiWNC7s+yxrskW5Z0hA==
 
+"@fontsource/dela-gothic-one@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@fontsource/dela-gothic-one/-/dela-gothic-one-5.1.1.tgz#9005b490705a89a1727c9f4454af756e520ef329"
+  integrity sha512-TSO7kNNV+Ux9VaHR3FDDhT3mPV7O9jTBqatLw1993w57G9sQDpAGzGepTNCZcNW987ZUVFUMO+I8Vh/37Un2Yg==
+
 "@fontsource/poppins@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-5.1.0.tgz#919205f53d99ec4751a945057ef525f06681df8a"
