@@ -4,9 +4,11 @@
 	import Input from '@/components/ui/input.svelte';
 	import { GAME_SEASONS } from '@/constant/matchup';
 	import { players, teams } from '@/data/matchup';
+	import { MLB_PLAYER_POSITIONS } from '@/data/mlb';
 	import ConfigureMatchup from '@/modules/matchup/components/ConfigureMatchup.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
+	import SelectedMatchup from '@/modules/matchup/components/SelectedMatchup.svelte';
 	import type { Player } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { BadgeCheck, CheckCheck, ListFilter, Scale, Search, X } from 'lucide-svelte';
@@ -20,14 +22,25 @@
 
 	let filters: {
 		season: string;
+		position: string;
 	};
 	$: filters = {
-		season: '2024'
+		season: '2024',
+		position: 'P'
 	};
+
+	let selectedMatchup: string | null = null;
+	// $: selectedMatchup = '123';
+	$: selectedMatchup = null;
 
 	let showConfigureMatchup = false;
 
 	$: seasonValue = '2024';
+	$: positionValue = 'P';
+
+	$: filteredPlayers = players.filter((player) => {
+		return player.position === filters.position;
+	});
 
 	afterUpdate(() => {
 		// console.log(selectedPlayers);
@@ -73,10 +86,12 @@
 						<ListFilter size={20} class="stroke-white-100" />
 
 						<!-- filter indicator -->
-						{#if filters.season !== '2024'}
+						{#if filters.season !== '2024' || filters.position !== 'pitcher'}
 							<span
-								class="p-1 rounded-full bg-orange-101 absolute top-0 -translate-y-1 translate-x-1 right-0"
-							/>
+								class="w-4 h-4 text-[10px] rounded-full bg-orange-101 absolute top-0 -translate-y-1 translate-x-1 right-0 flex items-center justify-center"
+							>
+								{Object.entries(filters).length}
+							</span>
 						{/if}
 					</button>
 
@@ -138,7 +153,7 @@
 		{#if showConfigureMatchup}
 			<div class="h-screen -translate-y-10">
 				<ConfigureMatchup
-					{players}
+					players={filteredPlayers}
 					{selectedPlayers}
 					onSelectPlayer={(player) => {
 						const isMax = selectedPlayers.length === 2;
@@ -175,8 +190,13 @@
 			</div>
 		{/if}
 
-		<!-- empty state when no players are found or no recent matchup -->
+		{#if selectedMatchup}
+			<SelectedMatchup />
+		{:else}
+			<!-- show recent matchup lists -->
+		{/if}
 
+		<!-- empty state when no players are found or no recent matchup -->
 		<Notfound
 			title="No recent matchups found"
 			description="Start a new matchup by searching for a player."
@@ -192,7 +212,7 @@
 
 <!-- Search Filter Bottom Sheet -->
 <BottomSheet
-	className="w-full h-auto min-h-[20vh] bg-dark-106"
+	className="w-full h-auto min-h-[30vh] bg-dark-106"
 	showBackdrop={true}
 	isOpen={showSearchFilter}
 	showCloseButton={true}
@@ -203,7 +223,7 @@
 		showSearchFilter = false;
 	}}
 >
-	<Flex className="w-full h-full flex flex-col gap-2 px-[4em]">
+	<Flex className="w-full h-auto flex flex-col gap-2 px-[4em]">
 		<!-- <h1 class="text-white-100 text-xl font-semibold">Search Filter</h1> -->
 		<Flex className="w-full h-auto flex flex-row items-center justify-between gap-2 py-2">
 			<p class="text-white-100 text-sm font-normal">Seasons</p>
@@ -223,6 +243,24 @@
 			</select>
 		</Flex>
 
+		<Flex className="w-full h-full flex flex-row items-center justify-between gap-2 py-2">
+			<p class="text-white-100 text-sm font-normal">Positions</p>
+			<select
+				name=""
+				id=""
+				class="w-full h-full bg-dark-100/30 outline-none border-none ring-0 rounded-lg focus:ring-0 cursor-pointer"
+				value={positionValue}
+				on:change={(e) => {
+					// @ts-expect-error
+					positionValue = e.target?.value;
+				}}
+			>
+				{#each MLB_PLAYER_POSITIONS as position}
+					<option value={position?.abbrev}>{position?.fullName}</option>
+				{/each}
+			</select>
+		</Flex>
+
 		<br />
 		<Flex className="w-full flex-center">
 			<button
@@ -232,6 +270,7 @@
 				on:click={() => {
 					showSearchFilter = false;
 					filters.season = seasonValue;
+					filters.position = positionValue;
 				}}
 			>
 				Apply
