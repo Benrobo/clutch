@@ -256,7 +256,7 @@
 				}}
 			>
 				{#each MLB_PLAYER_POSITIONS as position}
-					<option value={position?.abbrev}>{position?.fullName}</option>
+					<option value={position?.abbrev}>{position?.shortName}</option>
 				{/each}
 			</select>
 		</Flex>
