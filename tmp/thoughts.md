@@ -373,3 +373,270 @@ Here's what i think would be the goto workflow:
 ## Player Stats Endpoint
 
 https://statsapi.mlb.com/api/v1/people/700363/stats?stats=gameLog
+
+## Relevant Player Positions for comparison
+
+```js
+{
+  "positionComparisonStats": [
+    {
+      "abbrev": "P",
+      "shortName": "Pitcher",
+      "stats": [
+        "era", // Measures run prevention; lower is better.
+        "strikeOuts", // Shows ability to miss bats.
+        "whip", // Indicates baserunner prevention; lower is better.
+        "wins", // Reflects contribution to team success.
+        "inningsPitched", // Shows workload and durability.
+        "saves" // Important for closers; measures game-finishing ability.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to get the win?",
+          "stats": ["wins", "era", "inningsPitched"]
+        },
+        {
+          "question": "Who’s a safer bet for strikeouts?",
+          "stats": ["strikeOuts", "whip"]
+        },
+        {
+          "question": "Which pitcher has a better chance at a shutout?",
+          "stats": ["era", "whip", "inningsPitched"]
+        }
+      ]
+    },
+    {
+      "abbrev": "C",
+      "shortName": "Catcher",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "caughtStealingPercentage" // Shows ability to control the running game.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to hit a home run?",
+          "stats": ["homeRuns", "ops"]
+        },
+        {
+          "question": "Who’s a better bet for RBIs?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Which catcher is safer to bet on for a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "1B",
+      "shortName": "First Base",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "putOuts" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to drive in a run?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Who’s a safer bet for a home run?",
+          "stats": ["homeRuns", "ops"]
+        },
+        {
+          "question": "Which first baseman is more likely to get a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "2B",
+      "shortName": "Second Base",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "assists" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to score a run?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Who’s a better bet for a stolen base?",
+          "stats": ["stolenBases", "avg"]
+        },
+        {
+          "question": "Which second baseman is safer to bet on for a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "3B",
+      "shortName": "Third Base",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "putOuts" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to hit a home run?",
+          "stats": ["homeRuns", "ops"]
+        },
+        {
+          "question": "Who’s a safer bet for RBIs?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Which third baseman is more likely to get a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "SS",
+      "shortName": "Shortstop",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "assists" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to score a run?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Who’s a better bet for a double play?",
+          "stats": ["assists", "fieldingPercentage"]
+        },
+        {
+          "question": "Which shortstop is safer to bet on for a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "LF",
+      "shortName": "Left Field",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "putOuts" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to hit a home run?",
+          "stats": ["homeRuns", "ops"]
+        },
+        {
+          "question": "Who’s a safer bet for RBIs?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Which left fielder is more likely to get a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "CF",
+      "shortName": "Center Field",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "putOuts" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to steal a base?",
+          "stats": ["stolenBases", "avg"]
+        },
+        {
+          "question": "Who’s a safer bet for a diving catch?",
+          "stats": ["putOuts", "fieldingPercentage"]
+        },
+        {
+          "question": "Which center fielder is more likely to get a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "RF",
+      "shortName": "Right Field",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops", // Combines on-base and slugging for overall offensive value.
+        "fieldingPercentage", // Reflects defensive reliability.
+        "putOuts" // Shows involvement in defensive plays.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to hit a home run?",
+          "stats": ["homeRuns", "ops"]
+        },
+        {
+          "question": "Who’s a safer bet for RBIs?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Which right fielder is more likely to get a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    },
+    {
+      "abbrev": "DH",
+      "shortName": "Designated Hitter",
+      "stats": [
+        "avg", // Measures hitting consistency.
+        "homeRuns", // Shows power at the plate.
+        "rbi", // Indicates run production.
+        "ops" // Combines on-base and slugging for overall offensive value.
+      ],
+      "engagementQuestions": [
+        {
+          "question": "Who’s more likely to hit a home run?",
+          "stats": ["homeRuns", "ops"]
+        },
+        {
+          "question": "Who’s a safer bet for RBIs?",
+          "stats": ["rbi", "ops"]
+        },
+        {
+          "question": "Which designated hitter is more likely to get a hit?",
+          "stats": ["avg", "ops"]
+        }
+      ]
+    }
+  ]
+}
+```
