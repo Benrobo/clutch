@@ -90,9 +90,26 @@
 							challenger={player1Info.player}
 							opponent={player2Info.player}
 							slide={comparisonHighlights.slides[0]}
-							goBack={() => {
-								handlePrev();
-							}}
+							back={handlePrev}
+							next={handleNext}
+						/>
+					{:else if currentSlideIndex === 5}
+						<ComparisonSlide
+							challenger={player1Info.player}
+							opponent={player2Info.player}
+							slide={comparisonHighlights.slides[1]}
+							back={handlePrev}
+							next={handleNext}
+							headerClassName="bg-orange-100"
+						/>
+					{:else if currentSlideIndex === 6}
+						<ComparisonSlide
+							challenger={player1Info.player}
+							opponent={player2Info.player}
+							slide={comparisonHighlights.slides[2]}
+							back={handlePrev}
+							next={handleNext}
+							headerClassName="bg-yellow-102"
 						/>
 					{/if}
 				</div>
