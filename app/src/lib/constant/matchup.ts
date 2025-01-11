@@ -13,3 +13,8 @@ export const GAME_SEASONS = [
 		value: '2022'
 	}
 ];
+
+export const TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND = [
+	"tigers",
+	"athletics"
+]
