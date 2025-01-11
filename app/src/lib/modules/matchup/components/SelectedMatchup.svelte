@@ -8,7 +8,7 @@
 	import { MoveLeft, MoveRight, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
-	import PlayerProfile from './PlayerProfile.svelte';
+	import PlayerProfile from './stats/PlayerProfile.svelte';
 	import { pictcherStats, players, teams } from '@/data/matchup';
 	import { fly, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
