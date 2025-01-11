@@ -374,6 +374,8 @@ Here's what i think would be the goto workflow:
 
 https://statsapi.mlb.com/api/v1/people/700363/stats?stats=gameLog
 
+google colab note: https://colab.research.google.com/drive/1QcZD-_VK-Fa9ZC_iNy6Cth0n67KF2dSC#scrollTo=XZgOlX9dka7N
+
 ## Relevant Player Positions for comparison
 
 ```js
