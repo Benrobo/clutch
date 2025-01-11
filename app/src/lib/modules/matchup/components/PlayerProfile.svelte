@@ -5,15 +5,6 @@
 	import { cn } from '@/utils';
 	import { BadgeCheck, Dumbbell, Minus, X } from 'lucide-svelte';
 	import PlayerStatsCard from './stats/PlayerStatsCard.svelte';
-	import { fade, fly } from 'svelte/transition';
-	import {
-		bounceInOut,
-		cubicIn,
-		cubicInOut,
-		cubicOut,
-		quartInOut,
-		quintInOut
-	} from 'svelte/easing';
 
 	export let playerInfo: Player;
 	export let playerStats: (typeof pictcherStats)[0];
@@ -23,10 +14,7 @@
 	let lastNameLetter = playerInfo?.fullName.split(' ')[1][0];
 </script>
 
-<div
-	class="w-full h-full bg-dark-111 flex flex-col items-center justify-between p-0 relative transition-all duration-500 ease-in-out"
-	transition:fly={{ x: 100, duration: 500, easing: quintInOut }}
->
+<div class="w-full h-full bg-dark-111 flex flex-col items-center justify-between p-0 relative">
 	<!-- player basic info -->
 	<div
 		class="w-full h-[40vh] flex flex-col items-center justify-center gap-0 relative bg-orange-101- bg-dark-110 rounded-b-[2em]"
