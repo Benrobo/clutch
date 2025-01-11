@@ -33,6 +33,7 @@ export default {
 				'gothic-one': ['Dela Gothic One', 'system-ui'],
 				'mouzambik': ['Mouzambik', 'sans-serif'],
 				'facon': ['Facon', 'sans-serif'],
+				'garamond': ['EB Garamond Variable', 'serif'],
 			},
 			colors: {
 				white: {
@@ -123,6 +124,7 @@ export default {
 				},
 				pink: {
 					100: '#E4295D',
+					101: "#feb4ed",
 					102: '#FDDDF6',
 					200: 'rgba(228, 41, 93, 0.3)'
 				},
