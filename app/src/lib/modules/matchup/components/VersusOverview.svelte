@@ -2,18 +2,13 @@
 	import Flex from '@/components/Flex.svelte';
 	import type { Player } from '@/types/matchup';
 	import { X } from 'lucide-svelte';
-	import { quintInOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 
 	export let onClose: () => void;
 	export let challenger: Player;
 	export let opponent: Player;
 </script>
 
-<div
-	class="w-full h-full bg-dark-109 flex flex-col items-center justify-between p-0 relative"
-	transition:fade={{ duration: 500, easing: quintInOut }}
->
+<div class="w-full h-full bg-dark-109 flex flex-col items-center justify-between p-0 relative">
 	<!-- close btn -->
 	<button
 		class="absolute top-5 right-5 w-[45px] h-[45px] md:w-[55px] md:h-[55px] bg-dark-111 rounded-full flex flex-center enableBounceEffect z-[1]"
