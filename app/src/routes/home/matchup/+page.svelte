@@ -4,7 +4,7 @@
 	import Input from '@/components/ui/input.svelte';
 	import { GAME_SEASONS } from '@/constant/matchup';
 	import { players, teams } from '@/data/matchup';
-	import { MLB_PLAYER_POSITIONS } from '@/data/mlb';
+	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
 	import ConfigureMatchup from '@/modules/matchup/components/ConfigureMatchup.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
