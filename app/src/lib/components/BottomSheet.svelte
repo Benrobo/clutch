@@ -9,9 +9,11 @@
 
 	export let isOpen = false;
 	export let className: ClassValue = '';
+	export let contentClassName: ClassValue = '';
 	export let backdropClassName: ClassValue = '';
 	export let closeBtnClassName: ClassValue = '';
 	export let closeBtnIconClassName: ClassValue = '';
+	export let showHeader = true;
 	export let showBackdrop = true;
 	export let rounded = true;
 	export let onClose = () => {};
@@ -63,31 +65,33 @@
 			{/if}
 
 			<!-- Header -->
-			<div class="px-4 py-2 flex items-center justify-between">
-				<div class="flex flex-col">
-					{#if headline}
-						<h3 class="text-dark-100 font-semibold text-xl">{headline}</h3>
-					{/if}
-					{#if tagline}
-						<span class="text-dark-100/60 text-sm">{tagline}</span>
+			{#if showHeader}
+				<div class="px-4 py-2 flex items-center justify-between">
+					<div class="flex flex-col">
+						{#if headline}
+							<h3 class="text-dark-100 font-semibold text-xl">{headline}</h3>
+						{/if}
+						{#if tagline}
+							<span class="text-dark-100/60 text-sm">{tagline}</span>
+						{/if}
+					</div>
+
+					{#if showCloseButton}
+						<button
+							class={cn(
+								'p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors',
+								closeBtnClassName
+							)}
+							on:click={onClose}
+						>
+							<X size={20} class={cn('stroke-dark-100/60', closeBtnIconClassName)} />
+						</button>
 					{/if}
 				</div>
-
-				{#if showCloseButton}
-					<button
-						class={cn(
-							'p-2 rounded-full bg-dark-103/5 hover:bg-dark-103/10 transition-colors',
-							closeBtnClassName
-						)}
-						on:click={onClose}
-					>
-						<X size={20} class={cn('stroke-dark-100/60', closeBtnIconClassName)} />
-					</button>
-				{/if}
-			</div>
+			{/if}
 
 			<!-- Content -->
-			<div class="flex-1 overflow-y-auto px-4">
+			<div class={cn('flex-1 overflow-y-auto px-4', contentClassName)}>
 				<slot />
 			</div>
 		</div>
