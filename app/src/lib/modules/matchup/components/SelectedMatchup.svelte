@@ -8,6 +8,7 @@
 	import { MoveLeft, MoveRight, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
+	import PlayerProfile from './PlayerProfile.svelte';
 
 	$: currentSlideIndex = 0;
 </script>
@@ -23,7 +24,9 @@
 	contentClassName="px-0 py-0"
 >
 	<div class="w-full h-screen relative">
-		<VersusOverview onClose={() => {}} />
+		<!-- <VersusOverview onClose={() => {}} /> -->
+
+		<PlayerProfile next={() => {}} prev={() => {}} />
 
 		<Flex
 			className="w-full h-auto pb-5 items-center justify-between absolute bottom-5 right-0 px-5"
