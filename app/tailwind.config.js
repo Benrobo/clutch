@@ -31,6 +31,8 @@ export default {
 				'cyber': ['Cyber', 'sans-serif'],
 				'shiny': ['Shiny', 'sans-serif'],
 				'gothic-one': ['Dela Gothic One', 'system-ui'],
+				'mouzambik': ['Mouzambik', 'sans-serif'],
+				'facon': ['Facon', 'sans-serif'],
 			},
 			colors: {
 				white: {
@@ -53,7 +55,9 @@ export default {
 					106: '#222222',
 					107: '#161616',
 					108: "#24262c",
-					109: "#25272d",
+					109: "#272b31",
+					110: "#222428",
+					111: "#16171a",
 					500: 'rgba(0,0,0,.4)'
 				},
 				gray: {
