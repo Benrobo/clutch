@@ -30,8 +30,8 @@
 	};
 
 	let selectedMatchup: string | null = null;
-	// $: selectedMatchup = '123';
-	$: selectedMatchup = null;
+	$: selectedMatchup = '123';
+	// $: selectedMatchup = null;
 
 	let showConfigureMatchup = false;
 
@@ -190,9 +190,7 @@
 			</div>
 		{/if}
 
-		{#if selectedMatchup}
-			<SelectedMatchup />
-		{:else}
+		{#if !selectedMatchup}
 			<!-- show recent matchup lists -->
 		{/if}
 
@@ -209,6 +207,10 @@
 		/>
 	</div>
 </div>
+
+{#if selectedMatchup}
+	<SelectedMatchup />
+{/if}
 
 <!-- Search Filter Bottom Sheet -->
 <BottomSheet
