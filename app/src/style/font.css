@@ -121,6 +121,20 @@
   font-style: normal; */
 }
 
+@font-face {
+  font-family: "Mouzambik";
+  src: url("/fonts/mouzambik/regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Facon";
+  src: url("/fonts/facon/regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 /* Utility classes */
 .recoleta {
@@ -147,6 +161,13 @@
   font-family: "Dela Gothic One", system-ui;
 }
 
+.mouzambik {
+  font-family: "Mouzambik", sans-serif;
+}
+
+.facon {
+  font-family: "Facon", sans-serif;
+}
 
 /* Font weight utilities */
 .font-thin {
