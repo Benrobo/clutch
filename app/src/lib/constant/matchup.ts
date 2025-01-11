@@ -16,5 +16,7 @@ export const GAME_SEASONS = [
 
 export const TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND = [
 	"tigers",
-	"athletics"
+	"athletics",
+	"twins",
+	"rockies"
 ]
