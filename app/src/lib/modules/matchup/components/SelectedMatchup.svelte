@@ -7,13 +7,23 @@
 	import { cn } from '@/utils';
 	import { X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
+	import VersusOverview from './VersusOverview.svelte';
 </script>
 
+<!-- <div class="w-screen h-screen"> -->
 <BottomSheet
+	showHeader={false}
 	isOpen={true}
 	showBackdrop={false}
-	showCloseButton={true}
+	showCloseButton={false}
 	rounded={false}
 	showDragHandle={false}
-	className="w-full min-h-[100vh] bg-dark-109"
-></BottomSheet>
+	className="w-[100vw] h-[100vh] overflow-hidden bg-dark-109"
+	contentClassName="px-0 py-0"
+>
+	<div class="w-full h-screen relative">
+		<VersusOverview title="Versus Overview-1" />
+		<!-- <VersusOverview title="Versus Overview-2" /> -->
+	</div>
+</BottomSheet>
+<!-- </div> -->
