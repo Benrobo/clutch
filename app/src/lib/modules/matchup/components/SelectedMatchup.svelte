@@ -9,9 +9,11 @@
 	import { afterUpdate } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
 	import PlayerProfile from './stats/PlayerProfile.svelte';
-	import { pictcherStats, players, teams } from '@/data/matchup';
+	import { pictcherStats, players, teams, comparisonHighlights } from '@/data/matchup';
 	import { fly, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import ComparisonOverview from './comparison-highlights/ComparisonOverview.svelte';
+	import ComparisonSlide from './comparison-highlights/ComparisonSlide.svelte';
 
 	let currentSlideIndex = 0;
 	let slideDirection = 1;
@@ -22,12 +24,12 @@
 	};
 
 	const player1Info = {
-		player: players[Math.floor(Math.random() * players.length)],
+		player: players[74],
 		stats: pictcherStats[0],
 		team: teams[Math.floor(Math.random() * teams.length)]
 	};
 	const player2Info = {
-		player: players[Math.floor(Math.random() * players.length)],
+		player: players[75],
 		stats: pictcherStats[0],
 		team: teams[Math.floor(Math.random() * teams.length)]
 	};
@@ -42,7 +44,7 @@
 		currentSlideIndex--;
 	}
 
-	$: currentSlideIndex = 0;
+	$: currentSlideIndex = 4;
 </script>
 
 <BottomSheet
@@ -81,30 +83,43 @@
 							playerStats={player1Info.stats}
 							teamInfo={player1Info.team}
 						/>
+					{:else if currentSlideIndex === 3}
+						<ComparisonOverview challenger={player1Info.player} opponent={player2Info.player} />
+					{:else if currentSlideIndex === 4}
+						<ComparisonSlide
+							challenger={player1Info.player}
+							opponent={player2Info.player}
+							slide={comparisonHighlights.slides[0]}
+							goBack={() => {
+								handlePrev();
+							}}
+						/>
 					{/if}
 				</div>
 			{/key}
 		</div>
 
-		<Flex
-			className="w-full h-auto pb-2 items-center justify-between absolute bottom-2 right-0 px-5"
-		>
-			<button
-				class={cn(
-					'w-full max-w-[90px] min-h-[45px] bg-dark-111 flex items-center justify-center rounded-full enableBounceEffect border-[1px] border-white-400/30',
-					currentSlideIndex === 0 ? 'invisible' : ''
-				)}
-				on:click={handlePrev}
+		{#if currentSlideIndex <= 3}
+			<Flex
+				className="w-full h-auto pb-2 items-center justify-between absolute bottom-2 right-0 px-5"
 			>
-				<MoveLeft size={30} strokeWidth={1} class="stroke-white-200" />
-			</button>
+				<button
+					class={cn(
+						'w-full max-w-[90px] min-h-[45px] bg-dark-111 flex items-center justify-center rounded-full enableBounceEffect border-[1px] border-white-400/30',
+						currentSlideIndex === 0 ? 'invisible' : ''
+					)}
+					on:click={handlePrev}
+				>
+					<MoveLeft size={30} strokeWidth={1} class="stroke-white-200" />
+				</button>
 
-			<button
-				class="w-full max-w-[90px] min-h-[45px] bg-dark-111 flex items-center justify-center rounded-full enableBounceEffect border-[1px] border-white-400/30"
-				on:click={handleNext}
-			>
-				<MoveRight size={30} strokeWidth={1} class="stroke-white-200" />
-			</button>
-		</Flex>
+				<button
+					class="w-full max-w-[90px] min-h-[45px] bg-dark-111 flex items-center justify-center rounded-full enableBounceEffect border-[1px] border-white-400/30"
+					on:click={handleNext}
+				>
+					<MoveRight size={30} strokeWidth={1} class="stroke-white-200" />
+				</button>
+			</Flex>
+		{/if}
 	</div>
 </BottomSheet>
