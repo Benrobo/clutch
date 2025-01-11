@@ -338,7 +338,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "63",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/689958/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/689958/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 222,
         "currentAge": 24
@@ -351,7 +351,7 @@ export const players = [
         "active": true,
         "position": "CF",
         "jerseyNumber": "1",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682657/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682657/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 200,
         "currentAge": 22
@@ -364,7 +364,7 @@ export const players = [
         "active": true,
         "position": "C",
         "jerseyNumber": "27",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/595978/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/595978/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 220,
         "currentAge": 32
@@ -377,7 +377,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "39",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/594902/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/594902/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 235,
         "currentAge": 32
@@ -390,7 +390,7 @@ export const players = [
         "active": true,
         "position": "C",
         "jerseyNumber": "23",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/666310/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/666310/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 205,
         "currentAge": 24
@@ -403,7 +403,7 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "4",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/677587/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/677587/headshot/silo/current",
         "height": "5' 10\"",
         "weight": 170,
         "currentAge": 23
@@ -416,7 +416,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "36",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671922/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671922/headshot/silo/current",
         "height": "6' 5\"",
         "weight": 230,
         "currentAge": 25
@@ -429,7 +429,7 @@ export const players = [
         "active": true,
         "position": "1B",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/467793/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/467793/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 210,
         "currentAge": 38
@@ -442,7 +442,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "66",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682982/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682982/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 225,
         "currentAge": 24
@@ -455,7 +455,7 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "10",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682177/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682177/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 185,
         "currentAge": 27
@@ -468,7 +468,7 @@ export const players = [
         "active": true,
         "position": "1B",
         "jerseyNumber": "6",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681807/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681807/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 215,
         "currentAge": 29
@@ -481,7 +481,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680951/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680951/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 210,
         "currentAge": 25
@@ -494,7 +494,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "48",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/661403/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/661403/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 206,
         "currentAge": 26
@@ -507,7 +507,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "62",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681870/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681870/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 230,
         "currentAge": 27
@@ -520,7 +520,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "92",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680916/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680916/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 235,
         "currentAge": 24
@@ -533,7 +533,7 @@ export const players = [
         "active": true,
         "position": "3B",
         "jerseyNumber": "13",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/672356/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/672356/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 217,
         "currentAge": 24
@@ -546,7 +546,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "32",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668909/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668909/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 250,
         "currentAge": 25
@@ -559,7 +559,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "33",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683769/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683769/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 260,
         "currentAge": 26
@@ -572,7 +572,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "43",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/678877/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/678877/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 250,
         "currentAge": 23
@@ -585,7 +585,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "54",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676282/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676282/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 225,
         "currentAge": 25
@@ -598,7 +598,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "30",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671286/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671286/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 224,
         "currentAge": 25
@@ -611,7 +611,7 @@ export const players = [
         "active": true,
         "position": "3B",
         "jerseyNumber": "11",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/608070/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/608070/headshot/silo/current",
         "height": "5' 9\"",
         "weight": 190,
         "currentAge": 32
@@ -624,7 +624,7 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "74",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682877/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682877/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 202,
         "currentAge": 23
@@ -637,7 +637,7 @@ export const players = [
         "active": true,
         "position": "1B",
         "jerseyNumber": "9",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/700932/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/700932/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 205,
         "currentAge": 24
@@ -650,7 +650,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "8",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/657041/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/657041/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 195,
         "currentAge": 29
@@ -663,7 +663,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "41",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671106/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671106/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 190,
         "currentAge": 26
@@ -676,7 +676,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "45",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682847/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682847/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 235,
         "currentAge": 25
@@ -689,7 +689,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "94",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663671/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663671/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 205,
         "currentAge": 28
@@ -702,7 +702,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "60",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/658648/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/658648/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 210,
         "currentAge": 27
@@ -715,7 +715,7 @@ export const players = [
         "active": true,
         "position": "CF",
         "jerseyNumber": "89",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/690984/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/690984/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 200,
         "currentAge": 22
@@ -728,7 +728,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "31",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/656529/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/656529/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 245,
         "currentAge": 28
@@ -741,7 +741,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "57",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/669456/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/669456/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 200,
         "currentAge": 29
@@ -754,7 +754,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "44",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/677944/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/677944/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 219,
         "currentAge": 25
@@ -767,7 +767,7 @@ export const players = [
         "active": true,
         "position": "LF",
         "jerseyNumber": "38",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680757/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680757/headshot/silo/current",
         "height": "5' 9\"",
         "weight": 170,
         "currentAge": 27
@@ -780,7 +780,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "28",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676440/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676440/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 205,
         "currentAge": 25
@@ -793,7 +793,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "29",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682120/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682120/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 230,
         "currentAge": 28
@@ -806,7 +806,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "37",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663986/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663986/headshot/silo/current",
         "height": "6' 5\"",
         "weight": 225,
         "currentAge": 29
@@ -819,7 +819,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "24",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663474/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663474/headshot/silo/current",
         "height": "6' 5\"",
         "weight": 165,
         "currentAge": 27
@@ -832,7 +832,7 @@ export const players = [
         "active": true,
         "position": "CF",
         "jerseyNumber": "2",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671289/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/671289/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 190,
         "currentAge": 25
@@ -845,7 +845,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "17",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/686823/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/686823/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 200,
         "currentAge": 26
@@ -858,7 +858,7 @@ export const players = [
         "active": true,
         "position": "LF",
         "jerseyNumber": "4",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/672744/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/672744/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 165,
         "currentAge": 24
@@ -871,7 +871,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "32",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676962/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676962/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 210,
         "currentAge": 25
@@ -884,7 +884,7 @@ export const players = [
         "active": true,
         "position": "3B",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/701496/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/701496/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 180,
         "currentAge": 24
@@ -897,7 +897,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "45",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668873/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668873/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 180,
         "currentAge": 27
@@ -910,7 +910,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "24",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/573204/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/573204/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 205,
         "currentAge": 37
@@ -923,7 +923,7 @@ export const players = [
         "active": true,
         "position": "C",
         "jerseyNumber": "15",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/608348/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/608348/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 212,
         "currentAge": 30
@@ -936,7 +936,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/547001/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/547001/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 190,
         "currentAge": 30
@@ -949,7 +949,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "48",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/694037/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/694037/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 160,
         "currentAge": 24
@@ -962,7 +962,7 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "7",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/621020/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/621020/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 190,
         "currentAge": 30
@@ -975,7 +975,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "33",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/669212/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/669212/headshot/silo/current",
         "height": "5' 10\"",
         "weight": 190,
         "currentAge": 28
@@ -988,7 +988,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "39",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681799/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681799/headshot/silo/current",
         "height": "5' 10\"",
         "weight": 180,
         "currentAge": 27
@@ -1001,7 +1001,7 @@ export const players = [
         "active": true,
         "position": "3B",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/669398/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/669398/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 202,
         "currentAge": 25
@@ -1014,7 +1014,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "46",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668970/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668970/headshot/silo/current",
         "height": "6' 7\"",
         "weight": 215,
         "currentAge": 27
@@ -1027,7 +1027,7 @@ export const players = [
         "active": true,
         "position": "LF",
         "jerseyNumber": "8",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/664023/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/664023/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 205,
         "currentAge": 30
@@ -1040,7 +1040,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "47",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680891/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/680891/headshot/silo/current",
         "height": "6' 8\"",
         "weight": 245,
         "currentAge": 24
@@ -1053,7 +1053,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "50",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/592791/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/592791/headshot/silo/current",
         "height": "6' 5\"",
         "weight": 230,
         "currentAge": 33
@@ -1066,7 +1066,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "72",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/665871/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/665871/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 200,
         "currentAge": 27
@@ -1079,7 +1079,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "36",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/696136/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/696136/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 220,
         "currentAge": 25
@@ -1092,7 +1092,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "66",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/657240/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/657240/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 215,
         "currentAge": 33
@@ -1105,7 +1105,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "35",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/657006/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/657006/headshot/silo/current",
         "height": "6' 2\"",
         "weight": 205,
         "currentAge": 29
@@ -1118,7 +1118,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "71",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/624522/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/624522/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 210,
         "currentAge": 29
@@ -1131,7 +1131,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "13",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682634/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/682634/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 188,
         "currentAge": 22
@@ -1144,7 +1144,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "30",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663656/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663656/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 212,
         "currentAge": 27
@@ -1157,7 +1157,7 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "12",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676679/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/676679/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 165,
         "currentAge": 25
@@ -1170,7 +1170,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "43",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681432/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/681432/headshot/silo/current",
         "height": "6' 8\"",
         "weight": 220,
         "currentAge": 24
@@ -1183,7 +1183,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "16",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/571510/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/571510/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 223,
         "currentAge": 33
@@ -1196,7 +1196,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "82",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683522/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683522/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 155,
         "currentAge": 23
@@ -1209,7 +1209,7 @@ export const players = [
         "active": true,
         "position": "1B",
         "jerseyNumber": "29",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683737/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683737/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 210,
         "currentAge": 27
@@ -1222,7 +1222,7 @@ export const players = [
         "active": true,
         "position": "C",
         "jerseyNumber": "9",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/665804/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/665804/headshot/silo/current",
         "height": "6' 0\"",
         "weight": 230,
         "currentAge": 25
@@ -1235,7 +1235,7 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "20",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/670156/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/670156/headshot/silo/current",
         "height": "5' 10\"",
         "weight": 185,
         "currentAge": 29
@@ -1248,7 +1248,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "56",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663878/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663878/headshot/silo/current",
         "height": "6' 6\"",
         "weight": 255,
         "currentAge": 28
@@ -1261,7 +1261,7 @@ export const players = [
         "active": true,
         "position": "2B",
         "jerseyNumber": "2",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663538/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663538/headshot/silo/current",
         "height": "6' 1\"",
         "weight": 200,
         "currentAge": 27
@@ -1274,7 +1274,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683357/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/683357/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 190,
         "currentAge": 22
@@ -1287,7 +1287,7 @@ export const players = [
         "active": true,
         "position": "CF",
         "jerseyNumber": "52",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/691718/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/691718/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 184,
         "currentAge": 22
@@ -1300,7 +1300,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "37",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/687863/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/687863/headshot/silo/current",
         "height": "6' 4\"",
         "weight": 230,
         "currentAge": 23
@@ -1313,7 +1313,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/642239/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/642239/headshot/silo/current",
         "height": "6' 3\"",
         "weight": 205,
         "currentAge": 32
@@ -1326,7 +1326,7 @@ export const players = [
         "active": true,
         "position": "RF",
         "jerseyNumber": "27",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/673548/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/673548/headshot/silo/current",
         "height": "5' 11\"",
         "weight": 182,
         "currentAge": 30
@@ -1339,7 +1339,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "18",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/684007/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/684007/headshot/silo/current",
         "height": "5' 10\"",
         "weight": 175,
         "currentAge": 31
@@ -1352,7 +1352,7 @@ export const players = [
         "active": true,
         "position": "P",
         "jerseyNumber": "49",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668338/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668338/headshot/silo/current",
         "height": "6' 5\"",
         "weight": 220,
         "currentAge": 29
@@ -1365,9 +1365,98 @@ export const players = [
         "active": true,
         "position": "SS",
         "jerseyNumber": "17",
-        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/660644/headshot/silo/current",
+        "profilePicture": "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/660644/headshot/silo/current",
         "height": "5' 10\"",
         "weight": 180,
         "currentAge": 26
+    }
+]
+
+export const pictcherStats = [
+    {
+        "season": "2024",
+        "stat": {
+            "gamesPlayed": 26,
+            "gamesStarted": 7,
+            "groundOuts": 58,
+            "airOuts": 71,
+            "runs": 27,
+            "doubles": 10,
+            "triples": 0,
+            "homeRuns": 7,
+            "strikeOuts": 70,
+            "baseOnBalls": 15,
+            "intentionalWalks": 2,
+            "hits": 66,
+            "hitByPitch": 2,
+            "avg": ".252",
+            "atBats": 262,
+            "obp": ".294",
+            "slg": ".370",
+            "ops": ".664",
+            "caughtStealing": 0,
+            "stolenBases": 7,
+            "stolenBasePercentage": "1.000",
+            "groundIntoDoublePlay": 5,
+            "numberOfPitches": 1024,
+            "era": "3.56",
+            "inningsPitched": "68.1",
+            "wins": 2,
+            "losses": 1,
+            "saves": 0,
+            "saveOpportunities": 1,
+            "holds": 1,
+            "blownSaves": 1,
+            "earnedRuns": 27,
+            "whip": "1.19",
+            "battersFaced": 282,
+            "outs": 205,
+            "gamesPitched": 26,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 692,
+            "strikePercentage": ".680",
+            "hitBatsmen": 2,
+            "balks": 0,
+            "wildPitches": 2,
+            "pickoffs": 0,
+            "totalBases": 97,
+            "groundOutsToAirouts": "0.82",
+            "winPercentage": ".667",
+            "pitchesPerInning": "14.99",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "4.67",
+            "strikeoutsPer9Inn": "9.22",
+            "walksPer9Inn": "1.98",
+            "hitsPer9Inn": "8.69",
+            "runsScoredPer9": "3.56",
+            "homeRunsPer9": "0.92",
+            "inheritedRunners": 12,
+            "inheritedRunnersScored": 4,
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 3
+        },
+        "team": {
+            "id": 144,
+            "name": "Atlanta Braves",
+            "link": "/api/v1/teams/144"
+        },
+        "player": {
+            "id": 656550,
+            "fullName": "Grant Holmes",
+            "link": "/api/v1/people/656550"
+        },
+        "league": {
+            "id": 104,
+            "name": "National League",
+            "link": "/api/v1/league/104"
+        },
+        "sport": {
+            "id": 1,
+            "link": "/api/v1/sports/1",
+            "abbreviation": "MLB"
+        },
+        "gameType": "R"
     }
 ]
