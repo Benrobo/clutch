@@ -10,8 +10,16 @@
 	import VersusOverview from './VersusOverview.svelte';
 	import PlayerProfile from './PlayerProfile.svelte';
 	import { pictcherStats, players, teams } from '@/data/matchup';
+	import { fly, slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	let currentSlideIndex = 0;
+	let slideDirection = 1;
+
+	const slideOptions = {
+		duration: 300,
+		easing: quintOut
+	};
 
 	const player1Info = {
 		player: players[Math.floor(Math.random() * players.length)],
@@ -23,6 +31,16 @@
 		stats: pictcherStats[0],
 		team: teams[Math.floor(Math.random() * teams.length)]
 	};
+
+	function handleNext() {
+		slideDirection = 1;
+		currentSlideIndex++;
+	}
+
+	function handlePrev() {
+		slideDirection = -1;
+		currentSlideIndex--;
+	}
 
 	$: currentSlideIndex = 0;
 </script>
@@ -38,25 +56,35 @@
 	contentClassName="px-0 py-0"
 >
 	<div class="w-full h-screen relative">
-		{#if currentSlideIndex === 0}
-			<VersusOverview
-				onClose={() => {}}
-				challenger={player1Info.player}
-				opponent={player2Info.player}
-			/>
-		{:else if currentSlideIndex === 1}
-			<PlayerProfile
-				playerInfo={player2Info.player}
-				playerStats={player2Info.stats}
-				teamInfo={player2Info.team}
-			/>
-		{:else if currentSlideIndex === 2}
-			<PlayerProfile
-				playerInfo={player1Info.player}
-				playerStats={player1Info.stats}
-				teamInfo={player1Info.team}
-			/>
-		{/if}
+		<div class="relative overflow-hidden">
+			{#key currentSlideIndex}
+				<div
+					class="w-full h-screen"
+					in:fly={{ x: 100 * slideDirection, ...slideOptions }}
+					out:fly={{ x: -100 * slideDirection, ...slideOptions }}
+				>
+					{#if currentSlideIndex === 0}
+						<VersusOverview
+							onClose={() => {}}
+							challenger={player1Info.player}
+							opponent={player2Info.player}
+						/>
+					{:else if currentSlideIndex === 1}
+						<PlayerProfile
+							playerInfo={player2Info.player}
+							playerStats={player2Info.stats}
+							teamInfo={player2Info.team}
+						/>
+					{:else if currentSlideIndex === 2}
+						<PlayerProfile
+							playerInfo={player1Info.player}
+							playerStats={player1Info.stats}
+							teamInfo={player1Info.team}
+						/>
+					{/if}
+				</div>
+			{/key}
+		</div>
 
 		<Flex
 			className="w-full h-auto pb-2 items-center justify-between absolute bottom-2 right-0 px-5"
@@ -66,18 +94,14 @@
 					'w-full max-w-[90px] min-h-[45px] bg-dark-111 flex items-center justify-center rounded-full enableBounceEffect border-[1px] border-white-400/30',
 					currentSlideIndex === 0 ? 'invisible' : ''
 				)}
-				on:click={() => {
-					currentSlideIndex -= 1;
-				}}
+				on:click={handlePrev}
 			>
 				<MoveLeft size={30} strokeWidth={1} class="stroke-white-200" />
 			</button>
 
 			<button
 				class="w-full max-w-[90px] min-h-[45px] bg-dark-111 flex items-center justify-center rounded-full enableBounceEffect border-[1px] border-white-400/30"
-				on:click={() => {
-					currentSlideIndex += 1;
-				}}
+				on:click={handleNext}
 			>
 				<MoveRight size={30} strokeWidth={1} class="stroke-white-200" />
 			</button>
