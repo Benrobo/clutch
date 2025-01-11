@@ -168,6 +168,10 @@
   font-family: "Facon", sans-serif;
 }
 
+.garamond {
+  font-family: 'EB Garamond Variable', serif;
+}
+
 /* Font weight utilities */
 .font-thin {
   font-weight: 100;
