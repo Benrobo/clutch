@@ -13,6 +13,7 @@
 	import '@fontsource/bruno-ace/400.css';
 	import '@fontsource-variable/montserrat';
 	import '@fontsource/dela-gothic-one';
+	import '@fontsource-variable/eb-garamond';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { Toaster } from 'svelte-french-toast';
 </script>
