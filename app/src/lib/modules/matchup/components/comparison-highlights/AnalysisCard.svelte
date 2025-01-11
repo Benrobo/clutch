@@ -2,6 +2,7 @@
 	import { cn } from '@/utils';
 	import { Minus, MoveUpRight } from 'lucide-svelte';
 	import Divider from '@/components/Divider.svelte';
+	import { scale } from 'svelte/transition';
 
 	export let headshot: string;
 	export let player: {
