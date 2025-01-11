@@ -4,22 +4,32 @@
 	import type { Player } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { BadgeCheck, Dumbbell, Minus, X } from 'lucide-svelte';
+	import PlayerStatsCard from './stats/PlayerStatsCard.svelte';
+	import { fade, fly } from 'svelte/transition';
+	import {
+		bounceInOut,
+		cubicIn,
+		cubicInOut,
+		cubicOut,
+		quartInOut,
+		quintInOut
+	} from 'svelte/easing';
 
-	export let next: () => void;
-	export let prev: () => void;
+	export let playerInfo: Player;
+	export let playerStats: (typeof pictcherStats)[0];
+	export let teamInfo: (typeof teams)[0];
 
-	const player = players[0];
-	const teamInfo = teams[0];
-	const playerStats = pictcherStats[0];
-
-	let firstNameLetter = player?.fullName.split(' ')[0][0];
-	let lastNameLetter = player?.fullName.split(' ')[1][0];
+	let firstNameLetter = playerInfo?.fullName.split(' ')[0][0];
+	let lastNameLetter = playerInfo?.fullName.split(' ')[1][0];
 </script>
 
-<div class="w-full h-full bg-dark-111 flex flex-col items-center justify-between p-0 relative">
+<div
+	class="w-full h-full bg-dark-111 flex flex-col items-center justify-between p-0 relative transition-all duration-500 ease-in-out"
+	transition:fly={{ x: 100, duration: 500, easing: quintInOut }}
+>
 	<!-- player basic info -->
 	<div
-		class="w-full h-[50vh] flex flex-col items-center justify-center gap-0 relative bg-orange-101- bg-dark-110 rounded-b-[2em]"
+		class="w-full h-[40vh] flex flex-col items-center justify-center gap-0 relative bg-orange-101- bg-dark-110 rounded-b-[2em]"
 	>
 		<div
 			class="absolute top-[4em] md:top-10 -translate-y-10 flex flex-col items-center justify-center"
@@ -38,7 +48,7 @@
 				class="w-[150px] h-[150px] md:w-[180px] md:h-[180px] bg-dark-111 rounded-full border-[5px] border-orange-102 outline outline-[10px] outline-dark-111/30 shadow-2xl shadow-white-400/30"
 			>
 				<img
-					src={player?.profilePicture}
+					src={playerInfo?.profilePicture}
 					alt=""
 					class="w-full h-full rounded-full"
 					on:error={(e) => {
@@ -53,9 +63,9 @@
 				class="w-full h-auto pt-[1em] md:pt-[3em] flex flex-col items-center justify-center gap-0"
 			>
 				<span class="text-white-100 text-[1.2em] md:text-[2em] font-facon relative">
-					{player?.fullName}
+					{playerInfo?.fullName}
 
-					{#if player?.verified}
+					{#if playerInfo?.verified}
 						<span class="absolute -top-1 -right-4 translate-x-2">
 							<BadgeCheck size={20} class="stroke-white-100 fill-orange-101" />
 						</span>
@@ -70,13 +80,13 @@
 							<div
 								class={cn(
 									'w-3 h-3 animate-ping rounded-full',
-									player?.active ? 'bg-green-100' : 'bg-red-305'
+									playerInfo?.active ? 'bg-green-100' : 'bg-red-305'
 								)}
 							></div>
 							<div
 								class={cn(
 									'w-2 h-2 rounded-full absolute',
-									player?.active ? 'bg-green-100' : 'bg-red-305'
+									playerInfo?.active ? 'bg-green-100' : 'bg-red-305'
 								)}
 							></div>
 						</div>
@@ -88,7 +98,7 @@
 						<Dumbbell size={18} class="text-white-400" />
 
 						<span class="text-white-300 font-poppins text-xs md:text-sm text-nowrap">
-							{player?.weight} lbs
+							{playerInfo?.weight} lbs
 						</span>
 					</div>
 
@@ -134,13 +144,56 @@
 	</div>
 
 	<!-- player stats -->
-	<div class="w-full h-full flex flex-col items-start justify-start gap-0 relative py-5">
+	<div
+		class="w-full h-full max-h-[calc(100vh-40vh)] flex flex-col items-start justify-start gap-0 relative py-5"
+	>
 		<Flex className="w-full h-auto px-4">
 			<span class="text-white-100 text-[2em] md:text-[2em] font-mouzambik relative"> Stats </span>
 		</Flex>
 
-		<div class="w-full h-auto grid grid-cols-2 gap-5">
+		<div class="w-full h-auto grid grid-cols-2 gap-5 px-4 py-3 overflow-y-auto hideScrollBar2">
 			<!-- pitcher stats (some stats within pitcher are available for some positions) -->
+			<PlayerStatsCard
+				headline="Total Games Played"
+				tagline="total games played"
+				value={playerStats?.stat?.gamesPlayed}
+			/>
+
+			<PlayerStatsCard
+				headline="earned run average"
+				tagline="measures run prevention"
+				value={playerStats?.stat?.era}
+			/>
+
+			<PlayerStatsCard
+				headline="strikeouts"
+				tagline="ability to miss bats"
+				value={playerStats?.stat?.strikeOuts}
+			/>
+
+			<PlayerStatsCard
+				headline="wins"
+				tagline="contribution to team success"
+				value={playerStats?.stat?.wins}
+			/>
+
+			<PlayerStatsCard
+				headline="whip"
+				tagline="baserunner prevention"
+				value={playerStats?.stat?.whip}
+			/>
+
+			<PlayerStatsCard
+				headline="innings pitched"
+				tagline="workload and durability"
+				value={playerStats?.stat?.inningsPitched}
+			/>
+
+			<PlayerStatsCard
+				headline="saves"
+				tagline="game-finishing ability"
+				value={playerStats?.stat?.saves}
+			/>
 
 			<!-- catcher / 1B / 2B / 3B / SS / OF / DH stats -->
 		</div>
