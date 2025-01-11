@@ -5,6 +5,7 @@
 	import { cn } from '@/utils';
 	import { BadgeCheck, Dumbbell, Minus, X } from 'lucide-svelte';
 	import PlayerStatsCard from './stats/PlayerStatsCard.svelte';
+	import { TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND } from '@/constant/matchup';
 
 	export let playerInfo: Player;
 	export let playerStats: (typeof pictcherStats)[0];
@@ -120,7 +121,15 @@
 
 					<!-- team logo -->
 					<div class="flex flex-row items-end justify-end gap-2">
-						<img src={teamInfo?.logo_url} alt="" class="w-5 h-5" />
+						<img
+							src={teamInfo?.logo_url}
+							alt=""
+							class={cn(
+								'w-5 h-5',
+								TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND.includes(teamInfo?.name.toLowerCase()) &&
+									'bg-white-100'
+							)}
+						/>
 
 						<span class="text-white-300 font-poppins text-xs md:text-sm">
 							{teamInfo?.name}
