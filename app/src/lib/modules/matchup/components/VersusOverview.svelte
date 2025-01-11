@@ -1,13 +1,9 @@
 <script lang="ts">
-	import BottomSheet from '@/components/BottomSheet.svelte';
 	import Flex from '@/components/Flex.svelte';
 	import { players } from '@/data/matchup';
-	import Notfound from '@/modules/matchup/components/Notfound.svelte';
-	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import type { Player } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { X } from 'lucide-svelte';
-	import { afterUpdate } from 'svelte';
 
 	export let onClose: () => void;
 
