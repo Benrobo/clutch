@@ -1460,3 +1460,124 @@ export const pictcherStats = [
         "gameType": "R"
     }
 ]
+
+export const comparisonHighlights = {
+    "title": "Player Comparison Highlights",
+    "subtitle": "See how Porter Hodge and Rob Zastryzny stack up.",
+    "slides": [
+      {
+        "title": "Who’s more likely to strike out the side?",
+        "players": {
+          "687863": {
+            "stats": [
+              {
+                "key": "strikeOuts",
+                "value": "52"
+              },
+              {
+                "key": "strikeoutsPer9Inn",
+                "value": "10.88"
+              }
+            ],
+            "visualization": {
+              "percentage": 70,
+              "trend": "up"
+            }
+          },
+          "642239": {
+            "stats": [
+              {
+                "key": "strikeOuts",
+                "value": "5"
+              },
+              {
+                "key": "strikeoutsPer9Inn",
+                "value": "5.87"
+              }
+            ],
+            "visualization": {
+              "percentage": 30,
+              "trend": "down"
+            }
+          }
+        },
+        "insight": "Porter Hodge has 52 strikeouts this season, compared to Rob Zastryzny’s 5. Based on recent performance, Porter Hodge has a 70% chance of striking out the side in their next appearance."
+      },
+      {
+        "title": "Who’s more likely to earn a save?",
+        "players": {
+          "687863": {
+            "stats": [
+              {
+                "key": "saves",
+                "value": "9"
+              },
+              {
+                "key": "saveOpportunities",
+                "value": "12"
+              }
+            ],
+            "visualization": {
+              "percentage": 75,
+              "trend": "up"
+            }
+          },
+          "642239": {
+            "stats": [
+              {
+                "key": "saves",
+                "value": "0"
+              },
+              {
+                "key": "saveOpportunities",
+                "value": "0"
+              }
+            ],
+            "visualization": {
+              "percentage": 25,
+              "trend": "down"
+            }
+          }
+        },
+        "insight": "Porter Hodge has 9 saves this season, while Rob Zastryzny has 0. Porter Hodge has a 75% chance of earning a save in their next opportunity."
+      },
+      {
+        "title": "Who’s more likely to prevent runs?",
+        "players": {
+          "687863": {
+            "stats": [
+              {
+                "key": "era",
+                "value": "1.88"
+              },
+              {
+                "key": "whip",
+                "value": "0.88"
+              }
+            ],
+            "visualization": {
+              "percentage": 65,
+              "trend": "up"
+            }
+          },
+          "642239": {
+            "stats": [
+              {
+                "key": "era",
+                "value": "1.17"
+              },
+              {
+                "key": "whip",
+                "value": "0.65"
+              }
+            ],
+            "visualization": {
+              "percentage": 35,
+              "trend": "down"
+            }
+          }
+        },
+        "insight": "Porter Hodge has a 1.88 ERA and a 0.88 WHIP, while Rob Zastryzny has a 1.17 ERA and a 0.65 WHIP. Porter Hodge has a 65% chance of preventing runs in their next game."
+      }
+    ]
+}
