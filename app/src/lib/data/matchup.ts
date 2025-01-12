@@ -1581,3 +1581,10 @@ export const comparisonHighlights = {
       }
     ]
 }
+
+export const playerOfTheDay = {
+    // "title": "Player of the Day",
+    // "subtitle": "Top Performer",
+    "player": 687863,
+    "reason": "Porter Hodge boasts a stellar 1.88 ERA and 0.88 WHIP, while Rob Zastryzny shines with a 1.17 ERA and 0.65 WHIP. Hodge has a 65% chance of shutting down runs in his next outing."
+}
