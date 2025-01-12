@@ -208,9 +208,12 @@
 	</div>
 </div>
 
-{#if selectedMatchup}
-	<SelectedMatchup />
-{/if}
+<SelectedMatchup
+	onClose={() => {
+		selectedMatchup = null;
+	}}
+	isOpen={!!selectedMatchup}
+/>
 
 <!-- Search Filter Bottom Sheet -->
 <BottomSheet
