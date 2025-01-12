@@ -22,6 +22,9 @@
 	import ComparisonSlide from './comparison-highlights/ComparisonSlide.svelte';
 	import PlayerOfTheDay from './comparison-highlights/PlayerOfTheDay.svelte';
 
+	export let onClose: () => void;
+	export let isOpen: boolean = false;
+
 	let currentSlideIndex = 0;
 	let slideDirection = 1;
 
@@ -62,7 +65,7 @@
 
 <BottomSheet
 	showHeader={false}
-	isOpen={true}
+	{isOpen}
 	showBackdrop={false}
 	showCloseButton={false}
 	rounded={false}
@@ -80,7 +83,7 @@
 				>
 					{#if currentSlideIndex === 0}
 						<VersusOverview
-							onClose={() => {}}
+							{onClose}
 							challenger={player1Info.player}
 							opponent={player2Info.player}
 						/>
@@ -129,7 +132,8 @@
 							player={players.find((player) => player.id === playerOfTheDay.player)}
 							reason={playerOfTheDay.reason}
 							comparisonHighlights={getPlayerOfTheDayComparisonHighlights()}
-							onClose={() => {}}
+							{onClose}
+							back={handlePrev}
 						/>
 					{/if}
 				</div>
