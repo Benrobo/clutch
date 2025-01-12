@@ -31,3 +31,19 @@ export type ComparisonHighlights = {
     subtitle: string;
     slides: ComparisonHighlightSlide[];
 };
+
+
+export type MatchupPlayer = {
+    id: number;
+    fullName: string;
+    profilePicture: string;
+    jerseyNumber: string;
+    position: string;
+    team: string;
+}
+
+export type MatchupList = {
+    id: number;
+    challenger: MatchupPlayer;
+    opponent: MatchupPlayer;
+}
