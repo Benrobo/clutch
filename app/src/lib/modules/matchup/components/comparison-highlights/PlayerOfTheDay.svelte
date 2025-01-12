@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { cn } from '@/utils';
-	import { BadgeCheck, Component, Minus, MoveUpRight, Sigma, X, Zap } from 'lucide-svelte';
+	import { BadgeCheck, Component, X, Zap } from 'lucide-svelte';
 	import Divider from '@/components/Divider.svelte';
-	import { scale } from 'svelte/transition';
 	import type { Player, PlayerStats } from '@/types/matchup';
 	import Flex from '@/components/Flex.svelte';
 	import { MLB_STATS_SCHEMA } from '@/constant/mlb';
