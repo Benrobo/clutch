@@ -3,17 +3,24 @@
 	import Flex from '@/components/Flex.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
-	import type { Player } from '@/types/matchup';
+	import type { ComparisonHighlights, Player } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { MoveLeft, MoveRight, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
 	import PlayerProfile from './stats/PlayerProfile.svelte';
-	import { pictcherStats, players, teams, comparisonHighlights } from '@/data/matchup';
+	import {
+		pictcherStats,
+		players,
+		teams,
+		comparisonHighlights,
+		playerOfTheDay
+	} from '@/data/matchup';
 	import { fly, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import ComparisonOverview from './comparison-highlights/ComparisonOverview.svelte';
 	import ComparisonSlide from './comparison-highlights/ComparisonSlide.svelte';
+	import PlayerOfTheDay from './comparison-highlights/PlayerOfTheDay.svelte';
 
 	let currentSlideIndex = 0;
 	let slideDirection = 1;
@@ -44,7 +51,13 @@
 		currentSlideIndex--;
 	}
 
-	$: currentSlideIndex = 4;
+	function getPlayerOfTheDayComparisonHighlights() {
+		return (comparisonHighlights as ComparisonHighlights).slides.find(
+			(slide) => slide.players[playerOfTheDay.player.toString()]
+		)?.players[playerOfTheDay.player.toString()];
+	}
+
+	$: currentSlideIndex = 7;
 </script>
 
 <BottomSheet
@@ -110,6 +123,13 @@
 							back={handlePrev}
 							next={handleNext}
 							headerClassName="bg-yellow-102"
+						/>
+					{:else if currentSlideIndex === 7}
+						<PlayerOfTheDay
+							player={players.find((player) => player.id === playerOfTheDay.player)}
+							reason={playerOfTheDay.reason}
+							comparisonHighlights={getPlayerOfTheDayComparisonHighlights()}
+							onClose={() => {}}
 						/>
 					{/if}
 				</div>
