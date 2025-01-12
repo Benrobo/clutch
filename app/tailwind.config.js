@@ -140,6 +140,10 @@ export default {
 					100: '#17BEBB',
 					200: 'rgba(33, 182, 162, 0.3)'
 				},
+				brown: {
+					100: "#fbedd9",
+					101: "#f3d5ac"
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
