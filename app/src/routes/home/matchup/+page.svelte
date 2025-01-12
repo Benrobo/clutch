@@ -52,14 +52,26 @@
 	<div class="w-full h-full max-w-[678px] mx-auto relative">
 		<!-- header -->
 		<div class="flex flex-col items-center justify-center gap-2 px-4 md:px-8 py-10">
-			<Flex className="w-full flex-row items-center py-1">
+			<Flex className="w-full flex-row items-center justify-between py-1">
 				<Flex className="w-auto flex-col">
 					<Flex className="w-auto flex-row items-center gap-2">
 						<Scale size={25} class="stroke-white-100" />
-						<h1 class="text-white-200 text-xl font-semibold">Matchup</h1>
+						<h1 class="text-white-200 text-xl font-gothic-one font-semibold">Matchup</h1>
 					</Flex>
 					<p class="text-xs text-white-300">Compare players, stats, and more.</p>
 				</Flex>
+
+				<button
+					class={cn(
+						'w-auto h-auto text-white-100 rounded-full px-4 py-2 text-sm font-light font-gothic-one enableBounceEffect',
+						showConfigureMatchup ? 'bg-dark-106 border-[1px] border-white-400/30' : 'bg-orange-101'
+					)}
+					on:click={() => {
+						showConfigureMatchup = !showConfigureMatchup;
+					}}
+				>
+					{showConfigureMatchup ? 'Cancel' : 'New Matchup'}
+				</button>
 			</Flex>
 
 			<!-- search bar -->
