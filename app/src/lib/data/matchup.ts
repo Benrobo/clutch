@@ -1588,3 +1588,26 @@ export const playerOfTheDay = {
     "player": 687863,
     "reason": "Porter Hodge boasts a stellar 1.88 ERA and 0.88 WHIP, while Rob Zastryzny shines with a 1.17 ERA and 0.65 WHIP. Hodge has a 65% chance of shutting down runs in his next outing."
 }
+
+
+export const matchupList = [
+    {
+        id: 1,
+        challenger: {
+            id: 687863,
+            fullName: "Porter Hodge",
+            profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/691718/headshot/silo/current",
+            jerseyNumber: "52",
+            position: "P",
+            team: "Chicago Cubs"
+        },
+        opponent: {
+            id: 642239,
+            fullName: "Rob Zastryzny",
+            profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/642239/headshot/silo/current",
+            jerseyNumber: "37",
+            position: "P",
+            team: "Chicago Cubs"
+        }
+    }
+]
