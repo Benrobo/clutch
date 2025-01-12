@@ -48,8 +48,6 @@
 			borderRadius: '0px'
 		}))
 	});
-
-	console.log(player2?.info);
 </script>
 
 <div class="w-full h-full bg-dark-109 flex flex-col items-start justify-start gap-0 p-0 relative">
