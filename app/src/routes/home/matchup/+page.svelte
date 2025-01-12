@@ -3,16 +3,17 @@
 	import Flex from '@/components/Flex.svelte';
 	import Input from '@/components/ui/input.svelte';
 	import { GAME_SEASONS } from '@/constant/matchup';
-	import { players, teams } from '@/data/matchup';
+	import { players, teams, matchupList } from '@/data/matchup';
 	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
 	import ConfigureMatchup from '@/modules/matchup/components/ConfigureMatchup.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import SelectedMatchup from '@/modules/matchup/components/SelectedMatchup.svelte';
-	import type { Player } from '@/types/matchup';
+	import type { Player, MatchupList } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { BadgeCheck, CheckCheck, ListFilter, Scale, Search, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
+	import MatchUpList from '@/modules/matchup/components/MatchUpList.svelte';
 
 	let selectedTeam: number = teams[0]?.id;
 	let showSearchFilter = false;
@@ -30,8 +31,8 @@
 	};
 
 	let selectedMatchup: string | null = null;
-	$: selectedMatchup = '123';
-	// $: selectedMatchup = null;
+	// $: selectedMatchup = '123';
+	$: selectedMatchup = null;
 
 	let showConfigureMatchup = false;
 
@@ -190,21 +191,25 @@
 			</div>
 		{/if}
 
-		{#if !selectedMatchup}
-			<!-- show recent matchup lists -->
+		{#if matchupList.length > 0}
+			<MatchUpList
+				{matchupList}
+				onSelect={(id) => {
+					selectedMatchup = id;
+				}}
+			/>
+		{:else}
+			<Notfound
+				title="No recent matchups found"
+				description="Start a new matchup by searching for a player."
+				showCTA={true}
+				ctaClassName="py-2"
+				ctaText="Compare Players"
+				onClick={() => {
+					showConfigureMatchup = true;
+				}}
+			/>
 		{/if}
-
-		<!-- empty state when no players are found or no recent matchup -->
-		<Notfound
-			title="No recent matchups found"
-			description="Start a new matchup by searching for a player."
-			showCTA={true}
-			ctaClassName="py-2"
-			ctaText="Compare Players"
-			onClick={() => {
-				showConfigureMatchup = true;
-			}}
-		/>
 	</div>
 </div>
 
