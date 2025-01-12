@@ -60,7 +60,7 @@
 		)?.players[playerOfTheDay.player.toString()];
 	}
 
-	$: currentSlideIndex = 7;
+	$: currentSlideIndex = 0;
 </script>
 
 <BottomSheet
