@@ -65,3 +65,74 @@
   },
 ];
 ```
+
+## Matchups
+
+```js
+// highlights
+{
+  comparisonHighlights: [
+    {
+      title: "", // questions
+      players: {
+        challenger: {
+          id: "",
+          stats: [
+            {
+              key: "", // stats key
+              value: ""
+            }
+          ],
+          visualization: {
+            percentage: 0,
+            trend: "up" | "down"
+          }
+        },
+        opponent: {
+          id: "",
+          stats: [
+            {
+              key: "", // stats key
+              value: ""
+            }
+          ],
+          visualization: {
+            percentage: 0,
+            trend: "up" | "down"
+          }
+        }
+      },
+      insight: "",
+      source: {
+        url: "",
+        title: ""
+      }
+    }
+  ],
+  playerOfTheDay: {
+    player_id: "",
+    reason: ""
+  }
+}
+```
+
+## Player Position Stats
+
+```js
+{
+  challenger:{
+    position: "",
+    stats: [
+      {} // MLB API based
+    ]
+  },
+  opponent: {
+    position: "",
+    stats: [
+      {} // MLB API based
+    ]
+  }
+}
+```
+
+The player's info and stats would be gotten from MLB API before sending the final structure to client.
