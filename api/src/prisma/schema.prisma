@@ -32,6 +32,7 @@ model users {
     liked_highlights     user_highlight_likes[]
     chat                 chat[]
     dugout_game_progress dugout_game_progress[]
+    matchups             matchups[]
 
     @@index([email])
 }
@@ -257,6 +258,28 @@ model dugout_game_progress {
 
     @@index([user_id])
     @@index([dugout_game_id])
+}
+
+model matchups {
+    id                 String @id @default(cuid())
+    user_id            String
+    challenger_id      String
+    opponent_id        String
+    challenger_team_id Int
+    opponent_team_id   Int
+    season             Int
+    position           String
+
+    // highlights -> check db-fields-structure.md
+    highlights Json?
+
+    error String?
+
+    created_at DateTime @default(now())
+
+    user users @relation(fields: [user_id], references: [id])
+
+    @@index([user_id])
 }
 
 enum JobType {
