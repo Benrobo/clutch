@@ -14,8 +14,8 @@ export const AIChatConversationSchema = zod.object({
 });
 
 export const CreateMatchupSchema = zod.object({
-  challengerId: zod.string().min(1, "Challenger ID is required"),
-  opponentId: zod.string().min(1, "Opponent ID is required"),
+  challengerId: zod.number().min(1, "Challenger ID is required"),
+  opponentId: zod.number().min(1, "Opponent ID is required"),
   challengerTeamId: zod.number().min(1, "Challenger Team ID is required"),
   opponentTeamId: zod.number().min(1, "Opponent Team ID is required"),
   position: zod.string().min(1, "Position is required"),
