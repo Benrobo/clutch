@@ -8,15 +8,15 @@ export function validateSchema(schema: ZodSchema) {
     const body = await c.req.json();
     const validatedData = schema.safeParse(body);
 
-    console.log(validatedData.error);
-
     if (validatedData.error) {
       const issues = validatedData.error?.issues;
       const msg =
         issues?.length > 0
-          ? issues[0]?.message
+          ? issues[0]?.message && issues[0]?.message === "Required"
+            ? "VALIDATION ERROR"
+            : issues[0]?.message
           : validatedData.error?.message ?? "VALIDATION ERROR";
-      return sendResponse.error(c, msg, 400);
+      return sendResponse.error(c, msg, 400, validatedData.error);
     }
 
     c.set("validatedData", validatedData.data);
