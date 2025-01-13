@@ -735,3 +735,138 @@ export interface MLBRosterResponse {
   teamId: number;
   rosterType: string;
 }
+
+/** Position-specific stat group types */
+export type MLBStatGroup =
+  | "pitcher"
+  | "catching"
+  | "infield"
+  | "outfield"
+  | "hitting";
+
+/** Base stats interface with common fields */
+export interface MLBBaseStats {
+  gamesPlayed: number;
+  avg: string;
+  obp: string;
+  slg: string;
+  ops: string;
+}
+
+/** Pitcher-specific stats */
+export interface MLBPitcherStats extends MLBBaseStats {
+  gamesStarted: number;
+  groundOuts: number;
+  airOuts: number;
+  runs: number;
+  doubles: number;
+  triples: number;
+  homeRuns: number;
+  strikeOuts: number;
+  baseOnBalls: number;
+  intentionalWalks: number;
+  hits: number;
+  hitByPitch: number;
+  atBats: number;
+  era: string;
+  inningsPitched: string;
+  wins: number;
+  losses: number;
+  saves: number;
+  saveOpportunities: number;
+  holds: number;
+  blownSaves: number;
+  whip: string;
+  battersFaced: number;
+  gamesPitched: number;
+  completeGames: number;
+  shutouts: number;
+  strikes: number;
+  strikePercentage: string;
+  wildPitches: number;
+  pickoffs: number;
+}
+
+/** Position player hitting stats */
+export interface MLBHitterStats extends MLBBaseStats {
+  atBats: number;
+  runs: number;
+  hits: number;
+  doubles: number;
+  triples: number;
+  homeRuns: number;
+  rbi: number;
+  baseOnBalls: number;
+  strikeOuts: number;
+  stolenBases: number;
+  caughtStealing: number;
+  hitByPitch: number;
+  groundIntoDoublePlay: number;
+  totalBases: number;
+}
+
+/** Catcher-specific stats */
+export interface MLBCatcherStats extends MLBHitterStats {
+  assists: number;
+  putOuts: number;
+  errors: number;
+  passedBalls: number;
+  catcherStolenBases: number;
+  catcherCaughtStealing: number;
+  throwingErrors: number;
+}
+
+/** Infielder-specific stats */
+export interface MLBInfielderStats extends MLBHitterStats {
+  assists: number;
+  putOuts: number;
+  errors: number;
+  doublePlays: number;
+  fieldingPercentage: string;
+  rangeFactorPerGame: string;
+}
+
+/** Outfielder-specific stats */
+export interface MLBOutfielderStats extends MLBHitterStats {
+  assists: number;
+  putOuts: number;
+  errors: number;
+  doublePlays: number;
+  fieldingPercentage: string;
+  rangeFactorPerGame: string;
+}
+
+/** Union type for all possible stats */
+export type MLBPositionStats =
+  | MLBPitcherStats
+  | MLBHitterStats
+  | MLBCatcherStats
+  | MLBInfielderStats
+  | MLBOutfielderStats;
+
+/** Stats response from MLB API */
+export interface MLBPlayerStatsResponse {
+  copyright: string;
+  stats: Array<{
+    type: {
+      displayName: string;
+    };
+    group: {
+      displayName: string;
+    };
+    splits: Array<{
+      season: string;
+      stat: MLBPositionStats;
+      team: {
+        id: number;
+        name: string;
+        link: string;
+      };
+      player: {
+        id: number;
+        fullName: string;
+        link: string;
+      };
+    }>;
+  }>;
+}
