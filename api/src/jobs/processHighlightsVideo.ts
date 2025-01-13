@@ -35,7 +35,7 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
     event: "process-highlights-video",
   },
   async ({ step }) => {
-    processVideo();
+    // processVideo();
   }
 );
 
