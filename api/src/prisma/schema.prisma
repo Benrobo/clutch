@@ -263,8 +263,8 @@ model dugout_game_progress {
 model matchups {
     id                 String @id @default(cuid())
     user_id            String
-    challenger_id      String
-    opponent_id        String
+    challenger_id      Int
+    opponent_id        Int
     challenger_team_id Int
     opponent_team_id   Int
     season             Int
@@ -304,6 +304,8 @@ model jobs {
     id     String    @id @default(cuid())
     type   JobType
     status JobStatus @default(PENDING)
+
+    started Boolean @default(false)
 
     input_data  Json? // Generic input data for the job
     output_data Json? // Generic output/results
