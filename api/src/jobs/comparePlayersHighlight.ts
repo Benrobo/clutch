@@ -7,5 +7,7 @@ export const comparePlayersHighlight = inngestClient.createFunction(
   {
     event: "process-highlights-video",
   },
-  async ({ step }) => {}
+  async ({ step }) => {
+    console.log(`🔃 Compare players highlight job started`);
+  }
 );
