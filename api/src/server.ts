@@ -13,6 +13,7 @@ import highlightRoute from "./routes/highlight.route.js";
 import baseballInsightRoute from "./routes/baseball-insight.route.js";
 import spotlightRoute from "./routes/spotlight.route.js";
 import dugoutRoute from "./routes/dugout.route.js";
+import matchupRoute from "./routes/matchup.route.js";
 import "./test.js";
 
 const app = new Hono();
@@ -51,6 +52,7 @@ const routes: any[] = [
   baseballInsightRoute,
   spotlightRoute,
   dugoutRoute,
+  matchupRoute,
 ];
 routes.forEach((route) => {
   app.route("/api", route);
