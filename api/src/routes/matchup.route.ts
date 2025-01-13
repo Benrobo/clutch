@@ -10,7 +10,7 @@ const basePath = "/matchup";
 const matchupController = new MatchupController();
 
 router.post(
-  `${basePath}/create`,
+  `${basePath}`,
   validateSchema(CreateMatchupSchema),
   useCatchErrors(
     isAuthenticated(matchupController.createMatchup.bind(matchupController))
