@@ -12,6 +12,8 @@ import {
   MLBRosterPlayer,
   MLBPlayer,
   GameType,
+  MLBStatGroup,
+  MLBPlayerStatsResponse,
 } from "../../types/mlb.types.js";
 
 class MLBAPIError extends Error {
@@ -360,5 +362,45 @@ export default class MLBAPIHelper {
       medium: `${baseUrl}/w_213,${fallback},${quality}/${path}`,
       large: `${baseUrl}/w_426,${fallback},${quality}/${path}`,
     };
+  }
+
+  /**
+   * Get player stats for a specific season
+   * @param playerId - MLB player ID
+   * @param group - Stats group based on position
+   * @param params - Additional parameters
+   */
+  async getPlayerStats(
+    playerId: number,
+    group: MLBStatGroup = "hitting",
+    params?: {
+      stats?: string;
+      season?: number;
+    }
+  ): Promise<MLBPlayerStatsResponse> {
+    try {
+      const queryParams = new URLSearchParams({
+        stats: params?.stats || "season",
+        group: group,
+      });
+
+      if (params?.season) {
+        queryParams.append("season", params.season.toString());
+      }
+
+      const { data } = await axios.get<MLBPlayerStatsResponse>(
+        `${this.baseUrl}/people/${playerId}/stats?${queryParams.toString()}`
+      );
+      return data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new MLBAPIError(
+          error.response?.status || 500,
+          error.response?.statusText || "Internal Server Error",
+          error.response?.data || error.message
+        );
+      }
+      throw error;
+    }
   }
 }
