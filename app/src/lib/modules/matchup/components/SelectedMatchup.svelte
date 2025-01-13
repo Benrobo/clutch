@@ -60,6 +60,11 @@
 		)?.players[playerOfTheDay.player.toString()];
 	}
 
+	function handleClose() {
+		onClose();
+		currentSlideIndex = 0;
+	}
+
 	$: currentSlideIndex = 0;
 </script>
 
@@ -83,7 +88,7 @@
 				>
 					{#if currentSlideIndex === 0}
 						<VersusOverview
-							{onClose}
+							onClose={handleClose}
 							challenger={player1Info.player}
 							opponent={player2Info.player}
 						/>
@@ -132,7 +137,7 @@
 							player={players.find((player) => player.id === playerOfTheDay.player)}
 							reason={playerOfTheDay.reason}
 							comparisonHighlights={getPlayerOfTheDayComparisonHighlights()}
-							{onClose}
+							onClose={handleClose}
 							back={handlePrev}
 						/>
 					{/if}
