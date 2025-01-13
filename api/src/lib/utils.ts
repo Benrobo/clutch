@@ -1,3 +1,5 @@
+import { MLB_PLAYER_POSITIONS } from "../constant/mlb.js";
+
 export function checkDurationConstraints(
   duration: string,
   constraints: {
@@ -122,4 +124,9 @@ export const shuffleArray = <T>(array: T[]) => {
   }
 
   return array;
+};
+
+export const getPositionType = (abbrev: string) => {
+  const position = MLB_PLAYER_POSITIONS.find((p) => p.abbrev === abbrev);
+  return position?.type ? position.type.toLowerCase() : null;
 };
