@@ -115,6 +115,13 @@ async function mlbTest() {
   //     // );
   //     // console.log(`Game Status: ${liveGame.gameData.status.detailedState}\n`);
   //   }
+
+  // Test 11: Get Player Stats
+  // console.log("Test 11: Get Player Stats");
+  // const playerId = 660670; // Ronald Acuña Jr.
+  // const stats = await mlbApi.getPlayerStats(playerId);
+  // console.log("Player Stats Test:", stats ? "✅" : "❌");
+  // console.log(stats?.stats[0]?.splits[0]);
 }
 
 async function testUploadingVideo() {
