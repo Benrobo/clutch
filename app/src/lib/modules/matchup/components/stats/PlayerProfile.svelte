@@ -131,7 +131,7 @@
 							)}
 						/>
 
-						<span class="text-white-300 font-poppins text-xs md:text-sm">
+						<span class="text-white-300 font-poppins text-xs text-nowrap md:text-sm">
 							{teamInfo?.name}
 						</span>
 					</div>
