@@ -11,7 +11,15 @@ class MatchupController {
 
   async createMatchup(c: Context) {
     const userId = c.get("userId");
-    const { player1Id, player2Id } = await c.req.json();
+    const {
+      challengerId,
+      opponentId,
+      challengerTeamId,
+      opponentTeamId,
+      position,
+    } = await c.req.json();
+
+    // check if user has already created a matchup for this team, challenger, opponent and position
 
     // const matchup = await this.baseballInsightService.createMatchup(userId, player1Id, player2Id);
   }
