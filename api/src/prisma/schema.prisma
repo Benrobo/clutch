@@ -273,6 +273,9 @@ model matchups {
     // highlights -> check db-fields-structure.md
     highlights Json?
 
+    // player_position_stats -> check db-fields-structure.md
+    player_position_stats Json?
+
     error String?
 
     created_at DateTime @default(now())
