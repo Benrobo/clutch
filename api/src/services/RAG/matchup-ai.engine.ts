@@ -24,6 +24,18 @@ type PlayerStatsAnalysisFinalResponse = {
   insight: string;
 };
 
+type ParsedMatchupResponse = {
+  players: {
+    [playerId: string]: {
+      visualization: {
+        percentage: number;
+        trending: "up" | "down";
+      };
+    };
+  };
+  insight: string;
+};
+
 export default class MatchupAIEngine {
   private gemini: Gemini;
   private mlbApi: MLBAPIHelper;
@@ -130,6 +142,30 @@ export default class MatchupAIEngine {
     };
   }
 
+  private transformToFinalResponse(
+    parsedData: ParsedMatchupResponse,
+    question: string,
+    challengerStats: Array<{ key: string; value: string | number }>,
+    opponentStats: Array<{ key: string; value: string | number }>,
+    challengerId: string,
+    opponentId: string
+  ): PlayerStatsAnalysisFinalResponse {
+    return {
+      title: question,
+      players: {
+        [challengerId]: {
+          stats: challengerStats,
+          visualization: parsedData.players[challengerId].visualization,
+        },
+        [opponentId]: {
+          stats: opponentStats,
+          visualization: parsedData.players[opponentId].visualization,
+        },
+      },
+      insight: parsedData.insight,
+    };
+  }
+
   async playersStatsAnalysis(data: {
     challenger: {
       stats: Array<{ key: string; value: string | number }>;
@@ -151,6 +187,7 @@ export default class MatchupAIEngine {
     };
     question: string;
   }) {
+    console.log(`Analyzing player stats for matchup: ${data?.question}`);
     try {
       return await retry(
         async () => {
@@ -184,9 +221,16 @@ export default class MatchupAIEngine {
             throw new Error("Failed to parse player analysis");
           }
 
-          console.log(parsedData);
+          const finalResponse = this.transformToFinalResponse(
+            parsedData,
+            question,
+            challenger?.stats,
+            opponent?.stats,
+            challenger?.player?.id.toString(),
+            opponent?.player?.id.toString()
+          );
 
-          return cleanData;
+          return finalResponse;
         },
         {
           retries: 3,
@@ -197,7 +241,10 @@ export default class MatchupAIEngine {
           },
         }
       );
-    } catch (e: any) {}
+    } catch (e: any) {
+      console.error("Failed to generate matchup highlights", e);
+      throw new Error("Failed to generate matchup highlights");
+    }
   }
 
   async generateMatchupHighlights(matchupId: string) {
@@ -235,11 +282,10 @@ export default class MatchupAIEngine {
           season: matchup?.season,
         });
 
-      const playerStatsComparisonQuestions = PLAYER_ENGAGEMENT_QUESTIONS[
-        matchup?.position as any
-      ].slice(1, 2);
+      const playerStatsComparisonQuestions =
+        PLAYER_ENGAGEMENT_QUESTIONS[matchup?.position as any];
 
-      const analysis = [];
+      const finalAnalysis: PlayerStatsAnalysisFinalResponse[] = [];
 
       for (const question of playerStatsComparisonQuestions) {
         const requiredStats = question?.stats;
@@ -273,12 +319,12 @@ export default class MatchupAIEngine {
             question: question?.question,
           });
 
-          console.log("\n\n\n");
+          finalAnalysis.push(analysis);
         }
       }
 
-      //   console.log({ analysis });
-      //   console.log({ analysis });
+      //   return finalAnalysis;
+      console.log({ finalAnalysis });
     } catch (e: any) {
       console.error("Failed to generate matchup highlights", e);
     }
