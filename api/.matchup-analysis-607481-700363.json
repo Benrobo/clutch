@@ -1,0 +1,79 @@
+{
+  "finalResponse": {
+    "title": "Which pitcher is more likely to throw a shutout?",
+    "players": {
+      "607481": {
+        "stats": [
+          {
+            "key": "era",
+            "value": "3.58"
+          },
+          {
+            "key": "wins",
+            "value": 4
+          }
+        ],
+        "visualization": {
+          "percentage": 20,
+          "trending": "down"
+        }
+      },
+      "700363": {
+        "stats": [
+          {
+            "key": "era",
+            "value": "0.00"
+          },
+          {
+            "key": "wins",
+            "value": 0
+          }
+        ],
+        "visualization": {
+          "percentage": 40,
+          "trending": "up"
+        }
+      }
+    },
+    "insight": "Okay, so Bummer's ERA is 3.58 and he has 4 wins which is not bad, but recently he has been giving up more runs. Smith-Shawver has a 0.00 ERA, it’s just that he has no wins, and is trending upward. If we are thinking shutouts, AJ has a better shot right now given his recent performances, making him a bit more likely than Bummer."
+  },
+  "data": {
+    "challenger": {
+      "stats": [
+        {
+          "key": "era",
+          "value": "3.58"
+        },
+        {
+          "key": "wins",
+          "value": 4
+        }
+      ],
+      "player": {
+        "id": 607481,
+        "fullName": "Aaron Bummer",
+        "position": "Pitcher",
+        "team": "Atlanta Braves"
+      }
+    },
+    "opponent": {
+      "stats": [
+        {
+          "key": "era",
+          "value": "0.00"
+        },
+        {
+          "key": "wins",
+          "value": 0
+        }
+      ],
+      "player": {
+        "id": 700363,
+        "fullName": "AJ Smith-Shawver",
+        "position": "Pitcher",
+        "team": "Atlanta Braves"
+      }
+    },
+    "question": "Which pitcher is more likely to throw a shutout?"
+  }
+}
