@@ -8,6 +8,21 @@ import {
   PLAYER_POSITION_STATS_MAP,
 } from "../../constant/matchup.js";
 import { MLBPositionStats } from "../../types/mlb.types.js";
+import { matchupPlayerComparisonPrompt } from "../../data/prompts/llm-prompts.js";
+
+type PlayerStatsAnalysisFinalResponse = {
+  title: string;
+  players: {
+    [key: string]: {
+      stats: Array<{ key: string; value: string | number }>;
+      visualization: {
+        percentage: number;
+        trending: "up" | "down";
+      };
+    };
+  };
+  insight: string;
+};
 
 export default class MatchupAIEngine {
   private gemini: Gemini;
@@ -134,13 +149,44 @@ export default class MatchupAIEngine {
         team: string;
       };
     };
+    question: string;
   }) {
     try {
       return await retry(
         async () => {
-          const { challenger, opponent } = data;
+          const { challenger, opponent, question } = data;
 
-          console.log({ challenger, opponent });
+          const prompt = matchupPlayerComparisonPrompt({
+            challenger,
+            opponent,
+            question,
+          });
+
+          const response = await this.gemini.callAI({
+            user_prompt: prompt,
+            enable_call_history: false,
+            model: "gemini-2.0-flash-exp",
+          });
+
+          if (!response?.data) {
+            throw new Error("Failed to get player analysis");
+          }
+
+          const cleanData = response?.data
+            ?.replace(/```json/g, "")
+            .replace(/```/g, "");
+
+          let parsedData;
+          try {
+            parsedData = JSON.parse(cleanData);
+          } catch (e: any) {
+            console.log(e);
+            throw new Error("Failed to parse player analysis");
+          }
+
+          console.log(parsedData);
+
+          return cleanData;
         },
         {
           retries: 3,
@@ -189,8 +235,9 @@ export default class MatchupAIEngine {
           season: matchup?.season,
         });
 
-      const playerStatsComparisonQuestions =
-        PLAYER_ENGAGEMENT_QUESTIONS[matchup?.position as any];
+      const playerStatsComparisonQuestions = PLAYER_ENGAGEMENT_QUESTIONS[
+        matchup?.position as any
+      ].slice(1, 2);
 
       const analysis = [];
 
@@ -223,7 +270,10 @@ export default class MatchupAIEngine {
                 team: opponentInfo?.teamInfo?.name,
               },
             },
+            question: question?.question,
           });
+
+          console.log("\n\n\n");
         }
       }
 
