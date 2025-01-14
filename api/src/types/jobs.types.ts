@@ -1,3 +1,4 @@
 export type JobType =
   | "generate-game-highlights-metadata"
-  | "process-highlights-video";
+  | "process-highlights-video"
+  | "compare-players-stats";
