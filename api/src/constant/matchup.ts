@@ -1,3 +1,9 @@
+import {
+  MLBBaseStats,
+  MLBPitcherStats,
+  MLBPositionStats,
+} from "../types/mlb.types.js";
+
 export const BASE_PLAYER_STATS = ["gamesPlayed"];
 
 export const PLAYER_POSITION_STATS_MAP = {
@@ -10,6 +16,7 @@ export const PLAYER_POSITION_STATS_MAP = {
     "inningsPitched",
     "saves",
     "wins",
+    "strikeoutsPer9Inn",
   ],
   // catcher
   C: [
@@ -79,142 +86,147 @@ export const PLAYER_POSITION_STATS_MAP = {
     "fieldingPercentage",
     "putOuts",
   ],
-} as const;
+} as Record<string, (keyof MLBPositionStats)[]>;
 
 export const PLAYER_ENGAGEMENT_QUESTIONS = {
   // Pitcher (P)
   P: [
     {
-      question: "Who’s the strikeout king?",
-      stats: ["strikeOuts"],
+      question:
+        "Who’s more likely to strike out 10 batters in their next game?",
+      stats: ["strikeOuts", "strikeoutsPer9Inn"],
     },
     {
-      question: "Which pitcher is the hardest to score on?",
-      stats: ["era"],
+      question: "Which pitcher is more likely to throw a shutout?",
+      stats: ["era", "wins"],
     },
     {
-      question: "Who’s the most reliable arm on the mound?",
-      stats: ["wins", "inningsPitched"],
+      question: "Who’s more likely to close out the game with no runs allowed?",
+      stats: ["saves", "whip"],
     },
   ],
   // Catcher (C)
   C: [
     {
-      question: "Who’s the best at stopping runners?",
+      question: "Who’s more likely to throw out a runner stealing a base?",
       stats: ["caughtStealingPercentage"],
     },
     {
-      question: "Which catcher hits the most home runs?",
-      stats: ["homeRuns"],
+      question:
+        "Which catcher is more likely to hit a home run in their next game?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Who’s the safest pair of hands behind the plate?",
-      stats: ["fieldingPercentage"],
+      question: "Who’s more likely to drive in the winning run?",
+      stats: ["rbi", "avg"],
     },
   ],
   // First Base (1B)
   "1B": [
     {
-      question: "Who’s the home run leader at first?",
-      stats: ["homeRuns"],
+      question: "Who’s more likely to hit a home run in their next at-bat?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Which first baseman gets the most hits?",
-      stats: ["avg"],
+      question:
+        "Which first baseman is more likely to get 3 hits in their next game?",
+      stats: ["avg", "hits"],
     },
     {
-      question: "Who’s the best at catching throws to first?",
-      stats: ["fieldingPercentage"],
+      question: "Who’s more likely to make a game-saving catch at first?",
+      stats: ["fieldingPercentage", "putOuts"],
     },
   ],
   // Second Base (2B)
   "2B": [
     {
-      question: "Who’s the best at turning double plays?",
+      question: "Who’s more likely to turn a double play in their next game?",
       stats: ["fieldingPercentage", "assists"],
     },
     {
-      question: "Which second baseman drives in the most runs?",
-      stats: ["rbi"],
+      question: "Which second baseman is more likely to steal a base?",
+      stats: ["stolenBases", "caughtStealingPercentage"],
     },
     {
-      question: "Who’s the fastest runner at second?",
-      stats: ["stolenBases"],
+      question: "Who’s more likely to drive in the go-ahead run?",
+      stats: ["rbi", "ops"],
     },
   ],
   // Third Base (3B)
   "3B": [
     {
-      question: "Who’s the home run hitter at third?",
-      stats: ["homeRuns"],
+      question: "Who’s more likely to hit a clutch home run?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Which third baseman makes the fewest errors?",
-      stats: ["fieldingPercentage"],
-    },
-    {
-      question: "Who’s the best at making tough plays at third?",
+      question: "Which third baseman is more likely to make a diving stop?",
       stats: ["fieldingPercentage", "assists"],
+    },
+    {
+      question: "Who’s more likely to drive in 3 runs in their next game?",
+      stats: ["rbi", "avg"],
     },
   ],
   // Shortstop (SS)
   SS: [
     {
-      question: "Who’s the best fielder at shortstop?",
+      question: "Who’s more likely to make a highlight-reel play at short?",
       stats: ["fieldingPercentage", "assists"],
     },
     {
-      question: "Which shortstop hits the most home runs?",
-      stats: ["homeRuns"],
+      question: "Which shortstop is more likely to hit a walk-off home run?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Who’s the most reliable arm at shortstop?",
+      question: "Who’s more likely to turn a game-changing double play?",
       stats: ["fieldingPercentage", "assists"],
     },
   ],
   // Left Field (LF)
   LF: [
     {
-      question: "Who’s the home run hitter in left field?",
-      stats: ["homeRuns"],
+      question: "Who’s more likely to hit a home run in their next game?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Which left fielder gets the most hits?",
-      stats: ["avg"],
+      question:
+        "Which left fielder is more likely to make a game-saving catch?",
+      stats: ["fieldingPercentage", "putOuts"],
     },
     {
-      question: "Who’s the best at catching fly balls in left?",
-      stats: ["fieldingPercentage"],
+      question: "Who’s more likely to drive in the winning run?",
+      stats: ["rbi", "avg"],
     },
   ],
   // Center Field (CF)
   CF: [
     {
-      question: "Who’s the fastest runner in center field?",
-      stats: ["stolenBases"],
+      question: "Who’s more likely to make an incredible diving catch?",
+      stats: ["fieldingPercentage", "putOuts"],
     },
     {
-      question: "Which center fielder hits the most home runs?",
-      stats: ["homeRuns"],
+      question: "Which center fielder is more likely to hit a clutch home run?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Who’s the best at tracking down fly balls?",
-      stats: ["fieldingPercentage"],
+      question: "Who’s more likely to steal a base in their next game?",
+      stats: ["stolenBases", "caughtStealingPercentage"],
     },
   ],
   // Right Field (RF)
   RF: [
     {
-      question: "Who’s the home run hitter in right field?",
-      stats: ["homeRuns"],
+      question: "Who’s more likely to hit a home run in their next at-bat?",
+      stats: ["homeRuns", "ops"],
     },
     {
-      question: "Which right fielder has the strongest arm?",
+      question:
+        "Which right fielder is more likely to throw out a runner at home?",
       stats: ["fieldingPercentage", "assists"],
     },
     {
-      question: "Who’s the best at driving in runs from right field?",
-      stats: ["rbi"],
+      question: "Who’s more likely to drive in the go-ahead run?",
+      stats: ["rbi", "avg"],
     },
   ],
-} as const;
+} as Record<string, { question: string; stats: string[] }[]>;
