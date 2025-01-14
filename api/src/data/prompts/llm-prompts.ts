@@ -374,3 +374,84 @@ export const fourPicOneWordHintPrompt = (props: {
     .compose();
   return prompt;
 };
+
+export const matchupPlayerComparisonPrompt = (data: {
+  question: string;
+  challenger: {
+    stats: Array<{ key: string; value: string | number }>;
+    player: {
+      id: number;
+      fullName: string;
+      position: string;
+      team: string;
+    };
+  };
+  opponent: {
+    stats: Array<{ key: string; value: string | number }>;
+    player: {
+      id: number;
+      fullName: string;
+      position: string;
+      team: string;
+    };
+  };
+}) => {
+  const prompt = new LLMPromptBuilder()
+    .addInstruction(
+      "You are a baseball analyst providing a detailed comparison of two players based on their stats and a specific question. Use the following data to analyze and answer the question in a fun, engaging, and insightful way. Focus on future outcomes and probabilities, and avoid overly technical jargon. Be concise but thorough. keep the tone casual, relatable, and conversational—like chatting with a friend who’s also passionate about baseball. You’re not giving a formal response, but rather something that feels like a natural part of a conversation. You don’t need to be overly enthusiastic, just warm and approachable. Avoid over-elaborating. Avoid conversational fillers, casual phrases, or unnecessary words. Respond concisely and directly to the query or task. Do not include speculative or ambiguous language"
+    )
+    .addCustomBlock(
+      "data",
+      `
+      **Data:**
+      - Challenger: 
+        - Name: ${data.challenger.player.fullName}
+        - ID: ${data.challenger.player.id}
+        - Position: ${data.challenger.player.position}
+        - Team: ${data.challenger.player.team}
+        - Stats: ${JSON.stringify(data.challenger.stats)}
+      - Opponent: 
+        - Name: ${data.opponent.player.fullName}
+        - ID: ${data.opponent.player.id}
+        - Position: ${data.opponent.player.position}
+        - Team: ${data.opponent.player.team}
+        - Stats: ${JSON.stringify(data.opponent.stats)}  
+    `
+    )
+    .addCustomBlock("question", data.question)
+    .addRule(
+      `
+      - Use the provided stats as a baseline, but also search for the most recent performance data for both players (e.g., last 5 games, season trends, or injury updates).
+      - Compare the relevant stats for both players based on the question.
+      - Calculate a percentage likelihood for each player based on their stats (e.g., 60% vs. 40%).
+      - Determine if each player’s trend is "up" or "down" based on recent performance.
+      - Provide a detailed, non-biased, and casual insight comparing the two players.
+      - Format the output as follows:  
+
+      {
+        players: {
+          {challenger.player.id}: {
+            visualization: {
+              percentage: [calculated percentage],
+              trending: "up" | "down"
+            }
+          },
+          {opponent.player.id}: {
+            visualization: {
+              percentage: [calculated percentage],
+              trending: "up" | "down"
+            }
+          }
+        },
+        insight: "detailed, non-bias, casual insight"
+      }
+    `
+    )
+    .addCustomBlock(
+      "guidelines",
+      "Make the insight feel like something a human would casually say while watching a game or chatting with a friend. Think relaxed, relatable, and unpolished, but still accurate and insightful. Make sure you leverage the context, web results, and final game decision if applicable."
+    )
+    .addPlainText("Your response should be concise but not too short.")
+    .compose();
+  return prompt;
+};
