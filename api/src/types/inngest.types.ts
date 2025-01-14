@@ -9,7 +9,7 @@ type GenerateGameHighlightsMetadata = BaseEvent & {};
 
 type ProcessHighlightsVideoEvent = BaseEvent & {};
 
-type ComparePlayersHighlightEvent = BaseEvent & {
+type ComparePlayersStatsEvent = BaseEvent & {
   data: {
     matchupId: string;
   };
@@ -18,7 +18,7 @@ type ComparePlayersHighlightEvent = BaseEvent & {
 type Events = {
   "generate-game-highlights-metadata": GenerateGameHighlightsMetadata;
   "process-highlights-video": ProcessHighlightsVideoEvent;
-  "compare-players-highlight": ComparePlayersHighlightEvent;
+  "compare-players-stats": ComparePlayersStatsEvent;
 };
 
 export const schemas = new EventSchemas().fromRecord<Events>();
