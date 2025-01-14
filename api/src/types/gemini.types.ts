@@ -25,6 +25,7 @@ export interface ICallAIProps {
       text: string;
     }[];
   }[];
+  model?: "gemini-2.0-flash-exp" | "gemini-1.5-flash";
 }
 
 export type VectorSimilaritySearchProp = {};
