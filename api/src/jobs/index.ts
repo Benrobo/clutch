@@ -1,4 +1,4 @@
-import { comparePlayersHighlight } from "./comparePlayersHighlight.js";
+import { comparePlayersStats } from "./comparePlayersStats.js";
 import { generateGameHighlightsMetadata } from "./generateHighlights.js";
 import { processGameHighlightsVideo } from "./processHighlightsVideo.js";
 import {
@@ -11,7 +11,7 @@ export const inngestFunctions = [
   processGameHighlightsVideoScheduler,
   processGameHighlightsVideo,
   generateGameHighlightsMetadata,
-  comparePlayersHighlight,
+  comparePlayersStats,
 ];
 
 export { inngestClient } from "../config/inngest.js";
