@@ -146,7 +146,7 @@ class MatchupController {
     if (existingMatchup && jobStatus?.status === "PENDING") {
       if (!jobStatus?.started) {
         await inngestClient.send({
-          name: "compare-players-highlight",
+          name: "compare-players-stats",
           data: {
             matchupId: existingMatchup.id,
           },
@@ -183,7 +183,7 @@ class MatchupController {
       });
 
       inngestClient.send({
-        name: "compare-players-highlight",
+        name: "compare-players-stats",
         data: {
           matchupId: matchup.id,
         },
