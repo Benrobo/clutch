@@ -3,23 +3,27 @@
 	import Flex from '@/components/Flex.svelte';
 	import Input from '@/components/ui/input.svelte';
 	import { GAME_SEASONS } from '@/constant/matchup';
-	import { players, teams, matchupList } from '@/data/matchup';
+	import { players, teams } from '@/data/matchup';
 	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
 	import ConfigureMatchup from '@/modules/matchup/components/ConfigureMatchup.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import SelectedMatchup from '@/modules/matchup/components/SelectedMatchup.svelte';
-	import type { Player, MatchupList } from '@/types/matchup';
-	import { cn } from '@/utils';
+	import type { MatchupList, MatchupListResponse } from '@/types/matchup';
+	import { cn, extractAxiosResponseData } from '@/utils';
 	import { BadgeCheck, CheckCheck, ListFilter, Scale, Search, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
 	import MatchUpList from '@/modules/matchup/components/MatchUpList.svelte';
+	import { createQuery } from '@tanstack/svelte-query';
+	import { getMatchups } from '@/http/requests';
 
 	let selectedTeam: number = teams[0]?.id;
 	let showSearchFilter = false;
 
-	let selectedPlayers: Player[] = [];
-	$: selectedPlayers = [];
+	let selectedPlayers:
+		| MatchupListResponse['player_position_stats']['challenger' | 'opponent']['info']
+		| null = null;
+	$: selectedPlayers = null;
 
 	let filters: {
 		season: string;
@@ -30,7 +34,7 @@
 		position: 'P'
 	};
 
-	let selectedMatchup: string | null = null;
+	let selectedMatchup: MatchupListResponse | null = null;
 	// $: selectedMatchup = '123';
 	$: selectedMatchup = null;
 
@@ -42,6 +46,21 @@
 	$: filteredPlayers = players.filter((player) => {
 		return player.position === filters.position;
 	});
+
+	let matchupList: MatchupListResponse[] = [];
+
+	$: getMatchupsQuery = createQuery({
+		queryKey: ['matchups'],
+		queryFn: getMatchups
+	});
+
+	$: {
+		if ($getMatchupsQuery.data) {
+			const data = extractAxiosResponseData($getMatchupsQuery.data, 'success')
+				?.data as MatchupListResponse[];
+			matchupList = data;
+		}
+	}
 
 	afterUpdate(() => {
 		// console.log(selectedPlayers);
@@ -206,8 +225,9 @@
 		{#if matchupList.length > 0}
 			<MatchUpList
 				{matchupList}
-				onSelect={(id) => {
-					selectedMatchup = id;
+				onSelect={(matchup) => {
+					console.log({ matchup });
+					selectedMatchup = matchup;
 				}}
 			/>
 		{:else}
@@ -225,12 +245,15 @@
 	</div>
 </div>
 
-<SelectedMatchup
-	onClose={() => {
-		selectedMatchup = null;
-	}}
-	isOpen={!!selectedMatchup}
-/>
+{#if selectedMatchup}
+	<SelectedMatchup
+		onClose={() => {
+			selectedMatchup = null;
+		}}
+		isOpen={!!selectedMatchup}
+		{selectedMatchup}
+	/>
+{/if}
 
 <!-- Search Filter Bottom Sheet -->
 <BottomSheet
