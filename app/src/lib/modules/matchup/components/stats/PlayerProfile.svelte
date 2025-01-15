@@ -14,12 +14,12 @@
 		team: MatchupListResponse['player_position_stats']['challenger' | 'opponent']['info']['team'];
 	};
 
-	export let playerInfo: PlayerDetails;
+	export let playerInfo: PlayerDetails['info'];
 	export let playerStats: PlayerDetails['stats'];
 	export let teamInfo: PlayerDetails['team'];
 
-	let firstNameLetter = playerInfo?.info?.name.split(' ')[0][0];
-	let lastNameLetter = playerInfo?.info?.name.split(' ')[1][0];
+	let firstNameLetter = playerInfo?.name.split(' ')[0][0];
+	let lastNameLetter = playerInfo?.name.split(' ')[1][0];
 
 	const getStatDescription = (key: string) => {
 		const stat = MLB_PLAYER_STATS_INFO.find((stat) => stat.key.toLowerCase() === key.toLowerCase());
@@ -54,7 +54,7 @@
 				class="w-[150px] h-[150px] md:w-[180px] md:h-[180px] bg-dark-111 rounded-full border-[5px] border-orange-102 outline outline-[10px] outline-dark-111/30 shadow-2xl shadow-white-400/30"
 			>
 				<img
-					src={playerInfo?.info?.profilePicture}
+					src={playerInfo?.profilePicture}
 					alt=""
 					class="w-full h-full rounded-full"
 					on:error={(e) => {
@@ -69,9 +69,9 @@
 				class="w-full h-auto pt-[1em] md:pt-[3em] flex flex-col items-center justify-center gap-0"
 			>
 				<span class="text-white-100 text-[1.2em] md:text-[2em] font-facon relative">
-					{playerInfo?.info?.name}
+					{playerInfo?.name}
 
-					{#if playerInfo?.info?.verified}
+					{#if playerInfo?.verified}
 						<span class="absolute -top-1 -right-4 translate-x-2">
 							<BadgeCheck size={20} class="stroke-white-100 fill-orange-101" />
 						</span>
@@ -86,13 +86,13 @@
 							<div
 								class={cn(
 									'w-3 h-3 animate-ping rounded-full',
-									playerInfo?.info?.active ? 'bg-green-100' : 'bg-red-305'
+									playerInfo?.active ? 'bg-green-100' : 'bg-red-305'
 								)}
 							></div>
 							<div
 								class={cn(
 									'w-2 h-2 rounded-full absolute',
-									playerInfo?.info?.active ? 'bg-green-100' : 'bg-red-305'
+									playerInfo?.active ? 'bg-green-100' : 'bg-red-305'
 								)}
 							></div>
 						</div>
@@ -104,7 +104,7 @@
 						<Dumbbell size={18} class="text-white-400" />
 
 						<span class="text-white-300 font-poppins text-xs md:text-sm text-nowrap">
-							{playerInfo?.info?.weight} lbs
+							{playerInfo?.weight} lbs
 						</span>
 					</div>
 
@@ -165,7 +165,9 @@
 			<span class="text-white-100 text-[2em] md:text-[2em] font-mouzambik relative"> Stats </span>
 		</Flex>
 
-		<div class="w-full h-auto grid grid-cols-2 gap-5 px-4 py-3 overflow-y-auto hideScrollBar2">
+		<div
+			class="w-full h-auto grid grid-cols-2 gap-5 px-4 py-3 pb-[5em] overflow-y-auto hideScrollBar2"
+		>
 			<!-- pitcher stats (some stats within pitcher are available for some positions) -->
 			{#each playerStats as stat}
 				<PlayerStatsCard
