@@ -87,7 +87,7 @@ export default class Gemini {
       logger.info("Sending prompt to Gemini:", props.prompt);
       const chat = generativeModel.startChat();
       const result = await chat.sendMessage(props.prompt!);
-      logger.info("Raw response from Gemini:", result.response);
+      if (props.log) logger.info("Raw response from Gemini:", result.response);
 
       // For simplicity, this uses the first function call found.
       const call = result.response.functionCalls();
@@ -135,7 +135,7 @@ export default class Gemini {
 
       resp.data = result.response.text();
 
-      console.log({ resp });
+      if (props.log) console.log({ resp });
       return resp;
     } catch (e: any) {
       console.log(e);
