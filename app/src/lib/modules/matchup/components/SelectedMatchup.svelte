@@ -3,10 +3,10 @@
 	import Flex from '@/components/Flex.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
-	import type { ComparisonHighlights, Player } from '@/types/matchup';
+	import type { ComparisonHighlights, MatchupListResponse, Player } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { MoveLeft, MoveRight, X } from 'lucide-svelte';
-	import { afterUpdate } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
 	import PlayerProfile from './stats/PlayerProfile.svelte';
 	import {
@@ -24,6 +24,9 @@
 
 	export let onClose: () => void;
 	export let isOpen: boolean = false;
+	export let selectedMatchup: MatchupListResponse | null = null;
+
+	$: isMounted = false;
 
 	let currentSlideIndex = 0;
 	let slideDirection = 1;
@@ -33,15 +36,15 @@
 		easing: quintOut
 	};
 
-	const player1Info = {
-		player: players[74],
-		stats: pictcherStats[0],
-		team: teams[Math.floor(Math.random() * teams.length)]
+	const challengerInfo = {
+		player: selectedMatchup?.player_position_stats?.challenger?.info,
+		stats: selectedMatchup?.player_position_stats?.challenger?.stats,
+		team: selectedMatchup?.player_position_stats?.challenger?.info?.team
 	};
-	const player2Info = {
-		player: players[75],
-		stats: pictcherStats[0],
-		team: teams[Math.floor(Math.random() * teams.length)]
+	const opponentInfo = {
+		player: selectedMatchup?.player_position_stats?.opponent?.info,
+		stats: selectedMatchup?.player_position_stats?.opponent?.stats,
+		team: selectedMatchup?.player_position_stats?.opponent?.info?.team
 	};
 
 	function handleNext() {
@@ -61,16 +64,24 @@
 	}
 
 	function handleClose() {
-		onClose();
+		setTimeout(() => (isMounted = false), 100);
+		setTimeout(() => onClose(), 200);
 		currentSlideIndex = 0;
 	}
 
 	$: currentSlideIndex = 0;
+
+	onMount(() => {
+		// delay the mounting of the component to apply the fly transition
+		setTimeout(() => {
+			isMounted = true;
+		}, 100);
+	});
 </script>
 
 <BottomSheet
 	showHeader={false}
-	{isOpen}
+	isOpen={isOpen && isMounted}
 	showBackdrop={false}
 	showCloseButton={false}
 	rounded={false}
@@ -89,35 +100,35 @@
 					{#if currentSlideIndex === 0}
 						<VersusOverview
 							onClose={handleClose}
-							challenger={player1Info.player}
-							opponent={player2Info.player}
+							challenger={challengerInfo.player}
+							opponent={opponentInfo.player}
 						/>
 					{:else if currentSlideIndex === 1}
 						<PlayerProfile
-							playerInfo={player2Info.player}
-							playerStats={player2Info.stats}
-							teamInfo={player2Info.team}
+							playerInfo={opponentInfo.player}
+							playerStats={opponentInfo.stats}
+							teamInfo={opponentInfo.team}
 						/>
 					{:else if currentSlideIndex === 2}
 						<PlayerProfile
-							playerInfo={player1Info.player}
-							playerStats={player1Info.stats}
-							teamInfo={player1Info.team}
+							playerInfo={challengerInfo.player}
+							playerStats={challengerInfo.stats}
+							teamInfo={challengerInfo.team}
 						/>
 					{:else if currentSlideIndex === 3}
-						<ComparisonOverview challenger={player1Info.player} opponent={player2Info.player} />
+						<ComparisonOverview challenger={challengerInfo.player} opponent={opponentInfo.player} />
 					{:else if currentSlideIndex === 4}
 						<ComparisonSlide
-							challenger={player1Info.player}
-							opponent={player2Info.player}
+							challenger={challengerInfo.player}
+							opponent={opponentInfo.player}
 							slide={comparisonHighlights.slides[0]}
 							back={handlePrev}
 							next={handleNext}
 						/>
 					{:else if currentSlideIndex === 5}
 						<ComparisonSlide
-							challenger={player1Info.player}
-							opponent={player2Info.player}
+							challenger={challengerInfo.player}
+							opponent={opponentInfo.player}
 							slide={comparisonHighlights.slides[1]}
 							back={handlePrev}
 							next={handleNext}
@@ -125,8 +136,8 @@
 						/>
 					{:else if currentSlideIndex === 6}
 						<ComparisonSlide
-							challenger={player1Info.player}
-							opponent={player2Info.player}
+							challenger={challengerInfo.player}
+							opponent={opponentInfo.player}
 							slide={comparisonHighlights.slides[2]}
 							back={handlePrev}
 							next={handleNext}
