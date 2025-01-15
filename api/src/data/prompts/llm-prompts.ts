@@ -455,3 +455,70 @@ export const matchupPlayerComparisonPrompt = (data: {
     .compose();
   return prompt;
 };
+
+export const playerOfTheDayInsightPrompt = (data: {
+  playerOfTheDay: {
+    id: number;
+    fullName: string;
+    position: string;
+    team: string;
+    score: number;
+  };
+  analysis: Array<{
+    title: string;
+    players: {
+      [playerId: string]: {
+        stats: Array<{ key: string; value: string | number }>;
+      };
+    };
+  }>;
+}) => {
+  const prompt = new LLMPromptBuilder()
+    .addInstruction(
+      "You are tasked with explaining why a specific player was chosen as the Player of the Day based on provided baseball analysis data. Follow these steps:"
+    )
+    .addCustomBlock(
+      "data",
+      `
+      **Player of the Day:**
+      - Name: ${data.playerOfTheDay.fullName}
+      - ID: ${data.playerOfTheDay.id}
+      - Position: ${data.playerOfTheDay.position}
+      - Team: ${data.playerOfTheDay.team}
+      - Score: ${data.playerOfTheDay.score}
+
+      **Analysis Data:**
+      ${JSON.stringify(data.analysis, null, 2)}
+    `
+    )
+    .addCustomBlock(
+      "guidelines",
+      `
+      1. Identify the Player of the Day from the 'playerOfTheDay' object.
+      2. Extract the player's name, position, team, and score.
+      3. Review the 'analysis' array to find statistics for the Player of the Day.
+      4. Compare the Player of the Day's statistics to other players in each analysis.
+      5. Identify standout performances or statistics that likely contributed to their selection.
+      6. Craft a concise explanation highlighting 1-2 key statistics or performances that set them apart.
+      7. Format your response as follows:
+
+      {
+        "insight": "" // only
+      }
+    `
+    )
+    .addRule(
+      `
+      - Focus on the most relevant statistics that justify the player's selection.
+      - Keep the insight concise (1-2 sentences max) and professional.
+      - Avoid casual phrases, conversational fillers, or unnecessary words like "Okay," "so," or "alright."
+      - Do not include speculative or ambiguous language.
+    `
+    )
+    .addCustomBlock(
+      "guidelines",
+      "The insight should be straightforward and to the point, focusing only on the most relevant information that justifies the player's selection as Player of the Day."
+    )
+    .compose();
+  return prompt;
+};
