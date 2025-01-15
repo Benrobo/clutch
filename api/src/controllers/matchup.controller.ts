@@ -7,6 +7,7 @@ import { inngestClient } from "../config/inngest.js";
 import { JobType } from "@prisma/client";
 import { getPositionType } from "../lib/utils.js";
 import { MLBStatGroup } from "../types/mlb.types.js";
+import shortUUID from "short-uuid";
 
 class MatchupController {
   private matchupService: MatchupService;
@@ -149,6 +150,7 @@ class MatchupController {
           name: "compare-players-stats",
           data: {
             matchupId: existingMatchup.id,
+            jobId: jobStatus?.id,
           },
         });
       }
@@ -173,8 +175,10 @@ class MatchupController {
       });
 
       // create job
+      const jobId = shortUUID.generate();
       await tx.jobs.create({
         data: {
+          id: jobId,
           type: JobType.COMPARE_PLAYERS_HIGHLIGHT,
           input_data: {
             matchupId: matchup.id,
@@ -186,6 +190,7 @@ class MatchupController {
         name: "compare-players-stats",
         data: {
           matchupId: matchup.id,
+          jobId: jobId,
         },
       });
     });
