@@ -12,7 +12,6 @@ import {
   matchupPlayerComparisonPrompt,
   playerOfTheDayInsightPrompt,
 } from "../../data/prompts/llm-prompts.js";
-import fs from "fs";
 
 type PlayerStatsAnalysisFinalResponse = {
   title: string;
