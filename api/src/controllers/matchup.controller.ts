@@ -197,6 +197,12 @@ class MatchupController {
 
     return sendResponse?.success(c, "Players matchups queued", 201);
   }
+
+  async getMatchups(c: Context) {
+    const user = c.get("user");
+    const matchups = await this.matchupService.getMatchups(user?.id);
+    return sendResponse?.success(c, "Matchups fetched", 200, matchups);
+  }
 }
 
 export default MatchupController;
