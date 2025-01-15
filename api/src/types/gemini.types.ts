@@ -13,6 +13,7 @@ export interface IFunctionCall {
     };
     required: string[];
   }[];
+  log?: boolean;
 }
 
 export interface ICallAIProps {
@@ -26,6 +27,7 @@ export interface ICallAIProps {
     }[];
   }[];
   model?: "gemini-2.0-flash-exp" | "gemini-1.5-flash";
+  log?: boolean;
 }
 
 export type VectorSimilaritySearchProp = {};
