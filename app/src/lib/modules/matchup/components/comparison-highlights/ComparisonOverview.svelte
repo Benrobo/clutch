@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import type { Player } from '@/types/matchup';
+	import type { MatchupListResponse } from '@/types/matchup';
+
+	type Player = MatchupListResponse['player_position_stats']['challenger']['info'];
 
 	export let challenger: Player;
 	export let opponent: Player;
@@ -18,9 +20,9 @@
 		</h1>
 		<p class="text-sm font-light font-poppins text-white-200">
 			See how
-			<span class="font-bold">{challenger.fullName}</span>
+			<span class="font-bold">{challenger.name}</span>
 			and
-			<span class="font-bold">{opponent.fullName}</span>
+			<span class="font-bold">{opponent.name}</span>
 			stack up.
 		</p>
 	</Flex>
