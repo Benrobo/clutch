@@ -1,18 +1,35 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
 	import { pictcherStats, players, teams } from '@/data/matchup';
-	import type { Player } from '@/types/matchup';
+	import type { MatchupListResponse } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { BadgeCheck, Dumbbell, Minus, X } from 'lucide-svelte';
 	import PlayerStatsCard from './PlayerStatsCard.svelte';
 	import { TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND } from '@/constant/matchup';
+	import { MLB_PLAYER_STATS_INFO, MLB_STATS_SCHEMA } from '@/constant/mlb';
 
-	export let playerInfo: Player;
-	export let playerStats: (typeof pictcherStats)[0];
-	export let teamInfo: (typeof teams)[0];
+	type PlayerDetails = {
+		info: MatchupListResponse['player_position_stats']['challenger' | 'opponent']['info'];
+		stats: MatchupListResponse['player_position_stats']['challenger' | 'opponent']['stats'];
+		team: MatchupListResponse['player_position_stats']['challenger' | 'opponent']['info']['team'];
+	};
 
-	let firstNameLetter = playerInfo?.fullName.split(' ')[0][0];
-	let lastNameLetter = playerInfo?.fullName.split(' ')[1][0];
+	export let playerInfo: PlayerDetails;
+	export let playerStats: PlayerDetails['stats'];
+	export let teamInfo: PlayerDetails['team'];
+
+	let firstNameLetter = playerInfo?.info?.name.split(' ')[0][0];
+	let lastNameLetter = playerInfo?.info?.name.split(' ')[1][0];
+
+	const getStatDescription = (key: string) => {
+		const stat = MLB_PLAYER_STATS_INFO.find((stat) => stat.key.toLowerCase() === key.toLowerCase());
+		return stat?.tagline ?? key;
+	};
+
+	const getStatHeadline = (key: string) => {
+		const stat = MLB_STATS_SCHEMA.find((stat) => stat.key.toLowerCase() === key.toLowerCase());
+		return stat?.title ?? key;
+	};
 </script>
 
 <div class="w-full h-full bg-dark-111 flex flex-col items-center justify-between p-0 relative">
@@ -37,7 +54,7 @@
 				class="w-[150px] h-[150px] md:w-[180px] md:h-[180px] bg-dark-111 rounded-full border-[5px] border-orange-102 outline outline-[10px] outline-dark-111/30 shadow-2xl shadow-white-400/30"
 			>
 				<img
-					src={playerInfo?.profilePicture}
+					src={playerInfo?.info?.profilePicture}
 					alt=""
 					class="w-full h-full rounded-full"
 					on:error={(e) => {
@@ -52,9 +69,9 @@
 				class="w-full h-auto pt-[1em] md:pt-[3em] flex flex-col items-center justify-center gap-0"
 			>
 				<span class="text-white-100 text-[1.2em] md:text-[2em] font-facon relative">
-					{playerInfo?.fullName}
+					{playerInfo?.info?.name}
 
-					{#if playerInfo?.verified}
+					{#if playerInfo?.info?.verified}
 						<span class="absolute -top-1 -right-4 translate-x-2">
 							<BadgeCheck size={20} class="stroke-white-100 fill-orange-101" />
 						</span>
@@ -69,13 +86,13 @@
 							<div
 								class={cn(
 									'w-3 h-3 animate-ping rounded-full',
-									playerInfo?.active ? 'bg-green-100' : 'bg-red-305'
+									playerInfo?.info?.active ? 'bg-green-100' : 'bg-red-305'
 								)}
 							></div>
 							<div
 								class={cn(
 									'w-2 h-2 rounded-full absolute',
-									playerInfo?.active ? 'bg-green-100' : 'bg-red-305'
+									playerInfo?.info?.active ? 'bg-green-100' : 'bg-red-305'
 								)}
 							></div>
 						</div>
@@ -87,7 +104,7 @@
 						<Dumbbell size={18} class="text-white-400" />
 
 						<span class="text-white-300 font-poppins text-xs md:text-sm text-nowrap">
-							{playerInfo?.weight} lbs
+							{playerInfo?.info?.weight} lbs
 						</span>
 					</div>
 
@@ -122,7 +139,7 @@
 					<!-- team logo -->
 					<div class="flex flex-row items-end justify-end gap-2">
 						<img
-							src={teamInfo?.logo_url}
+							src={teamInfo?.logo}
 							alt=""
 							class={cn(
 								'w-5 h-5',
@@ -150,49 +167,13 @@
 
 		<div class="w-full h-auto grid grid-cols-2 gap-5 px-4 py-3 overflow-y-auto hideScrollBar2">
 			<!-- pitcher stats (some stats within pitcher are available for some positions) -->
-			<PlayerStatsCard
-				headline="Total Games Played"
-				tagline="total games played"
-				value={playerStats?.stat?.gamesPlayed}
-			/>
-
-			<PlayerStatsCard
-				headline="earned run average"
-				tagline="measures run prevention"
-				value={playerStats?.stat?.era}
-			/>
-
-			<PlayerStatsCard
-				headline="strikeouts"
-				tagline="ability to miss bats"
-				value={playerStats?.stat?.strikeOuts}
-			/>
-
-			<PlayerStatsCard
-				headline="wins"
-				tagline="contribution to team success"
-				value={playerStats?.stat?.wins}
-			/>
-
-			<PlayerStatsCard
-				headline="whip"
-				tagline="baserunner prevention"
-				value={playerStats?.stat?.whip}
-			/>
-
-			<PlayerStatsCard
-				headline="innings pitched"
-				tagline="workload and durability"
-				value={playerStats?.stat?.inningsPitched}
-			/>
-
-			<PlayerStatsCard
-				headline="saves"
-				tagline="game-finishing ability"
-				value={playerStats?.stat?.saves}
-			/>
-
-			<!-- catcher / 1B / 2B / 3B / SS / OF / DH stats -->
+			{#each playerStats as stat}
+				<PlayerStatsCard
+					headline={getStatHeadline(stat.key)}
+					tagline={getStatDescription(stat.key)}
+					value={stat.value}
+				/>
+			{/each}
 		</div>
 	</div>
 </div>
