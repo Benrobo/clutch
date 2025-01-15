@@ -91,7 +91,7 @@ export const MLB_STATS_SCHEMA = [
   },
   {
     "key": "gamesPlayed",
-    "title": "Games Played"
+    "title": "Total Games Played"
   },
   {
     "key": "gamesStarted",
@@ -366,3 +366,328 @@ export const MLB_STATS_SCHEMA = [
     "title": "Games Pitched"
   }
 ]
+
+export const MLB_PLAYER_STATS_INFO = [
+  // General Stats (All Positions)
+  {
+    key: "gamesPlayed",
+    headline: "Games Played",
+    tagline: "total games the player has been in",
+  },
+  {
+    key: "gamesStarted",
+    headline: "Games Started",
+    tagline: "games the player started",
+  },
+  {
+    key: "runs",
+    headline: "Runs",
+    tagline: "times the player scored",
+  },
+  {
+    key: "hits",
+    headline: "Hits",
+    tagline: "times the player safely reached base",
+  },
+  {
+    key: "doubles",
+    headline: "Doubles",
+    tagline: "hits that got the player to second base",
+  },
+  {
+    key: "triples",
+    headline: "Triples",
+    tagline: "hits that got the player to third base",
+  },
+  {
+    key: "homeRuns",
+    headline: "Home Runs",
+    tagline: "times the player hit a home run",
+  },
+  {
+    key: "rbi",
+    headline: "RBIs",
+    tagline: "runs the player helped score",
+  },
+  {
+    key: "stolenBases",
+    headline: "Stolen Bases",
+    tagline: "bases the player stole",
+  },
+  {
+    key: "caughtStealing",
+    headline: "Caught Stealing",
+    tagline: "times the player got caught stealing",
+  },
+  {
+    key: "baseOnBalls",
+    headline: "Walks",
+    tagline: "times the player was walked",
+  },
+  {
+    key: "intentionalWalks",
+    headline: "Intentional Walks",
+    tagline: "times the player was intentionally walked",
+  },
+  {
+    key: "strikeOuts",
+    headline: "Strikeouts",
+    tagline: "times the player struck out",
+  },
+  {
+    key: "hitByPitch",
+    headline: "Hit by Pitch",
+    tagline: "times the player was hit by a pitch",
+  },
+  {
+    key: "avg",
+    headline: "Batting Average",
+    tagline: "how often the player gets a hit",
+  },
+  {
+    key: "obp",
+    headline: "On-Base Percentage",
+    tagline: "how often the player gets on base",
+  },
+  {
+    key: "slg",
+    headline: "Slugging Percentage",
+    tagline: "how well the player hits for power",
+  },
+  {
+    key: "ops",
+    headline: "OPS",
+    tagline: "overall hitting performance",
+  },
+  {
+    key: "groundIntoDoublePlay",
+    headline: "Double Plays",
+    tagline: "times the player hit into a double play",
+  },
+  {
+    key: "totalBases",
+    headline: "Total Bases",
+    tagline: "total bases the player has reached",
+  },
+  {
+    key: "leftOnBase",
+    headline: "Left on Base",
+    tagline: "runners the player left on base",
+  },
+  {
+    key: "sacBunts",
+    headline: "Sacrifice Bunts",
+    tagline: "times the player bunted to advance a runner",
+  },
+  {
+    key: "sacFlies",
+    headline: "Sacrifice Flies",
+    tagline: "times the player hit a fly ball to score a run",
+  },
+  {
+    key: "babip",
+    headline: "BABIP",
+    tagline: "how often the player gets a hit on balls in play",
+  },
+  {
+    key: "catchersInterference",
+    headline: "Catcher's Interference",
+    tagline: "times the catcher interfered with the batter",
+  },
+  {
+    key: "atBatsPerHomeRun",
+    headline: "At Bats per Home Run",
+    tagline: "how often the player hits a home run",
+  },
+
+  // Pitcher-Specific Stats
+  {
+    key: "era",
+    headline: "ERA",
+    tagline: "average runs the pitcher allows per game",
+  },
+  {
+    key: "whip",
+    headline: "WHIP",
+    tagline: "average baserunners the pitcher allows per inning",
+  },
+  {
+    key: "wins",
+    headline: "Wins",
+    tagline: "games the pitcher has won",
+  },
+  {
+    key: "losses",
+    headline: "Losses",
+    tagline: "games the pitcher has lost",
+  },
+  {
+    key: "saves",
+    headline: "Saves",
+    tagline: "games the pitcher has saved",
+  },
+  {
+    key: "saveOpportunities",
+    headline: "Save Opportunities",
+    tagline: "chances the pitcher had to save a game",
+  },
+  {
+    key: "holds",
+    headline: "Holds",
+    tagline: "games the pitcher held the lead",
+  },
+  {
+    key: "blownSaves",
+    headline: "Blown Saves",
+    tagline: "games the pitcher failed to save",
+  },
+  {
+    key: "inningsPitched",
+    headline: "Innings Pitched",
+    tagline: "total innings the pitcher has thrown",
+  },
+  {
+    key: "earnedRuns",
+    headline: "Earned Runs",
+    tagline: "runs the pitcher allowed that were earned",
+  },
+  {
+    key: "strikeoutsPer9Inn",
+    headline: "Strikeouts per 9 Innings",
+    tagline: "average strikeouts per 9 innings",
+  },
+  {
+    key: "walksPer9Inn",
+    headline: "Walks per 9 Innings",
+    tagline: "average walks per 9 innings",
+  },
+  {
+    key: "hitsPer9Inn",
+    headline: "Hits per 9 Innings",
+    tagline: "average hits per 9 innings",
+  },
+  {
+    key: "homeRunsPer9Inn",
+    headline: "Home Runs per 9 Innings",
+    tagline: "average home runs per 9 innings",
+  },
+  {
+    key: "strikeoutsPerWalk",
+    headline: "Strikeout-to-Walk Ratio",
+    tagline: "strikeouts compared to walks",
+  },
+  {
+    key: "pitchesPerInning",
+    headline: "Pitches per Inning",
+    tagline: "average pitches thrown per inning",
+  },
+  {
+    key: "gamesFinished",
+    headline: "Games Finished",
+    tagline: "games the pitcher finished",
+  },
+  {
+    key: "shutouts",
+    headline: "Shutouts",
+    tagline: "games the pitcher didn’t allow any runs",
+  },
+  {
+    key: "completeGames",
+    headline: "Complete Games",
+    tagline: "games the pitcher pitched the entire game",
+  },
+  {
+    key: "qualityStarts",
+    headline: "Quality Starts",
+    tagline: "games the pitcher pitched well enough to win",
+  },
+  {
+    key: "inheritedRunners",
+    headline: "Inherited Runners",
+    tagline: "runners the pitcher inherited when entering the game",
+  },
+  {
+    key: "inheritedRunnersScored",
+    headline: "Inherited Runners Scored",
+    tagline: "inherited runners who scored",
+  },
+  {
+    key: "pickoffs",
+    headline: "Pickoffs",
+    tagline: "times the pitcher picked off a runner",
+  },
+  {
+    key: "balks",
+    headline: "Balks",
+    tagline: "illegal moves by the pitcher",
+  },
+  {
+    key: "wildPitches",
+    headline: "Wild Pitches",
+    tagline: "pitches the pitcher threw too wild to catch",
+  },
+  {
+    key: "battersFaced",
+    headline: "Batters Faced",
+    tagline: "total batters the pitcher has faced",
+  },
+  {
+    key: "pitches",
+    headline: "Pitches",
+    tagline: "total pitches the pitcher has thrown",
+  },
+  {
+    key: "strikes",
+    headline: "Strikes",
+    tagline: "total strikes the pitcher has thrown",
+  },
+  {
+    key: "strikePercentage",
+    headline: "Strike Percentage",
+    tagline: "percentage of pitches that were strikes",
+  },
+
+  // Catcher-Specific Stats
+  {
+    key: "caughtStealingPercentage",
+    headline: "Caught Stealing Percentage",
+    tagline: "percentage of runners the catcher caught stealing",
+  },
+  {
+    key: "passedBalls",
+    headline: "Passed Balls",
+    tagline: "times the catcher missed a pitch",
+  },
+
+  // Fielding Stats (All Positions)
+  {
+    key: "fieldingPercentage",
+    headline: "Fielding Percentage",
+    tagline: "how often the player makes plays without errors",
+  },
+  {
+    key: "putOuts",
+    headline: "Putouts",
+    tagline: "times the player got an out",
+  },
+  {
+    key: "assists",
+    headline: "Assists",
+    tagline: "times the player helped get an out",
+  },
+  {
+    key: "errors",
+    headline: "Errors",
+    tagline: "mistakes the player made in the field",
+  },
+  {
+    key: "doublePlays",
+    headline: "Double Plays",
+    tagline: "times the player turned two outs in one play",
+  },
+  {
+    key: "rangeFactor",
+    headline: "Range Factor",
+    tagline: "how much ground the player covers",
+  },
+];
