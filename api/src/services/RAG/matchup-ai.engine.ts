@@ -9,6 +9,7 @@ import {
 } from "../../constant/matchup.js";
 import { MLBPositionStats } from "../../types/mlb.types.js";
 import { matchupPlayerComparisonPrompt } from "../../data/prompts/llm-prompts.js";
+import fs from "fs";
 
 type PlayerStatsAnalysisFinalResponse = {
   title: string;
@@ -324,6 +325,10 @@ export default class MatchupAIEngine {
       }
 
       //   return finalAnalysis;
+      fs.writeFileSync(
+        `./matchup-analysis-${matchupId}.json`,
+        JSON.stringify(finalAnalysis, null, 2)
+      );
       console.log({ finalAnalysis });
     } catch (e: any) {
       console.error("Failed to generate matchup highlights", e);
