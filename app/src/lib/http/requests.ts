@@ -145,3 +145,21 @@ export const getGameHint = async (payload: {
   });
   return res.data;
 }
+
+
+export const getMatchups = async () => {
+  const res = await $axios.get(`/matchups`);
+  return res.data;
+}
+
+export const createMatchup = async (payload: {
+  challengerId: string;
+  opponentId: string;
+  challengerTeamId: number;
+  opponentTeamId: number;
+  position: string;
+  season: number;
+}) => {
+  const res = await $axios.post(`/matchup`, payload);
+  return res.data;
+}
