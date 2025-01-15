@@ -1,15 +1,11 @@
 <script lang="ts">
 	import { cn } from '@/utils';
-	import { BadgeCheck, Component, Minus, MoveUpRight, Sigma, X, Zap } from 'lucide-svelte';
-	import Divider from '@/components/Divider.svelte';
-	import { scale } from 'svelte/transition';
-	import type { MatchupList, Player, PlayerStats } from '@/types/matchup';
+	import type { MatchupListResponse } from '@/types/matchup';
 	import Flex from '@/components/Flex.svelte';
-	import { MLB_STATS_SCHEMA } from '@/constant/mlb';
 	import Icon from '@/components/Icon.svelte';
 
-	export let matchupList: MatchupList[] = [];
-	export let onSelect: (id: string) => void;
+	export let matchupList: MatchupListResponse[] = [];
+	export let onSelect: (id: MatchupListResponse) => void;
 </script>
 
 <div class="w-full h-screen mx-auto flex flex-col items-start justify-start bg-dark-103 px-4">
@@ -25,9 +21,9 @@
 		{#each matchupList as matchup}
 			<button
 				class={cn(
-					'w-full h-auto min-h-[180px] flex flex-row items-start justify-start py-5 gap-1 relative rounded-2xl bg-dark-102 border-[1px] border-white-400/10 overflow-hidden transition-all'
+					'w-full h-auto min-h-[180px] flex flex-row items-start justify-start py-5 gap-1 relative rounded-2xl bg-dark-106 border-[1px] border-white-400/10 overflow-hidden transition-all'
 				)}
-				on:click={() => onSelect(matchup.id.toString())}
+				on:click={() => onSelect(matchup)}
 			>
 				<!-- pattern -->
 				<div class="w-full max-w-[50em] absolute top-0">
@@ -38,7 +34,7 @@
 				<div class="w-full h-full grid grid-cols-2 z-[1]">
 					<Flex class="w-full h-full flex flex-col gap-2 relative">
 						<img
-							src={matchup.challenger?.profilePicture}
+							src={matchup?.player_position_stats.challenger?.info?.profilePicture}
 							alt="challenger"
 							class="w-[10em] translate-y-4 md:w-[12.5em] md:-translate-y-2 object-cover absolute right-10"
 						/>
@@ -48,13 +44,13 @@
 							class="w-full h-auto absolute bottom-0 translate-y-5 py-3 px-3 flex flex-col items-start justify-start gap-0 bg-gradient-to-b from-transparent to-dark-103"
 						>
 							<p class="text-white-100 text-3xl translate-y-2 font-mouzambik font-normal">
-								{matchup.challenger?.fullName}
+								{matchup?.player_position_stats.challenger?.info?.name}
 							</p>
 						</div>
 					</Flex>
 					<Flex class="w-full h-full flex flex-col gap-2 items-end justify-end relative">
 						<img
-							src={matchup.opponent?.profilePicture}
+							src={matchup?.player_position_stats.opponent?.info?.profilePicture}
 							alt="opponent"
 							class="w-[10em] translate-y-10 translate-x-4 md:w-[12.5em] object-cover absolute right-0"
 						/>
@@ -64,7 +60,7 @@
 							class="w-full h-auto absolute bottom-0 translate-y-5 py-3 px-3 flex flex-col items-end justify-end gap-0 bg-gradient-to-b from-transparent to-dark-103"
 						>
 							<p class="text-white-100 text-3xl translate-y-2 font-mouzambik font-normal">
-								{matchup.opponent?.fullName}
+								{matchup?.player_position_stats.opponent?.info?.name}
 							</p>
 						</div>
 					</Flex>
