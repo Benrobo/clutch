@@ -20,6 +20,17 @@ class MatchupService {
     });
   }
 
+  async getMatchups(userId: string) {
+    return await prisma.matchups.findMany({
+      where: {
+        user_id: userId,
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+  }
+
   async getJobStatus(jobType: JobType) {
     return await prisma.jobs.findFirst({
       where: {
