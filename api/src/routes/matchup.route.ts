@@ -17,9 +17,11 @@ router.post(
   )
 );
 
-// router.get(
-//   `${basePath}/get-matchups`,
-//   isAuthenticated(matchupController.getMatchups.bind(matchupController))
-// );
+router.get(
+  `${basePath}s`,
+  useCatchErrors(
+    isAuthenticated(matchupController.getMatchups.bind(matchupController))
+  )
+);
 
 export default router;
