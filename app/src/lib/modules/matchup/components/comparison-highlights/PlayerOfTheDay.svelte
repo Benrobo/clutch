@@ -1,19 +1,29 @@
 <script lang="ts">
 	import { cn } from '@/utils';
-	import { BadgeCheck, Component, X, Zap } from 'lucide-svelte';
+	import { BadgeCheck, Component, Diamond, X, Zap } from 'lucide-svelte';
 	import Divider from '@/components/Divider.svelte';
-	import type { Player, PlayerStats } from '@/types/matchup';
+	import type { MatchupListResponse, PlayerStats } from '@/types/matchup';
 	import Flex from '@/components/Flex.svelte';
 	import { MLB_STATS_SCHEMA } from '@/constant/mlb';
 
-	export let player: Player | undefined;
+	type PlayerDetails = MatchupListResponse['player_position_stats'][
+		| 'challenger'
+		| 'opponent']['info'];
+
+	export let player: PlayerDetails;
 	export let reason: string;
-	export let comparisonHighlights: PlayerStats | undefined;
+	export let comparisonHighlights: PlayerStats['stats'];
 	export let totalGamesPlayed: number = 0;
 	export let onClose: () => void;
 	export let back: () => void;
 
-	const statOrderedColors = ['bg-yellow-102', 'bg-pink-101'];
+	const statOrderedColors = [
+		'bg-yellow-102',
+		'bg-pink-101',
+		'bg-blue-103',
+		'bg-orange-300',
+		'bg-green-102'
+	];
 
 	const getStatsKeyFullName = (key: string) => {
 		return MLB_STATS_SCHEMA.find((stat) => stat.key === key)?.title || key;
@@ -24,7 +34,7 @@
 	<!-- player basic info -->
 	<Flex className="w-full h-auto px-3 md:px-5 py-5 items-center justify-between">
 		<Flex className="w-auto h-auto items-center justify-center gap-2">
-			<h1 class="text-2xl font-medium font-garamond text-dark-100">{player?.fullName}</h1>
+			<h1 class="text-2xl font-medium font-garamond text-dark-100">{player?.name}</h1>
 			{#if player?.verified}
 				<BadgeCheck class="w-6 h-6 stroke-brown-100 fill-dark-100" />
 			{/if}
@@ -88,7 +98,7 @@
 			<span
 				class={cn(
 					'text-sm md:text-lg font-medium font-garamond text-dark-100',
-					reason?.length > 20 ? 'text-sm' : 'text-lg'
+					reason?.length > 20 ? 'text-md' : 'text-lg'
 				)}
 			>
 				{reason}
@@ -114,7 +124,6 @@
 				Total Games Played
 			</span>
 
-			<!-- <Sigma size={40} strokeWidth={1} class="stroke-dark-100 absolute top-5 right-2" /> -->
 			<span class="absolute top-5 right-2">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -130,8 +139,8 @@
 			</span>
 		</div>
 		<!-- OTHER STATS -->
-		{#if (comparisonHighlights?.stats ?? [])?.length > 0}
-			{#each comparisonHighlights?.stats ?? [] as stat, index}
+		{#if (comparisonHighlights ?? [])?.length > 0}
+			{#each comparisonHighlights ?? [] as stat, index}
 				<div
 					class={cn(
 						'w-full h-auto py-4 px-5 flex flex-col items-start justify-start relative',
@@ -153,6 +162,8 @@
 						/>
 					{:else if index === 1}
 						<Zap size={40} strokeWidth={1} class="stroke-dark-100/30 absolute top-5 right-3" />
+					{:else if index === 2}
+						<Diamond size={40} strokeWidth={1} class="stroke-dark-100/30 absolute top-5 right-3" />
 					{/if}
 				</div>
 			{/each}
