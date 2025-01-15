@@ -12,6 +12,7 @@ type ProcessHighlightsVideoEvent = BaseEvent & {};
 type ComparePlayersStatsEvent = BaseEvent & {
   data: {
     matchupId: string;
+    jobId: string;
   };
 };
 
