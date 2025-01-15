@@ -9,7 +9,7 @@
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import SelectedMatchup from '@/modules/matchup/components/SelectedMatchup.svelte';
-	import type { MatchupList, MatchupListResponse } from '@/types/matchup';
+	import type { MatchupList, MatchupListResponse, Player } from '@/types/matchup';
 	import { cn, extractAxiosResponseData } from '@/utils';
 	import { BadgeCheck, CheckCheck, ListFilter, Scale, Search, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
@@ -20,10 +20,8 @@
 	let selectedTeam: number = teams[0]?.id;
 	let showSearchFilter = false;
 
-	let selectedPlayers:
-		| MatchupListResponse['player_position_stats']['challenger' | 'opponent']['info']
-		| null = null;
-	$: selectedPlayers = null;
+	let selectedPlayers: Player[] = [];
+	$: selectedPlayers = [];
 
 	let filters: {
 		season: string;
@@ -188,18 +186,18 @@
 					players={filteredPlayers}
 					{selectedPlayers}
 					onSelectPlayer={(player) => {
-						const isMax = selectedPlayers.length === 2;
-						const idExists = selectedPlayers.find((p) => p.id === player?.id);
+						const isMax = selectedPlayers?.length === 2;
+						const idExists = selectedPlayers?.find((p) => p.id === player?.id);
 						if (isMax && !idExists) return;
 
 						if (idExists) {
-							selectedPlayers = selectedPlayers.filter((p) => p.id !== player?.id);
+							selectedPlayers = selectedPlayers?.filter((p) => p.id !== player?.id);
 						} else {
 							selectedPlayers = [...selectedPlayers, player];
 						}
 					}}
 					removeSelectedPlayer={(player) => {
-						selectedPlayers = selectedPlayers.filter((p) => p.id !== player?.id);
+						selectedPlayers = selectedPlayers?.filter((p) => p.id !== player?.id);
 					}}
 					{selectedTeam}
 				/>
@@ -226,7 +224,6 @@
 			<MatchUpList
 				{matchupList}
 				onSelect={(matchup) => {
-					console.log({ matchup });
 					selectedMatchup = matchup;
 				}}
 			/>
