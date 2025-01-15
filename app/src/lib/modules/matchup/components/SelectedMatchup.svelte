@@ -1,26 +1,19 @@
 <script lang="ts">
 	import BottomSheet from '@/components/BottomSheet.svelte';
 	import Flex from '@/components/Flex.svelte';
-	import Notfound from '@/modules/matchup/components/Notfound.svelte';
-	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
-	import type { ComparisonHighlights, MatchupListResponse, Player } from '@/types/matchup';
+	import type { MatchupListResponse } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { MoveLeft, MoveRight, X } from 'lucide-svelte';
-	import { afterUpdate, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
 	import PlayerProfile from './stats/PlayerProfile.svelte';
-	import {
-		pictcherStats,
-		players,
-		teams,
-		comparisonHighlights,
-		playerOfTheDay
-	} from '@/data/matchup';
 	import { fly, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import ComparisonOverview from './comparison-highlights/ComparisonOverview.svelte';
 	import ComparisonSlide from './comparison-highlights/ComparisonSlide.svelte';
 	import PlayerOfTheDay from './comparison-highlights/PlayerOfTheDay.svelte';
+	import { PLAYER_OF_THE_DAY_POSITION_STATS_MAP } from '@/constant/matchup';
+	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
 
 	export let onClose: () => void;
 	export let isOpen: boolean = false;
@@ -31,20 +24,22 @@
 	let currentSlideIndex = 0;
 	let slideDirection = 1;
 
+	const playerOfTheDay = selectedMatchup?.highlights?.playerOfTheDay!;
+
 	const slideOptions = {
 		duration: 300,
 		easing: quintOut
 	};
 
 	const challengerInfo = {
-		player: selectedMatchup?.player_position_stats?.challenger?.info,
-		stats: selectedMatchup?.player_position_stats?.challenger?.stats,
-		team: selectedMatchup?.player_position_stats?.challenger?.info?.team
+		player: selectedMatchup?.player_position_stats?.challenger?.info!,
+		stats: selectedMatchup?.player_position_stats?.challenger?.stats!,
+		team: selectedMatchup?.player_position_stats?.challenger?.info?.team!
 	};
 	const opponentInfo = {
-		player: selectedMatchup?.player_position_stats?.opponent?.info,
-		stats: selectedMatchup?.player_position_stats?.opponent?.stats,
-		team: selectedMatchup?.player_position_stats?.opponent?.info?.team
+		player: selectedMatchup?.player_position_stats?.opponent?.info!,
+		stats: selectedMatchup?.player_position_stats?.opponent?.stats!,
+		team: selectedMatchup?.player_position_stats?.opponent?.info?.team!
 	};
 
 	function handleNext() {
@@ -58,9 +53,40 @@
 	}
 
 	function getPlayerOfTheDayComparisonHighlights() {
-		return (comparisonHighlights as ComparisonHighlights).slides.find(
-			(slide) => slide.players[playerOfTheDay.player.toString()]
-		)?.players[playerOfTheDay.player.toString()];
+		const playerComparisonStats = selectedMatchup?.highlights?.analysis
+			.filter((analysis) => analysis.players[playerOfTheDay?.id.toString()])
+			?.map((analysis) => analysis.players[playerOfTheDay?.id.toString()]?.stats);
+
+		const nonDuplicateStats = Array.from(
+			new Map(
+				(playerComparisonStats ?? []).flatMap((stats) => stats).map((stat) => [stat.key, stat])
+			).values()
+		);
+
+		const playerOfTheDayPositionAbbrv = MLB_PLAYER_POSITIONS.find(
+			(position) => position.shortName === playerOfTheDay?.position
+		)?.abbrev;
+
+		return nonDuplicateStats.filter((stat) =>
+			PLAYER_OF_THE_DAY_POSITION_STATS_MAP[playerOfTheDayPositionAbbrv ?? '']?.includes(stat.key)
+		);
+	}
+
+	function getPlayerOfTheDayPlayer() {
+		const player =
+			selectedMatchup?.player_position_stats?.challenger?.info?.id === Number(playerOfTheDay?.id)
+				? selectedMatchup?.player_position_stats?.challenger
+				: selectedMatchup?.player_position_stats?.opponent;
+
+		const playerPositionStats =
+			selectedMatchup?.player_position_stats?.challenger?.info?.id === Number(playerOfTheDay?.id)
+				? selectedMatchup?.player_position_stats?.challenger?.stats
+				: selectedMatchup?.player_position_stats?.opponent?.stats;
+
+		return {
+			player: player!,
+			gamesPlayed: Number(playerPositionStats?.find((stat) => stat.key === 'gamesPlayed')?.value)
+		};
 	}
 
 	function handleClose() {
@@ -70,6 +96,10 @@
 	}
 
 	$: currentSlideIndex = 0;
+
+	const getComparisonAnalysis = (index: number) => {
+		return selectedMatchup?.highlights?.analysis[index] ?? ({} as any);
+	};
 
 	onMount(() => {
 		// delay the mounting of the component to apply the fly transition
@@ -121,7 +151,7 @@
 						<ComparisonSlide
 							challenger={challengerInfo.player}
 							opponent={opponentInfo.player}
-							slide={comparisonHighlights.slides[0]}
+							analysis={getComparisonAnalysis(0)}
 							back={handlePrev}
 							next={handleNext}
 						/>
@@ -129,27 +159,28 @@
 						<ComparisonSlide
 							challenger={challengerInfo.player}
 							opponent={opponentInfo.player}
-							slide={comparisonHighlights.slides[1]}
+							analysis={getComparisonAnalysis(1)}
 							back={handlePrev}
 							next={handleNext}
-							headerClassName="bg-orange-100"
+							headerClassName="bg-orange-300"
 						/>
 					{:else if currentSlideIndex === 6}
 						<ComparisonSlide
 							challenger={challengerInfo.player}
 							opponent={opponentInfo.player}
-							slide={comparisonHighlights.slides[2]}
+							analysis={getComparisonAnalysis(2)}
 							back={handlePrev}
 							next={handleNext}
 							headerClassName="bg-yellow-102"
 						/>
 					{:else if currentSlideIndex === 7}
 						<PlayerOfTheDay
-							player={players.find((player) => player.id === playerOfTheDay.player)}
-							reason={playerOfTheDay.reason}
-							comparisonHighlights={getPlayerOfTheDayComparisonHighlights()}
+							player={getPlayerOfTheDayPlayer()?.player?.info}
+							reason={playerOfTheDay?.insight}
+							comparisonHighlights={getPlayerOfTheDayComparisonHighlights() ?? []}
 							onClose={handleClose}
 							back={handlePrev}
+							totalGamesPlayed={getPlayerOfTheDayPlayer()?.gamesPlayed}
 						/>
 					{/if}
 				</div>
