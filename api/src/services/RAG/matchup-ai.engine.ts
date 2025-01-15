@@ -229,6 +229,7 @@ export default class MatchupAIEngine {
             user_prompt: prompt,
             enable_call_history: false,
             model: "gemini-2.0-flash-exp",
+            log: false,
           });
 
           if (!response?.data) {
@@ -360,9 +361,26 @@ export default class MatchupAIEngine {
         playerOfTheDay
       );
 
-      console.log(playerOfTheDayInsight);
+      return {
+        analysis: finalAnalysis,
+        playerOfTheDay: {
+          ...playerOfTheDay?.playerOfTheDay,
+          insight: playerOfTheDayInsight,
+        },
+        playerMetadata: {
+          challenger: {
+            info: challengerInfo?.playerInfo,
+            stats: challengerNeededStats,
+          },
+          opponent: {
+            info: opponentInfo?.playerInfo,
+            stats: opponentNeededStats,
+          },
+        },
+      };
     } catch (e: any) {
       console.error("Failed to generate matchup highlights", e);
+      throw new Error(`Failed to generate matchup highlights: ${e?.message}`);
     }
   }
 
