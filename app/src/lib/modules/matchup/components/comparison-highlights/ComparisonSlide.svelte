@@ -1,26 +1,26 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import { pictcherStats, players, teams, comparisonHighlights } from '@/data/matchup';
-	import type { Player } from '@/types/matchup';
 	import { cn } from '@/utils';
-	import { BadgeCheck, Dumbbell, Minus, MoveLeft, MoveRight, MoveUpRight, X } from 'lucide-svelte';
+	import { MoveLeft } from 'lucide-svelte';
 	import { MLB_STATS_SCHEMA } from '$lib/constant/mlb';
 	import Highlighter from '@/highlighter';
-	import Divider from '@/components/Divider.svelte';
 	import AnalysisCard from './AnalysisCard.svelte';
+	import type { MatchupListResponse } from '@/types/matchup';
+
+	type Player = MatchupListResponse['player_position_stats']['challenger' | 'opponent']['info'];
 
 	export let challenger: Player;
 	export let opponent: Player;
-	export let slide: (typeof comparisonHighlights.slides)[number];
+	export let analysis: MatchupListResponse['highlights']['analysis'][number];
 	export let headerClassName: string = '';
 	export let back: () => void;
 	export let next: () => void;
 
 	const hasPlayer = (id: number) => {
-		return Object.keys(slide?.players || {}).includes(id.toString());
+		return Object.keys(analysis?.players || {}).includes(id.toString());
 	};
 	const getPlayerSlide = (id: number) => {
-		return slide?.players[id.toString() as keyof typeof slide.players];
+		return analysis?.players[id.toString() as keyof typeof analysis.players];
 	};
 
 	const getStatsKeyFullName = (key: string) => {
@@ -36,9 +36,14 @@
 		slide: getPlayerSlide(opponent?.id) || []
 	};
 
+	const player1Stats =
+		analysis.players[player1?.info?.id.toString() as keyof typeof analysis.players];
+	const player2Stats =
+		analysis.players[player2?.info?.id.toString() as keyof typeof analysis.players];
+
 	const highlightedSight = new Highlighter({
-		text: slide.insight,
-		keywords: [opponent.fullName, challenger.fullName].map((name) => ({
+		text: analysis.insight,
+		keywords: [opponent.name, challenger.name].map((name) => ({
 			text: name,
 			word: name,
 			borderStyle: 'dashed',
@@ -54,7 +59,7 @@
 	<!-- header -->
 	<Flex
 		className={cn(
-			'w-full h-auto min-h-[300px] flex-col gap-6 bg-pink-101 px-10 py-10',
+			'w-full h-auto max-h-[320px] flex-col gap-6 bg-pink-101 px-10 py-10',
 			headerClassName
 		)}
 	>
@@ -66,7 +71,7 @@
 			<span class="text-xs text-dark-100 font-jetbrains">Back</span>
 		</button>
 		<h1 class="text-[2.5em] leading-none font-semibold font-garamond text-dark-100">
-			{slide.title}
+			{analysis.title}
 		</h1>
 		<div class="w-full flex flex-col items-end justify-end text-end">
 			<button
@@ -89,43 +94,47 @@
 				<!-- <span class="text-xs text-dark-100 font-jetbrains">Next</span> -->
 			</button>
 		</div>
+		<br />
 	</Flex>
-	<Flex
-		className="w-full h-full min-h-[200px] flex-col justify-center gap-6 bg-dark-100-2 px-5 py-10"
-	>
-		<p class="text-[1.3em] sm:text-[1.5em] font-garamond text-white-100">
-			{@html highlightedSight.highlight()}
-		</p>
-	</Flex>
-	<Flex className="w-full h-full max-h-[50vh] flex-col justify-end items-end gap-6 px-5 py-10">
-		<div class="w-full h-full grid grid-cols-2 gap-3">
-			<!-- positive -->
-			<AnalysisCard
-				headshot={player1?.info?.profilePicture}
-				player={{ name: player1?.info?.fullName }}
-				stats={player1.slide.stats?.map((stat) => ({
-					key: getStatsKeyFullName(stat.key),
-					value: stat.value
-				}))}
-				percentage={player1.slide.visualization.percentage}
-				trend={player1.slide.visualization.trend}
-				type="positive"
-				source={'#'}
-			/>
 
-			<!-- negative -->
-			<AnalysisCard
-				headshot={player2?.info?.profilePicture}
-				player={{ name: player2?.info?.fullName }}
-				stats={player2.slide.stats?.map((stat) => ({
-					key: getStatsKeyFullName(stat.key),
-					value: stat.value
-				}))}
-				percentage={player2.slide.visualization.percentage}
-				trend={player2.slide.visualization.trend}
-				type="negative"
-				source={'#'}
-			/>
-		</div>
-	</Flex>
+	{#if analysis}
+		<Flex
+			className="w-full h-full min-h-[200px] flex-col justify-center gap-6 bg-dark-100-2 px-5 py-10"
+		>
+			<p class="text-[1.3em] sm:text-[1.5em] font-garamond text-white-100">
+				{@html highlightedSight.highlight()}
+			</p>
+		</Flex>
+		<Flex className="w-full h-full max-h-[50vh] flex-col justify-end items-end gap-6 px-5 py-10">
+			<div class="w-full h-full grid grid-cols-2 gap-3">
+				<!-- positive -->
+				<AnalysisCard
+					headshot={player1?.info?.profilePicture}
+					player={{ name: player1?.info?.name }}
+					stats={player1Stats?.stats?.map((stat) => ({
+						key: getStatsKeyFullName(stat.key),
+						value: stat.value
+					}))}
+					percentage={player1Stats?.visualization.percentage}
+					trend={player1Stats?.visualization.trending}
+					type={player1Stats?.visualization.trending === 'up' ? 'positive' : 'negative'}
+					source={'#'}
+				/>
+
+				<!-- negative -->
+				<AnalysisCard
+					headshot={player2?.info?.profilePicture}
+					player={{ name: player2?.info?.name }}
+					stats={player2Stats?.stats?.map((stat) => ({
+						key: getStatsKeyFullName(stat.key),
+						value: stat.value
+					}))}
+					percentage={player2Stats?.visualization.percentage}
+					trend={player2Stats?.visualization.trending}
+					type={player2Stats?.visualization.trending === 'up' ? 'positive' : 'negative'}
+					source={'#'}
+				/>
+			</div>
+		</Flex>
+	{/if}
 </div>
