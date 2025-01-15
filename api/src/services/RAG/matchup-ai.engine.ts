@@ -8,7 +8,10 @@ import {
   PLAYER_POSITION_STATS_MAP,
 } from "../../constant/matchup.js";
 import { MLBPositionStats } from "../../types/mlb.types.js";
-import { matchupPlayerComparisonPrompt } from "../../data/prompts/llm-prompts.js";
+import {
+  matchupPlayerComparisonPrompt,
+  playerOfTheDayInsightPrompt,
+} from "../../data/prompts/llm-prompts.js";
 import fs from "fs";
 
 type PlayerStatsAnalysisFinalResponse = {
@@ -49,6 +52,8 @@ interface PlayerOfTheDayResponse {
   playerOfTheDay: {
     id: string;
     score: number;
+    fullName: string;
+    position: string;
   };
 }
 
@@ -70,6 +75,11 @@ export default class MatchupAIEngine {
       playerInfo,
       teamInfo,
     };
+  }
+
+  private async getPlayerInfo(playerId: number) {
+    const playerInfo = await this.mlbApi.getPlayer(playerId);
+    return playerInfo;
   }
 
   private async getPlayerStats(data: {
@@ -341,12 +351,16 @@ export default class MatchupAIEngine {
 
       const playerScores = this.aggregatePlayerScores(finalAnalysis);
 
-      const playerOfTheDay = this.determinePlayerOfTheDay(
+      const playerOfTheDay = await this.determinePlayerOfTheDay(
         finalAnalysis,
         playerScores
       );
 
-      console.log(playerOfTheDay);
+      const playerOfTheDayInsight = await this.generatePlayerOfTheDayInsight(
+        playerOfTheDay
+      );
+
+      console.log(playerOfTheDayInsight);
     } catch (e: any) {
       console.error("Failed to generate matchup highlights", e);
     }
@@ -374,10 +388,10 @@ export default class MatchupAIEngine {
     return playerScores;
   }
 
-  private determinePlayerOfTheDay(
+  private async determinePlayerOfTheDay(
     analysis: PlayerStatsAnalysisFinalResponse[],
     scores: Record<string, number>
-  ): PlayerOfTheDayResponse {
+  ): Promise<PlayerOfTheDayResponse> {
     // Find player with highest score
     const [topPlayerId, topScore] = Object.entries(scores).reduce(
       (max, [id, score]) => (score > max[1] ? [id, score] : max),
@@ -398,12 +412,93 @@ export default class MatchupAIEngine {
       ),
     }));
 
+    let playerOfTheDayInfo = null;
+    try {
+      playerOfTheDayInfo = await retry(
+        async () => {
+          const playerOfTheDayInfo = await this.getPlayerInfo(
+            Number(topPlayerId)
+          );
+          if (!playerOfTheDayInfo) {
+            throw new Error("Failed to get player of the day info");
+          }
+          return playerOfTheDayInfo;
+        },
+        {
+          retries: 3,
+          onRetry(e, attempt) {
+            console.log(
+              `Failed to get player of the day info, attempt ${attempt}`
+            );
+          },
+        }
+      );
+    } catch (e: any) {
+      console.error("Failed to get player of the day info", e);
+      throw new Error("Failed to get player of the day info");
+    }
+
     return {
       analysis: simplifiedAnalysis,
       playerOfTheDay: {
         id: topPlayerId,
         score: topScore,
+        fullName: playerOfTheDayInfo?.fullName,
+        position: playerOfTheDayInfo?.primaryPosition?.name,
       },
     };
+  }
+
+  private async generatePlayerOfTheDayInsight(
+    playerOfTheDay: PlayerOfTheDayResponse
+  ) {
+    try {
+      const response = await retry(
+        async () => {
+          const prompt = playerOfTheDayInsightPrompt({
+            playerOfTheDay: playerOfTheDay?.playerOfTheDay as any,
+            analysis: playerOfTheDay?.analysis,
+          });
+
+          const response = await this.gemini.callAI({
+            user_prompt: prompt,
+            enable_call_history: false,
+            model: "gemini-2.0-flash-exp",
+          });
+
+          if (!response?.data) {
+            throw new Error("Failed to generate player of the day insight");
+          }
+
+          const cleanData = response?.data
+            ?.replace(/```json/g, "")
+            .replace(/```/g, "");
+
+          let finalInsight = null;
+          try {
+            const parsedData = JSON.parse(cleanData);
+            finalInsight = parsedData?.insight;
+          } catch (e: any) {
+            console.log(e);
+            throw new Error("Failed to parse player of the day insight");
+          }
+
+          return finalInsight;
+        },
+        {
+          retries: 3,
+          onRetry(e, attempt) {
+            console.log(
+              `Failed to generate player of the day insight, attempt ${attempt}`
+            );
+          },
+        }
+      );
+
+      return response;
+    } catch (e: any) {
+      console.error("Failed to generate player of the day insight", e);
+      throw new Error("Failed to generate player of the day insight");
+    }
   }
 }
