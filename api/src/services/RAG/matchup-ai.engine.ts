@@ -279,6 +279,7 @@ export default class MatchupAIEngine {
 
   extractPlayerInfo(player: MLBPlayer & { team: MLBTeamDetail }) {
     return {
+      id: player?.id,
       name: player?.fullName,
       team: {
         name: player?.team?.name,
