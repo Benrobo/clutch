@@ -9,9 +9,13 @@ export type Player = {
     gender: string;
     verified: boolean;
     batSide: string;
-    pitchHand: string;
     profilePicture: string;
     jerseyNumber: string;
+    team: {
+        name: string;
+        logo: string;
+        id: number;
+    };
 }
 
 export type PlayerStats = {
