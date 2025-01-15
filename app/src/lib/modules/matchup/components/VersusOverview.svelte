@@ -1,11 +1,20 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import type { Player } from '@/types/matchup';
+	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
+	import type { MatchupListResponse } from '@/types/matchup';
 	import { X } from 'lucide-svelte';
 
+	type PlayerDetails = MatchupListResponse['player_position_stats'][
+		| 'challenger'
+		| 'opponent']['info'];
+
 	export let onClose: () => void;
-	export let challenger: Player;
-	export let opponent: Player;
+	export let challenger: PlayerDetails | undefined;
+	export let opponent: PlayerDetails | undefined;
+
+	const getPosition = (position: string) => {
+		return MLB_PLAYER_POSITIONS.find((pos) => pos.abbrev === position)?.shortName;
+	};
 </script>
 
 <div class="w-full h-full bg-dark-109 flex flex-col items-center justify-between p-0 relative">
@@ -31,13 +40,13 @@
 			<img src={challenger?.profilePicture} alt="" class="w-full h-full object-cover" />
 		</div>
 		<span class="font-mouzambik text-white-100 text-[2em] md:text-[3em] z-[1]">
-			{challenger?.fullName.toUpperCase()}
+			{challenger?.name.toUpperCase()}
 		</span>
 		<span
 			class="px-3 py-[4px] rounded-full flex items-center justify-center gap-1 bg-dark-103 font-poppins text-white-300 text-xs z-[1] border-[1px] border-white-400/30"
 		>
 			<span class="text-[1em]">🔰</span>
-			Pitcher
+			{getPosition(challenger?.position ?? '')}
 		</span>
 	</div>
 	<div
@@ -52,13 +61,13 @@
 			<img src={opponent?.profilePicture} alt="" class="w-full h-full object-cover" />
 		</div>
 		<span class="font-mouzambik text-white-100 text-[2em] md:text-[3em] z-[1]">
-			{opponent?.fullName.toUpperCase()}
+			{opponent?.name.toUpperCase()}
 		</span>
 		<span
 			class="px-3 py-[4px] rounded-full flex items-center justify-center gap-1 bg-dark-103 font-poppins text-white-300 text-xs z-[1] border-[1px] border-white-400/30"
 		>
 			<span class="text-[1em]">🔰</span>
-			Pitcher
+			{getPosition(opponent?.position ?? '')}
 		</span>
 	</div>
 </div>
