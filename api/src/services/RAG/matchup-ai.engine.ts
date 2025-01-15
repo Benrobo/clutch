@@ -7,7 +7,11 @@ import {
   PLAYER_ENGAGEMENT_QUESTIONS,
   PLAYER_POSITION_STATS_MAP,
 } from "../../constant/matchup.js";
-import { MLBPositionStats } from "../../types/mlb.types.js";
+import {
+  MLBPlayer,
+  MLBPositionStats,
+  MLBTeamDetail,
+} from "../../types/mlb.types.js";
 import {
   matchupPlayerComparisonPrompt,
   playerOfTheDayInsightPrompt,
@@ -273,6 +277,28 @@ export default class MatchupAIEngine {
     }
   }
 
+  extractPlayerInfo(player: MLBPlayer & { team: MLBTeamDetail }) {
+    return {
+      name: player?.fullName,
+      team: {
+        name: player?.team?.name,
+        logo: player?.team?.logo,
+        id: player?.team?.id,
+      },
+      position: player?.primaryPosition?.abbreviation,
+      profilePicture: player?.profilePicture?.large,
+      batSide: player?.batSide,
+      birthCity: player?.birthCity,
+      birthCountry: player?.birthCountry,
+      height: player?.height,
+      weight: player?.weight,
+      active: player?.active,
+      verified: player?.isVerified,
+      gender: player?.gender,
+      currentAge: player?.currentAge,
+    };
+  }
+
   async generateMatchupHighlights(matchupId: string) {
     try {
       const matchup = await prisma.matchups.findUnique({
@@ -368,11 +394,17 @@ export default class MatchupAIEngine {
         },
         playerMetadata: {
           challenger: {
-            info: challengerInfo?.playerInfo,
+            info: this.extractPlayerInfo({
+              ...challengerInfo?.playerInfo,
+              team: challengerInfo?.teamInfo,
+            }),
             stats: challengerNeededStats,
           },
           opponent: {
-            info: opponentInfo?.playerInfo,
+            info: this.extractPlayerInfo({
+              ...opponentInfo?.playerInfo,
+              team: opponentInfo?.teamInfo,
+            }),
             stats: opponentNeededStats,
           },
         },
