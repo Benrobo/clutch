@@ -1,23 +1,26 @@
+export type Player = {
+    id: number;
+    fullName: string;
+    currentAge: number;
+    height: string;
+    weight: number;
+    active: boolean;
+    position: string;
+    gender: string;
+    verified: boolean;
+    batSide: string;
+    pitchHand: string;
+    profilePicture: string;
+    jerseyNumber: string;
+}
+
 export type PlayerStats = {
     stats: Array<{ key: string; value: string }>;
     visualization: {
         percentage: number;
-        trend: string;
+        trending: 'up' | 'down';
     };
 };
-
-export type ComparisonHighlightSlide = {
-    title: string;
-    players: Record<string, PlayerStats>;
-    insight: string;
-};
-
-export type ComparisonHighlights = {
-    title: string;
-    subtitle: string;
-    slides: ComparisonHighlightSlide[];
-};
-
 
 export type MatchupPlayer = {
     id: number;
@@ -35,6 +38,7 @@ export type MatchupList = {
 }
 
 export type MatchupPlayerDetails ={
+    id: number;
     name: string;
     team: {
         name: string;
