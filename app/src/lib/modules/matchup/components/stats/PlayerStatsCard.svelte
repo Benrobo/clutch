@@ -1,9 +1,6 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import { pictcherStats, players, teams } from '@/data/matchup';
-	import type { Player } from '@/types/matchup';
 	import { cn } from '@/utils';
-	import { BadgeCheck, Dumbbell, Minus, X } from 'lucide-svelte';
 
 	export let headline: string;
 	export let tagline: string;
