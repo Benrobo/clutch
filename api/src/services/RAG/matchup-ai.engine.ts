@@ -37,6 +37,21 @@ type ParsedMatchupResponse = {
   insight: string;
 };
 
+interface PlayerOfTheDayResponse {
+  analysis: Array<{
+    title: string;
+    players: {
+      [playerId: string]: {
+        stats: Array<{ key: string; value: string }>;
+      };
+    };
+  }>;
+  playerOfTheDay: {
+    id: string;
+    score: number;
+  };
+}
+
 export default class MatchupAIEngine {
   private gemini: Gemini;
   private mlbApi: MLBAPIHelper;
@@ -324,14 +339,71 @@ export default class MatchupAIEngine {
         }
       }
 
-      //   return finalAnalysis;
-      fs.writeFileSync(
-        `./matchup-analysis-${matchupId}.json`,
-        JSON.stringify(finalAnalysis, null, 2)
+      const playerScores = this.aggregatePlayerScores(finalAnalysis);
+
+      const playerOfTheDay = this.determinePlayerOfTheDay(
+        finalAnalysis,
+        playerScores
       );
-      console.log({ finalAnalysis });
+
+      console.log(playerOfTheDay);
     } catch (e: any) {
       console.error("Failed to generate matchup highlights", e);
     }
+  }
+
+  private aggregatePlayerScores(
+    analysis: PlayerStatsAnalysisFinalResponse[]
+  ): Record<string, number> {
+    const playerScores: Record<string, number> = {};
+
+    analysis.forEach((question) => {
+      Object.entries(question.players).forEach(([playerId, playerData]) => {
+        const baseScore = playerData.visualization.percentage;
+        const trendingModifier =
+          playerData.visualization.trending === "up" ? 10 : -10;
+        const finalScore = baseScore + trendingModifier;
+
+        if (!playerScores[playerId]) {
+          playerScores[playerId] = 0;
+        }
+        playerScores[playerId] += finalScore;
+      });
+    });
+
+    return playerScores;
+  }
+
+  private determinePlayerOfTheDay(
+    analysis: PlayerStatsAnalysisFinalResponse[],
+    scores: Record<string, number>
+  ): PlayerOfTheDayResponse {
+    // Find player with highest score
+    const [topPlayerId, topScore] = Object.entries(scores).reduce(
+      (max, [id, score]) => (score > max[1] ? [id, score] : max),
+      ["", -Infinity]
+    );
+
+    // Extract required information from analysis
+    const simplifiedAnalysis = analysis.map((question) => ({
+      title: question.title,
+      players: Object.entries(question.players).reduce(
+        (acc, [playerId, data]) => ({
+          ...acc,
+          [playerId]: {
+            stats: data.stats,
+          },
+        }),
+        {}
+      ),
+    }));
+
+    return {
+      analysis: simplifiedAnalysis,
+      playerOfTheDay: {
+        id: topPlayerId,
+        score: topScore,
+      },
+    };
   }
 }
