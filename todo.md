@@ -110,3 +110,9 @@ async function detectBaseballActions(video: string) {
   return actionFrames;
 }
 ```
+
+## Bugs
+
+- Fix the video chatbot feature where the tool to search web is been called on query that doesn't need any web search
+- Fix the matchup page where the selected players are not being updated when the team is changed
+-
