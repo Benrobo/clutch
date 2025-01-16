@@ -3,13 +3,18 @@
 	import type { Player } from '@/types/matchup';
 	import { cn } from '@/utils';
 	import { BadgeCheck, Check, CheckCheck } from 'lucide-svelte';
+	import { afterUpdate } from 'svelte';
 
 	export let player: Player;
-	export let selectedPlayers: Player[] = [];
+	export let selectedPlayers: Player[];
 	export let onSelect: (player: Player) => void;
 	export let disabled: boolean = false;
 
-	$: isSelected = selectedPlayers.find((p) => p.id === player?.id);
+	$: isSelected = selectedPlayers.some((p) => String(p.id) === String(player?.id));
+
+	afterUpdate(() => {
+		console.log({ isSelected, selectedPlayers, player });
+	});
 </script>
 
 <div
