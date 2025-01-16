@@ -13,7 +13,7 @@
 	$: isSelected = selectedPlayers.some((p) => String(p.id) === String(player?.id));
 
 	afterUpdate(() => {
-		console.log({ isSelected, selectedPlayers, player });
+		// console.log({ isSelected, selectedPlayers, player });
 	});
 </script>
 
