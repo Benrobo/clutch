@@ -318,21 +318,21 @@ export default class MatchupAIEngine {
       }
 
       const challengerInfo = await this.getPlayerAndTeamInfo(
-        challenger,
-        matchup?.challenger_team_id
+        Number(challenger),
+        Number(matchup?.challenger_team_id)
       );
 
       const opponentInfo = await this.getPlayerAndTeamInfo(
-        opponent,
-        matchup?.opponent_team_id
+        Number(opponent),
+        Number(matchup?.opponent_team_id)
       );
 
       const { challengerNeededStats, opponentNeededStats } =
         await this.getPlayerNeededStats({
-          challengerId: challenger,
-          opponentId: opponent,
+          challengerId: Number(challenger),
+          opponentId: Number(opponent),
           position: matchup?.position,
-          season: matchup?.season,
+          season: Number(matchup?.season),
         });
 
       const playerStatsComparisonQuestions =
@@ -363,7 +363,7 @@ export default class MatchupAIEngine {
             opponent: {
               stats: opponentStats as any,
               player: {
-                id: opponent,
+                id: Number(opponent),
                 fullName: opponentInfo?.playerInfo?.fullName,
                 position: opponentInfo?.playerInfo?.primaryPosition?.name,
                 team: opponentInfo?.teamInfo?.name,
