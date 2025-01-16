@@ -10,6 +10,9 @@
 	export let onSelectPlayer: (player: Player) => void;
 	export let removeSelectedPlayer: (player: Player) => void;
 	export let isLoading: boolean = false;
+	export let onSelectedPlayersClick: (pId: number) => void;
+
+	// $: console.log({ selectedPlayers });
 </script>
 
 {#if isLoading}
@@ -25,8 +28,13 @@
 	<div class="w-full h-[50px] flex flex-row items-center justify-start mb-5 px-4 md:px-8 gap-2">
 		{#if selectedPlayers.length > 0}
 			{#each selectedPlayers as player}
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
-					class="w-auto h-auto bg-orange-101 rounded-full pl-2 py-0 flex flex-row items-center justify-center gap-0"
+					class="w-auto h-auto bg-orange-101 rounded-full pl-2 py-0 flex flex-row items-center justify-center gap-0 cursor-pointer"
+					on:click={() => {
+						onSelectedPlayersClick(player?.id);
+					}}
 				>
 					<img src={player?.profilePicture} alt={player?.fullName} class="w-5 h-5 rounded-full" />
 					<span class="text-white-100 text-sm font-semibold font-recoleta mr-1">
