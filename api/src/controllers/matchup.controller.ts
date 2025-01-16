@@ -4,10 +4,12 @@ import sendResponse from "../lib/send-response.js";
 import { HttpException } from "../lib/exception.js";
 import MLBAPIHelper from "../helpers/mlb/mlb-api.helper.js";
 import { inngestClient } from "../config/inngest.js";
-import { JobType } from "@prisma/client";
+import { JobStatus, JobType } from "@prisma/client";
 import { getPositionType } from "../lib/utils.js";
 import { MLBStatGroup } from "../types/mlb.types.js";
 import shortUUID from "short-uuid";
+import retry from "async-retry";
+import redis from "../config/redis.js";
 
 class MatchupController {
   private matchupService: MatchupService;
@@ -140,25 +142,31 @@ class MatchupController {
       position,
     });
 
-    const jobStatus = await this.matchupService.getJobStatus(
-      JobType.COMPARE_PLAYERS_HIGHLIGHT
-    );
-
-    if (existingMatchup && jobStatus?.status === "PENDING") {
-      if (!jobStatus?.started) {
+    if (existingMatchup) {
+      if (
+        existingMatchup?.status === JobStatus.PENDING ||
+        existingMatchup?.error
+      ) {
         await inngestClient.send({
           name: "compare-players-stats",
           data: {
             matchupId: existingMatchup.id,
-            jobId: jobStatus?.id,
           },
         });
+      } else if (existingMatchup?.status === JobStatus.COMPLETED) {
+        return sendResponse?.success(
+          c,
+          "Matchup already exists",
+          200,
+          existingMatchup
+        );
+      } else {
+        return sendResponse?.success(
+          c,
+          "Players matchups are being generated. Please wait.",
+          200
+        );
       }
-      return sendResponse?.success(
-        c,
-        "Players matchups are being generated. Please wait.",
-        200
-      );
     }
 
     await prisma.$transaction(async (tx) => {
@@ -174,23 +182,10 @@ class MatchupController {
         },
       });
 
-      // create job
-      const jobId = shortUUID.generate();
-      await tx.jobs.create({
-        data: {
-          id: jobId,
-          type: JobType.COMPARE_PLAYERS_HIGHLIGHT,
-          input_data: {
-            matchupId: matchup.id,
-          },
-        },
-      });
-
       inngestClient.send({
         name: "compare-players-stats",
         data: {
           matchupId: matchup.id,
-          jobId: jobId,
         },
       });
     });
@@ -202,6 +197,71 @@ class MatchupController {
     const user = c.get("user");
     const matchups = await this.matchupService.getMatchups(user?.id);
     return sendResponse?.success(c, "Matchups fetched", 200, matchups);
+  }
+
+  async getTeamPlayers(c: Context) {
+    const teamId = c.req.param("teamId");
+    let players: any[] = [];
+
+    try {
+      const cachedPlayers = await redis.get(`team-players-${teamId}`);
+      if (cachedPlayers) {
+        try {
+          players = JSON.parse(cachedPlayers);
+        } catch (parseError) {
+          console.error("Error parsing cached players:", parseError);
+          // If parsing fails, fetch fresh data
+          players = await this.fetchTeamPlayers(teamId);
+        }
+      } else {
+        players = await this.fetchTeamPlayers(teamId);
+      }
+    } catch (e: any) {
+      console.error(`Error fetching team players:`, e);
+      throw new Error("Failed to fetch team players");
+    }
+    return sendResponse?.success(c, "Team players fetched", 200, players);
+  }
+
+  private async fetchTeamPlayers(teamId: string) {
+    return retry(
+      async () => {
+        const roster = await this.mlbApi.getTeamRoster(Number(teamId));
+        const rosterIds = roster.map((player) => player?.person?.id);
+        const players = await Promise.all(
+          rosterIds.map(async (id) => {
+            const player = await this.mlbApi.getPlayer(id);
+            return {
+              id: player.id,
+              fullName: player.fullName,
+              currentAge: player.currentAge,
+              height: player.height,
+              weight: player.weight,
+              active: player.active,
+              position: player.primaryPosition?.abbreviation,
+              gender: player.gender,
+              verified: player.isVerified,
+              batSide: player.batSide?.code,
+              profilePicture: player.profilePicture?.medium ?? "",
+              jerseyNumber: player.primaryNumber,
+            };
+          })
+        );
+
+        const cacheDuration = 2 * 60 * 60; // 2hr
+        await redis.set(`team-players-${teamId}`, JSON.stringify(players));
+        await redis.expire(`team-players-${teamId}`, cacheDuration);
+
+        return players;
+      },
+      {
+        retries: 3,
+        onRetry(e, attempt) {
+          console.error(`Error fetching team players:`, e);
+          console.error(`Attempt:`, attempt);
+        },
+      }
+    );
   }
 }
 
