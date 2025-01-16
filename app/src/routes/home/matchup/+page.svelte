@@ -21,25 +21,32 @@
 	import Spinner from '@/components/Spinner.svelte';
 	import Switch from '@/components/ui/switch/switch.svelte';
 
-	let selectedPlayers: Array<{ teamId: number; player: Player | null }>;
+	interface SelectedPlayer {
+		teamId: number;
+		player: Player;
+	}
+
+	let selectedPlayers: SelectedPlayer[] = [];
 	let selectInputTeam: Record<number, number>;
 	let selectedTeam: Record<number, number>;
 	let selectingFor: number;
-	let showSearchFilter = true;
+	let showSearchFilter = false;
 	let searchQuery: string;
 	let selectedMatchup: MatchupListResponse | null = null;
-	let showConfigureMatchup = false;
+	let showConfigureMatchup = true;
 	let matchupList: MatchupListResponse[] = [];
 
 	let createMatchupState: Array<{
 		type: 'challenger' | 'opponent';
-		player: Player | null;
 		teamId: number;
 		fetchedPlayers: Player[];
 	}>;
-	let activeTeamTab: number;
+	let activeTeamTab: 'challenger' | 'opponent';
+	let activeTeam: number;
+	let _activeTeam: number;
 
-	$: activeTeamTab = teams[0]?.id;
+	$: activeTeamTab = 'challenger';
+	$: _activeTeam = teams[0]?.id;
 
 	$: createMatchupState = [
 		{
@@ -68,8 +75,8 @@
 
 	// Simplified queries by using store values
 	$: getTeamPlayersQuery = createQuery({
-		queryKey: ['team-players', activeTeamTab],
-		queryFn: () => getTeamPlayers(activeTeamTab),
+		queryKey: ['team-players', _activeTeam],
+		queryFn: () => getTeamPlayers(_activeTeam),
 		enabled: showConfigureMatchup,
 		staleTime: 1000 * 60 * 5
 	});
@@ -86,10 +93,6 @@
 		mutationFn: createMatchup,
 		onSuccess: () => {
 			showConfigureMatchup = false;
-			selectedPlayers = [
-				{ teamId: selectInputTeam[selectingFor], player: null },
-				{ teamId: selectInputTeam[selectingFor], player: null }
-			];
 			searchQuery = '';
 			filters.season = '2024';
 			filters.position = 'P';
@@ -103,32 +106,27 @@
 	});
 
 	$: filteredPlayers = filterPlayers(
-		createMatchupState.find((state) => state.teamId === activeTeamTab)?.fetchedPlayers ?? [],
+		createMatchupState.find((state) => state.teamId === _activeTeam)?.fetchedPlayers ?? [],
 		searchQuery,
-		filters,
-		createMatchupState.find((state) => state.teamId === activeTeamTab)?.player ?? null
+		filters
 	);
 
 	const filterPlayers = (
 		players: Player[],
 		query: string,
-		filters: { season: string; position: string },
-		selectedPlayers: Player | null
+		filters: { season: string; position: string }
 	) => {
 		return (players ?? []).filter((player) => {
-			const isAlreadySelected = selectedPlayers?.id === player.id;
-			return (
-				!isAlreadySelected &&
-				(query.toLowerCase().length > 0
-					? player.fullName.toLowerCase().includes(query.toLowerCase()) &&
+			return query.toLowerCase().length > 0
+				? player.fullName.toLowerCase().includes(query.toLowerCase()) &&
 						player.position === filters.position
-					: player.position === filters.position)
-			);
+				: player.position === filters.position;
 		});
 	};
 
 	function handleTeamChange(teamId: number) {
-		activeTeamTab = teamId;
+		_activeTeam = teamId;
+		activeTeamTab = createMatchupState.find((state) => state.teamId === _activeTeam)?.type! as any;
 	}
 
 	$: isMaxSelectedPlayersUpToLimit = () => {
@@ -140,27 +138,43 @@
 	};
 
 	function handlePlayerSelection(player: Player) {
-		// Create a new array to ensure reactivity
-		let copySelectedPlayers = selectedPlayers;
-		if (selectedPlayers.length > 0) {
-			const selectionExists = copySelectedPlayers.find(
-				(selection) => selection.player?.id === player.id
-			);
-			if (selectionExists) {
-				selectedPlayers = selectedPlayers.filter((selection) => selection.player?.id !== player.id);
-			} else {
-				selectedPlayers = [
-					...copySelectedPlayers,
-					{ teamId: selectInputTeam[selectingFor], player }
-				];
-			}
-		} else {
-			selectedPlayers = [{ teamId: selectInputTeam[selectingFor], player }];
+		// Check if player is already selected - if so, remove them
+		if (selectedPlayers.some((selected) => selected.player.id === player.id)) {
+			selectedPlayers = selectedPlayers.filter((selected) => selected.player.id !== player.id);
+			return;
 		}
+
+		// If no players selected yet, add as first player
+		if (selectedPlayers.length === 0) {
+			selectedPlayers = [
+				{
+					teamId: _activeTeam,
+					player
+				}
+			];
+			return;
+		}
+
+		// If one player selected and selecting for different team, add as second player
+		if (selectedPlayers.length === 1) {
+			selectedPlayers = [
+				...selectedPlayers,
+				{
+					teamId: _activeTeam,
+					player
+				}
+			];
+			return;
+		}
+
+		// If selecting for a team that already has a player, update that player
+		// selectedPlayers = selectedPlayers.map((selected) =>
+		// 	selected.teamId === _activeTeam ? { ...selected, player } : selected
+		// );
 	}
 
 	function handleRemovePlayer(player: Player) {
-		selectedPlayers = selectedPlayers.filter((selection) => selection.player?.id !== player.id);
+		selectedPlayers = selectedPlayers.filter((s) => s.player.id !== player.id);
 	}
 
 	function handleChallengerAndOpponentChange(teamId: number, type: 'challenger' | 'opponent') {
@@ -168,7 +182,8 @@
 			const updatedState = createMatchupState.find((state) => state.type === 'challenger');
 			if (updatedState) {
 				updatedState.teamId = teamId;
-				activeTeamTab = teamId;
+				_activeTeam = teamId;
+				activeTeamTab = 'challenger';
 				console.log({ updatedState });
 				createMatchupState = [
 					...createMatchupState.filter((state) => state.type !== 'challenger'),
@@ -179,7 +194,8 @@
 			const updatedState = createMatchupState.find((state) => state.type === 'opponent');
 			if (updatedState) {
 				updatedState.teamId = teamId;
-				activeTeamTab = teamId;
+				_activeTeam = teamId;
+				activeTeamTab = 'opponent';
 				createMatchupState = [
 					...createMatchupState.filter((state) => state.type !== 'opponent'),
 					updatedState
@@ -198,7 +214,7 @@
 		if ($getTeamPlayersQuery.data) {
 			const data = (extractAxiosResponseData($getTeamPlayersQuery.data, 'success')?.data ??
 				[]) as unknown as Player[];
-			let updated = createMatchupState.find((state) => state.teamId === activeTeamTab);
+			let updated = createMatchupState.find((state) => state.teamId === _activeTeam);
 			if (updated?.fetchedPlayers) {
 				updated.fetchedPlayers = [...data];
 
@@ -211,18 +227,10 @@
 		}
 	}
 
-	$: getSelectedPlayers = (): Player[] => {
-		const selected = createMatchupState
-			.map((s) => s.player)
-			.filter((p) => p !== null)
-			.flat();
-
-		return selected;
-	};
-
 	afterUpdate(() => {
 		// console.log(createMatchupState);
 		// console.log(createMatchupState);
+		console.log({ selectedPlayers, createMatchupState });
 	});
 </script>
 
@@ -312,7 +320,7 @@
 						<button
 							class={cn(
 								'w-auto h-full flex flex-row items-center justify-around gap-1 py-2 px-4 text-md font-light font-gothic-one rounded-full border-[1px] border-white-100/10 transition-all ease-in-out',
-								matchupState.teamId === activeTeamTab
+								matchupState.type === activeTeamTab
 									? 'bg-orange-101 text-white-100'
 									: 'bg-white-100 text-dark-100  disabled:cursor-not-allowed disabled:opacity-50'
 							)}
@@ -336,10 +344,20 @@
 			<div class="h-screen -translate-y-10">
 				<ConfigureMatchup
 					players={filteredPlayers}
-					selectedPlayers={getSelectedPlayers()}
+					selectedPlayers={selectedPlayers.map((s) => s.player)}
 					onSelectPlayer={handlePlayerSelection}
 					removeSelectedPlayer={handleRemovePlayer}
 					isLoading={$getTeamPlayersQuery.isFetching || $getTeamPlayersQuery.isLoading}
+					onSelectedPlayersClick={(pId) => {
+						const playerTeam = selectedPlayers.find((s) => s.player?.id === pId)?.teamId;
+						if (playerTeam) {
+							const activeTeam = createMatchupState.find((s) => s.teamId === playerTeam);
+							if (activeTeam) {
+								activeTeamTab = activeTeam.type;
+								_activeTeam = activeTeam.teamId;
+							}
+						}
+					}}
 				/>
 			</div>
 
