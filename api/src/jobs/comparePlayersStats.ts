@@ -11,28 +11,17 @@ export const comparePlayersStats = inngestClient.createFunction(
     retries: 1,
     onFailure: async ({ event }) => {
       console.log(`🔃 Compare players stats job failed`, event);
-      const jobId = event.data?.event?.data?.jobId;
       const matchupId = event.data?.event?.data?.matchupId;
-      if (!jobId || !matchupId) return;
+      if (!matchupId) return;
 
       await prisma.$transaction(async (tx) => {
-        await tx.jobs.update({
-          where: { id: jobId },
-          data: {
-            status: JobStatus.FAILED,
-            error: event.data?.error?.message,
-            output_data: {
-              error: event.data?.error?.message,
-            } as unknown as never,
-          },
-        });
-
         await tx.matchups.update({
           where: { id: matchupId },
           data: {
             highlights: null as any,
             player_position_stats: null as any,
             error: event.data?.error?.message,
+            status: JobStatus.FAILED,
           },
         });
       });
@@ -44,13 +33,6 @@ export const comparePlayersStats = inngestClient.createFunction(
   async ({ step, event }) => {
     console.log(`🔃 Compare players stats job started`);
     const matchupId = event.data.matchupId;
-    const jobId = event.data.jobId;
-
-    // update job status
-    await prisma.jobs.update({
-      where: { id: jobId },
-      data: { started: true },
-    });
 
     // generate matchup highlights
     const matchupAIEngine = new MatchupAIEngine();
@@ -59,15 +41,6 @@ export const comparePlayersStats = inngestClient.createFunction(
     );
 
     await prisma.$transaction(async (tx) => {
-      await tx.jobs.update({
-        where: { id: jobId },
-        data: {
-          output_data: matchupHighlights as any,
-          status: JobStatus.COMPLETED,
-          error: null,
-        },
-      });
-
       await tx.matchups.update({
         where: { id: matchupId },
         data: {
@@ -77,6 +50,7 @@ export const comparePlayersStats = inngestClient.createFunction(
           } as any,
           player_position_stats: matchupHighlights?.playerMetadata as any,
           error: null,
+          status: JobStatus.COMPLETED,
         },
       });
     });
