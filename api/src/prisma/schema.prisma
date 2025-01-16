@@ -264,11 +264,13 @@ model matchups {
     id                 String @id @default(cuid())
     user_id            String
     challenger_id      Int
-    opponent_id        Int
+    opponent_id        String
     challenger_team_id Int
     opponent_team_id   Int
     season             Int
     position           String
+
+    status JobStatus @default(PENDING)
 
     // highlights -> check db-fields-structure.md
     highlights Json?
