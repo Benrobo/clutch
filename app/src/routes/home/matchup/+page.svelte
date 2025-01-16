@@ -20,68 +20,56 @@
 	import queryClient from '@/config/tanstack-query';
 	import Spinner from '@/components/Spinner.svelte';
 	import Switch from '@/components/ui/switch/switch.svelte';
-	// import { matchupStore } from '$lib/store/matchup.store';
-	import * as Popover from '$lib/components/ui/popover';
-
-	// Move these interfaces to types/matchup.ts
-	interface TeamSelection {
-		challenger: number;
-		opponent: number;
-	}
-
-	interface FilterState {
-		season: string;
-		position: string;
-	}
 
 	let selectedPlayers: Array<{ teamId: number; player: Player | null }>;
 	let selectInputTeam: Record<number, number>;
 	let selectedTeam: Record<number, number>;
-	let selectingForInput: number;
 	let selectingFor: number;
-	let showSearchFilter = false;
+	let showSearchFilter = true;
 	let searchQuery: string;
 	let selectedMatchup: MatchupListResponse | null = null;
 	let showConfigureMatchup = false;
-	let selectedForPlayers: Record<number, Player[]> = {};
 	let matchupList: MatchupListResponse[] = [];
 
-	// Consolidated state management
-	$: selectedTeam = {
-		[teams[0]?.id]: teams[0]?.id,
-		[teams[1]?.id]: teams[1]?.id
-	};
+	let createMatchupState: Array<{
+		type: 'challenger' | 'opponent';
+		player: Player | null;
+		teamId: number;
+		fetchedPlayers: Player[];
+	}>;
+	let activeTeamTab: number;
 
-	$: selectInputTeam = {
-		[teams[0]?.id]: teams[0]?.id,
-		[teams[1]?.id]: teams[1]?.id
-	};
+	$: activeTeamTab = teams[0]?.id;
+
+	$: createMatchupState = [
+		{
+			type: 'challenger',
+			player: null,
+			teamId: teams[0]?.id,
+			fetchedPlayers: []
+		},
+		{
+			type: 'opponent',
+			player: null,
+			teamId: teams[1]?.id,
+			fetchedPlayers: []
+		}
+	] as any;
 
 	$: searchQuery = '';
-
-	$: selectingFor = selectInputTeam[selectingForInput];
-
-	$: selectedPlayers = [];
-	$: selectedForPlayers = {
-		[selectInputTeam[selectingFor]]: [],
-		[selectInputTeam[selectingFor]]: []
-	};
-
-	// Move filter state to store
 	$: filters = {
 		season: '2024',
 		position: 'P'
 	};
-
-	$: selectedMatchup = null;
-
 	$: seasonValue = '2024';
 	$: positionValue = 'P';
 
+	$: selectedMatchup = null;
+
 	// Simplified queries by using store values
 	$: getTeamPlayersQuery = createQuery({
-		queryKey: ['team-players', selectedTeam[selectingFor]],
-		queryFn: () => getTeamPlayers(selectedTeam[selectingFor]),
+		queryKey: ['team-players', activeTeamTab],
+		queryFn: () => getTeamPlayers(activeTeamTab),
 		enabled: showConfigureMatchup,
 		staleTime: 1000 * 60 * 5
 	});
@@ -115,23 +103,20 @@
 	});
 
 	$: filteredPlayers = filterPlayers(
-		selectedForPlayers[selectedTeam[selectingFor]],
+		createMatchupState.find((state) => state.teamId === activeTeamTab)?.fetchedPlayers ?? [],
 		searchQuery,
 		filters,
-		selectedPlayers
+		createMatchupState.find((state) => state.teamId === activeTeamTab)?.player ?? null
 	);
 
-	function filterPlayers(
+	const filterPlayers = (
 		players: Player[],
 		query: string,
 		filters: { season: string; position: string },
-		selectedPlayers: Array<{ teamId: number; player: Player | null }>
-	) {
-		return players.filter((player) => {
-			const isAlreadySelected = selectedPlayers.some(
-				(selection) => selection.player?.id === player.id
-			);
-
+		selectedPlayers: Player | null
+	) => {
+		return (players ?? []).filter((player) => {
+			const isAlreadySelected = selectedPlayers?.id === player.id;
 			return (
 				!isAlreadySelected &&
 				(query.toLowerCase().length > 0
@@ -140,15 +125,18 @@
 					: player.position === filters.position)
 			);
 		});
-	}
+	};
 
 	function handleTeamChange(teamId: number) {
-		selectInputTeam[selectingFor] = teamId;
-		selectingFor = teamId;
+		activeTeamTab = teamId;
 	}
 
 	$: isMaxSelectedPlayersUpToLimit = () => {
-		return selectedPlayers.filter((selection) => selection.player !== null).length === 2;
+		const state = createMatchupState
+			.map((s) => s.fetchedPlayers)
+			.filter((p) => p !== null)
+			.flat();
+		return state.length === 2;
 	};
 
 	function handlePlayerSelection(player: Player) {
@@ -175,6 +163,31 @@
 		selectedPlayers = selectedPlayers.filter((selection) => selection.player?.id !== player.id);
 	}
 
+	function handleChallengerAndOpponentChange(teamId: number, type: 'challenger' | 'opponent') {
+		if (type === 'challenger') {
+			const updatedState = createMatchupState.find((state) => state.type === 'challenger');
+			if (updatedState) {
+				updatedState.teamId = teamId;
+				activeTeamTab = teamId;
+				console.log({ updatedState });
+				createMatchupState = [
+					...createMatchupState.filter((state) => state.type !== 'challenger'),
+					updatedState
+				];
+			}
+		} else {
+			const updatedState = createMatchupState.find((state) => state.type === 'opponent');
+			if (updatedState) {
+				updatedState.teamId = teamId;
+				activeTeamTab = teamId;
+				createMatchupState = [
+					...createMatchupState.filter((state) => state.type !== 'opponent'),
+					updatedState
+				];
+			}
+		}
+	}
+
 	$: matchupList = (
 		$getMatchupsQuery.data
 			? (extractAxiosResponseData($getMatchupsQuery.data, 'success')?.data ?? [])
@@ -185,21 +198,31 @@
 		if ($getTeamPlayersQuery.data) {
 			const data = (extractAxiosResponseData($getTeamPlayersQuery.data, 'success')?.data ??
 				[]) as unknown as Player[];
-			selectedForPlayers[selectingFor] = data;
+			let updated = createMatchupState.find((state) => state.teamId === activeTeamTab);
+			if (updated?.fetchedPlayers) {
+				updated.fetchedPlayers = [...data];
+
+				// account for duplicate
+				createMatchupState = [
+					...createMatchupState.filter((state) => state.type !== updated.type),
+					updated
+				];
+			}
 		}
 	}
 
 	$: getSelectedPlayers = (): Player[] => {
-		const selected = selectedPlayers
-			.filter((selection) => selection.player !== null)
-			.map((selection) => selection.player)
-			.filter((p) => p !== null);
+		const selected = createMatchupState
+			.map((s) => s.player)
+			.filter((p) => p !== null)
+			.flat();
 
 		return selected;
 	};
 
 	afterUpdate(() => {
-		console.log(getSelectedPlayers());
+		// console.log(createMatchupState);
+		// console.log(createMatchupState);
 	});
 </script>
 
@@ -263,7 +286,7 @@
 							<span
 								class="w-4 h-4 text-[10px] rounded-full bg-orange-101 absolute top-0 -translate-y-1 translate-x-1 right-0 flex items-center justify-center"
 							>
-								{Object.entries(filters).length}
+								<!-- {Object.entries(filters).length} -->
 							</span>
 						{/if}
 					</button>
@@ -284,39 +307,22 @@
 				<div
 					class="w-full h-auto py-2 flex flex-row gap-4 whitespace-nowrap overflow-x-scroll bg-none mt-5 hideScrollBar2"
 				>
-					{#each Object.entries(selectedTeam) as [key, value]}
-						{@const team = teams.find((team) => team.id === Number(value))}
+					{#each createMatchupState.sort( (a, b) => (a.type === 'challenger' ? -1 : 1) ) as matchupState}
+						{@const team = teams.find((team) => team.id === Number(matchupState.teamId))}
 						<button
 							class={cn(
 								'w-auto h-full flex flex-row items-center justify-around gap-1 py-2 px-4 text-md font-light font-gothic-one rounded-full border-[1px] border-white-100/10 transition-all ease-in-out',
-								selectedTeam[selectingFor] === team?.id
+								matchupState.teamId === activeTeamTab
 									? 'bg-orange-101 text-white-100'
 									: 'bg-white-100 text-dark-100  disabled:cursor-not-allowed disabled:opacity-50'
 							)}
 							on:click={() => {
 								// @ts-expect-error
-								handleTeamChange(team?.id, key);
+								handleTeamChange(team?.id);
 							}}
 							disabled={isMaxSelectedPlayersUpToLimit()}
 						>
 							<img src={team?.logo_url} alt={team?.abbreviation} class="w-5 h-5 grayscale" />
-							<!-- <span class="text-white-100 text-xl grayscale"> ⚾️ </span> -->
-							<!-- {#if selectedTeam === team?.id}
-								<span class="text-white-100 text-xl grayscale">
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-										><g
-											fill="none"
-											stroke="currentColor"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="1.5"
-											><path d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0" /><path
-												d="M3.804 9.804c5.022.94 7.697 5.573 6 10.392m10.392-6c-5.022-.94-7.697-5.573-6-10.392"
-											/></g
-										></svg
-									>
-								</span>
-							{/if} -->
 							<span class="ml-2 text-xs mr-3">
 								{team?.name}
 							</span>
@@ -407,7 +413,7 @@
 <!-- Search Filter Bottom Sheet -->
 <BottomSheet
 	className="w-full h-auto min-h-[30vh] bg-dark-106"
-	showBackdrop={true}
+	showBackdrop={false}
 	isOpen={showSearchFilter}
 	showCloseButton={true}
 	closeBtnClassName="bg-dark-100/30 text-white-100 stroke-white-100"
@@ -460,12 +466,10 @@
 				name="challengerTeam"
 				id=""
 				class="w-full h-full bg-dark-100/30 outline-none border-none ring-0 rounded-lg focus:ring-0 cursor-pointer"
-				value={selectedTeam[selectingFor]}
+				value={createMatchupState.find((state) => state.type === 'challenger')?.teamId}
 				on:change={(e) => {
 					// @ts-expect-error
-					selectInputTeam[selectingFor] = Number(e.target?.value);
-					// @ts-expect-error
-					selectingFor = Number(e.target?.value);
+					handleChallengerAndOpponentChange(Number(e.target?.value), 'challenger');
 				}}
 			>
 				{#each teams as team}
@@ -480,12 +484,10 @@
 				name="opponentTeam"
 				id=""
 				class="w-full h-full bg-dark-100/30 outline-none border-none ring-0 rounded-lg focus:ring-0 cursor-pointer"
-				value={selectedTeam[selectingFor]}
+				value={createMatchupState.find((state) => state.type === 'opponent')?.teamId}
 				on:change={(e) => {
 					// @ts-expect-error
-					selectInputTeam[selectingFor] = Number(e.target?.value);
-					// @ts-expect-error
-					selectingFor = Number(e.target?.value);
+					handleChallengerAndOpponentChange(Number(e.target?.value), 'opponent');
 				}}
 			>
 				{#each teams as team}
@@ -495,44 +497,28 @@
 		</Flex>
 
 		<br />
-		<Flex className="w-full flex-center">
+		<!-- <Flex className="w-full flex-center">
 			<button
 				class={cn(
 					'w-full h-auto bg-orange-101 rounded-full px-4 py-3 text-white-100 text-md font-semibold font-gothic-one enableBounceEffect'
 				)}
 				on:click={() => {
-					if (filters.position !== positionValue) {
-						// Find and clear the current selection
-						const currentSelection = selectedPlayers.find(
-							(s) => s.teamId === selectInputTeam[selectingFor]
-						);
-						if (currentSelection) {
-							currentSelection.player = null;
-						}
-						selectedForPlayers[selectingForInput] = [];
-					}
-
-					if (selectedTeam[selectingFor] !== selectInputTeam[selectingForInput]) {
-						// Find and clear the current selection
-						const currentSelection = selectedPlayers.find(
-							(s) => s.teamId === selectInputTeam[selectingFor]
-						);
-						if (currentSelection) {
-							currentSelection.player = null;
-						}
-						selectedForPlayers[selectingForInput] = [];
-					}
-
-					selectedTeam = selectInputTeam;
-					selectingFor = selectingForInput;
-					showSearchFilter = false;
-					filters.season = seasonValue;
-					filters.position = positionValue;
+					// if (filters.position !== positionValue) {
+					// 	// Find and clear the current selection
+					// }
+					// if (selectedTeam[selectingFor] !== selectInputTeam[selectingForInput]) {
+					// 	// Find and clear the current selection
+					// }
+					// selectedTeam = selectInputTeam;
+					// selectingFor = selectingForInput;
+					// showSearchFilter = false;
+					// filters.season = seasonValue;
+					// filters.position = positionValue;
 				}}
 			>
 				Apply
 			</button>
-		</Flex>
+		</Flex> -->
 		<br />
 	</Flex>
 </BottomSheet>
