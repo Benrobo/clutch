@@ -264,7 +264,7 @@ model matchups {
     id                 String @id @default(cuid())
     user_id            String
     challenger_id      Int
-    opponent_id        String
+    opponent_id        Int
     challenger_team_id Int
     opponent_team_id   Int
     season             Int
