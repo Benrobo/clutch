@@ -11,11 +11,6 @@ export type Player = {
     batSide: string;
     profilePicture: string;
     jerseyNumber: string;
-    team: {
-        name: string;
-        logo: string;
-        id: number;
-    };
 }
 
 export type PlayerStats = {
@@ -103,4 +98,7 @@ export type MatchupListResponse = {
             }>
         }
     }
+    created_at: string;
+    status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
+    error: string | null;
 }
