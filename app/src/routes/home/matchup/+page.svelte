@@ -1,17 +1,15 @@
 <script lang="ts">
 	import BottomSheet from '@/components/BottomSheet.svelte';
 	import Flex from '@/components/Flex.svelte';
-	import Input from '@/components/ui/input.svelte';
 	import { GAME_SEASONS } from '@/constant/matchup';
-	import { players, teams } from '@/data/matchup';
+	import { teams } from '@/data/matchup';
 	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
 	import ConfigureMatchup from '@/modules/matchup/components/ConfigureMatchup.svelte';
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
-	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import SelectedMatchup from '@/modules/matchup/components/SelectedMatchup.svelte';
-	import type { MatchupList, MatchupListResponse, Player } from '@/types/matchup';
+	import type { MatchupListResponse, Player } from '@/types/matchup';
 	import { cn, extractAxiosResponseData } from '@/utils';
-	import { BadgeCheck, CheckCheck, ListFilter, Scale, Search, X } from 'lucide-svelte';
+	import { ListFilter, Scale, Search, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
 	import MatchUpList from '@/modules/matchup/components/MatchUpList.svelte';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
@@ -19,7 +17,6 @@
 	import toast from 'svelte-french-toast';
 	import queryClient from '@/config/tanstack-query';
 	import Spinner from '@/components/Spinner.svelte';
-	import Switch from '@/components/ui/switch/switch.svelte';
 
 	interface SelectedPlayer {
 		teamId: number;
@@ -27,13 +24,11 @@
 	}
 
 	let selectedPlayers: SelectedPlayer[] = [];
-	let selectInputTeam: Record<number, number>;
 	let selectedTeam: Record<number, number>;
-	let selectingFor: number;
 	let showSearchFilter = false;
 	let searchQuery: string;
 	let selectedMatchup: MatchupListResponse | null = null;
-	let showConfigureMatchup = true;
+	let showConfigureMatchup = false;
 	let matchupList: MatchupListResponse[] = [];
 
 	let createMatchupState: Array<{
@@ -42,7 +37,6 @@
 		fetchedPlayers: Player[];
 	}>;
 	let activeTeamTab: 'challenger' | 'opponent';
-	let activeTeam: number;
 	let _activeTeam: number;
 
 	$: activeTeamTab = 'challenger';
@@ -111,6 +105,34 @@
 		filters
 	);
 
+	$: isMaxSelectedPlayersUpToLimit = () => {
+		const state = selectedPlayers.length === 2;
+		return state;
+	};
+
+	$: matchupList = (
+		$getMatchupsQuery.data
+			? (extractAxiosResponseData($getMatchupsQuery.data, 'success')?.data ?? [])
+			: []
+	) as Array<MatchupListResponse>;
+
+	$: {
+		if ($getTeamPlayersQuery.data) {
+			const data = (extractAxiosResponseData($getTeamPlayersQuery.data, 'success')?.data ??
+				[]) as unknown as Player[];
+			let updated = createMatchupState.find((state) => state.teamId === _activeTeam);
+			if (updated?.fetchedPlayers) {
+				updated.fetchedPlayers = [...data];
+
+				// account for duplicate
+				createMatchupState = [
+					...createMatchupState.filter((state) => state.type !== updated.type),
+					updated
+				];
+			}
+		}
+	}
+
 	const filterPlayers = (
 		players: Player[],
 		query: string,
@@ -129,34 +151,16 @@
 		activeTeamTab = createMatchupState.find((state) => state.teamId === _activeTeam)?.type! as any;
 	}
 
-	$: isMaxSelectedPlayersUpToLimit = () => {
-		const state = createMatchupState
-			.map((s) => s.fetchedPlayers)
-			.filter((p) => p !== null)
-			.flat();
-		return state.length === 2;
-	};
-
 	function handlePlayerSelection(player: Player) {
-		// Check if player is already selected - if so, remove them
-		if (selectedPlayers.some((selected) => selected.player.id === player.id)) {
-			selectedPlayers = selectedPlayers.filter((selected) => selected.player.id !== player.id);
+		// If player already selected, remove them
+		const existingIndex = selectedPlayers.findIndex((selected) => selected.player.id === player.id);
+		if (existingIndex >= 0) {
+			selectedPlayers = selectedPlayers.filter((_, i) => i !== existingIndex);
 			return;
 		}
 
-		// If no players selected yet, add as first player
-		if (selectedPlayers.length === 0) {
-			selectedPlayers = [
-				{
-					teamId: _activeTeam,
-					player
-				}
-			];
-			return;
-		}
-
-		// If one player selected and selecting for different team, add as second player
-		if (selectedPlayers.length === 1) {
+		// Add new player if less than 2 players selected
+		if (selectedPlayers.length < 2) {
 			selectedPlayers = [
 				...selectedPlayers,
 				{
@@ -164,13 +168,7 @@
 					player
 				}
 			];
-			return;
 		}
-
-		// If selecting for a team that already has a player, update that player
-		// selectedPlayers = selectedPlayers.map((selected) =>
-		// 	selected.teamId === _activeTeam ? { ...selected, player } : selected
-		// );
 	}
 
 	function handleRemovePlayer(player: Player) {
@@ -204,34 +202,29 @@
 		}
 	}
 
-	$: matchupList = (
-		$getMatchupsQuery.data
-			? (extractAxiosResponseData($getMatchupsQuery.data, 'success')?.data ?? [])
-			: []
-	) as Array<MatchupListResponse>;
+	function handleCreateMatchup() {
+		if (selectedPlayers.length !== 2) return;
 
-	$: {
-		if ($getTeamPlayersQuery.data) {
-			const data = (extractAxiosResponseData($getTeamPlayersQuery.data, 'success')?.data ??
-				[]) as unknown as Player[];
-			let updated = createMatchupState.find((state) => state.teamId === _activeTeam);
-			if (updated?.fetchedPlayers) {
-				updated.fetchedPlayers = [...data];
+		const [challengerIndex, opponentIndex] = selectedPlayers.map((sp) =>
+			createMatchupState.findIndex((cs) => cs.teamId === sp.teamId)
+		);
 
-				// account for duplicate
-				createMatchupState = [
-					...createMatchupState.filter((state) => state.type !== updated.type),
-					updated
-				];
-			}
-		}
+		const challengerPlayer = selectedPlayers[0].player;
+		const opponentPlayer = selectedPlayers[1].player;
+		const challengerTeam = selectedPlayers[challengerIndex].teamId;
+		const opponentTeam = selectedPlayers[opponentIndex].teamId;
+
+		$createMatchupMut.mutate({
+			challengerId: challengerPlayer.id,
+			opponentId: opponentPlayer.id,
+			challengerTeamId: challengerTeam,
+			opponentTeamId: opponentTeam,
+			position: filters.position,
+			season: Number(filters.season)
+		});
 	}
 
-	afterUpdate(() => {
-		// console.log(createMatchupState);
-		// console.log(createMatchupState);
-		console.log({ selectedPlayers, createMatchupState });
-	});
+	afterUpdate(() => {});
 </script>
 
 <div class="w-full h-screen mx-auto flex flex-col items-center justify-center bg-dark-103">
@@ -328,7 +321,7 @@
 								// @ts-expect-error
 								handleTeamChange(team?.id);
 							}}
-							disabled={isMaxSelectedPlayersUpToLimit()}
+							disabled={$createMatchupMut.isPending}
 						>
 							<img src={team?.logo_url} alt={team?.abbreviation} class="w-5 h-5 grayscale" />
 							<span class="ml-2 text-xs mr-3">
@@ -373,18 +366,7 @@
 					)}
 					disabled={!isMaxSelectedPlayersUpToLimit() || $createMatchupMut.isPending}
 					on:click={() => {
-						$createMatchupMut.mutate({
-							challengerId:
-								selectedPlayers.find((s) => s.teamId === selectInputTeam[selectingFor])?.player
-									?.id ?? 0,
-							opponentId:
-								selectedPlayers.find((s) => s.teamId === selectInputTeam[selectingFor])?.player
-									?.id ?? 0,
-							challengerTeamId: Number(selectedTeam[selectingFor]),
-							opponentTeamId: Number(selectedTeam[selectingFor]),
-							position: filters.position,
-							season: Number(filters.season)
-						});
+						handleCreateMatchup();
 					}}
 				>
 					{#if $createMatchupMut.isPending}
