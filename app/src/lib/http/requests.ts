@@ -153,13 +153,18 @@ export const getMatchups = async () => {
 }
 
 export const createMatchup = async (payload: {
-  challengerId: string;
-  opponentId: string;
+  challengerId: number;
+  opponentId: number;
   challengerTeamId: number;
   opponentTeamId: number;
   position: string;
   season: number;
 }) => {
   const res = await $axios.post(`/matchup`, payload);
+  return res.data;
+}
+
+export const getTeamPlayers = async (teamId: number) => {
+  const res = await $axios.get(`/matchup/players/${teamId}`);
   return res.data;
 }
