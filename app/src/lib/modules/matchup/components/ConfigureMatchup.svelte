@@ -3,18 +3,24 @@
 	import Notfound from '@/modules/matchup/components/Notfound.svelte';
 	import PlayersCardInfo from '@/modules/matchup/components/PlayersCardInfo.svelte';
 	import type { Player } from '@/types/matchup';
-	import { cn } from '@/utils';
 	import { X } from 'lucide-svelte';
-	import { afterUpdate } from 'svelte';
 
 	export let players: Player[] = [];
 	export let selectedPlayers: Player[] = [];
 	export let onSelectPlayer: (player: Player) => void;
 	export let removeSelectedPlayer: (player: Player) => void;
-	export let selectedTeam: number | null = null;
+	export let isLoading: boolean = false;
 </script>
 
-{#if players.length > 0}
+{#if isLoading}
+	<div class="w-full flex flex-col items-center justify-center gap-2 px-4">
+		{#each Array(3) as _}
+			<div
+				class="w-full h-auto min-h-[150px] flex flex-row items-start justify-start py-5 gap-1 relative rounded-2xl bg-dark-106/50 border-[1px] border-white-400/10 overflow-hidden transition-all animate-pulse"
+			></div>
+		{/each}
+	</div>
+{:else if players.length > 0}
 	<!-- selected players cards -->
 	<div class="w-full h-[50px] flex flex-row items-center justify-start mb-5 px-4 md:px-8 gap-2">
 		{#if selectedPlayers.length > 0}
