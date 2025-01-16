@@ -11,8 +11,6 @@
 	export let removeSelectedPlayer: (player: Player) => void;
 	export let isLoading: boolean = false;
 	export let onSelectedPlayersClick: (pId: number) => void;
-
-	// $: console.log({ selectedPlayers });
 </script>
 
 {#if isLoading}
@@ -33,7 +31,9 @@
 				<div
 					class="w-auto h-auto bg-orange-101 rounded-full pl-2 py-0 flex flex-row items-center justify-center gap-0 cursor-pointer"
 					on:click={() => {
-						onSelectedPlayersClick(player?.id);
+						if (!isLoading) {
+							onSelectedPlayersClick(player?.id);
+						}
 					}}
 				>
 					<img src={player?.profilePicture} alt={player?.fullName} class="w-5 h-5 rounded-full" />
