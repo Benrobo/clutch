@@ -2,7 +2,7 @@
 	import Flex from '@/components/Flex.svelte';
 	import { samplePlaybackStats } from '@/data/highlights';
 	import HighlightVideo from '@/modules/discover/components/highlight-video.svelte';
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, afterUpdate } from 'svelte';
 	import { cn, extractAxiosResponseData, getTeamLogoWithBg } from '@/utils';
 	import useDetectDevice from '@/hooks/useDetectDevice';
 	import BottomSheet from '@/components/BottomSheet.svelte';
@@ -31,6 +31,7 @@
 	import toast from 'svelte-french-toast';
 	import type { ConversationResponse } from '@/types/chatfeed';
 	import { useChatFeedStore } from '@/store/chatfeed.store';
+	import HighlightConversationService from '$lib/services/highlight-conversation';
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
@@ -53,7 +54,8 @@
 	const queryClient = useQueryClient();
 	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
 	const mlbGlossaryTerms = mlbGlossary.map((glossary) => glossary.title.toLowerCase());
-	const samplePlaystats = samplePlaybackStats;
+
+	const highlightConversationService = new HighlightConversationService();
 
 	// Video playback state
 	let observedPlaybackId: string | null = null;
@@ -194,17 +196,42 @@
 			? $recommendationStore[activeFeed].items[$recommendationStore[activeFeed].items.length - 1].id
 			: null;
 
+	$: aiButtonLabel = 'Ask About This Play';
+
 	// Highlight containers for text processing
 	let insightsContainer: HTMLDivElement | null = null;
 	let summaryContainer: HTMLDivElement | null = null;
 	let insightsHighlighter: Highlighter | null = null;
 	let summaryHighlighter: Highlighter | null = null;
 
-	onMount(() => {
+	const handleHighlightConversation = async () => {
+		const currentPb = $recommendationStore[activeFeed].items.find((hl) => hl.id === $pbIdParam);
+
+		const createdChat = await highlightConversationService.createChat({
+			ref: $pbIdParam,
+			ref_type: 'highlight_playback',
+			title: currentPb?.playback?.title ?? ''
+		});
+
+		feedStore.toggleShowBottomSheet(false);
+		chatFeedStore.setActiveConversation(createdChat as any);
+	};
+
+	onMount(async () => {
 		// queryClient.invalidateQueries({ queryKey: ['recommendations', activeFeed] });
 		params.updateParams({
 			feed: activeFeed
 		});
+	});
+
+	afterUpdate(async () => {
+		// get chat based on pbIdParam
+		const chat = await highlightConversationService.getChat($pbIdParam);
+		if (chat && chat?.ref === $pbIdParam) {
+			aiButtonLabel = 'Continue Conversation';
+		} else {
+			aiButtonLabel = 'Ask About This Play';
+		}
 	});
 
 	onDestroy(() => {
@@ -407,13 +434,12 @@
 
 			<div class="flex justify-center mt-2 pb-5">
 				<AiButton
-					onClick={() => {
-						$startPlaybackConversationMut.mutate();
-						feedStore.setVideoPlaying(false);
-						// feedStore.toggleShowBottomSheet(false);
+					onClick={async () => {
+						await handleHighlightConversation();
 					}}
 					visible={$feedStore?.showBottomSheet}
 					loading={$startPlaybackConversationMut.isPending}
+					label={aiButtonLabel}
 				/>
 			</div>
 		</div>
@@ -425,6 +451,7 @@
 		onClose={() => {
 			chatFeedStore.reset();
 		}}
+		pbId={$pbIdParam}
 	/>
 {/if}
 
