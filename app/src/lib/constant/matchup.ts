@@ -18,7 +18,8 @@ export const TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND = [
 	"tigers",
 	"athletics",
 	"twins",
-	"rockies"
+	"rockies",
+	"Detroit Tigers"
 ]
 
 
