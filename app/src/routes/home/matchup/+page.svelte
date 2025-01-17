@@ -17,6 +17,7 @@
 	import toast from 'svelte-french-toast';
 	import queryClient from '@/config/tanstack-query';
 	import Spinner from '@/components/Spinner.svelte';
+	import type { BaseResponse } from '@/types';
 
 	interface SelectedPlayer {
 		teamId: number;
@@ -24,12 +25,12 @@
 	}
 
 	let selectedPlayers: SelectedPlayer[] = [];
-	let selectedTeam: Record<number, number>;
 	let showSearchFilter = false;
 	let searchQuery: string;
 	let selectedMatchup: MatchupListResponse | null = null;
 	let showConfigureMatchup = false;
 	let matchupList: MatchupListResponse[] = [];
+	let fetchCount: number;
 
 	let createMatchupState: Array<{
 		type: 'challenger' | 'opponent';
@@ -65,6 +66,10 @@
 
 	$: selectedMatchup = null;
 
+	const MAX_FETCH_COUNT = 10;
+	const REFRESH_INTERVAL = 5000; // 5 seconds
+	$: fetchCount = 0;
+
 	// Simplified queries by using store values
 	$: getTeamPlayersQuery = createQuery({
 		queryKey: ['team-players', _activeTeam],
@@ -75,10 +80,35 @@
 
 	$: getMatchupsQuery = createQuery({
 		queryKey: ['matchups'],
-		queryFn: getMatchups,
+		queryFn: async () => {
+			fetchCount += 1;
+			const data = await getMatchups();
+			return data;
+		},
 		refetchOnMount: true,
 		refetchOnWindowFocus: false,
-		refetchOnReconnect: true
+		refetchOnReconnect: true,
+		refetchInterval(query) {
+			const data = query?.state?.data as BaseResponse<MatchupListResponse[]>;
+			const pendingMatchups = data?.data?.filter(
+				(m) => m.status === 'PENDING' || m.status === 'PROCESSING'
+			);
+
+			if (pendingMatchups?.length > 0) {
+				if (fetchCount === MAX_FETCH_COUNT) {
+					// set the status to failed
+					pendingMatchups.forEach((m) => {
+						m.status = 'FAILED';
+						m.error = 'Failed to fetch matchup';
+					});
+					fetchCount = 0;
+					return false;
+				}
+
+				return REFRESH_INTERVAL;
+			}
+			return false;
+		}
 	});
 
 	$: createMatchupMut = createMutation({
@@ -89,7 +119,7 @@
 			filters.season = '2024';
 			filters.position = 'P';
 
-			queryClient.invalidateQueries({ queryKey: ['team-players', selectedTeam] });
+			queryClient.invalidateQueries({ queryKey: ['team-players', _activeTeam] });
 			queryClient.invalidateQueries({ queryKey: ['matchups'] });
 		},
 		onError: (error) => {
@@ -398,7 +428,7 @@
 			</div>
 		{/if}
 
-		{#if $getMatchupsQuery.isFetching}
+		{#if $getMatchupsQuery.isLoading}
 			<div class="w-full min-h-[40vh] flex flex-col items-center justify-center gap-2">
 				<Spinner size="25" strokeWidth="2.5" />
 			</div>
