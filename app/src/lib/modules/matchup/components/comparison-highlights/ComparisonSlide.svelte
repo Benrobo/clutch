@@ -53,6 +53,24 @@
 			borderRadius: '0px'
 		}))
 	});
+
+	const constructPublicPlayerProfile = (id: number) => {
+		return `https://www.mlb.com/player/${id}`;
+	};
+
+	const getPlayerStats = (
+		stats: {
+			key: string;
+			value: string;
+		}[]
+	) => {
+		return stats
+			.filter((s: any) => Object.entries(s).length > 0)
+			?.map((stat) => ({
+				key: getStatsKeyFullName(stat.key),
+				value: stat.value
+			}));
+	};
 </script>
 
 <div class="w-full h-full bg-dark-109 flex flex-col items-start justify-start gap-0 p-0 relative">
@@ -111,28 +129,22 @@
 				<AnalysisCard
 					headshot={player1?.info?.profilePicture}
 					player={{ name: player1?.info?.name }}
-					stats={player1Stats?.stats?.map((stat) => ({
-						key: getStatsKeyFullName(stat.key),
-						value: stat.value
-					}))}
+					stats={getPlayerStats(player1Stats?.stats)}
 					percentage={player1Stats?.visualization.percentage}
 					trend={player1Stats?.visualization.trending}
 					type={player1Stats?.visualization.trending === 'up' ? 'positive' : 'negative'}
-					source={'#'}
+					publicProfile={constructPublicPlayerProfile(player1?.info?.id)}
 				/>
 
 				<!-- negative -->
 				<AnalysisCard
 					headshot={player2?.info?.profilePicture}
 					player={{ name: player2?.info?.name }}
-					stats={player2Stats?.stats?.map((stat) => ({
-						key: getStatsKeyFullName(stat.key),
-						value: stat.value
-					}))}
+					stats={getPlayerStats(player2Stats?.stats)}
 					percentage={player2Stats?.visualization.percentage}
 					trend={player2Stats?.visualization.trending}
 					type={player2Stats?.visualization.trending === 'up' ? 'positive' : 'negative'}
-					source={'#'}
+					publicProfile={constructPublicPlayerProfile(player2?.info?.id)}
 				/>
 			</div>
 		</Flex>
