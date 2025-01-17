@@ -14,7 +14,7 @@
 	}[] = [];
 	export let percentage: number;
 	export let trend: 'up' | 'down' | string;
-	export let source: string;
+	export let publicProfile: string;
 	export let type: 'positive' | 'negative';
 </script>
 
@@ -45,39 +45,44 @@
 		</div>
 	</div>
 	<!-- player stats -->
-	<div class="w-full h-full flex flex-col justify-between items-start gap-1 mt-5">
+	<div class="w-full h-full flex flex-col justify-end items-start gap-5 mt-5">
 		{#each stats as stat}
-			<div class="w-full h-auto flex flex-col justify-start items-start gap-0">
-				<span
-					class="text-[2em] md:text-[3em] text-dark-100 font-cyber font-extralight leading-none"
-				>
-					{stat.value}
-				</span>
-				<span class="text-[12px] md:text-md text-dark-100 font-recoleta leading-none">
-					{stat.key}
-				</span>
-			</div>
+			{#if Object.entries(stat).length > 1}
+				<div class="w-full h-auto flex flex-col justify-start items-start gap-0">
+					<span
+						class="text-[2em] md:text-[3em] text-dark-100 font-cyber font-extralight leading-none"
+					>
+						{stat.value}
+					</span>
+					<span class="text-[12px] md:text-md text-dark-100 font-recoleta leading-none">
+						{stat.key}
+					</span>
+				</div>
+			{/if}
 		{/each}
 
-		<Divider className="w-full h-[.8px] bg-dark-100" />
+		<!-- more info -->
+		<div class="w-full h-auto flex-col gap-2">
+			<Divider className="w-full h-[.8px] mb-3 bg-dark-100/20" />
 
-		<!-- source -->
-
-		<div class="w-full h-auto flex flex-row items-end justify-between gap-2 z-[1]">
-			<div class="text-sm text-dark-100 font-poppins font-normal flex items-center justify-center">
-				<span class="text-xs md:text-md">Source</span>
-				<Minus size={20} strokeWidth={1.5} class="stroke-dark-100 translate-y-[1px]" />
+			<div class="w-full h-auto flex flex-row items-end justify-between gap-2 z-[1]">
+				<div
+					class="text-sm text-dark-100 font-poppins font-normal flex items-center justify-center"
+				>
+					<span class="text-xs md:text-md"> More Info </span>
+					<Minus size={20} strokeWidth={1.5} class="stroke-dark-100 translate-y-[1px]" />
+				</div>
+				<a
+					href={publicProfile}
+					target="_blank"
+					class={cn(
+						'w-[30px] h-[30px] md:w-[40px] md:h-[40px] rounded-full flex-center enableBounceEffect relative top-2',
+						type === 'positive' ? 'bg-green-100/20' : 'bg-red-305/20'
+					)}
+				>
+					<MoveUpRight size={18} strokeWidth={2} class="stroke-dark-100" />
+				</a>
 			</div>
-			<a
-				href={source}
-				target="_blank"
-				class={cn(
-					'w-[30px] h-[30px] md:w-[40px] md:h-[40px] rounded-full flex-center enableBounceEffect relative top-2',
-					type === 'positive' ? 'bg-green-100/20' : 'bg-red-305/20'
-				)}
-			>
-				<MoveUpRight size={18} strokeWidth={2} class="stroke-dark-100" />
-			</a>
 		</div>
 	</div>
 
