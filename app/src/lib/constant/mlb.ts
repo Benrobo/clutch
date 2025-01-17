@@ -649,7 +649,7 @@ export const MLB_PLAYER_STATS_INFO = [
 
   // Catcher-Specific Stats
   {
-    key: "caughtStealingPercentage",
+    key: "caughtStealing",
     headline: "Caught Stealing Percentage",
     tagline: "percentage of runners the catcher caught stealing",
   },
