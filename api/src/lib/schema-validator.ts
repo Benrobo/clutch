@@ -35,3 +35,10 @@ export const GetTeamPlayersSchema = zod.object({
     teamId: zod.string().transform((val) => parseInt(val)),
   }),
 });
+
+export const ProcessLastMessageSchema = zod.object({
+  body: zod.object({
+    last_message: zod.string().min(1, "Message is required"),
+    pbId: zod.string().min(1, "Playback ID is required"),
+  }),
+});
