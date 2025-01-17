@@ -259,12 +259,13 @@
 
 				<button
 					class={cn(
-						'w-auto h-auto text-white-100 rounded-full px-4 py-2 text-sm font-light font-gothic-one enableBounceEffect',
+						'w-auto h-auto text-white-100 rounded-full px-4 py-2 text-sm font-light font-gothic-one enableBounceEffect disabled:cursor-not-allowed disabled:opacity-50',
 						showConfigureMatchup ? 'bg-dark-106 border-[1px] border-white-400/30' : 'bg-orange-101'
 					)}
 					on:click={() => {
 						showConfigureMatchup = !showConfigureMatchup;
 					}}
+					disabled={$createMatchupMut.isPending}
 				>
 					{showConfigureMatchup ? 'Cancel' : 'New Matchup'}
 				</button>
@@ -279,23 +280,25 @@
 						<Search size={25} strokeWidth={3} class="stroke-white-100" />
 						<input
 							type="text"
-							class="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-white-100 text-white-100 font-bold font-gothic-one focus:ring-0 placeholder:text-white-100/50"
+							class="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-white-100 text-white-100 font-bold font-gothic-one focus:ring-0 placeholder:text-white-100/50 disabled:cursor-not-allowed disabled:opacity-50"
 							placeholder="Search Players"
 							value={searchQuery}
 							on:input={(e) => {
 								// @ts-expect-error
 								searchQuery = e.target?.value;
 							}}
+							disabled={$createMatchupMut.isPending}
 						/>
 					</div>
 					<button
 						class={cn(
-							'flex-center w-[45px] h-[42px] p-2 bg-none border-[1px] border-white-200/20 rounded-lg relative',
+							'flex-center w-[45px] h-[42px] p-2 bg-none border-[1px] border-white-200/20 rounded-lg relative disabled:cursor-not-allowed disabled:opacity-50',
 							false ? 'bg-orange-103' : ''
 						)}
 						on:click={() => {
 							showSearchFilter = true;
 						}}
+						disabled={$createMatchupMut.isPending}
 					>
 						<ListFilter size={20} class="stroke-white-100" />
 
@@ -395,7 +398,11 @@
 			</div>
 		{/if}
 
-		{#if matchupList.length > 0}
+		{#if $getMatchupsQuery.isFetching}
+			<div class="w-full min-h-[40vh] flex flex-col items-center justify-center gap-2">
+				<Spinner size="25" strokeWidth="2.5" />
+			</div>
+		{:else if matchupList.length > 0}
 			<MatchUpList
 				{matchupList}
 				onSelect={(matchup) => {
@@ -431,7 +438,7 @@
 <BottomSheet
 	className="w-full h-auto min-h-[30vh] bg-dark-106"
 	showBackdrop={false}
-	isOpen={showSearchFilter}
+	isOpen={showSearchFilter && showConfigureMatchup}
 	showCloseButton={true}
 	closeBtnClassName="bg-dark-100/30 text-white-100 stroke-white-100"
 	closeBtnIconClassName="stroke-white-100"
