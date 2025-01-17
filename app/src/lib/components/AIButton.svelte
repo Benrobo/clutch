@@ -6,6 +6,7 @@
 	export let onClick = () => {};
 	export let visible: boolean = false;
 	export let loading: boolean = false;
+	export let label: string = 'Ask About This Play';
 </script>
 
 {#if visible}
@@ -47,7 +48,7 @@
 				>
 			{/if}
 
-			<span class="text-xs font-poppins"> Ask About This Play </span>
+			<span class="text-xs font-poppins"> {label} </span>
 		</span>
 	</button>
 {/if}
