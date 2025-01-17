@@ -416,7 +416,7 @@ google colab note: https://colab.research.google.com/drive/1QcZD-_VK-Fa9ZC_iNy6C
         "rbi", // Indicates run production.
         "ops", // Combines on-base and slugging for overall offensive value.
         "fieldingPercentage", // Reflects defensive reliability.
-        "caughtStealingPercentage" // Shows ability to control the running game.
+        "caughtStealing" // Shows ability to control the running game.
       ],
       "engagementQuestions": [
         {
