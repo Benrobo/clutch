@@ -19,7 +19,9 @@
 	</div>
 
 	<!-- list -->
-	<div class="w-full h-full flex flex-col items-start justify-start gap-5 mt-5">
+	<div
+		class="w-full h-full max-h-[calc(100vh-10em)] overflow-y-auto hideScrollBar2 pb-[20em] flex flex-col items-start justify-start gap-5 mt-5"
+	>
 		{#each matchupList as matchup}
 			{#if matchup.error}
 				<div
@@ -34,12 +36,23 @@
 				</div>
 			{:else if matchup.status === 'PENDING' || matchup.status === 'PROCESSING'}
 				<div
-					class="w-full h-auto min-h-[180px] flex flex-row items-center justify-center py-5 gap-1 relative rounded-2xl bg-dark-106 border-[1px] border-white-400/10 overflow-hidden transition-all"
+					class="w-full h-auto min-h-[180px] flex flex-col items-center justify-center py-5 gap-3 relative rounded-2xl bg-dark-106 border-[1px] border-white-400/10 overflow-hidden transition-all"
 				>
-					<span class="text-sm text-white-100 font-jetbrains font-normal">
-						{matchup.status}
+					<span class="text-sm text-white-200 font-jetbrains font-normal">
+						{matchup.status === 'PENDING' ? '⚡ Getting Ready...' : '🔍 Analyzing Players Stats...'}
 					</span>
 					<Spinner size="25" strokeWidth="2.5" />
+				</div>
+			{:else if matchup.status === 'FAILED'}
+				<div
+					class="w-full h-auto min-h-[180px] flex flex-row items-center justify-center py-5 gap-1 relative rounded-2xl bg-dark-106 border-[1px] border-white-400/10 overflow-hidden transition-all"
+				>
+					<ErrorAction
+						error={matchup.error ?? 'Failed to fetch matchup'}
+						isLoading={false}
+						callback={() => {}}
+						showActionButton={true}
+					/>
 				</div>
 			{:else}
 				<button
