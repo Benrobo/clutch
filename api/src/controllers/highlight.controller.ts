@@ -259,7 +259,7 @@ export default class HighlightController {
     # Game Decision:
     ${finalGameDecision}
 
-    # Video Summary:
+    # Video Summary | Gameplay Summary | Highlights:
     ${JSON.stringify(pbSummary, null, 2)}
     `;
 
@@ -291,6 +291,77 @@ export default class HighlightController {
 
       return sendResponse.success(c, "Message processed successfully", 200, {
         ai: savedResp,
+      });
+    }
+  }
+
+  async processLastMessageLocal(c: Context) {
+    const { last_message, pbId }: { last_message: string; pbId: string } =
+      (await c.req.json()) as { last_message: string; pbId: string };
+
+    // check if playback exists
+    const playback = await this.highlightService.getPlayback(pbId);
+    if (!playback) {
+      return sendResponse.success(c, "Playback not found", 200, {
+        pbId: pbId,
+        message: "I'm sorry, I could not find the gameplay highlight.",
+        role: "AI",
+        error: "Playback not found",
+      });
+    }
+
+    const pbSummary = playback?.summary;
+    const homeTeam = playback?.highlight?.game?.home_team_id;
+    const awayTeam = playback?.highlight?.game?.away_team_id;
+    const gameDecision = playback?.highlight?.game
+      ?.decisions as DBGameDecision | null;
+    const finalGameDecision = gameDecision
+      ? JSON.stringify(
+          {
+            winner: gameDecision?.winner?.fullName,
+            loser: gameDecision?.loser?.fullName,
+          },
+          null,
+          2
+        )
+      : "N/A";
+    const teamInfoMd = await this.getTeamInfo([homeTeam, awayTeam], "md");
+    const context = `
+    # Team Information:
+    ${teamInfoMd}
+
+    # Game Decision:
+    ${finalGameDecision}
+
+    # Video Summary:
+    ${JSON.stringify(pbSummary, null, 2)}
+    `;
+
+    try {
+      const aiResponse = await this.highlightAIEngine.generateAIResponse({
+        query: last_message,
+        context: context as string,
+      });
+
+      const parsedSources = await this.parseSources(aiResponse?.sources!);
+
+      return sendResponse.success(c, "Message processed successfully", 200, {
+        ai: {
+          pbId,
+          message: aiResponse?.response!,
+          role: "AI",
+          sources: parsedSources,
+        },
+      });
+    } catch (err: any) {
+      return sendResponse.success(c, "Message processed successfully", 200, {
+        ai: {
+          pbId,
+          message: `I'm sorry, something went wrong.`,
+          role: "AI",
+          error: err?.message,
+          sources: [],
+        },
       });
     }
   }
