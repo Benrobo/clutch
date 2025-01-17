@@ -143,8 +143,9 @@
 							alt=""
 							class={cn(
 								'w-5 h-5',
-								TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND.includes(teamInfo?.name.toLowerCase()) &&
-									'bg-white-100'
+								TEAMS_LOGOS_REQUIRING_WHITE_BACKGROUND.map((team) => team.toLowerCase()).includes(
+									teamInfo?.name.toLowerCase()
+								) && 'bg-white-100'
 							)}
 						/>
 
