@@ -9,7 +9,7 @@
 	import SelectedMatchup from '@/modules/matchup/components/SelectedMatchup.svelte';
 	import type { MatchupListResponse, Player } from '@/types/matchup';
 	import { cn, extractAxiosResponseData } from '@/utils';
-	import { ListFilter, Scale, Search, X } from 'lucide-svelte';
+	import { ChevronLeft, ListFilter, Scale, Search, X } from 'lucide-svelte';
 	import { afterUpdate } from 'svelte';
 	import MatchUpList from '@/modules/matchup/components/MatchUpList.svelte';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
@@ -18,6 +18,7 @@
 	import queryClient from '@/config/tanstack-query';
 	import Spinner from '@/components/Spinner.svelte';
 	import type { BaseResponse } from '@/types';
+	import { goto } from '$app/navigation';
 
 	interface SelectedPlayer {
 		teamId: number;
@@ -280,6 +281,15 @@
 		<div class="flex flex-col items-center justify-center gap-2 px-4 md:px-8 py-10">
 			<Flex className="w-full flex-row items-center justify-between py-1">
 				<Flex className="w-auto flex-col">
+					<button
+						class="flex flex-row items-center -translate-y-2"
+						on:click={() => {
+							goto('/home/feed');
+						}}
+					>
+						<ChevronLeft size={25} class="stroke-white-200" />
+						<span class="text-white-200 text-xs font-poppins font-semibold">Back</span>
+					</button>
 					<Flex className="w-auto flex-row items-center gap-2">
 						<Scale size={25} class="stroke-white-100" />
 						<h1 class="text-white-200 text-xl font-gothic-one font-semibold">Matchup</h1>
