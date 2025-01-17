@@ -25,7 +25,7 @@ export const PLAYER_POSITION_STATS_MAP = {
     "homeRuns",
     "rbi",
     "ops",
-    "fieldingPercentage",
+    "stolenBases",
     "caughtStealing",
   ],
   // first base
@@ -34,58 +34,56 @@ export const PLAYER_POSITION_STATS_MAP = {
     "avg",
     "ops",
     "homeRuns",
-    "fieldingPercentage",
-    "putOuts",
+    "doubles",
+    "rbi",
+    "hits",
   ],
   // second base
   "2B": [
     ...BASE_PLAYER_STATS,
     "avg",
     "ops",
-    "fieldingPercentage",
-    "caughtStealing",
+    "obp",
+    "hits",
+    "runs",
+    "stolenBases",
   ],
   // third base
-  "3B": [...BASE_PLAYER_STATS, "avg", "ops", "fieldingPercentage", "putOuts"],
+  "3B": [
+    ...BASE_PLAYER_STATS,
+    "avg",
+    "ops",
+    "homeRuns",
+    "doubles",
+    "rbi",
+    "hits",
+  ],
   // shortstop
   SS: [
     ...BASE_PLAYER_STATS,
-    "rbi",
     "avg",
     "ops",
-    "fieldingPercentage",
-    "assists",
-    "homeRuns",
+    "hits",
+    "stolenBases",
+    "runs",
+    "obp",
   ],
   // left field
-  LF: [
-    ...BASE_PLAYER_STATS,
-    "avg",
-    "ops",
-    "homeRuns",
-    "rbi",
-    "fieldingPercentage",
-    "putOuts",
-  ],
+  LF: [...BASE_PLAYER_STATS, "avg", "ops", "homeRuns", "slg", "rbi", "hits"],
   // center field
   CF: [
     ...BASE_PLAYER_STATS,
     "avg",
     "ops",
+    "stolenBases",
+    "stolenBasePercentage",
+    "doubles",
     "homeRuns",
-    "fieldingPercentage",
-    "putOuts",
+    "obp",
+    "hits",
   ],
   // right field
-  RF: [
-    ...BASE_PLAYER_STATS,
-    "avg",
-    "ops",
-    "homeRuns",
-    "rbi",
-    "fieldingPercentage",
-    "putOuts",
-  ],
+  RF: [...BASE_PLAYER_STATS, "avg", "ops", "homeRuns", "slg", "rbi", "obp"],
 } as Record<string, (keyof MLBPositionStats)[]>;
 
 export const PLAYER_ENGAGEMENT_QUESTIONS = {
@@ -199,16 +197,16 @@ export const PLAYER_ENGAGEMENT_QUESTIONS = {
   // Center Field (CF)
   CF: [
     {
-      question: "Who's more likely to create havoc on the bases?",
-      stats: ["stolenBases", "runs"],
+      question: "Who's the better baserunner?",
+      stats: ["stolenBases", "stolenBasePercentage"],
     },
     {
-      question: "Who's the better overall offensive player?",
-      stats: ["ops", "hits"],
+      question: "Who's the more impactful power hitter?",
+      stats: ["doubles", "homeRuns"],
     },
     {
-      question: "Who's more likely to get on base?",
-      stats: ["obp", "avg"],
+      question: "Who's better at getting on base?",
+      stats: ["obp", "hits"],
     },
   ],
   // Right Field (RF)
