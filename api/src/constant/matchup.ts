@@ -26,7 +26,7 @@ export const PLAYER_POSITION_STATS_MAP = {
     "rbi",
     "ops",
     "fieldingPercentage",
-    "caughtStealingPercentage",
+    "caughtStealing",
   ],
   // first base
   "1B": [
@@ -43,7 +43,7 @@ export const PLAYER_POSITION_STATS_MAP = {
     "avg",
     "ops",
     "fieldingPercentage",
-    "caughtStealingPercentage",
+    "caughtStealing",
   ],
   // third base
   "3B": [...BASE_PLAYER_STATS, "avg", "ops", "fieldingPercentage", "putOuts"],
@@ -108,8 +108,8 @@ export const PLAYER_ENGAGEMENT_QUESTIONS = {
   // Catcher (C)
   C: [
     {
-      question: "Who’s more likely to throw out a runner stealing a base?",
-      stats: ["caughtStealingPercentage"],
+      question: "Who's better at controlling the running game?",
+      stats: ["stolenBases", "caughtStealing"],
     },
     {
       question:
@@ -117,116 +117,113 @@ export const PLAYER_ENGAGEMENT_QUESTIONS = {
       stats: ["homeRuns", "ops"],
     },
     {
-      question: "Who’s more likely to drive in the winning run?",
+      question: "Who's more likely to drive in the winning run?",
       stats: ["rbi", "avg"],
     },
   ],
   // First Base (1B)
   "1B": [
     {
-      question: "Who’s more likely to hit a home run in their next at-bat?",
-      stats: ["homeRuns", "ops"],
+      question: "Who's more likely to get an extra-base hit?",
+      stats: ["doubles", "homeRuns"],
     },
     {
-      question:
-        "Which first baseman is more likely to get 3 hits in their next game?",
-      stats: ["avg", "hits"],
+      question: "Who's the better overall hitter?",
+      stats: ["avg", "ops"],
     },
     {
-      question: "Who’s more likely to make a game-saving catch at first?",
-      stats: ["fieldingPercentage", "putOuts"],
+      question: "Who's more likely to drive in runs?",
+      stats: ["rbi", "hits"],
     },
   ],
   // Second Base (2B)
   "2B": [
     {
-      question: "Who’s more likely to turn a double play in their next game?",
-      stats: ["fieldingPercentage", "assists"],
+      question: "Who's more likely to get on base?",
+      stats: ["obp", "hits"],
     },
     {
-      question: "Which second baseman is more likely to steal a base?",
-      stats: ["stolenBases", "caughtStealingPercentage"],
+      question: "Who's the better run scorer?",
+      stats: ["runs", "stolenBases"],
     },
     {
-      question: "Who’s more likely to drive in the go-ahead run?",
-      stats: ["rbi", "ops"],
+      question: "Who's more likely to spark the offense?",
+      stats: ["avg", "ops"],
     },
   ],
   // Third Base (3B)
   "3B": [
     {
-      question: "Who’s more likely to hit a clutch home run?",
-      stats: ["homeRuns", "ops"],
+      question: "Who's more likely to hit for power?",
+      stats: ["homeRuns", "doubles"],
     },
     {
-      question: "Which third baseman is more likely to make a diving stop?",
-      stats: ["fieldingPercentage", "assists"],
+      question: "Who's the more consistent hitter?",
+      stats: ["avg", "hits"],
     },
     {
-      question: "Who’s more likely to drive in 3 runs in their next game?",
-      stats: ["rbi", "avg"],
+      question: "Who's more likely to produce runs?",
+      stats: ["rbi", "ops"],
     },
   ],
   // Shortstop (SS)
   SS: [
     {
-      question: "Who’s more likely to make a highlight-reel play at short?",
-      stats: ["fieldingPercentage", "assists"],
+      question: "Who's more likely to make things happen on offense?",
+      stats: ["hits", "stolenBases"],
     },
     {
-      question: "Which shortstop is more likely to hit a walk-off home run?",
-      stats: ["homeRuns", "ops"],
+      question: "Who's the better all-around hitter?",
+      stats: ["avg", "ops"],
     },
     {
-      question: "Who’s more likely to turn a game-changing double play?",
-      stats: ["fieldingPercentage", "assists"],
+      question: "Who's more likely to score runs?",
+      stats: ["runs", "obp"],
     },
   ],
   // Left Field (LF)
   LF: [
     {
-      question: "Who’s more likely to hit a home run in their next game?",
-      stats: ["homeRuns", "ops"],
+      question: "Who's the bigger power threat?",
+      stats: ["homeRuns", "slg"],
     },
     {
-      question:
-        "Which left fielder is more likely to make a game-saving catch?",
-      stats: ["fieldingPercentage", "putOuts"],
+      question: "Who's more likely to drive in runs?",
+      stats: ["rbi", "ops"],
     },
     {
-      question: "Who’s more likely to drive in the winning run?",
-      stats: ["rbi", "avg"],
+      question: "Who's the more consistent hitter?",
+      stats: ["avg", "hits"],
     },
   ],
   // Center Field (CF)
   CF: [
     {
-      question: "Who’s more likely to make an incredible diving catch?",
-      stats: ["fieldingPercentage", "putOuts"],
+      question: "Who's more likely to create havoc on the bases?",
+      stats: ["stolenBases", "runs"],
     },
     {
-      question: "Which center fielder is more likely to hit a clutch home run?",
-      stats: ["homeRuns", "ops"],
+      question: "Who's the better overall offensive player?",
+      stats: ["ops", "hits"],
     },
     {
-      question: "Who’s more likely to steal a base in their next game?",
-      stats: ["stolenBases", "caughtStealingPercentage"],
+      question: "Who's more likely to get on base?",
+      stats: ["obp", "avg"],
     },
   ],
   // Right Field (RF)
   RF: [
     {
-      question: "Who’s more likely to hit a home run in their next at-bat?",
-      stats: ["homeRuns", "ops"],
+      question: "Who's the bigger power threat?",
+      stats: ["homeRuns", "slg"],
     },
     {
-      question:
-        "Which right fielder is more likely to throw out a runner at home?",
-      stats: ["fieldingPercentage", "assists"],
+      question: "Who's more likely to drive in runs?",
+      stats: ["rbi", "ops"],
     },
     {
-      question: "Who’s more likely to drive in the go-ahead run?",
-      stats: ["rbi", "avg"],
+      question: "Who's the more complete hitter?",
+      stats: ["avg", "obp"],
     },
   ],
 } as Record<string, { question: string; stats: string[] }[]>;
