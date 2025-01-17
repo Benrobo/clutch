@@ -421,11 +421,22 @@ export const matchupPlayerComparisonPrompt = (data: {
     .addCustomBlock("question", data.question)
     .addRule(
       `
-      - Use the provided stats as a baseline, but also search for the most recent performance data for both players (e.g., last 5 games, season trends, or injury updates).
+      - **Strictly use only the provided stats** for analysis. Do not search for or infer additional data.
       - Compare the relevant stats for both players based on the question.
-      - Calculate a percentage likelihood for each player based on their stats (e.g., 60% vs. 40%).
-      - Determine if each player’s trend is "up" or "down" based on recent performance.
-      - Provide a detailed, non-biased, and professional insight comparing the two players.
+      - **Calculate percentages** based on the following rules:
+        - If the challenger has a higher value for a key stat (e.g., home runs, OPS), assign a higher percentage to the challenger.
+        - If the opponent has a higher value for a key stat, assign a higher percentage to the opponent.
+        - Ensure the total percentage adds up to 100%.
+      - **Determine trends** based on the following rules:
+        - If a player’s key stat (e.g., OPS, home runs) has improved over the last 5 games or the season, the trend is "up."
+        - If a player’s key stat has declined over the last 5 games or the season, the trend is "down."
+        - **Trends can only be 'up' or 'down.' Do not suggest 'neutral' or any other value.**
+      - **Insight Guidelines:**
+        - The insight should be professional, concise, and free from casual phrases or conversational fillers.
+        - Avoid speculative or ambiguous language.
+        - Focus on providing clear, data-driven insights that are suitable for a billboard or professional presentation.
+        - **Do not explicitly reference the visualization (e.g., 'trending up' or 'trending down').**
+        - Instead, use the stats to explain why one player is more likely to succeed in the given scenario.
       - Format the output as follows:  
 
       {
@@ -446,10 +457,6 @@ export const matchupPlayerComparisonPrompt = (data: {
         insight: "detailed, non-bias, professional insight"
       }
     `
-    )
-    .addCustomBlock(
-      "guidelines",
-      "The insight should be professional, concise, and free from casual phrases or conversational fillers. Avoid speculative or ambiguous language. Focus on providing clear, data-driven insights that are suitable for a billboard or professional presentation."
     )
     .addPlainText("Your response should be concise but not too short.")
     .compose();
