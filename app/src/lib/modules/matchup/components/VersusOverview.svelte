@@ -2,6 +2,7 @@
 	import Flex from '@/components/Flex.svelte';
 	import { MLB_PLAYER_POSITIONS } from '@/constant/mlb';
 	import type { MatchupListResponse } from '@/types/matchup';
+	import { getPosition } from '@/utils';
 	import { X } from 'lucide-svelte';
 
 	type PlayerDetails = MatchupListResponse['player_position_stats'][
@@ -11,10 +12,6 @@
 	export let onClose: () => void;
 	export let challenger: PlayerDetails | undefined;
 	export let opponent: PlayerDetails | undefined;
-
-	const getPosition = (position: string) => {
-		return MLB_PLAYER_POSITIONS.find((pos) => pos.abbrev === position)?.shortName;
-	};
 </script>
 
 <div class="w-full h-full bg-dark-109 flex flex-col items-center justify-between p-0 relative">
