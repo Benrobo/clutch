@@ -11,7 +11,12 @@
 </script>
 
 <Flex className="w-full h-full flex-col items-center justify-center gap-0">
-	<p class="text-[12px] font-jetbrains text-white-100/80">
+	<p
+		class={cn(
+			'text-[12px] font-jetbrains text-white-100/80',
+			error.length > 100 ? 'line-clamp-3' : ''
+		)}
+	>
 		{error}
 	</p>
 	{#if showActionButton}
