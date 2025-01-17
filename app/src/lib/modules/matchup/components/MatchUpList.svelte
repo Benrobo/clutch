@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '@/utils';
+	import { cn, getPosition } from '@/utils';
 	import type { MatchupListResponse } from '@/types/matchup';
 	import Flex from '@/components/Flex.svelte';
 	import Icon from '@/components/Icon.svelte';
@@ -105,6 +105,12 @@
 					<!-- lightning bolt divider -->
 					<div class="w-full h-full flex flex-col items-center justify-center absolute top-0">
 						<Icon name="lighting-bolt" className="fill-dark-103 scale-[1]" size="800px" />
+						<span
+							class="absolute left-3 top-2 px-3 py-[4px] rounded-full flex items-center justify-center gap-1 bg-dark-103 font-poppins text-white-100 text-xs z-[1] border-[1px] border-white-400/30"
+						>
+							<span class="text-[1em]">🔰</span>
+							{getPosition(matchup?.player_position_stats.challenger?.info?.position ?? '')}
+						</span>
 						<div
 							class="flex-center absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
 						>
