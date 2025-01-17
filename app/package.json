@@ -68,6 +68,7 @@
 		"colorthief": "^2.6.0",
 		"dayjs": "^1.11.13",
 		"device-detector-js": "^3.0.3",
+		"dexie": "^4.0.11",
 		"lucide-svelte": "^0.441.0",
 		"marked": "^15.0.4",
 		"path": "^0.12.7",
