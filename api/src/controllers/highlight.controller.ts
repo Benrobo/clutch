@@ -12,18 +12,21 @@ import { SEARCH_WEB_RESPONSE } from "../types/rag.types.js";
 import retry from "async-retry";
 import WebCrawler from "../helpers/web-crawler.js";
 import { ExaSearchResult } from "../config/exa-js-client.js";
+import MLBAPIHelper from "../helpers/mlb/mlb-api.helper.js";
 
 export default class HighlightController {
   private highlightService: HighlightService;
   private chatService: ChatService;
   private highlightAIEngine: HighlightAIEngine;
   private contentModeration: ContentModeration;
+  private mlbApi: MLBAPIHelper;
 
   constructor() {
     this.highlightService = new HighlightService();
     this.chatService = new ChatService();
     this.highlightAIEngine = new HighlightAIEngine();
     this.contentModeration = new ContentModeration();
+    this.mlbApi = new MLBAPIHelper();
   }
 
   async toggleLike(c: Context) {
@@ -113,6 +116,75 @@ export default class HighlightController {
     });
   }
 
+  // TEAM/PLAYER INFO FOR LLM CONTEXT
+  public async getTeamInfo(
+    teams: (string | number)[],
+    type: "md" | "object" = "object"
+  ) {
+    try {
+      const _teamInfo: {
+        teamName: string;
+        location: string;
+        playerInfo: {
+          playerName: string;
+          playerPosition: string;
+        }[];
+      }[] = [];
+      let markdownTeamFormat = "";
+      await Promise.all(
+        teams.map(async (team) => {
+          const teamInfo = await this.mlbApi.getTeam(Number(team));
+          const roster = await this.mlbApi.getTeamRoster(Number(team));
+          roster.forEach((player) => {
+            if (!_teamInfo.find((t) => t.teamName === teamInfo?.name)) {
+              _teamInfo.push({
+                teamName: teamInfo?.name,
+                location: teamInfo?.locationName ?? "N/A",
+                playerInfo: [
+                  {
+                    playerName: player?.person?.fullName,
+                    playerPosition: player?.position?.abbreviation,
+                  },
+                ],
+              });
+            } else {
+              _teamInfo
+                .find((t) => t.teamName === teamInfo?.name)
+                ?.playerInfo.push({
+                  playerName: player?.person?.fullName,
+                  playerPosition: player?.position?.abbreviation,
+                });
+            }
+          });
+        })
+      );
+
+      if (type === "md") {
+        _teamInfo.forEach((team) => {
+          markdownTeamFormat += `## ${team.teamName}\n`;
+          markdownTeamFormat += `- [Team Location]: ${team.location}\n`;
+          markdownTeamFormat += `- [Players | Roasters]:\n`;
+          team.playerInfo.forEach((player, index) => {
+            markdownTeamFormat += `${index + 1}. ${player.playerName} (${
+              player.playerPosition
+            })\n`;
+          });
+          markdownTeamFormat += "\n\n";
+        });
+
+        return markdownTeamFormat;
+      }
+
+      return _teamInfo.flat();
+    } catch (e: any) {
+      console.error(e);
+      if (type === "md") {
+        return "N/A";
+      }
+      return [];
+    }
+  }
+
   // CURRENTLY, CONTENT MODERATION IS BEEN CHECK ON MESSAGE SENT
   // NOW, IT SHOULD BE DONE WITHIN THE PROCESS METHOD BELOW
 
@@ -165,6 +237,8 @@ export default class HighlightController {
     }
 
     const pbSummary = playback?.summary;
+    const homeTeam = playback?.highlight?.game?.home_team_id;
+    const awayTeam = playback?.highlight?.game?.away_team_id;
     const gameDecision = playback?.highlight?.game
       ?.decisions as DBGameDecision | null;
     const finalGameDecision = gameDecision
@@ -177,14 +251,22 @@ export default class HighlightController {
           2
         )
       : "N/A";
-    const context = "N/A";
+    const teamInfoMd = await this.getTeamInfo([homeTeam, awayTeam], "md");
+    const context = `
+    # Team Information:
+    ${teamInfoMd}
+
+    # Game Decision:
+    ${finalGameDecision}
+
+    # Video Summary:
+    ${JSON.stringify(pbSummary, null, 2)}
+    `;
 
     try {
       const aiResponse = await this.highlightAIEngine.generateAIResponse({
         query: lastMessage?.content!,
-        finalGameDecision,
-        highlightSummary: JSON.stringify(pbSummary, null, 2),
-        context,
+        context: context as string,
       });
 
       const parsedSources = await this.parseSources(aiResponse?.sources!);
