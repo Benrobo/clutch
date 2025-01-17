@@ -51,6 +51,8 @@ export const toolOrchestratorPrompt = (props: ToolOrchestratorPromptProps) => {
         - For specific and actionable questions (e.g., "Which team won between X and Y?" or "How many goals did Player X score this season?"), suggest an appropriate tool with the necessary parameters.
 
         The goal is to avoid suggesting tools for questions that are based on personal opinions or general speculations, while offering tool suggestions for clear, data-driven, and actionable queries.
+
+        IMPORTANT: Not every user query will require a tool, analyze the query and the context provided CAREFULLY before deciding, THIS IS CRITICAL.
     `
     )
     // .addRule(
@@ -141,6 +143,7 @@ export const toolOrchestratorPrompt = (props: ToolOrchestratorPromptProps) => {
         - If a tool is selected but has no parameters, set "input_parameters" to an empty string "".
         - If no tool is needed, set both fields to null.
         - If the query is outside the scope of the niche (e.g., non-baseball related), set both fields to null.
+        - Not every user query will require a tool, analyze the query and the context provided CAREFULLY before deciding, THIS IS CRITICAL.
         `
     )
     .compose();
