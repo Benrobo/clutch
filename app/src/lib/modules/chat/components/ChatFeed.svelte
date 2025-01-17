@@ -1,8 +1,6 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
-	import { ArrowRight, ChevronLeft, X } from 'lucide-svelte';
-	import { fly, slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	import { ArrowRight, X } from 'lucide-svelte';
 	import Portal from '@/components/Portal.svelte';
 	import { cn, extractAxiosResponseData } from '@/utils';
 	import { onMount } from 'svelte';
@@ -12,37 +10,52 @@
 	import ChatLoading from './loaders/ChatLoading.svelte';
 	import AnswerLoading from './loaders/AnswerLoading.svelte';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
-	import { getChatMessages, processLastMsg, sendMessage } from '@/http/requests';
-	import type { ChatMessagesResponse } from '@/types/chatfeed';
+	import {
+		getChatMessages,
+		processLastMsg,
+		processLastMsgLocal,
+		sendMessage
+	} from '@/http/requests';
+	import type { ChatMessagesResponse, ProcessLastMessageResponse } from '@/types/chatfeed';
 	import Spinner from '@/components/Spinner.svelte';
 	import EmptyChat from './EmptyChat.svelte';
+	import HighlightConversationService from '@/services/highlight-conversation';
+	import type { ChatMessage } from '@/services/db';
 
 	export let onClose: () => void = () => {};
+	export let pbId: string = '';
+
+	const highlightConversationService = new HighlightConversationService();
+
+	let scrollElement: HTMLElement | null;
+	let chatMessages: ChatMessagesResponse[] | ChatMessage[] = [];
+	let message: string = '';
 
 	$: chatFeedStore = useChatFeedStore();
 	$: chatId = $chatFeedStore?.activeConversation?.id;
 	$: userAvatar = $authStore?.user?.avatar;
 
-	let chatMessages: ChatMessagesResponse[] = [];
 	$: chatMessages = [];
-
-	let message = '';
 
 	$: processingLastMsg = false;
 
+	// SERVER RELATED QUERIES
+	// Get chat messages from server (CURRENTLY NOT IN USE)
+	// Leaving this here for future reference
 	$: getMessagesQuery = createQuery({
 		queryKey: ['getMessages', chatId],
 		queryFn: async () => await getChatMessages(chatId!),
 		enabled: !!chatId
 	});
 
+	// Send message to server
 	$: sendMessageMutation = createMutation({
 		mutationFn: async (message: string) => await sendMessage(chatId!, message),
 		onSuccess: (data) => {
 			const resp = extractAxiosResponseData(data, 'success')?.data as unknown as {
 				user: ChatMessagesResponse;
 			};
-			chatMessages = [...chatMessages, resp?.user];
+			chatMessages = [...chatMessages, resp?.user] as ChatMessagesResponse[];
 			processingLastMsg = true;
 			$processLastMsgMut.mutate();
 			scrollToBottom();
@@ -53,6 +66,8 @@
 		}
 	});
 
+	// process last message from server (CURRENTLY NOT IN USE)
+	// Leaving this here for future reference
 	$: processLastMsgMut = createMutation({
 		mutationFn: async () => {
 			processingLastMsg = true;
@@ -64,7 +79,7 @@
 			const resp = extractAxiosResponseData(data, 'success')?.data as unknown as {
 				ai: ChatMessagesResponse;
 			};
-			chatMessages = [...chatMessages, resp?.ai];
+			chatMessages = [...chatMessages, resp?.ai] as ChatMessagesResponse[];
 		},
 		onError: (error) => {
 			processingLastMsg = false;
@@ -72,10 +87,39 @@
 		}
 	});
 
-	$: fetchingChatMessages = $getMessagesQuery.isLoading;
+	// LOCAL RELATED QUERIES
+	// process last message from local (CURRENTLY IN USE)
+	$: processLastMsgLocalMut = createMutation({
+		mutationFn: async (payload: { last_message: string; pbId: string }) =>
+			await processLastMsgLocal(payload),
+		onSuccess: async (data) => {
+			const resp = extractAxiosResponseData(data, 'success')
+				?.data as unknown as ProcessLastMessageResponse;
+			console.log({ resp });
+
+			// save to local db
+			const chat = await highlightConversationService.getChat(pbId!);
+			await highlightConversationService.addChatMessage({
+				chat_id: chat?.id!,
+				role: 'AI',
+				content: resp?.ai?.message,
+				sources: resp?.ai?.sources
+			});
+
+			await getLocalChatMessages();
+
+			fetchingAIResponse = false;
+		},
+		onError: (error) => {
+			fetchingAIResponse = false;
+			console.error(error);
+		}
+	});
+
+	// $: fetchingChatMessages = $getMessagesQuery.isLoading;
+	$: fetchingChatMessages = false;
 	$: fetchingAIResponse = processingLastMsg || $processLastMsgMut.isPending;
 
-	let scrollElement: HTMLElement | null;
 	$: scrollElement = null;
 
 	const scrollToBottom = () => {
@@ -84,18 +128,50 @@
 		}
 	};
 
+	const getLocalChatMessages = async () => {
+		const chat = await highlightConversationService.getChat(pbId!);
+		const messages = await highlightConversationService.getChatMessages(chat?.id!);
+		console.log({ messages });
+		chatMessages = messages;
+	};
+
+	const sendMessageLocal = async (message: string) => {
+		const chat = await highlightConversationService.getChat(pbId!);
+		if (!chat) {
+			await highlightConversationService.createChat({
+				ref: pbId!,
+				ref_type: 'highlight_playback',
+				title: 'Highlight Conversation'
+			});
+		}
+
+		await highlightConversationService.addChatMessage({
+			chat_id: chat?.id!,
+			role: 'USER',
+			content: message
+		});
+
+		await getLocalChatMessages();
+
+		fetchingAIResponse = true;
+
+		$processLastMsgLocalMut.mutate({ last_message: message, pbId: pbId! });
+	};
+
 	$: if (chatMessages.length > 0) {
-		setTimeout(scrollToBottom, 100); // Small delay to ensure content is rendered
+		// Small delay to ensure content is rendered
+		setTimeout(scrollToBottom, 100);
 	}
 
-	$: if ($getMessagesQuery.data) {
-		const data = extractAxiosResponseData($getMessagesQuery.data, 'success')
-			?.data as unknown as ChatMessagesResponse[];
-		chatMessages = data;
-	}
+	// $: if ($getMessagesQuery.data) {
+	// 	const data = extractAxiosResponseData($getMessagesQuery.data, 'success')
+	// 		?.data as unknown as ChatMessagesResponse[];
+	// 	chatMessages = data;
+	// }
 
 	onMount(() => {
 		scrollToBottom();
+		getLocalChatMessages();
 	});
 </script>
 
@@ -121,7 +197,7 @@
 						<X size={20} class="stroke-white-100" strokeWidth={2} />
 					</button>
 					<div>
-						<h1 class="text-white-100 font-normal font-recoleta text-md">
+						<h1 class="text-white-100 font-light font-garamond text-xl">
 							{$chatFeedStore?.activeConversation?.title}
 						</h1>
 					</div>
@@ -185,16 +261,18 @@
 						<input
 							type="text"
 							placeholder="Ask me anything about this highlight..."
-							class="w-full h-full py-3 bg-transparent text-white-200 font-recoleta font-normal text-sm border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/50 disabled:cursor-not-allowed disabled:opacity-50"
+							class="w-full h-full py-3 bg-transparent text-white-200 font-garamond font-light text-md border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/50 disabled:cursor-not-allowed disabled:opacity-50"
 							bind:value={message}
-							on:keydown={(e) => {
+							on:keydown={async (e) => {
 								if (e.key === 'Enter') {
-									$sendMessageMutation.mutate(message);
+									// $sendMessageMutation.mutate(message);
+									await sendMessageLocal(message);
 									message = '';
 								}
 							}}
-							disabled={$sendMessageMutation.isPending}
 						/>
+						<!-- SERVER RELATED 👆 -->
+						<!-- disabled={$sendMessageMutation.isPending} -->
 
 						<button class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center">
 							{#if $sendMessageMutation.isPending}
