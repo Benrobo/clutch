@@ -1,4 +1,3 @@
-
 export const GAME_SEASONS = [
 	{
 		label: '2024',
@@ -37,57 +36,57 @@ export const PLAYER_OF_THE_DAY_POSITION_STATS_MAP = {
   // Catcher
   C: [
     ...BASE_PLAYER_STATS,
-    "avg",
     "homeRuns",
+    "caughtStealing",
     "rbi",
   ],
   // First Base
   "1B": [
     ...BASE_PLAYER_STATS,
     "avg",
+    "ops",
     "homeRuns",
-    "rbi",
   ],
   // Second Base
   "2B": [
     ...BASE_PLAYER_STATS,
     "avg",
-    "rbi",
-    "fieldingPercentage",
+    "obp",
+    "stolenBases",
   ],
   // Third Base
   "3B": [
     ...BASE_PLAYER_STATS,
     "avg",
+    "ops",
     "homeRuns",
-    "rbi",
   ],
   // Shortstop
   SS: [
     ...BASE_PLAYER_STATS,
-    "avg",
-    "rbi",
-    "fieldingPercentage",
+    "hits",
+    "obp",
+    "stolenBases",
   ],
   // Left Field
   LF: [
     ...BASE_PLAYER_STATS,
-    "avg",
+    "stolenBases",
+    "stolenBasePercentage",
     "homeRuns",
-    "rbi",
   ],
   // Center Field
   CF: [
     ...BASE_PLAYER_STATS,
-    "avg",
+    "stolenBases",
+    "stolenBasePercentage",
     "homeRuns",
-    "rbi",
   ],
   // Right Field
   RF: [
     ...BASE_PLAYER_STATS,
-    "avg",
+    "stolenBases",
+    "stolenBasePercentage",
     "homeRuns",
-    "rbi",
   ],
 } as Record<string, any[]>;
