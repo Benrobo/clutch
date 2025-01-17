@@ -18,8 +18,12 @@ export default class HighlightAIEngine {
     this.toolOrchestrator = new ToolOrchestrator();
   }
 
-  private async doINeedToolHelp(query: string) {
-    const response = await this.toolOrchestrator.queryRoute(query, "baseball");
+  private async doINeedToolHelp(query: string, context: string) {
+    const response = await this.toolOrchestrator.queryRoute(
+      query,
+      "baseball",
+      context
+    );
 
     if (!response) {
       logger.info(`No tool needed for query: [${query}]`);
@@ -85,80 +89,85 @@ export default class HighlightAIEngine {
     return markdown;
   }
 
-  async generateAIResponseV1(props: {
-    query: string;
-    finalGameDecision: string;
-    highlightSummary: string;
-    context?: string;
-  }) {
+  // async generateAIResponseV1(props: {
+  //   query: string;
+  //   finalGameDecision: string;
+  //   highlightSummary: string;
+  //   context?: string;
+  // }) {
+  //   // check if tool is needed
+  //   const toolDecision = await this.doINeedToolHelp(
+  //     props.query,
+  //     `
+  //     # Video Highlight/Summary/Information Context:
+  //     ## Summary: ${props.highlightSummary}
+  //     ## Context: ${props.context}
+  //     `
+  //   );
+  //   console.log({ toolDecision });
+  //   let toolResponse: CallToolResponse<"search_web"> | null = null;
+  //   let sources: CallToolResponse<"search_web"> | [] = [];
+  //   if (toolDecision) {
+  //     const [_toolResponse, _sources] = await Promise.all([
+  //       this.callTool(
+  //         toolDecision?.input_parameters!,
+  //         toolDecision?.tool as any,
+  //         "baseball"
+  //       ),
+  //       this.getSources(props.query),
+  //     ]);
+
+  //     toolResponse = _toolResponse;
+  //     sources = _sources;
+  //   }
+
+  //   const formattedToolResponse = this.formatToolResponseToMarkdown(
+  //     toolDecision?.tool as any,
+  //     toolResponse as any
+  //   );
+
+  //   const prompt = baseballAssistantPrompt({
+  //     query: props.query,
+  //     finalGameDecision: props.finalGameDecision,
+  //     highlightSummary: props.highlightSummary,
+  //     webResults: formattedToolResponse,
+  //     context: props.context ?? "N/A",
+  //   });
+
+  //   const response = await this.gemini.functionCall({
+  //     prompt: prompt as any,
+  //     tools: [
+  //       {
+  //         func_name: "baseball_assistant",
+  //         description: "Provide a response to a baseball question",
+  //         parameters: {
+  //           type: "object",
+  //           properties: {
+  //             // @ts-expect-error
+  //             response: {
+  //               type: "string",
+  //             },
+  //           },
+  //         },
+  //         required: ["response"],
+  //       },
+  //     ],
+  //   });
+
+  //   const aiResponse = response?.data?.[0]?.args as { response: string };
+
+  //   return {
+  //     response: aiResponse?.response,
+  //     sources,
+  //   };
+  // }
+
+  async generateAIResponse(props: { query: string; context?: string }) {
     // check if tool is needed
-    const toolDecision = await this.doINeedToolHelp(props.query);
-    console.log({ toolDecision });
-    let toolResponse: CallToolResponse<"search_web"> | null = null;
-    let sources: CallToolResponse<"search_web"> | [] = [];
-    if (toolDecision) {
-      const [_toolResponse, _sources] = await Promise.all([
-        this.callTool(
-          toolDecision?.input_parameters!,
-          toolDecision?.tool as any,
-          "baseball"
-        ),
-        this.getSources(props.query),
-      ]);
-
-      toolResponse = _toolResponse;
-      sources = _sources;
-    }
-
-    const formattedToolResponse = this.formatToolResponseToMarkdown(
-      toolDecision?.tool as any,
-      toolResponse as any
+    const toolDecision = await this.doINeedToolHelp(
+      props.query,
+      props.context ?? "N/A"
     );
-
-    const prompt = baseballAssistantPrompt({
-      query: props.query,
-      finalGameDecision: props.finalGameDecision,
-      highlightSummary: props.highlightSummary,
-      webResults: formattedToolResponse,
-      context: props.context ?? "N/A",
-    });
-
-    const response = await this.gemini.functionCall({
-      prompt: prompt as any,
-      tools: [
-        {
-          func_name: "baseball_assistant",
-          description: "Provide a response to a baseball question",
-          parameters: {
-            type: "object",
-            properties: {
-              // @ts-expect-error
-              response: {
-                type: "string",
-              },
-            },
-          },
-          required: ["response"],
-        },
-      ],
-    });
-
-    const aiResponse = response?.data?.[0]?.args as { response: string };
-
-    return {
-      response: aiResponse?.response,
-      sources,
-    };
-  }
-
-  async generateAIResponse(props: {
-    query: string;
-    finalGameDecision: string;
-    highlightSummary: string;
-    context?: string;
-  }) {
-    // check if tool is needed
-    const toolDecision = await this.doINeedToolHelp(props.query);
     let toolResponse: CallToolResponse<"search_web"> | null = null;
     let sources: CallToolResponse<"search_web"> | [] = [];
     if (toolDecision) {
@@ -182,10 +191,7 @@ export default class HighlightAIEngine {
 
     const prompt = baseballAssistantPrompt({
       query: props.query,
-      finalGameDecision: props.finalGameDecision,
-      highlightSummary: props.highlightSummary,
-      webResults: formattedToolResponse,
-      context: props.context ?? "N/A",
+      context: `${props?.context}\n\n # Web Results: ${formattedToolResponse}`,
     });
 
     const response = await this.gemini.callAI({
