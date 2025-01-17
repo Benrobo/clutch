@@ -7,6 +7,7 @@ import type { BaseResponse } from "@/types";
 import zod from "zod";
 import env from "@/config/env";
 import { logout } from "@/http/requests";
+import { MLB_PLAYER_POSITIONS } from "@/constant/mlb";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -241,4 +242,9 @@ export const shuffleArray = <T>(array: T[]) => {
   }
 
   return array;
+};
+
+
+export const getPosition = (position: string) => {
+  return MLB_PLAYER_POSITIONS.find((pos) => pos.abbrev === position)?.shortName;
 };
