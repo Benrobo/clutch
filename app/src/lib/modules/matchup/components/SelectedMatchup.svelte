@@ -64,7 +64,7 @@
 		);
 
 		const playerOfTheDayPositionAbbrv = MLB_PLAYER_POSITIONS.find(
-			(position) => position.shortName === playerOfTheDay?.position
+			(position) => position.abbrev.toLowerCase() === playerOfTheDay?.position.toLowerCase()
 		)?.abbrev;
 
 		return nonDuplicateStats.filter((stat) =>
