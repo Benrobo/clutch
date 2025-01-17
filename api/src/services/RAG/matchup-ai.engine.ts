@@ -342,12 +342,45 @@ export default class MatchupAIEngine {
 
       for (const question of playerStatsComparisonQuestions) {
         const requiredStats = question?.stats;
-        const challengerStats = requiredStats.map((stat) =>
-          challengerNeededStats.find((s) => s.key === stat)
-        );
-        const opponentStats = requiredStats.map((stat) =>
-          opponentNeededStats.find((s) => s.key === stat)
-        );
+        const challengerStats = requiredStats
+          .map((stat) => challengerNeededStats.find((s) => s.key === stat))
+          .map((stat) => {
+            const validValue = isNaN(parseFloat(stat?.value as any))
+              ? stat?.value
+              : parseFloat(stat?.value as any);
+            return {
+              key: stat?.key,
+              value: validValue,
+            };
+          })
+          .filter(
+            (
+              stat
+            ): stat is {
+              key: keyof MLBPositionStats;
+              value: string | number;
+            } => stat !== undefined
+          );
+
+        const opponentStats = requiredStats
+          .map((stat) => opponentNeededStats.find((s) => s.key === stat))
+          .map((stat) => {
+            const validValue = isNaN(parseFloat(stat?.value as any))
+              ? stat?.value
+              : parseFloat(stat?.value as any);
+            return {
+              key: stat?.key,
+              value: validValue,
+            };
+          })
+          .filter(
+            (
+              stat
+            ): stat is {
+              key: keyof MLBPositionStats;
+              value: string | number;
+            } => stat !== undefined
+          );
 
         if (challengerStats?.length > 0 && opponentStats?.length > 0) {
           const analysis = await this.playersStatsAnalysis({
