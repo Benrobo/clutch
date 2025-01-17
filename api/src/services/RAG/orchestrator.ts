@@ -75,7 +75,7 @@ export default class ToolOrchestrator {
           };
         },
         {
-          retries: 3,
+          retries: 2,
           onRetry: (e, attempt) => {
             console.log(`Error querying route (attempt ${attempt}):`, e);
           },
