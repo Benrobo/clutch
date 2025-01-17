@@ -151,9 +151,6 @@ export const toolOrchestratorPrompt = (props: ToolOrchestratorPromptProps) => {
 interface BaseballAssistantPromptProps {
   context: string;
   query: string;
-  webResults: string;
-  finalGameDecision: string;
-  highlightSummary: string;
 }
 
 export const baseballAssistantPrompt = (
@@ -185,12 +182,7 @@ export const baseballAssistantPrompt = (
     .addRule("Never start a conversation without the user asking of one")
     .addPlainText("Here's the user's query:")
     .addCustomBlock("user_query", props?.query)
-    .addPlainText("Searched Web Results (DO NOT USE ONLY IF NECESSARY):")
-    .addCustomBlock("web_results", props?.webResults)
-    .addPlainText("Final Game Decision (Only if applicable):")
-    .addCustomBlock("final_game_decision", props?.finalGameDecision)
-    .addPlainText("Highlight Playback Summary (Only if applicable):")
-    .addCustomBlock("video_highlight_playback", props?.highlightSummary)
+    .addCustomBlock("context", props?.context)
     .addRule(
       "Leverage the (context, web results, and final game decision, video highlight playback if applicable) to provide a response."
     )
@@ -202,7 +194,7 @@ export const baseballAssistantPrompt = (
       "Make the response feel like something a human would casually say while watching a game or chatting with a friend. Think relaxed, relatable, and unpolished, but still accurate and insightful. Make sure you leverage the context, web results, and final game decision if applicable."
     )
     .addPlainText(
-      "Your response should be concise and straight forward to the call."
+      "Your response should be concise and straight forward to the call and formatted for readability."
     )
     .compose();
 
