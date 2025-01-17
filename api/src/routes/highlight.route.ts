@@ -3,7 +3,10 @@ import HighlightController from "../controllers/highlight.controller.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 import useCatchErrors from "../lib/error.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
-import { AIChatConversationSchema } from "../lib/schema-validator.js";
+import {
+  AIChatConversationSchema,
+  ProcessLastMessageSchema,
+} from "../lib/schema-validator.js";
 
 const router = new Hono();
 const basePath = "/highlights";
@@ -50,6 +53,17 @@ router.get(
   useCatchErrors(
     isAuthenticated(
       highlightController.getChatMessages.bind(highlightController)
+    )
+  )
+);
+
+// LOCAL AI CHAT CONVERSATION
+router.post(
+  `${basePath}/chat/process/local`,
+  validateSchema(ProcessLastMessageSchema),
+  useCatchErrors(
+    isAuthenticated(
+      highlightController.processLastMessageLocal.bind(highlightController)
     )
   )
 );
