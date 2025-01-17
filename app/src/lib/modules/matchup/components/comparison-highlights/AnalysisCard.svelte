@@ -76,7 +76,7 @@
 					href={publicProfile}
 					target="_blank"
 					class={cn(
-						'w-[30px] h-[30px] md:w-[40px] md:h-[40px] rounded-full flex-center enableBounceEffect relative top-2',
+						'w-[30px] h-[30px] md:w-[40px] md:h-[40px] rounded-full flex-center enableBounceEffect relative top-2 z-[1]',
 						type === 'positive' ? 'bg-green-100/20' : 'bg-red-305/20'
 					)}
 				>
