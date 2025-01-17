@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import VersusOverview from './VersusOverview.svelte';
 	import PlayerProfile from './stats/PlayerProfile.svelte';
-	import { fly, slide } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import ComparisonOverview from './comparison-highlights/ComparisonOverview.svelte';
 	import ComparisonSlide from './comparison-highlights/ComparisonSlide.svelte';
