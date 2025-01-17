@@ -62,8 +62,6 @@
 		season: '2024',
 		position: 'P'
 	};
-	$: seasonValue = '2024';
-	$: positionValue = 'P';
 
 	$: selectedMatchup = null;
 
@@ -92,6 +90,7 @@
 			filters.position = 'P';
 
 			queryClient.invalidateQueries({ queryKey: ['team-players', selectedTeam] });
+			queryClient.invalidateQueries({ queryKey: ['matchups'] });
 		},
 		onError: (error) => {
 			const resp = extractAxiosResponseData(error, 'error')?.message;
@@ -176,6 +175,8 @@
 	}
 
 	function handleChallengerAndOpponentChange(teamId: number, type: 'challenger' | 'opponent') {
+		selectedPlayers = [];
+
 		if (type === 'challenger') {
 			const updatedState = createMatchupState.find((state) => state.type === 'challenger');
 			if (updatedState) {
@@ -205,20 +206,36 @@
 	function handleCreateMatchup() {
 		if (selectedPlayers.length !== 2) return;
 
-		const [challengerIndex, opponentIndex] = selectedPlayers.map((sp) =>
-			createMatchupState.findIndex((cs) => cs.teamId === sp.teamId)
-		);
+		let challengerPlayer, opponentPlayer;
 
-		const challengerPlayer = selectedPlayers[0].player;
-		const opponentPlayer = selectedPlayers[1].player;
-		const challengerTeam = selectedPlayers[challengerIndex].teamId;
-		const opponentTeam = selectedPlayers[opponentIndex].teamId;
+		if (selectedPlayers[0].teamId === selectedPlayers[1].teamId) {
+			// If both players are from the same team, use selection order
+			challengerPlayer = selectedPlayers[0].player;
+			opponentPlayer = selectedPlayers[1].player;
+		} else {
+			// If different teams, determine roles based on createMatchupState
+			const [player1, player2] = selectedPlayers;
+			const player1TeamRole = createMatchupState.find(
+				(state) => state.teamId === player1.teamId
+			)?.type;
+
+			if (player1TeamRole === 'challenger') {
+				challengerPlayer = player1.player;
+				opponentPlayer = player2.player;
+			} else {
+				challengerPlayer = player2.player;
+				opponentPlayer = player1.player;
+			}
+		}
+
+		const challengerState = createMatchupState.find((state) => state.type === 'challenger');
+		const opponentState = createMatchupState.find((state) => state.type === 'opponent');
 
 		$createMatchupMut.mutate({
 			challengerId: challengerPlayer.id,
 			opponentId: opponentPlayer.id,
-			challengerTeamId: challengerTeam,
-			opponentTeamId: opponentTeam,
+			challengerTeamId: challengerState?.teamId!,
+			opponentTeamId: opponentState?.teamId!,
 			position: filters.position,
 			season: Number(filters.season)
 		});
@@ -285,7 +302,7 @@
 						<!-- filter indicator -->
 						{#if filters.season !== '2024' || filters.position !== 'pitcher'}
 							<span
-								class="w-4 h-4 text-[10px] rounded-full bg-orange-101 absolute top-0 -translate-y-1 translate-x-1 right-0 flex items-center justify-center"
+								class="w-2 h-2 text-[10px] rounded-full bg-orange-101 absolute top-0 -translate-y-1 translate-x-1 right-0 flex items-center justify-center"
 							>
 								<!-- {Object.entries(filters).length} -->
 							</span>
@@ -430,10 +447,11 @@
 				name=""
 				id=""
 				class="w-full h-full bg-dark-100/30 outline-none border-none ring-0 rounded-lg focus:ring-0 cursor-pointer"
-				value={seasonValue}
+				value={filters.season}
 				on:change={(e) => {
 					// @ts-expect-error
-					seasonValue = e.target?.value;
+					filters.season = e.target?.value;
+					selectedPlayers = [];
 				}}
 			>
 				{#each GAME_SEASONS as season}
@@ -448,10 +466,11 @@
 				name=""
 				id=""
 				class="w-full h-full bg-dark-100/30 outline-none border-none ring-0 rounded-lg focus:ring-0 cursor-pointer"
-				value={positionValue}
+				value={filters.position}
 				on:change={(e) => {
 					// @ts-expect-error
-					positionValue = e.target?.value;
+					filters.position = e.target?.value;
+					selectedPlayers = [];
 				}}
 			>
 				{#each MLB_PLAYER_POSITIONS as position}
