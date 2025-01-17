@@ -66,7 +66,7 @@
 
 		<!-- answer content -->
 		<div class="w-full h-auto">
-			<span class="text-white-100 font-montserrat font-normal text-md sm:text-lg">
+			<span class="text-white-100 font-garamond font-light text-md sm:text-lg">
 				{answer}
 			</span>
 		</div>
