@@ -9,6 +9,7 @@ import { validateImageUrl } from "./lib/utils.js";
 import ToolOrchestrator from "./services/RAG/orchestrator.js";
 import ContentModeration from "./helpers/content-moderation.js";
 import HighlightAIEngine from "./services/RAG/highlight-ai.engine.js";
+import HighlightController from "./controllers/highlight.controller.js";
 
 async function mlbTest() {
   // MLB API TEST
@@ -180,6 +181,13 @@ async function testUploadingVideo() {
       // const result = await hlAIEngine.generateAIResponse(
       //   "What was the last time the Yankees won a championship?"
       // );
+
+      const highlightController = new HighlightController();
+      // const result = await highlightController.getTeamInfo(
+      //   ["114", "115"],
+      //   "md"
+      // );
+      // console.log(result);
     } catch (error) {
       console.error("Test Error:", error);
     }
