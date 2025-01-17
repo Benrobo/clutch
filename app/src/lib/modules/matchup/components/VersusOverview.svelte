@@ -52,7 +52,7 @@
 	<div
 		class="w-full h-auto flex flex-col items-center justify-center absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 gap-0"
 	>
-		<span class="font-facon font-normal text-white-100 text-[2em] md:text-[3em]"> VS </span>
+		<span class="font-facon font-normal text-white-100 text-[3em] md:text-[3em]"> VS </span>
 	</div>
 	<div class="w-full h-[50vh] flex flex-col items-center justify-center gap-3 bg-dark-110">
 		<div
