@@ -41,44 +41,46 @@
 		</Flex>
 
 		<!-- close button -->
-		<button
-			class="absolute top-5 right-5 w-[35px] h-[35px] md:w-[55px] md:h-[55px] bg-dark-111 rounded-full flex flex-center enableBounceEffect z-[1]"
-			on:click={onClose}
-		>
-			<X size={18} class="stroke-brown-100" strokeWidth={3} />
-		</button>
+		<Flex className="absolute top-5 right-5 ">
+			<button
+				class="w-[35px] h-[35px] md:w-[55px] md:h-[55px] border-none outline-none ring-0 flex flex-row items-center justify-center gap-2 enableBounceEffect bg-dark-111 rounded-full"
+				on:click={back}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					class={cn('text-brown-100 -rotate-360')}
+					stroke-width={2}
+				>
+					<path
+						fill="none"
+						stroke="currentColor"
+						d="M8 5c0 .742-.733 1.85-1.475 2.78c-.954 1.2-2.094 2.247-3.401 3.046C2.144 11.425.956 12 0 12m0 0c.956 0 2.145.575 3.124 1.174c1.307.8 2.447 1.847 3.401 3.045C7.267 17.15 8 18.26 8 19m-8-7h24"
+					/></svg
+				>
+				<!-- <span class="text-xs text-dark-100 font-jetbrains">Next</span> -->
+			</button>
+			<button
+				class="w-[35px] h-[35px] md:w-[55px] md:h-[55px] bg-dark-111 rounded-full flex flex-center enableBounceEffect z-[1]"
+				on:click={onClose}
+			>
+				<X size={18} class="stroke-brown-100" strokeWidth={3} />
+			</button>
+		</Flex>
 	</Flex>
 
-	<Flex className="w-full h-auto px-3 md:px-5 py-5 flex-col gap-0 max-w-[70%] mt-[1em] md:mt-[4em]">
+	<Flex
+		className="w-full h-auto justify-between px-3 md:px-5 py-5 flex-col gap-0 max-w-[70%] mt-[.5em] md:mt-[4em]"
+	>
 		<span
 			class="px-4 py-1 md:py-2 rounded-full bg-dark-100 text-[10px] md:text-xs font-normal font-poppins text-brown-100"
 			>Top Performer</span
 		>
-		<h2 class="text-[3.4em] md:text-[4em] font-medium font-garamond text-dark-100">
+		<h2 class="w-full text-[3em] md:text-[4em] font-medium font-garamond text-dark-100">
 			Player <br /> Of The Day
 		</h2>
-	</Flex>
-
-	<Flex class="w-full px-4">
-		<button
-			class="w-auto border-none outline-none ring-0 flex flex-row items-center justify-center gap-2 enableBounceEffect"
-			on:click={back}
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="50"
-				height="50"
-				viewBox="0 0 24 24"
-				class={cn('text-dark-100 -rotate-360')}
-			>
-				<path
-					fill="none"
-					stroke="currentColor"
-					d="M8 5c0 .742-.733 1.85-1.475 2.78c-.954 1.2-2.094 2.247-3.401 3.046C2.144 11.425.956 12 0 12m0 0c.956 0 2.145.575 3.124 1.174c1.307.8 2.447 1.847 3.401 3.045C7.267 17.15 8 18.26 8 19m-8-7h24"
-				/></svg
-			>
-			<!-- <span class="text-xs text-dark-100 font-jetbrains">Next</span> -->
-		</button>
 	</Flex>
 
 	<!-- player image and insight -->
