@@ -84,6 +84,14 @@ export const processLastMsg = async (ref: string)=> {
   return res.data;
 }
 
+export const processLastMsgLocal = async (payload: {
+	last_message: string;
+	pbId: string;
+}) => {
+	const res = await $axios.post(`/highlights/chat/process/local`, payload);
+	return res.data;
+};
+
 export const getSpotlights = async ()=> {
   const res = await $axios.get(`/spotlights`);
   return res.data;
