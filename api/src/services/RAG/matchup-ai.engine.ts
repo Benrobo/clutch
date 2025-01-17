@@ -527,7 +527,7 @@ export default class MatchupAIEngine {
         id: topPlayerId,
         score: topScore,
         fullName: playerOfTheDayInfo?.fullName,
-        position: playerOfTheDayInfo?.primaryPosition?.name,
+        position: playerOfTheDayInfo?.primaryPosition?.abbreviation,
       },
     };
   }
