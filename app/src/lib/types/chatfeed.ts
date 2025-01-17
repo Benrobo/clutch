@@ -30,3 +30,14 @@ export type ChatMessagesResponse = {
     error: string | null;
     created_at: string;
 }
+
+export type ProcessLastMessageResponse = {
+    ai: {
+        pbId: string;
+        message: string;
+        role: "AI" | "HUMAN";
+        sources: ChatFeedSources[] | null;
+        error: string | null;
+        created_at: string;
+    }
+}
