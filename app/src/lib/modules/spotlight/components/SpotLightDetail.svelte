@@ -100,7 +100,7 @@
 		<Flex
 			className={cn(
 				'w-full flex flex-col gap-4 px-4 py-2 relative',
-				content.join('\n\n').length > 300 && !shouldExpand ? 'h-[40vh] overflow-hidden' : 'h-auto'
+				content.join('\n\n').length > 600 && !shouldExpand ? 'h-[50vh] overflow-hidden' : 'h-auto'
 			)}
 		>
 			{#if content}
@@ -110,7 +110,7 @@
 				{/each}
 			{/if}
 
-			{#if content.join('\n\n').length > 300}
+			{#if content.join('\n\n').length > 600}
 				<div
 					class={cn(
 						'w-full h-auto absolute bottom-0 z-[10] bg-gradient-to-b from-dark-106/10 to-dark-107 pt-10 pb-4 flex-center',
