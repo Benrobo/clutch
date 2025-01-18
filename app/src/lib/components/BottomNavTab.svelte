@@ -58,11 +58,18 @@
 	$: {
 		const hideBottomNavMap = {
 			dugout: true,
-			matchup: true
+			matchup: true,
+			onboarding: true
 		};
 		const isMatchup = slug.includes('matchup');
 		const isDugout = slug.includes('dugout');
-		if (hideBottomNavMap[activeTab as keyof typeof hideBottomNavMap] || isDugout || isMatchup) {
+		const isOnboarding = slug.includes('onboarding');
+		if (
+			hideBottomNavMap[activeTab as keyof typeof hideBottomNavMap] ||
+			isDugout ||
+			isMatchup ||
+			isOnboarding
+		) {
 			globalStore.toggleBottomNav(false);
 		} else {
 			globalStore.toggleBottomNav(true);
