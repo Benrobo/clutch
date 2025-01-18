@@ -15,9 +15,7 @@
 	export let onClick: () => void;
 	export let gameProgress: DugoutGameProgress | null = null;
 
-	afterUpdate(() => {
-		console.log({ gameProgress });
-	});
+	afterUpdate(() => {});
 </script>
 
 <button
@@ -26,7 +24,6 @@
 		game?.available ? 'cursor-pointer' : 'cursor-not-allowed grayscale opacity-50'
 	)}
 	on:click={onClick}
-	disabled={!game?.available}
 >
 	<Flex
 		className="w-full max-w-[200px] min-h-[290px] flex justify-between flex-col gap-3 bg-dark-106 cursor-pointer rounded-lg border-[.5px] border-white-400/30"
