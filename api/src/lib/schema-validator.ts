@@ -3,7 +3,7 @@ import * as zod from "zod";
 export const AddUserPreferencesSchema = zod.object({
   body: zod.object({
     teams: zod.array(zod.number()),
-    players: zod.array(zod.number()),
+    players: zod.array(zod.number()).optional(),
   }),
 });
 
