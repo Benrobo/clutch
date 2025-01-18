@@ -53,5 +53,32 @@ export type RecommendationData = {
         },
         date: string,
         status: "Final" | "Live" | "Upcoming"
-    }
+    },
+    transcript: Transcript
+}
+
+export type SupportedTranslations = "en" | "es" | "ja" | "ko";
+
+export type Transcript = {
+    original: {
+        segments: Array<{
+            end: number;
+            text: string;
+            start: number;
+            confidence: number;
+        }>
+        fullTranscript: string;
+    } | null;
+    translated: {
+        [key in SupportedTranslations]: {
+            lang: key;
+            translations: Array<{
+                end: number;
+                start: number;
+                text: string;
+                translated_text: string;
+            }>
+            fullTranscript: string;
+        }
+    } | null;
 }
