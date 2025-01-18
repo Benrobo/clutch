@@ -23,27 +23,46 @@ export default class DugoutAIEngine {
           const hint = await this.gemini.callAI({
             user_prompt: prompt,
             enable_call_history: false,
+            log: true,
           });
 
           if (!hint?.data) {
             throw new Error("Failed to get hint");
           }
 
-          const strippedHint = hint.data.replace(/^```json\s*\n|\n```$/g, "");
-          const parsedHint = JSON.parse(strippedHint);
+          // Remove the leading and trailing backticks and any extra whitespace
+          const strippedHint = hint.data
+            .replace(/^```json\s*\n|\n```$|```$/g, "")
+            .replace(/\\/g, "")
+            .replace(/\n\s*/g, "")
+            .replace(/\s+/g, " ")
+            .replace(/\\n/g, " ")
+            .trim();
 
-          if (!parsedHint?.suggested_letters?.length || !parsedHint?.tip) {
-            throw new Error("Invalid hint format");
+          // Remove any trailing backticks that might still be present
+          const cleanedHint = strippedHint.replace(/```/g, "").trim();
+
+          try {
+            const parsedHint = JSON.parse(cleanedHint);
+            if (!parsedHint?.suggested_letters?.length || !parsedHint?.tip) {
+              throw new Error("Invalid hint format");
+            }
+            return parsedHint;
+          } catch (parseError: any) {
+            console.error("Cleaned string:", cleanedHint);
+            throw parseError;
           }
-
-          return parsedHint;
         },
         {
-          retries: 3,
+          retries: 5,
+          factor: 2,
           minTimeout: 1000,
-          maxTimeout: 10000,
-          onRetry(e, attempt) {
-            console.error(`Failed to get hint: ${e} - attempt: ${attempt}`);
+          maxTimeout: 15000,
+          randomize: true,
+          onRetry(e: any, attempt) {
+            console.error(
+              `Failed to get hint (attempt ${attempt}/5): ${e.message}`
+            );
           },
         }
       );
