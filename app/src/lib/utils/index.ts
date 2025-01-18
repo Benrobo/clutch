@@ -8,6 +8,7 @@ import zod from "zod";
 import env from "@/config/env";
 import { logout } from "@/http/requests";
 import { MLB_PLAYER_POSITIONS } from "@/constant/mlb";
+import type { SupportedTranslations, Transcript } from "@/types/recommendation";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -248,3 +249,61 @@ export const shuffleArray = <T>(array: T[]) => {
 export const getPosition = (position: string) => {
   return MLB_PLAYER_POSITIONS.find((pos) => pos.abbrev === position)?.shortName;
 };
+
+export const mapTranscript: (transcript: Transcript) => {
+  lang: string;
+  translation: {
+    start: number;
+    end: number;
+    text: string;
+  }[];
+}[] | null = (transcript: Transcript) => {
+  if(!transcript?.original || !transcript?.translated) return null;
+
+  if(
+    (Object.entries(transcript?.translated ?? {}).length === 0) || 
+    (Object.entries(transcript?.original ?? {}).length === 0)
+  ){
+    return null;
+  }
+  
+  const translation = new Map<string, {
+    start: number;
+    end: number;
+    text: string;
+  }[]>();
+
+  for(const [key, value] of Object.entries(transcript?.translated ?? {})) {
+    if(translation.has(key)) continue;
+    else{
+      translation.set(key, value?.translations.map((translation) => ({
+        start: Number(translation.start),
+        end: Number(translation.end),
+        text: translation.translated_text
+      })));
+    }
+  }
+
+  // get english translation from text
+  for(const [key, value] of Object.entries(transcript?.original?.segments ?? {})) {
+    const englishTranslation = translation.get("en");
+    if(englishTranslation) {
+      englishTranslation.push({
+        start: Number(value.start),
+        end: Number(value.end),
+        text: value.text
+      });
+    }else{
+      translation.set("en", [{
+        start: Number(value.start),
+        end: Number(value.end),
+        text: value.text
+      }]);
+    }
+  }
+
+  return Array.from(translation.entries()).map(([lang, translations]) => ({
+    lang,
+    translation: translations
+  }));
+} 
