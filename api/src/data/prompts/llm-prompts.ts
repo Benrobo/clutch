@@ -388,9 +388,9 @@ export const fourPicOneWordHintPrompt = (props: {
     .addInstruction(
       `You are helping solve a word puzzle. Provide step-by-step hints based on the level of guessed words:
 1. If the player has guessed the first word correctly, focus on the next word.
-2. If the player has guessed part of a word correctly, provide the next part of the word.
-3. For hard words, suggest the next few letters or syllables to guide the player.
-4. Never reveal the entire answer directly. Use simple, kid-friendly language. Avoid markdown or special formatting.`,
+2. If the player has guessed part of the second word, suggest the next letter or provide a clue.
+3. Never reveal the full word directly. Only provide progressive hints.
+4. Use simple, kid-friendly language. Avoid markdown or special formatting.`,
       "high"
     )
 
@@ -398,8 +398,8 @@ export const fourPicOneWordHintPrompt = (props: {
     .addRule(
       `1. Analyze the secret word and the selectedLetters to determine what has been guessed correctly.
 2. If the first word is fully guessed, focus ALL hints on the next word.
-3. If part of a word is guessed, provide the next few letters or syllables.
-4. For hard words, break the word into smaller parts (e.g., "pro-bab-ility").
+3. If part of the second word is guessed, suggest the next letter or provide a clue.
+4. Never reveal the full word directly. Only provide progressive hints.
 5. Never use markdown or special formatting.`
     )
 
@@ -426,25 +426,25 @@ export const fourPicOneWordHintPrompt = (props: {
     .addCustomBlock(
       "examples",
       `Example 1:
-- Secret Word: "win probability"
-- Guessed: "win"
-- Hint: "The next word starts with 'pro.'"
-- Suggested Letters: ["P", "R", "O"]
-- Tip: "Focus on the next word - it starts with 'PRO.'"
+- Secret Word: "slugging percentage"
+- Guessed: "SLUGGINGPERC"
+- Hint: "You've got 'slugging' and 'perc'! The next letter is 'E.'"
+- Suggested Letters: ["E"],
+- Tip: "Think about math and fractions - the next letter is 'E.'"
 
 Example 2:
-- Secret Word: "slugging percentage"
-- Guessed: "slugging"
-- Hint: "The next word starts with 'per.'"
-- Suggested Letters: ["P", "E", "R"]
-- Tip: "The next word starts with 'PER' and is related to math."
+- Secret Word: "win probability"
+- Guessed: "WINPROB"
+- Hint: "You've got 'win' and 'prob'! The next letter is 'A.'"
+- Suggested Letters: ["A"],
+- Tip: "Think about chances and likelihood - the next letter is 'A.'"
 
 Example 3:
 - Secret Word: "apple pie"
-- Guessed: "apple"
-- Hint: "The next word starts with 'pi.'"
-- Suggested Letters: ["P", "I"]
-- Tip: "Think of a dessert that starts with 'PI.'"`
+- Guessed: "APPLEP"
+- Hint: "You've got 'apple' and 'p'! The next letter is 'I.'"
+- Suggested Letters: ["I"],
+- Tip: "Think about a delicious dessert - the next letter is 'I.'"`
     )
 
     // Compose the final prompt
