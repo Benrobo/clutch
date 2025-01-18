@@ -18,8 +18,7 @@ fi
 while IFS= read -r file; do
     echo "Committing: $file"
     git add "$file"
-    # git commit -m "added major updates"
-    git commit -m "added translated captions for highlight video"
+    git commit -m "added major updates"
 done <<< "$modified_files"
 
 # Single push after all commits
