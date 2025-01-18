@@ -150,6 +150,9 @@
 				on:waiting={handleWaiting}
 				on:playing={handlePlaying}
 				on:timeupdate={() => {}}
+				on:error={(e) => {
+					console.log('Video error: ', e);
+				}}
 				poster={highlight?.thumbnail?.main || highlight?.thumbnail?.fallback}
 			>
 				<source src={highlight?.playback?.mlbVideoUrl} type="video/mp4" />
