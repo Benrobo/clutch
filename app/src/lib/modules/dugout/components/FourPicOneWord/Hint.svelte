@@ -122,6 +122,10 @@
 						{tip}
 					</p>
 				{/each}
+
+				<span class="text-white text-sm font-medium font-poppins text-white-100">
+					💡 Suggested Letters: [{hintData?.suggested_letters.join(' - ')}]
+				</span>
 			</div>
 		{:else}
 			<!-- empty state -->
