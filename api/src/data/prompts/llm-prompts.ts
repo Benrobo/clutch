@@ -377,33 +377,34 @@ export const fourPicOneWordHintPrompt = (props: {
   const { selectedLetters, secretWord } = props;
 
   const prompt = new LLMPromptBuilder()
-    // Define global context
     .defineContext({
       gameType: "Word Puzzle",
-      audience: "12-year-old kids",
+      // audience: "12-year-old kids",
       tone: "Friendly, fun, and encouraging",
     })
 
-    // Add high-level instruction
     .addInstruction(
-      `You are helping solve a word puzzle. Provide step-by-step hints based on the level of guessed words:
-1. If the player has guessed the first word correctly, focus on the next word.
-2. If the player has guessed part of the second word, suggest the next letter or provide a clue.
-3. Never reveal the full word directly. Only provide progressive hints.
-4. Use simple, kid-friendly language. Avoid markdown or special formatting.`,
+      `You are helping solve a word puzzle. Analyze the selectedLetters to determine if they match the secret word in the correct order, starting from the first character:
+1. If the first character of selectedLetters does NOT match the first character of the secret word, provide feedback on the mistake and guide the player.
+2. If the first character matches, check the subsequent characters in order. Only suggest letters or words if the order is correct.
+3. Never suggest letters or words from the secret word if the order is wrong.
+4. Never reveal the full word directly.
+5. Respond in plain JSON format. Do NOT use markdown syntax like \`\`\`json.`,
       "high"
     )
 
-    // Add rules
     .addRule(
-      `1. Analyze the secret word and the selectedLetters to determine what has been guessed correctly.
-2. If the first word is fully guessed, focus ALL hints on the next word.
-3. If part of the second word is guessed, suggest the next letter or provide a clue.
-4. Never reveal the full word directly. Only provide progressive hints.
+      `1. Compare the selectedLetters with the secret word in order, starting from the first character.
+2. If the first character of selectedLetters does NOT match the first character of the secret word:
+   - Provide feedback on the mistake.
+   - Do NOT suggest any letters or words from the secret word.
+3. If the first character matches, check the subsequent characters in order:
+   - Only suggest letters or words if the order is correct.
+   - If the order is wrong, provide feedback on the mistake.
+4. Respond in plain JSON format. Do NOT use markdown syntax like \`\`\`json.
 5. Never use markdown or special formatting.`
     )
 
-    // Add context about the game state
     .addCustomBlock(
       "game_state",
       JSON.stringify({
@@ -412,47 +413,51 @@ export const fourPicOneWordHintPrompt = (props: {
       })
     )
 
-    // Add response format
     .addCustomBlock(
       "response_format",
       `{
-  "hint": "", // A step-by-step hint based on the level of guessed words.
-  "suggested_letters": [], // Suggest the next few letters to focus on.
-  "tip": "" // Provide a tip on how to use the suggested letters or the hint.
+  "hint": "", // A hint based on the analysis of selectedLetters.
+  "tip": "" // Provide feedback on mistakes or a tip to guide the player.
 }`
     )
 
-    // Add examples
     .addCustomBlock(
       "examples",
       `Example 1:
-- Secret Word: "slugging percentage"
-- Guessed: "SLUGGINGPERC"
-- Hint: "You've got 'slugging' and 'perc'! The next letter is 'E.'"
-- Suggested Letters: ["E"],
-- Tip: "Think about math and fractions - the next letter is 'E.'"
+- Secret Word: "catcher framing"
+- Selected Letters: ["M", "A", "N", "C", "I", "T", "C", "R", "D", "E", "A", "C"]
+- Response:
+{
+  "hint": "The first letter of the secret word is 'C.' You've started with 'M,' which is incorrect.",
+  "tip": "Focus on baseball terms - the secret word starts with 'C.'"
+}
 
 Example 2:
-- Secret Word: "win probability"
-- Guessed: "WINPROB"
-- Hint: "You've got 'win' and 'prob'! The next letter is 'A.'"
-- Suggested Letters: ["A"],
-- Tip: "Think about chances and likelihood - the next letter is 'A.'"
+- Secret Word: "slugging percentage"
+- Selected Letters: ["S", "L", "U", "G", "G", "I", "N", "G", "P", "E", "R", "C", "A"]
+- Response:
+{
+  "hint": "You've got the first word correct! Now focus on the next word.",
+  "tip": "The next word starts with 'P' - think about math and sports stats."
+}
 
 Example 3:
 - Secret Word: "apple pie"
-- Guessed: "APPLEP"
-- Hint: "You've got 'apple' and 'p'! The next letter is 'I.'"
-- Suggested Letters: ["I"],
-- Tip: "Think about a delicious dessert - the next letter is 'I.'"`
+- Selected Letters: ["A", "P", "P", "L", "E", "P", "I", "E"]
+- Response:
+{
+  "hint": "You've got the first word correct! The next letter is 'P.'",
+  "tip": "Think about a dessert that starts with 'PIE.'"
+}`
+    )
+    .addPlainText(
+      "DO NOT USE MARKDOWN OR SPECIAL FORMATTING. DO NOT USE ```json. DO NOT USE ```."
     )
 
-    // Compose the final prompt
     .compose();
 
   return prompt;
 };
-
 export const matchupPlayerComparisonPrompt = (data: {
   question: string;
   challenger: {
