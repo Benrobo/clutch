@@ -14,7 +14,7 @@ export const DugoutGames = [
         title: "Quiz",
         description: "Test your knowledge of baseball with this fun trivia game!",
         image: "/images/word-search.png",
-        available: true,
+        available: false,
     },
     {
         id: "word-search",
