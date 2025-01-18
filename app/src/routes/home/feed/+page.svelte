@@ -32,12 +32,39 @@
 	import type { ConversationResponse } from '@/types/chatfeed';
 	import { useChatFeedStore } from '@/store/chatfeed.store';
 	import HighlightConversationService from '$lib/services/highlight-conversation';
+	import KeywordDefinition from '@/modules/discover/components/KeywordDefinition.svelte';
+
+	// Recommendation pagination
+	type PaginationState = {
+		hasMore: boolean;
+		cursor: string | null;
+	};
 
 	const params = useUrlParams();
 	const feedParam = params.getParam<'foryou' | 'explore'>({
 		key: 'feed',
 		defaultValue: 'foryou'
 	});
+
+	// Highlight containers for text processing
+	let insightsContainer: HTMLDivElement | null = null;
+	let summaryContainer: HTMLDivElement | null = null;
+	let insightsHighlighter: Highlighter | null = null;
+	let summaryHighlighter: Highlighter | null = null;
+	let observedPlaybackId: string | null = null;
+	let highlightKeyword: string | null;
+
+	const LAST_VIEWED_IDS_KEY = 'lastViewedPlaybackIds';
+	const lastViewedPbIdsStore = useLocalStorage<string[]>(LAST_VIEWED_IDS_KEY, []);
+	const chatFeedStore = useChatFeedStore();
+	const deviceInfo = useDetectDevice();
+	const queryClient = useQueryClient();
+	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
+	const mlbGlossaryTerms = mlbGlossary.map((glossary) => glossary.title.toLowerCase());
+	const highlightConversationService = new HighlightConversationService();
+	const MAX_RECOMMENDATIONS = 10;
+	const feedStore = useFeedStore();
+
 	$: pbIdParam = params.getParam<string>({
 		key: 'pbId',
 		defaultValue: ''
@@ -45,30 +72,11 @@
 
 	$: activeFeed = $feedParam;
 
-	const LAST_VIEWED_IDS_KEY = 'lastViewedPlaybackIds';
-	const lastViewedPbIdsStore = useLocalStorage<string[]>(LAST_VIEWED_IDS_KEY, []);
 	$: lastViewedPbIds = $lastViewedPbIdsStore;
 
-	const chatFeedStore = useChatFeedStore();
-	const deviceInfo = useDetectDevice();
-	const queryClient = useQueryClient();
-	const mlbGlossary = mlbGlossaryJson as MLBGlossary[];
-	const mlbGlossaryTerms = mlbGlossary.map((glossary) => glossary.title.toLowerCase());
-
-	const highlightConversationService = new HighlightConversationService();
-
-	// Video playback state
-	let observedPlaybackId: string | null = null;
 	$: observedPlaybackId = null;
 
-	// Recommendation pagination
-	const MAX_RECOMMENDATIONS = 10;
-	type PaginationState = {
-		hasMore: boolean;
-		cursor: string | null;
-	};
-
-	const feedStore = useFeedStore();
+	$: highlightKeyword = null;
 
 	$: getRecommendationsQuery = createQuery({
 		queryKey: ['recommendations', activeFeed],
@@ -198,12 +206,6 @@
 
 	$: aiButtonLabel = 'Ask About This Play';
 
-	// Highlight containers for text processing
-	let insightsContainer: HTMLDivElement | null = null;
-	let summaryContainer: HTMLDivElement | null = null;
-	let insightsHighlighter: Highlighter | null = null;
-	let summaryHighlighter: Highlighter | null = null;
-
 	const handleHighlightConversation = async () => {
 		const currentPb = $recommendationStore[activeFeed].items.find((hl) => hl.id === $pbIdParam);
 
@@ -239,6 +241,51 @@
 		if (insightsHighlighter) insightsHighlighter?.destroy();
 		// @ts-expect-error
 		if (summaryHighlighter) summaryHighlighter?.destroy();
+	});
+
+	afterUpdate(() => {
+		const highlight = $recommendationStore[activeFeed].items.find(
+			(hl) => hl.id === observedPlaybackId
+		);
+
+		if (highlight?.summary?.highlight && insightsContainer) {
+			const highlighter = new Highlighter({
+				text: highlight?.summary?.highlight,
+				keywords: mlbGlossaryTerms.map((term) => ({
+					word: term,
+					borderStyle: 'solid',
+					borderWidth: '1px',
+					fontWeight: 600,
+					color: '#fe605f',
+					style: 'border-bottom',
+					onClick: (match) => {
+						highlightKeyword = match;
+					}
+				}))
+			});
+			highlighter.render(insightsContainer);
+		}
+
+		if (highlight?.summary?.summary && summaryContainer) {
+			const highlighter = new Highlighter({
+				text: highlight?.summary?.summary,
+				keywords: mlbGlossaryTerms.map((term) => ({
+					word: term,
+					borderStyle: 'solid',
+					borderWidth: '1px',
+					fontWeight: 600,
+					color: '#fe605f',
+					style: 'border-bottom',
+					onClick: (match) => {
+						setTimeout(() => {
+							highlightKeyword = match;
+						}, 0);
+					}
+				})),
+				options: { caseSensitive: true }
+			});
+			highlighter.render(summaryContainer);
+		}
 	});
 </script>
 
@@ -340,7 +387,7 @@
 	}}
 	headline="Play Insights"
 	tagline=""
-	className="h-auto"
+	className="h-auto bg-brown-100"
 >
 	{#if observedPlaybackId}
 		{@const highlight = $recommendationStore[activeFeed].items.find(
@@ -384,23 +431,7 @@
 						<p
 							class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
 							bind:this={insightsContainer}
-						>
-							{#if highlight?.summary && insightsContainer}
-								{@const highlighter = new Highlighter({
-									text: highlight?.summary?.highlight,
-									keywords: mlbGlossaryTerms.map((term) => ({
-										word: term,
-										borderStyle: 'solid',
-										borderWidth: '1px',
-										fontWeight: 600,
-										color: '#fe605f',
-										style: 'border-bottom',
-										onClick: (match) => console.log({ match })
-									}))
-								})}
-								{highlighter.render(insightsContainer ?? 'N/A') ?? ''}
-							{/if}
-						</p>
+						/>
 					</div>
 				{/if}
 
@@ -410,24 +441,7 @@
 						<p
 							class="text-dark-100/80 text-[13px] font-poppins leading-relaxed"
 							bind:this={summaryContainer}
-						>
-							{#if highlight?.summary && summaryContainer}
-								{@const highlighter = new Highlighter({
-									text: highlight?.summary?.summary,
-									keywords: mlbGlossaryTerms.map((term) => ({
-										word: term,
-										borderStyle: 'solid',
-										borderWidth: '1px',
-										fontWeight: 600,
-										color: '#fe605f',
-										style: 'border-bottom',
-										onClick: (match) => console.log({ match })
-									})),
-									options: { caseSensitive: true }
-								})}
-								{highlighter.render(summaryContainer ?? 'N/A') ?? ''}
-							{/if}
-						</p>
+						/>
 					</div>
 				{/if}
 			</div>
@@ -445,6 +459,14 @@
 		</div>
 	{/if}
 </BottomSheet>
+
+<KeywordDefinition
+	keyword={highlightKeyword}
+	showModal={highlightKeyword ? true : false}
+	onClose={() => {
+		highlightKeyword = null;
+	}}
+/>
 
 {#if $chatFeedStore?.activeConversation?.id}
 	<ChatFeed
