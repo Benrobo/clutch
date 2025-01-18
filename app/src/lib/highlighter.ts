@@ -126,20 +126,31 @@ class Highlighter {
     
     // Remove old handler if it exists
     if (this.clickHandler) {
-      this.container.removeEventListener('click', this.clickHandler);
+        this.container.removeEventListener('click', this.clickHandler);
     }
 
     // Create new handler
     this.clickHandler = (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (target.hasAttribute('data-keyword')) {
-        const match = target.getAttribute('data-keyword');
-        const word = target.textContent;
-        const keyword = this.keywords.find(k => k.word === word);
-        if (keyword?.onClick && match) {
-          keyword.onClick(match);
+        const target = e.target as HTMLElement;
+        if (target.hasAttribute('data-keyword')) {
+            const match = target.getAttribute('data-keyword');
+            const word = target.textContent?.toLowerCase();
+            // Find the keyword case-insensitively
+            const keyword = this.keywords.find(k => 
+                k.word.toLowerCase() === word
+            );
+            if (keyword?.onClick && match) {
+                // Wrap the callback in a try-catch to prevent errors from bubbling
+                try {
+                    // Execute the callback in the next tick
+                    window.requestAnimationFrame(() => {
+                        keyword.onClick?.(match);
+                    });
+                } catch (error) {
+                    console.error('Error in keyword click handler:', error);
+                }
+            }
         }
-      }
     };
 
     // Add new handler
