@@ -111,6 +111,8 @@
 		}
 	});
 
+	afterUpdate(() => {});
+
 	onDestroy(() => {
 		if (observer) {
 			observer.disconnect();
@@ -128,7 +130,8 @@
 			deviceInfo?.device?.type === 'smartphone' && '-translate-y-[10em]'
 		)}
 	>
-		{#if currentVideoId === highlight?.playback?.id}
+		<!-- show the video element when in view -->
+		{#if currentVideoId === highlight?.playback?.id && currentVideoId}
 			<video
 				bind:this={videoElement}
 				class={cn(
@@ -149,8 +152,8 @@
 				on:timeupdate={() => {}}
 				poster={highlight?.thumbnail?.main || highlight?.thumbnail?.fallback}
 			>
-				<!-- <source src={highlight?.playback?.mlbVideoUrl} type="video/mp4" /> -->
-				<source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" />
+				<source src={highlight?.playback?.mlbVideoUrl} type="video/mp4" />
+				<!-- <source src={DEBUG_MODE_VIDEO_URL} type="video/mp4" /> -->
 			</video>
 		{/if}
 
