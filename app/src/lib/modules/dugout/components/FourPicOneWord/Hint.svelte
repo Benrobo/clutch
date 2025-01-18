@@ -123,9 +123,11 @@
 					</p>
 				{/each}
 
-				<span class="text-white text-sm font-medium font-poppins text-white-100">
-					💡 Suggested Letters: [{hintData?.suggested_letters.join(' - ')}]
-				</span>
+				{#if hintData?.suggested_letters}
+					<span class="text-white text-sm font-medium font-poppins text-white-100">
+						💡 Suggested Letters: [{hintData?.suggested_letters.join(' - ')}]
+					</span>
+				{/if}
 			</div>
 		{:else}
 			<!-- empty state -->
