@@ -1,0 +1,1682 @@
+[
+  {
+    "id": "10-and-5-rights",
+    "title": "10-and-5 Rights",
+    "summary": "Players who have accrued 10 years of Major League service time and spent the past five consecutive years with the same team are awarded 10-and-5 rights. Under these circumstances, a player can veto any trade scenario that is proposed."
+  },
+  {
+    "id": "10-day-injured-list",
+    "title": "10-day Injured List",
+    "summary": "The 10-day injured list allows clubs to remove injured position players from the 26-man active roster while keeping them on the 40-man roster. There is a separate 15-day injured list for pitchers and two-way players. \nPlayers can be placed on the 10-day injured list for any type of injury, though players with concussion symptoms are first sent to the 7-day injured list"
+  },
+  {
+    "id": "15-day-injured-list",
+    "title": "15-day Injured List",
+    "summary": "The 15-day injured list is specifically for pitchers and two-way players. It allows clubs to remove injured pitchers and two-way players from the 26-man active roster while keeping them on the 40-man roster. \nPlayers on the 15-day injured list must remain out of action for at least 15 days, though a player can also stay on the list for considerably longer than 15 days, if necessary"
+  },
+  {
+    "id": "26-man-roster",
+    "title": "26-man Roster",
+    "summary": "A club's 26-man roster is its full roster of active Major League players from Opening Day through Aug. 31, and during the postseason. \nTeams are limited to carrying 13 pitchers during this time"
+  },
+  {
+    "id": "27th-man",
+    "title": "27th Man",
+    "summary": "MLB clubs have a 26-man active Major League roster but are allowed to recall one additional player who is on the 40-man roster to serve as the 27th member for the day of a doubleheader. That player accrues one day of MLB service time and is returned to the Minor Leagues following the completion of the doubleheader.  This rule is in effect from Opening Day through Aug"
+  },
+  {
+    "id": "40-man-roster",
+    "title": "40-man Roster",
+    "summary": "The 40-man roster includes a combination of players on the 26-man roster, the 7-, 10-, and 15-day injured lists, the bereavement/family medical emergency list and the paternity leave list, as well as some Minor Leaguers. In order for a club to add a player to the 26-man roster, the player must be on the 40-man roster.  If a club with a full 40-man roster wishes to promote a Minor League player that is not on the 40-man roster, it must first remove a player from the 40-man roster -- either by designating a player's contract for assignment, trading a player, releasing a player or transferring a player to the 60-day injured list"
+  },
+  {
+    "id": "60-day-injured-list",
+    "title": "60-day Injured List",
+    "summary": "The 60-day injured list is the longest of the Major League Baseball injured lists. Players placed on the 60-day injured must remain on it for a minimum of 60 days and are temporarily removed from a club's 40-man roster, which often makes the list a last resort for clubs. \nIf a club doesn't need a 40-man roster spot to replace an injured player, the player may be kept on the 10-day injured list longer than 60 days rather than being transferred to the 60-day injured list"
+  },
+  {
+    "id": "7-day-injured-list",
+    "title": "7-day Injured List",
+    "summary": "The 7-day injured list is specifically for players with concussion symptoms. Players may be placed on the 7-day injured list \"retroactively,\" meaning the stint is backdated to the day after the last date on which the player appeared in a game.  For instance, if a player is diagnosed with a concussion on May 12 but last played on May 9, he could be placed on the 7-day injured list on May 12, retroactive to May 10"
+  },
+  {
+    "id": "90-foot-running-splits",
+    "title": "90-foot Running Splits",
+    "summary": "In addition to providing players' times, in seconds, on home-to-first runs, Statcast breaks down these runs in five-foot increments up to 90 feet. While Sprint Speed incorporates runs of two bases or more on non-homers -- excluding runs from second base when an extra-base hit happens -- and home-to-first runs on \"topped\" or \"weakly hit\" balls, a player's 90-foot splits only include the latter. \nBecause the baseline measurement starts from the back tip of home plate and ends at the back of first base, the home-to-first distance is not exactly 90 feet from a runner's perspective, as home-to-first readings measure the time elapsed from the point of bat-on-ball contact to the moment the batter first touches first base"
+  },
+  {
+    "id": "ace",
+    "title": "Ace",
+    "summary": "\"Ace\" typically refers to a team's No. 1 pitcher, though it can also be used to describe an elite pitcher in general.  Therefore, a team with multiple elite pitchers is said to have more than one ace"
+  },
+  {
+    "id": "active-spin",
+    "title": "Active Spin",
+    "summary": "Statcast refers to the spin that contributes to movement as Active Spin. Not all spin actually contributes to a pitch's movement.  For a football, or a bullet, none of the spin contributes to movement, and so, a football or a bullet has 100% Inactive Spin"
+  },
+  {
+    "id": "earned-run-average-plus",
+    "title": "Adjusted Earned Run Average",
+    "summary": "Adjusted Earned Run Average (ERA+) is a statistic that normalizes a pitcher's ERA across different ballparks and eras. An ERA+ of 100 is league average, while an ERA+ of 150 means a pitcher was 50% better than league average. The higher the ERA+, the better the pitcher performed relative to their peers."
+  },
+  {
+    "id": "all-star-ballot",
+    "title": "All-Star Ballot",
+    "summary": "The All-Star Ballot is the voting mechanism that allows fans to select the starting position players for the annual MLB All-Star Game. Voting typically occurs both online and at ballparks, with fans able to vote multiple times to choose their favorite players for both the American and National League teams."
+  },
+  {
+    "id": "ambidextrous-pitchers",
+    "title": "Ambidextrous Pitchers",
+    "summary": "A pitcher must visually indicate with which hand he will use to pitch prior to the start of a plate appearance. This can be accomplished simply by wearing his glove on his non-throwing hand and placing his foot on the pitching rubber.  Barring injury, he is not permitted to pitch with the other hand until the batter is retired, becomes a baserunner or is removed for a pinch-hitter"
+  },
+  {
+    "id": "appeal-plays",
+    "title": "Appeal Plays",
+    "summary": "The defensive team can appeal certain plays to alert the umpires of infractions that would otherwise be allowed without the appeal. Appeal plays are not the same as a manager asking the umpire for an instant-replay review. \nAn appeal can be made when the offensive team bats out of turn"
+  },
+  {
+    "id": "appearance",
+    "title": "Appearance",
+    "summary": "A pitcher is credited with an appearance if he pitches in a given game. When a pitcher enters the game -- barring an injury while warming up -- he must face at least one batter.  When crediting pitchers with an appearance, it does not matter whether the pitcher started the game or pitched in relief"
+  },
+  {
+    "id": "arm-strength",
+    "title": "Arm Strength",
+    "summary": "On an individual play, Arm Strength is defined as the maximum velocity of any throw made by a fielder -- with the max velocity always being at the release point, due to physics. It can be used to evaluate outfielders on attempted assists, catchers on stolen base and pickoff throws, and infielders on throws across the diamond.  Fielders -- especially outfielders -- often get a running start before throwing"
+  },
+  {
+    "id": "around-the-horn",
+    "title": "Around-the-horn",
+    "summary": "\"Around-the-horn\" describes a ground-ball double or triple play that starts with the third baseman and involves a throw to second followed by a throw to first. \"Around-the-horn\" can also be used to describe when the infielders throw the ball to one another following an out with no men on base.  After a strikeout with nobody on base, the catcher typically starts the \"around-the-horn\" exercise by throwing the ball to the third baseman"
+  },
+  {
+    "id": "assist",
+    "title": "Assist",
+    "summary": "An assist is awarded to a fielder who touches the ball before a putout is recorded by another fielder. Typically, assists are awarded to fielders when they throw the ball to another player -- but a fielder receives an assist as long as he touches the ball, even if the contact was unintentional.  For example, on a line drive that strikes the pitcher before caroming to the shortstop, both the pitcher and shortstop are awarded an assist if the out is made on a throw to first base"
+  },
+  {
+    "id": "at-bat",
+    "title": "At-bat",
+    "summary": "An official at-bat comes when a batter reaches base via a fielder's choice, hit or an error (not including catcher's interference) or when a batter is put out on a non-sacrifice. (Whereas a plate appearance refers to each completed turn batting, regardless of the result. )\nAt-bats are used as the denominator when determining batting average and slugging percentage"
+  },
+  {
+    "id": "balk",
+    "title": "Balk",
+    "summary": "A balk occurs when a pitcher makes an illegal motion on the mound that the umpire deems to be deceitful to the runner(s). As a result, any men on base are awarded the next base, and the pitch (if it was thrown in the first place) is waved off for a dead ball. \nIn September 2022, Major League Baseball announced three rule changes that were approved by the league\u2019s Competition Committee"
+  },
+  {
+    "id": "balk",
+    "title": "Balk",
+    "summary": "A balk occurs when a pitcher makes an illegal motion on the mound that the umpire deems to be deceitful to the runner(s). As a result, any men on base are awarded the next base, and the pitch (if it was thrown in the first place) is waved off for a dead ball. \nIn September 2022, Major League Baseball announced three rule changes that were approved by the league\u2019s Competition Committee"
+  },
+  {
+    "id": "park-factor",
+    "title": "Ballpark Factor",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "baltimore-chop",
+    "title": "Baltimore Chop",
+    "summary": "A \"Baltimore chop\" is a chopper that takes a high bounce near home plate, allowing the runner to reach first safely. "
+  },
+  {
+    "id": "barrel",
+    "title": "Barrel",
+    "summary": "The Barrel classification is assigned to batted-ball events whose comparable hit types (in terms of exit velocity and launch angle) have led to a minimum. 500 batting average and 1. 500 slugging percentage since Statcast was implemented Major League wide in 2015"
+  },
+  {
+    "id": "base-sizes",
+    "title": "Base Sizes",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "baseball-age",
+    "title": "Baseball Age",
+    "summary": "A player's baseball age indicates how old he is as of July 1 in a given season. The purpose of baseball age is to establish one age per season for each player, even if a player has a birthday during the season and spends parts of the campaign at two different ages.  A given season will often be referred to as a player's \"age-x season,\" with \"x\" being the player's baseball age"
+  },
+  {
+    "id": "baserunner",
+    "title": "Baserunner",
+    "summary": "A baserunner is any offensive player who is legally occupying a base or advancing between bases during play. This includes players who have reached base via hit, walk, error, fielder's choice, or any other means."
+  },
+  {
+    "id": "baserunners-per-nine-innings-pitched",
+    "title": "Baserunners Per Nine Innings Pitched",
+    "summary": "Baserunners per nine innings pitched tells us the average number of baserunners allowed by a pitcher for every nine innings pitched. For the purpose of this statistic, \"baserunners\" include men who reach on hits, walks and hit-by-pitches.  Errors and fielder's choices do not count"
+  },
+  {
+    "id": "baserunning",
+    "title": "Baserunning",
+    "summary": "A Statcast metric designed to use data to evaluate the performance of baserunners and outfielders in taking or preventing extra bases. Based on inputs including runner speed, outfielder throwing arm, runner position on the base paths, and outfielder distance from both ball and bases, an estimated success probability can be created for each opportunity.  With that information available for each play, the player\u2019s actual success rate can be compared to the estimated rate and the cumulative metric can be created"
+  },
+  {
+    "id": "batted-ball-event",
+    "title": "Batted Ball Event",
+    "summary": "A Batted Ball Event represents any batted ball that produces a result. This includes outs, hits and errors.  Any fair ball is a Batted Ball Event"
+  },
+  {
+    "id": "batter",
+    "title": "Batter",
+    "summary": "A batter is the offensive player currently at home plate attempting to hit the ball put into play by the pitcher. Each batter gets an opportunity to hit in a predetermined order known as the batting order, unless they are replaced by a pinch hitter or the game ends."
+  },
+  {
+    "id": "batters-box",
+    "title": "Batter's Box",
+    "summary": "A regulation baseball field has two batter's boxes -- one on the left side and one on the right side of home plate -- drawn using the same chalk as the baselines. From the pitcher's point of view, left-handed batters stand in the batter's box on the left side of the plate and right-handed batters stand in the batter's box on the right side of the plate. \nThe batter is expected to promptly take his place in the batter's box when his turn to bat comes up and is not permitted to exit the box once the pitcher begins his windup or comes to the set position"
+  },
+  {
+    "id": "batters-faced",
+    "title": "Batters Faced",
+    "summary": "Batters faced is simply a count of the number of total plate appearances against a certain pitcher or team. In a perfect game -- with 27 outs -- a pitcher will record 27 batters faced. \nBatters faced can often be used as a reference for in-game strategy"
+  },
+  {
+    "id": "batting-average",
+    "title": "Batting Average",
+    "summary": "One of the oldest and most universal tools to measure a hitter's success at the plate, batting average is determined by dividing a player's hits by his total at-bats for a number between zero (shown as. 000) and one (1. 000)"
+  },
+  {
+    "id": "babip",
+    "title": "Batting Average on Balls in Play",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "batting-out-of-turn",
+    "title": "Batting Out of Turn",
+    "summary": "If a team bats out of turn, the onus is not on the umpires to notify either team of the transgression. The consequences of batting out of turn vary depending on the timing of the appeal. \nAppeal made during plate appearance\nIf the opposing team makes its appeal or the offensive team realizes its error before the incorrect batter's plate appearance has concluded, then the correct batter can take his place at bat while assuming the incorrect batter's count"
+  },
+  {
+    "id": "bench-coach",
+    "title": "Bench Coach",
+    "summary": "The bench coach is typically the manager's top assistant and closest advisor. They help with in-game strategy, lineup decisions, and often serve as acting manager when the manager is ejected or absent. Many bench coaches go on to become managers themselves."
+  },
+  {
+    "id": "bequeathed-runners",
+    "title": "Bequeathed Runners",
+    "summary": "Bequeathed runners represents the number of runners left on base by a pitcher when that pitcher leaves the game. Any bequeathed runner who scores an earned run after a pitcher has left the game will be counted against that pitcher's ERA. \nAlong with being a pitching metric, bequeathed runners can be an assessment of a manager's philosophy"
+  },
+  {
+    "id": "bequeathed-runners-scored",
+    "title": "Bequeathed Runners Scored",
+    "summary": "Bequeathed runners scored represents the total number of runs a pitcher is charged with after he leaves the game. Or, put another way, it's the number of runners who come around to score after being left on base when that pitcher exits the game. \nThere is a key exception, however"
+  },
+  {
+    "id": "bat-tracking-blasts",
+    "title": "Blasts",
+    "summary": "A blast, in Statcast terms, is when a batter squares up a ball and does so with a minimum amount of bat speed. (To best understand, please review the definition for a squared up ball, or the efficiency of a batter\u2019s contact first. )\nWhile a squared-up swing expresses the relationship between how much exit velocity is possible given the speed of that swing+pitch and how much exit velocity was actually realized, it does not strictly have a bat speed minimum requirement"
+  },
+  {
+    "id": "blown-save",
+    "title": "Blown Save",
+    "summary": "A blown save occurs when a relief pitcher enters a game in a save situation, but allows the tying run to score. The run does not have to be charged to that pitcher.  If a reliever enters with a man already on third base, and he allows that runner to score the tying run, he is charged with a blown save"
+  },
+  {
+    "id": "bolt",
+    "title": "Bolt",
+    "summary": "A Bolt is any run where the Sprint Speed (defined as \"feet per second in a player's fastest one-second window\") of the runner is at least 30 ft/sec. Players' Bolt totals for each season are displayed on the Sprint Speed leaderboard.  It is a cumulative stat, unlike Sprint Speed"
+  },
+  {
+    "id": "bone-bruise",
+    "title": "Bone Bruise",
+    "summary": "A bone bruise is a traumatic injury to a bone that is less severe than a bone fracture, causing blood and fluid to build up near the injured bone. Bones have a cortex, or outer shell, made of interconnected fibers.  Calcium fills the spaces between the fibers"
+  },
+  {
+    "id": "bullpen-coach",
+    "title": "Bullpen Coach",
+    "summary": "The bullpen coach works with relief pitchers in the bullpen during games. They help pitchers warm up, maintain proper mechanics, and communicate with the dugout about pitcher readiness. They also often assist with pitcher development and preparation between games."
+  },
+  {
+    "id": "bursitis-and-shoulder-bursitis",
+    "title": "Bursitis/Shoulder Bursitis",
+    "summary": "Bursitis is inflammation of the bursa, a fluid-filled sac that acts as a cushion between bones, tendons, and muscles. Shoulder bursitis specifically affects the shoulder joint and is common in baseball players, particularly pitchers, due to the repetitive overhead throwing motion. It can cause pain, stiffness, and limited range of motion."
+  },
+  {
+    "id": "bush-league",
+    "title": "Bush League",
+    "summary": "\"Bush league\" describes something that is below professional standards. "
+  },
+  {
+    "id": "butcher-boy",
+    "title": "Butcher Boy",
+    "summary": "A \"butcher boy\" is a batter who squares around to bunt, only to pull the bat back and make a short, downward swing. "
+  },
+  {
+    "id": "can-of-corn",
+    "title": "Can of Corn",
+    "summary": "A \"can of corn\" is a routine fly ball hit to an outfielder. "
+  },
+  {
+    "id": "catch-probability",
+    "title": "Catch Probability",
+    "summary": "Catch Probability represents the likelihood that a batted ball to the outfield will be caught, based on four important pieces of information tracked by Statcast. 1.  How far did the fielder have to go? 2"
+  },
+  {
+    "id": "catcher",
+    "title": "Catcher",
+    "summary": "The catcher is the defensive player who positions themselves behind home plate to receive pitches from the pitcher. They wear protective equipment (often called 'tools of ignorance') and are responsible for calling pitches, framing strikes, throwing out baserunners, and managing the pitcher and overall game strategy."
+  },
+  {
+    "id": "catcher-framing",
+    "title": "Catcher Framing",
+    "summary": "Catcher framing is the art of a catcher receiving a pitch in a way that makes it more likely for an umpire to call it a strike -- whether that's turning a borderline ball into a strike, or not losing a strike to a ball due to poor framing. The effects of a single pitch can be huge; in 2019, hitters had an . 858 OPS after a 1-0 count, but just a"
+  },
+  {
+    "id": "catcher-interference",
+    "title": "Catcher Interference",
+    "summary": "The batter is awarded first base if the catcher (or any other fielder) interferes with him at any point during a pitch. If first base was occupied at the time of the pitch, the runner who held the base is permitted to move up one base.  This also applies if first and second base were occupied or the bases were loaded at the time of the pitch"
+  },
+  {
+    "id": "caught-stealing",
+    "title": "Caught Stealing",
+    "summary": "A caught stealing occurs when a runner attempts to steal but is tagged out before reaching second base, third base or home plate. This typically happens after a pitch, when a catcher throws the ball to the fielder at the base before the runner reaches it.  But it can also happen before a pitch, typically when a pitcher throws the ball to first base for a pickoff attempt but the batter has already left for second"
+  },
+  {
+    "id": "caught-stealing-percentage",
+    "title": "Caught Stealing Percentage",
+    "summary": "Caught stealing percentage refers to the frequency with which a catcher throws out opposing baserunners who are trying to steal. The formula is simple: catcher caught stealings divided by total stolen-base attempts -- both successful and unsuccessful -- against that catcher. \nIn terms of caught stealing percentage, a catcher is not responsible for any runners who advance via a passed ball or wild pitch"
+  },
+  {
+    "id": "cellar",
+    "title": "Cellar",
+    "summary": "The \"cellar\" refers to last place. "
+  },
+  {
+    "id": "center-fielder",
+    "title": "Center Fielder",
+    "summary": "The center fielder is the outfielder who plays between left and right field. Generally considered the captain of the outfield, center fielders typically have excellent speed and defensive skills to cover the most ground. They have priority over corner outfielders on fly balls they can reach."
+  },
+  {
+    "id": "changeup",
+    "title": "Changeup",
+    "summary": "A changeup is one of the slowest pitches thrown in baseball, and it is predicated on deception. Pitchers will release a changeup along the same trajectory as their fastball, but at a significantly slower velocity.  The goal of a changeup is to make the hitter think a fastball is coming, so his timing will be thrown off by the slower pitch"
+  },
+  {
+    "id": "chin-music",
+    "title": "Chin Music",
+    "summary": "\"Chin music\" refers to a pitch that is thrown high and inside, near a batter's head. "
+  },
+  {
+    "id": "closer",
+    "title": "Closer",
+    "summary": "A closer is a relief pitcher who specializes in pitching the final inning of close games when their team is leading. They are typically a team's best reliever and are primarily used to secure saves. Closers often have dominant 'out' pitches and the mental fortitude to handle high-pressure situations."
+  },
+  {
+    "id": "club-option",
+    "title": "Club Option",
+    "summary": "A club option is an optional year at the end of the contract which may be guaranteed at the discretion of the club. In most instances, the option comes with a buyout that represents a fraction of the option value.  If the player is injured or performs on a level that the club believes the option value to be too expensive, the club will typically pay the buyout and decline the option"
+  },
+  {
+    "id": "coach-interference",
+    "title": "Coach Interference",
+    "summary": "If a base coach interferes with a thrown ball, the runner will be ruled out. But if a thrown ball accidentally touches the base coach, the ball is alive and in play.  Coaches must respect the fielder's right of way to make a play on a batted or thrown ball"
+  },
+  {
+    "id": "collisions-at-home-plate",
+    "title": "Collisions at Home Plate",
+    "summary": "By rule, the baserunner is not allowed to deviate from his direct path to initiate contact with the catcher (or any player covering the plate). Runners are considered to be in violation of this rule if they collide with the catcher in cases where a slide could have been used to avoid the collision.  If the umpire determines that the runner violated this rule, the runner shall be ruled out and the ball is dead"
+  },
+  {
+    "id": "competitive-balance-draft-picks",
+    "title": "Competitive Balance Draft Picks",
+    "summary": "Competitive Balance Draft picks were implemented in the 2012-16 Collective Bargaining Agreement. The process to assign picks was amended in the 2017-21 Collective Bargaining Agreement. \nThe 10 lowest-revenue clubs and the clubs from the 10 smallest markets are eligible to receive a Competitive Balance pick (fewer than 20 clubs are in the mix each year, as some clubs qualify under both criteria)"
+  },
+  {
+    "id": "competitive-balance-tax",
+    "title": "Competitive Balance Tax",
+    "summary": "Each year, clubs that exceed a predetermined payroll threshold are subject to a Competitive Balance Tax -- which is commonly referred to as a \"luxury tax. \" Those who carry payrolls above that threshold are taxed on each dollar above the threshold, with the tax rate increasing based on the number of consecutive years a club has exceeded the threshold. \nA team's Competitive Balance Tax figure is determined using the average annual value of each player's contract on the 40-man roster, plus any additional player benefits"
+  },
+  {
+    "id": "complete-game",
+    "title": "Complete Game",
+    "summary": "A pitcher earns a complete game if he pitches the entire game for his team regardless of how long it lasts. If the game is shortened by rain or if it lasts into extra innings, it counts as a complete game if the pitcher was the only pitcher to record an appearance for his team. \nComplete games are considered valuable in baseball for a variety of reasons"
+  },
+  {
+    "id": "contract-renewal",
+    "title": "Contract Renewal",
+    "summary": "Players who haven't signed a long-term contract extension or accrued the MLB service time necessary to be eligible for salary arbitration can have their contracts renewed by their clubs as one-year deals for the coming season. These pre-arbitration players can negotiate their salaries but have little leverage, as clubs can choose to renew a contract for the Major League minimum if they cannot come to an agreement with the player.  Of course, clubs may choose to sign their pre-arbitration players to one-year deals for more than the Major League minimum to build good will for future negotiations, but they are under no obligation to do so"
+  },
+  {
+    "id": "contract-tendered",
+    "title": "Contract Tendered",
+    "summary": "To \"tender\" a contract to a player is to agree to give a contract for the upcoming season to a player who is under club control. Players on the 40-man roster with fewer than six years of Major League service time must be tendered contracts or they will be considered \"non-tendered\" and immediately made eligible for free agency.  Contracts must be tendered to both arbitration-eligible and pre-arbitration players, though the latter group has no say in its forthcoming salary"
+  },
+  {
+    "id": "curveball",
+    "title": "Curveball",
+    "summary": "A curveball is a breaking pitch that has more movement than just about any other pitch. It is thrown slower and with more overall break than a slider, and it is used to keep hitters off-balance.  When executed correctly by a pitcher, a batter expecting a fastball will swing too early and over the top of the curveball"
+  },
+  {
+    "id": "cutter",
+    "title": "Cutter",
+    "summary": "A cutter is a version of the fastball, designed to move slightly toward the pitcher's glove side as it reaches home plate -- a cutter from a right-handed pitcher will \"cut\" away from a right-handed hitter, or in toward a left-handed hitter. Cutters are not thrown by as many Major League pitchers as four-seam fastballs or sinkers, but for some of the pitchers who possess a cutter, it is one of their primary pitches.  \nAlthough cutters are a form of fastball, a pitcher will often throw a cutter in addition to his four-seam fastball or sinker, with the cutter having a slightly lower velocity"
+  },
+  {
+    "id": "dead-ball",
+    "title": "Dead Ball",
+    "summary": "A dead ball is a ball that is out of play. The ruling of a dead ball halts the game and no plays can legally occur until the umpire resumes the game, though baserunners can advance as the result of acts that occurred while the ball was live.  Dead balls are frequent occurrences during a game, and the dead-ball period typically does not last long before the ball is put back into play"
+  },
+  {
+    "id": "defensive-efficiency-ratio",
+    "title": "Defensive Efficiency Ratio",
+    "summary": "Defensive Efficiency Ratio is a statistic used to evaluate team defense by finding out the rate of times batters reach base on balls put in play. Basically, for every ball hit into the field of play, how likely is the defense to convert that into an out?\nThe formula for Defensive Efficiency Ratio is: 1 - ((H + ROE - HR) / (PA - BB - SO - HBP - HR))."
+  },
+  {
+    "id": "defensive-runs-saved",
+    "title": "Defensive Runs Saved",
+    "summary": "DRS quantifies a player's entire defensive performance by attempting to measure how many runs a defender saved. It takes into account errors, range, outfield arm and double-play ability.  It differs only slightly from UZR (Ultimate Zone Rating) in its formula, but the concept is the same"
+  },
+  {
+    "id": "defensive-shift-limits",
+    "title": "Defensive Shift Limits",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "designate-for-assignment",
+    "title": "Designate for Assignment",
+    "summary": "When a player's contract is designated for assignment -- often abbreviated \"DFA\" -- that player is immediately removed from his club's 40-man roster. Within seven days of the transaction (had been 10 days under the 2012-16 Collective Bargaining Agreement), the player can either be traded or placed on outright or unconditional release waivers. \nIf the player is claimed off waivers by another club, he is immediately added to that team's 40-man roster, at which point he can be optioned to the Minor Leagues (if he has Minor League options remaining) or assigned to his new team's 26-man roster"
+  },
+  {
+    "id": "designated-hitter",
+    "title": "Designated Hitter",
+    "summary": "The designated hitter (DH) is a player who bats in place of the pitcher in the lineup but does not play a defensive position. This position allows teams to use specialized hitters who may not be strong defensive players, often extending the careers of veteran players."
+  },
+  {
+    "id": "designated-hitter-rule",
+    "title": "Designated Hitter Rule",
+    "summary": "The designated hitter rule allows teams to use another player to bat in place of the pitcher. Because the pitcher is still part of the team's nine defensive players, the designated hitter -- or \"DH\" -- does not take the field on defense. \nThe rule was adopted by the American League in 1973, while pitchers continued to hit in games played at National League parks"
+  },
+  {
+    "id": "designated-runner",
+    "title": "Designated Runner",
+    "summary": "All half-innings after the conclusion of the ninth inning begin with an automatic runner on second base. The rule applies only to regular-season games. \nThe runner placed on second base at the start of each half-inning in extras is the player in the batting order immediately preceding that half-inning\u2019s leadoff hitter, or a pinch-runner"
+  },
+  {
+    "id": "distance-covered",
+    "title": "Distance Covered",
+    "summary": "Distance Covered represents the total distance covered by a defender from the time the bat makes contact with the ball until the moment he fields it. This metric only takes into account the route actually traveled by the fielder -- NOT the direct route from the fielder's starting position to the ball.  (In fact, if you divide a player's optimal route to the ball by his Distance Covered, you get another Statcast metric called \"Route Efficiency"
+  },
+  {
+    "id": "doctoring-the-baseball",
+    "title": "Doctoring the Baseball",
+    "summary": "No player is permitted to intentionally damage, deface or discolor the baseball by rubbing it with any type of foreign item or substance, including dirt or saliva. Failure to follow this rule will result in an ejection and an automatic 10-game suspension. \nThe pitcher is allowed to rub the ball between his bare hands but cannot spit on the ball, his hands or his glove"
+  },
+  {
+    "id": "double",
+    "title": "Double",
+    "summary": "A batter is credited with a double when he hits the ball into play and reaches second base without the help of an intervening error or attempt to put out another baserunner. Doubles are typically hit either into a gap, down the lines or off the outfield wall.  They often score speedier runners from first base -- except for in the instance of a ground-rule double, where the ball bounces into the stands and all baserunners, including the batter, are awarded two bases"
+  },
+  {
+    "id": "double-play",
+    "title": "Double Play",
+    "summary": "A double play occurs when two offensive players are ruled out within the same play. It's often referred to as \"a pitcher's best friend\" because it's twice as helpful toward his cause as any given out. \nDouble plays can be made in any number of ways, but the most common form is on a ground ball with a runner on first"
+  },
+  {
+    "id": "earned-run",
+    "title": "Earned Run",
+    "summary": "An earned run is any run that scores against a pitcher without the benefit of an error or a passed ball. Often, it is the judgment of the official scorer as to whether a specific run would've scored without the defensive mishap.  If a pitcher exits a game with runners on base, any earned runs scored by those runners will count against him"
+  },
+  {
+    "id": "earned-run-average",
+    "title": "Earned Run Average",
+    "summary": "Earned run average represents the number of earned runs a pitcher allows per nine innings -- with earned runs being any runs that scored without the aid of an error or a passed ball. ERA is the most commonly accepted statistical tool for evaluating pitchers. \nThe formula for finding ERA is: 9 x earned runs / innings pitched"
+  },
+  {
+    "id": "eephus",
+    "title": "Eephus",
+    "summary": "The eephus is one of the rarest pitches thrown in baseball, and it is known for its exceptionally low speed and ability to catch a hitter off guard. Typically, an eephus is thrown very high in the air, resembling the trajectory of a slow-pitch softball pitch.  Hitters, expecting a fastball that's nearly twice the velocity of the eephus, can get over-zealous and swing too early and hard"
+  },
+  {
+    "id": "error",
+    "title": "Error",
+    "summary": "A fielder is given an error if, in the judgment of the official scorer, he fails to convert an out on a play that an average fielder should have made. Fielders can also be given errors if they make a poor play that allows one or more runners to advance on the bases.  A batter does not necessarily need to reach base for a fielder to be given an error"
+  },
+  {
+    "id": "exit-velocity",
+    "title": "Exit Velocity",
+    "summary": "Exit Velocity measures the speed of the baseball as it comes off the bat, immediately after a batter makes contact. This is tracked for all Batted Ball Events -- outs, hits and errors. \nAttaining a high Exit Velocity is one of a hitter's primary goals"
+  },
+  {
+    "id": "expected-batting-average",
+    "title": "Expected Batting Average",
+    "summary": "Expected Batting Average (xBA) is a Statcast metric that measures the likelihood that a batted ball will become a hit. Each batted ball is assigned an xBA based on how often comparable balls -- in terms of exit velocity, launch angle and, on certain types of batted balls, Sprint Speed -- have become hits since Statcast was implemented Major League wide in 2015.  (As of January 2019, xBA now factors in a batter's seasonal Sprint Speed on \"topped\" or weakly hit\" balls)"
+  },
+  {
+    "id": "expected-era",
+    "title": "Expected ERA",
+    "summary": "Expected ERA (xERA) is a Statcast metric that estimates what a pitcher's ERA should be based on the quality of contact allowed, using exit velocity and launch angle. It removes defense and ballpark factors from the equation to better evaluate a pitcher's true performance level."
+  },
+  {
+    "id": "expected-fielding-independent-pitching",
+    "title": "Expected Fielding Independent Pitching",
+    "summary": "xFIP finds a pitcher's FIP, but it uses projected home-run rate instead of actual home runs allowed. The home run rate is determined by that season's league average HR/FB rate. \nFor example: In 2002, Randy Johnson had a 2"
+  },
+  {
+    "id": "expected-slugging-percentage",
+    "title": "Expected Slugging Percentage",
+    "summary": "Expected Slugging Percentage (xSLG) is formulated using exit velocity, launch angle and, on certain types of batted balls, Sprint Speed. In the same way that each batted ball is assigned an expected batting average, every batted ball is given a single, double, triple and home run probability based on the results of comparable batted balls since Statcast was implemented Major League wide in 2015.  For the majority of batted balls, this is achieved using only exit velocity and launch angle"
+  },
+  {
+    "id": "expected-woba",
+    "title": "Expected Weighted On-base Average",
+    "summary": "Expected Weighted On-base Average (xwOBA) is a Statcast metric that measures what a batter's wOBA should be based on the quality of contact (exit velocity and launch angle) of their batted balls, along with their strikeouts and walks. It helps evaluate a batter's skill independent of defense and luck."
+  },
+  {
+    "id": "extension",
+    "title": "Extension",
+    "summary": "A pitcher must begin his throwing motion while standing on the pitching rubber -- which is 60 feet, 6 inches away from home plate. This does not mean pitches are actually thrown from 60 feet, 6 inches away from the plate. \nThe point at which a pitcher releases the ball is actually a few feet closer to home plate than the pitching rubber itself"
+  },
+  {
+    "id": "extra-base-hit",
+    "title": "Extra-base Hit",
+    "summary": "An extra-base hit is defined as any hit that is not a single, meaning doubles, triples and home runs are all considered extra-base hits. They are a good stat to look at to evaluate an offensive player's power -- and in some cases, his speed. \nAn extra-base hit is typically a ball that is hit very hard, and it often goes to the outfield wall"
+  },
+  {
+    "id": "fair-ball",
+    "title": "Fair Ball",
+    "summary": "The foul lines and foul poles are used to demarcate fair territory and, thus, determine what constitutes a fair ball. Any batted ball that first contacts a fielder while the ball is in fair territory is considered fair.  If not touched by a fielder, any batted ball that first contacts the field in fair territory beyond first or third base -- with the foul lines and foul poles counting as fair territory -- is considered fair"
+  },
+  {
+    "id": "fast-swing-rate",
+    "title": "Fast-swing Rate",
+    "summary": "Statcast defines a \u201cfast swing\u201d as one that reaches a swing speed of 75 MPH. A player\u2019s \u201cfast-swing rate\u201d is simply showing the percentage of all of his swings that did reach 75 MPH.  In the first month of 2024, 23% of all swings qualified as a \u2018fast swing"
+  },
+  {
+    "id": "field-dimensions",
+    "title": "Field Dimensions",
+    "summary": "No Major League ballparks are exactly alike, but certain aspects of the field of play must be uniform across baseball. The infield must be a square that is 90 feet on each side, and the outfield is the area between the two foul lines formed by extending two sides of said square (though the dirt portion of the field that runs well past the 90-foot basepaths in all Major League parks is also commonly referred to as the infield).  The field must be constructed so that the bases are the same level as home plate"
+  },
+  {
+    "id": "fielder-right-of-way",
+    "title": "Fielder Right of Way",
+    "summary": "Fielders have a right to occupy any space needed to catch or field a batted ball and also must not be hindered while attempting to field a thrown ball. If any member of the batting team (including the coaches) interferes with a fielder's right of way to field a batted ball, the batter shall be declared out.  If any member of the batting team (including the coaches) interferes with a fielder's right of way to field a thrown ball, the runner on whom the play is being made shall be ruled out"
+  },
+  {
+    "id": "fielding-independent-pitching",
+    "title": "Fielding Independent Pitching",
+    "summary": "FIP is similar to ERA, but it focuses solely on the events a pitcher has the most control over -- strikeouts, walks, hit-by-pitches and home runs. It entirely removes results on balls hit into the field of play. \nFor example: If a pitcher has surrendered a high average on balls in play, his FIP will likely be lower than his ERA"
+  },
+  {
+    "id": "fielding-percentage",
+    "title": "Fielding Percentage",
+    "summary": "Fielding percentage answers the question: How often does a fielder or team make the play when tasked with fielding a batted ball, throwing a ball, or receiving a thrown ball for an out. The formula is simple: the total number of putouts and assists by a defender, divided by the total number of chances (putouts, assists and errors). \nThe league's lowest fielding percentages typically come from shortstops and third basemen, who must deal with a wide array of tricky ground balls and tough throws across the diamond"
+  },
+  {
+    "id": "fielding-run-value",
+    "title": "Fielding Run Value",
+    "summary": "Fielding Run Value (FRV) is Statcast's overall metric for capturing a player\u2019s measurable defensive performance onto a run-based scale, which can then be read as a player being worth X runs above or Y runs below average. Since different types of defensive performance are expressed in different scales -- throws, outs, blocks, etc.  --  this conversion is necessary to place all performance on the same scale, which then allows defenders of all positions to be compared to one another"
+  },
+  {
+    "id": "first-baseman",
+    "title": "First Baseman",
+    "summary": "The first baseman is the infielder positioned near first base. They are responsible for fielding ground balls, catching throws from other infielders, and holding runners on first base. First basemen are often taller players with good hands for catching throws and typically prioritize offensive production over defensive mobility."
+  },
+  {
+    "id": "first-base-coach",
+    "title": "First-base Coach",
+    "summary": "The first-base coach stands in foul territory near first base during their team's offensive innings. They assist baserunners with timing pickoff moves, relay signs from the manager, help position runners taking their lead off first base, and provide information about the defense to batters and baserunners."
+  },
+  {
+    "id": "fly-ball-rate",
+    "title": "Fly-ball Rate",
+    "summary": "Fly-ball rate represents the percentage of balls hit into the field of play that are characterized as fly balls. Each ball that is hit into the field of play is characterized as a line drive, a fly ball, a ground ball or a pop-up.  (A fly ball is a fly to the outfield, while a pop-up is hit to the infield"
+  },
+  {
+    "id": "flyout",
+    "title": "Flyout",
+    "summary": "A flyout occurs when a batter hits the ball in the air (not including balls designated as line drives) and an opposing defender catches it before it hits the ground or fence. Certain pitchers -- generally those who pitch up in the zone frequently -- have a tendency to induce more flyouts than others.  But that's a risky proposition, as fly balls can result in home runs, too"
+  },
+  {
+    "id": "force-play",
+    "title": "Force Play",
+    "summary": "A force play occurs when a baserunner is no longer permitted to legally occupy a base and must attempt to advance to the next base. The defense can retire the runner by tagging the next base before he arrives, though not if the defensive team first forces out a trailing runner.  In that instance, the force play is removed and the defense must tag the remaining runners to retire them"
+  },
+  {
+    "id": "forearm-flexor-tendinitis",
+    "title": "Forearm Flexor Tendinitis",
+    "summary": "Repetitive motion can irritate, inflame or strain the flexor and pronator tendons in the forearm -- the ones that bend the wrist toward the palm -- where they attach to the medial epicondyle, which is the bony bump on the inside of the elbow that is actually the base of the humerus bone. Flexor tendinitis, also known as medial epicondylitis, can manifest as pain on the inside of the elbow, loss of range of motion or a popping or locking sensation."
+  },
+  {
+    "id": "forkball",
+    "title": "Forkball",
+    "summary": "One of the rarest pitches in baseball, the forkball is a variant of the splitter known for its big downward break as it approaches the plate. Because of the torque involved with snapping off a forkball, it can be one of the more taxing pitches to throw."
+  },
+  {
+    "id": "foul-ball",
+    "title": "Foul Ball",
+    "summary": "The foul lines and foul poles are used to demarcate fair territory and, thus, determine what constitutes a foul ball. Any batted ball that first contacts a fielder while the ball is in foul territory is considered foul.  If not touched by a fielder in fair territory, any batted ball that first contacts the field in foul territory beyond first or third base -- with the foul lines and foul poles counting as fair territory -- is considered foul"
+  },
+  {
+    "id": "foul-tip",
+    "title": "Foul Tip",
+    "summary": "A foul tip is a batted ball that goes sharply and directly to the catcher's hand or glove and is legally caught. A foul tip is considered equivalent to a ball in which the batter swings and misses, in that the baserunners are able to advance at their own risk (without needing to tag up).  Should the batter produce a foul tip after previously accruing two strikes, the foul tip is considered strike three and the batter is out"
+  },
+  {
+    "id": "four-seam-fastball",
+    "title": "Four-Seam Fastball",
+    "summary": "A four-seam fastball is almost always the fastest and straightest pitch a pitcher throws. It is also generally the most frequently utilized. \nThe four-seam fastball is typically one of the easiest pitches for a pitcher to place, because of the lack of movement on the pitch"
+  },
+  {
+    "id": "free-agency",
+    "title": "Free Agency",
+    "summary": "Players become free agents upon reaching six years of Major League service time or when they are released from their organization prior to reaching six years of service time. A free agent is eligible to sign with any club for any terms to which the two parties can agree.  If a player with fewer than six years of service time signs with a club, he remains under the control of that club until reaching the requisite service time to reach free agency -- even if the contract he signed does not cover the remaining years until that point"
+  },
+  {
+    "id": "game-score",
+    "title": "Game Score",
+    "summary": "Game Score measures a pitcher's performance in any given game started. Introduced by Bill James in the 1980s and updated by fellow sabermetrician Tom Tango in 2014, Game Score is presented as a figure between 0-100 -- except for extreme outliers -- and usually falls between 40-70. \nA Game Score of 50 is considered \"average,\" while a Game Score of 40 is deemed to be \"replacement level"
+  },
+  {
+    "id": "games-finished",
+    "title": "Games Finished",
+    "summary": "A pitcher is credited with a game finished if he is the last pitcher to pitch for his team in a given game, provided he was not the starting pitcher. Starters are not credited for a game finished when they pitch a complete game. \nTypically, a team's closer will be the team leader in this category, because games finished is generally a good indicator of when and how a relief pitcher is used"
+  },
+  {
+    "id": "games-played",
+    "title": "Games Played",
+    "summary": "A player is credited with having played a game if he appears in it at any point -- be it as a starter or a replacement. It's important to note that the player doesn't necessarily need an at-bat.  He can also enter for defense or as a pinch-runner"
+  },
+  {
+    "id": "games-started",
+    "title": "Games Started",
+    "summary": "A pitcher is credited with a game started if he is the first pitcher to throw a pitch for his team in a given game. A starter who pitches a full season in a five-man rotation will generally tally at most 34 games started.  There is no minimum innings plateau for a pitcher to earn a game started, but a starter must pitch at least five innings to be eligible for a win"
+  },
+  {
+    "id": "general-manager",
+    "title": "General Manager",
+    "summary": "The General Manager (GM) is the executive primarily responsible for player personnel decisions for a Major League team. They oversee player trades, free agent signings, draft selections, and contract negotiations. The GM works with the manager, scouts, and other front office personnel to build and maintain the team's roster."
+  },
+  {
+    "id": "grand-slam",
+    "title": "Grand Slam",
+    "summary": "A grand slam occurs when a batter hits a home run with men on first base, second base and third base. Four runs score on a grand slam -- the most possible on one play -- and a batter is awarded four RBIs. \nUnderstandably, a grand slam usually has an immense impact on the result of the game, because four runs score on the play"
+  },
+  {
+    "id": "ground-into-double-play",
+    "title": "Ground Into Double Play",
+    "summary": "A GIDP occurs when a player hits a ground ball that results in multiple outs on the bases. The most common double plays are ground balls where a forceout is made on the player running from first to second base, then another forceout is made on the batter running to first base. \nA GIDP typically occurs on a ground ball that is hit hard and directly at a fielder, although softly hit balls can also result in double plays depending on the speed of the batter running to first base"
+  },
+  {
+    "id": "ground-rules",
+    "title": "Ground Rules",
+    "summary": "The Commissioner's Office issues a list of universal ground rules that are to be used in every Major League ballpark each season. Individual parks then are able to institute their own special ground rules, covering instances in which the intricacies of said parks might influence the game.  For example, Tropicana Field has a number of special ground rules regarding occurrences of a batted ball striking a catwalk, light or another suspended object"
+  },
+  {
+    "id": "ground-ball-rate",
+    "title": "Ground-ball Rate",
+    "summary": "Ground-ball rate represents the percentage of balls hit into the field of play that are characterized as ground balls. Each ball that is hit into the field of play is characterized as a line drive, a fly ball, a ground ball or a pop-up.  Ground-ball rate can be used as a metric to evaluate both hitters and pitchers"
+  },
+  {
+    "id": "groundout",
+    "title": "Groundout",
+    "summary": "A groundout occurs when a batter hits a ball on the ground to a fielder, who records an out by throwing to or stepping on first base. It can also occur when the batter reaches first base -- and the defense instead opts to record an out elsewhere via a \"fielder's choice. \"\nGroundouts typically occur on pitches that are lower in the strike zone"
+  },
+  {
+    "id": "groundout-to-airout-ratio",
+    "title": "Groundout-to-Airout Ratio",
+    "summary": "Groundout-to-airout ratio is obtained by dividing the total number of ground balls converted into outs (not including bunts) by the total number of balls in the air (fly balls and line drives) converted into outs. For pitchers, GO/AO can often be an indicator of success, because a pitcher generally aims to induce more ground balls than balls in the air (seeing as how these batted balls can turn into the most harmful result of all, a home run).  But at the same time, certain pitchers can thrive while still allowing a high percentage of balls in the air, as long as they're inducing weak contact and/or striking out hitters"
+  },
+  {
+    "id": "guaranteed-contract",
+    "title": "Guaranteed Contract",
+    "summary": "Players who obtain Major League contracts are guaranteed the full amount of money promised by those contracts. Conversely, players signed to Minor League contracts must earn a spot on the roster in Spring Training or via an in-season promotion in order to have their contracts guaranteed."
+  },
+  {
+    "id": "hamstring-strain",
+    "title": "Hamstring Strain",
+    "summary": "At the back of each thigh are three hamstring muscles -- the semitendinosus, semimembranosus and biceps femoris, from the inside to the outside. At the top, or proximal end, the three muscles come together, form the hamstring tendon and attach at the base of the pelvis on the ischial tuberosity, or the sitting bone.  They run down the back of the thigh, cross the knee joint and attach distally to the tibia and fibula bones in the lower leg"
+  },
+  {
+    "id": "hard-hit-rate",
+    "title": "Hard-hit Rate",
+    "summary": "Statcast defines a 'hard-hit ball' as one hit with an exit velocity of 95 mph or higher, and a player's \"hard-hit rate\" is simply showing the percentage of batted balls that were hit at 95 mph or more. Why 95 mph? Because, as the image below shows, that's when exit velocity begins to \"matter. \" Another way of saying that is that balls hit at 40 mph or 70 mph will affect your average exit velocity differently, but in terms of outcomes, they're just two varieties of weakly hit balls"
+  },
+  {
+    "id": "hit",
+    "title": "Hit",
+    "summary": "A hit occurs when a batter strikes the baseball into fair territory and reaches base without doing so via an error or a fielder's choice. There are four types of hits in baseball: singles, doubles, triples and home runs.  All four are counted equally when deciphering batting average"
+  },
+  {
+    "id": "hit-distance",
+    "title": "Hit Distance",
+    "summary": "Hit Distance represents the distance away from home plate that a batted ball lands -- whether by hitting the ground, the seats, the wall or a fielder's glove. Average Hit Distance (aDST) is calculated by: the sum of all Hit Distances, divided by all Batted Ball Events. \nStatcast can record Hit Distances at the moment a ball touches the ground or where a ball ultimately ends up"
+  },
+  {
+    "id": "hit-by-pitch",
+    "title": "Hit-by-pitch",
+    "summary": "A hit-by-pitch occurs when a batter is struck by a pitched ball without swinging at it. He is awarded first base as a result.  Strikes supersede hit-by-pitches, meaning if the umpire rules that the pitch was in the strike zone or that the batter swung, the HBP is nullified"
+  },
+  {
+    "id": "hits-per-nine-innings",
+    "title": "Hits Per Nine Innings",
+    "summary": "H/9 represents the average number of hits a pitcher allows per nine innings pitched. It is determined by dividing a pitcher's hits allowed by his innings pitched and multiplying that by nine.  It's a very useful tool for evaluating pitchers, whose goal is to prevent runs, which are usually scored by hits"
+  },
+  {
+    "id": "hitting-coach",
+    "title": "Hitting Coach",
+    "summary": "The hitting coach works with players on all aspects of offensive performance, including batting stance, swing mechanics, pitch recognition, and approach at the plate. They analyze video, provide batting practice instruction, and help develop hitting strategies against opposing pitchers."
+  },
+  {
+    "id": "hold",
+    "title": "Hold",
+    "summary": "A hold occurs when a relief pitcher enters the game in a save situation and maintains his team's lead for the next relief pitcher, while recording at least one out. One of two conditions must be met for a pitcher to record a hold: 1) He enters with a lead of three runs or less and maintains that lead while recording at least one out.  2) He enters the game with the tying run on-deck, at the plate or on the bases, and records an out"
+  },
+  {
+    "id": "home-run",
+    "title": "Home Run",
+    "summary": "A home run occurs when a batter hits a fair ball and scores on the play without being put out or without the benefit of an error. In almost every instance of a home run, a batter hits the ball in the air over the outfield fence in fair territory.  In that situation, the batter is awarded all four bases, and any runners on base score as well"
+  },
+  {
+    "id": "home-run-to-fly-ball-rate",
+    "title": "Home Run To Fly Ball Rate",
+    "summary": "Home-run-to-fly-ball (HR/FB) rate is the rate at which home runs are hit against a pitcher for every fly ball he allows. It's as simple as the name makes it sound.  The league average HR/FB rate is usually slightly below 10 percent"
+  },
+  {
+    "id": "home-runs-per-nine-innings",
+    "title": "Home Runs Per Nine Innings",
+    "summary": "HR/9 represents the average number of home runs allowed by a pitcher on a nine-inning scale. The statistic is determined by dividing a pitcher's home runs allowed by his total innings pitched and multiplying the result by nine. \nHR/9 is a statistic that -- relatively speaking -- is in the control of the pitcher, because defensive positioning plays no factor"
+  },
+  {
+    "id": "home-to-first",
+    "title": "Home To First",
+    "summary": "Home to First readings measure the time elapsed from the point of bat-on-ball contact to the moment the batter reaches first base. Statcast has the ability to filter Home to First readings, which can be useful when attempting to discern a hitter's ability to \"beat out\" a ground ball hit to an infielder.  In some scouting circles, a hitter's Home to First time on infield ground balls is sometimes referred to as \"dig speed"
+  },
+  {
+    "id": "incentive-clause",
+    "title": "Incentive Clause",
+    "summary": "Incentives in contracts allow players to earn additional money by achieving certain predetermined benchmarks. Major League Baseball's Basic Agreement prohibits incentives from being awarded based on statistical achievement.  Thus, playing time is the near-universal means by which players receive incentives"
+  },
+  {
+    "id": "infield-fly",
+    "title": "Infield Fly",
+    "summary": "An infield fly is any fair fly ball (not including a line drive or a bunt) which can be caught by an infielder with ordinary effort when first and second or first, second and third base are occupied, before two men are out. The rule is in place to protect against a team allowing a shallow fly ball to drop in with the intention of causing a force play at second and third or second, third and home.  Otherwise, the team would be able to force out baserunners who had stayed put on a routine fly ball"
+  },
+  {
+    "id": "inherited-runner",
+    "title": "Inherited Runner",
+    "summary": "An inherited runner is any baserunner who is already on base when a relief pitcher enters the game. Any inherited runners who score against a relief pitcher are not charged to his ERA; however, there are a few statistics that take into account a pitcher's success at stranding runners on base."
+  },
+  {
+    "id": "inherited-runs-allowed",
+    "title": "Inherited Runs Allowed",
+    "summary": "Every inherited runner who scores when a relief pitcher is in the game counts as an inherited run allowed against that relief pitcher. It's a way of quantifying how well a reliever performs when thrown into a situation with men already on base.  (This is somewhat necessary, for evaluation purposes, because those runs won't be charged against that relief pitcher's ERA"
+  },
+  {
+    "id": "inherited-runs-allowed-percentage",
+    "title": "Inherited Runs Allowed Percentage",
+    "summary": "IR-A% denotes the percentage of inherited runners who come around to score against a relief pitcher. It is determined by dividing the inherited runs scored against a pitcher by the total number of runners he has inherited.  This statistic essentially asks the question: How often does a relief pitcher allow a runner (or multiple runners) to score when he enters the game with a runner (or multiple runners) on base?\nAny baserunners allowed by a relief pitcher do not factor into his eventual IR-A percentage"
+  },
+  {
+    "id": "innings-per-start",
+    "title": "Innings Per Start",
+    "summary": "Innings per start signifies the average number of innings a pitcher throws per game started and is determined by dividing his innings pitched by his starts. "
+  },
+  {
+    "id": "innings-pitched",
+    "title": "Innings Pitched",
+    "summary": "Innings pitched measures the number of innings a pitcher remains in a game. Because there are three outs in an inning, each out recorded represents one-third of an inning pitched. \nJust because a pitcher appears in a game, doesn't mean he will record an inning pitched or even a third of an inning pitched"
+  },
+  {
+    "id": "innings-played",
+    "title": "Innings Played",
+    "summary": "Innings played is a defensive statistic determined by counting the number of outs during which a player is in the field and dividing by three. Innings played is often used by voters to delineate players who have played enough at a given position to consider merit for defensive awards, specifically Gold Gloves.  However, it is not used as the qualifying metric for the fielding percentage leaderboards"
+  },
+  {
+    "id": "intentional-walk",
+    "title": "Intentional Walk",
+    "summary": "An intentional walk occurs when the defending team elects to walk a batter on purpose, putting him on first base instead of letting him try to hit. Intentional walks -- which count as a walk for the hitter and a walk allowed by the pitcher -- are an important strategy in the context of a game.  They can be used to put a runner on first base, setting up a potential double play"
+  },
+  {
+    "id": "intercostal-strain",
+    "title": "Intercostal Strain",
+    "summary": "The 11 intercostal muscles on each side of the rib cage connect one rib to another, working to spread the ribs apart and bring them back together again as the chest expands and contracts during breathing. The intercostals are also part of the core muscle group that is integral to many fundamental baseball movements.  They are most often injured during a sudden contraction when they are in a stretched position, such as during a throw or swing"
+  },
+  {
+    "id": "international-amateur-free-agency-bonus-pool-money",
+    "title": "International Amateur Free Agency & Bonus Pool Money",
+    "summary": "Under the terms of the 2022-26 Collective Bargaining Agreement, the current international amateur talent system will continue for the 2021-22 and 2022-23 signing periods. As per the existing rules established in the 2017-21 Collective Bargaining Agreement, clubs are each subject to a spending cap for amateur international free agents.  Each club will have at least a $4"
+  },
+  {
+    "id": "international-free-agency-asia-professional",
+    "title": "International Free Agency -- Asia",
+    "summary": "Players that accrue nine years of service time in Japan's Nippon Professional Baseball or the Korea Baseball Organization are considered free agents. Such players are eligible to pursue opportunities in any league, including Major League Baseball, without being subjected to the Korean or Japanese posting systems. \nClubs are able to offer any dollar amount they wish to such players, as they are not subject to international amateur free agency spending restrictions"
+  },
+  {
+    "id": "international-free-agency-cuba-professional",
+    "title": "International Free Agency -- Cuba",
+    "summary": "While most international free agents from Latin America sign as amateurs during their teenage years, Cuba has its own top professional league: the Cuban National Series (Serie Nacional). Players with enough experience as a professional in Cuba are exempt from MLB's international bonus pools. \nAny player 25 years of age or older with at least six seasons in Serie Nacional is considered a professional rather than an amateur"
+  },
+  {
+    "id": "isolated-power",
+    "title": "Isolated Power",
+    "summary": "ISO measures the raw power of a hitter by taking only extra-base hits -- and the type of extra-base hit -- into account. For example, a player who goes 1-for-5 with a double has an ISO of . 200"
+  },
+  {
+    "id": "japanese-posting-system",
+    "title": "Japanese Posting System",
+    "summary": "Players from Japan's top league -- Nippon Professional Baseball (NPB) -- who do not have the requisite nine years of professional experience to gain international free agency can request to be \"posted\" for Major League clubs. Under posting rules that were instituted in the 2018-19 offseason, the \"release fee\" -- an amount that an NPB club must receive in the event an agreement is reached between a posted player and a Major League club -- depends on the guaranteed value of the contract a posted player signs with a Major League club. \nAll 30 MLB clubs have 45 days to negotiate with a player after he is posted"
+  },
+  {
+    "id": "jaws",
+    "title": "JAWS",
+    "summary": "JAWS (Jaffe Wins Above Replacement Score) is a system created by Jay Jaffe that evaluates a player's worthiness for enshrinement in the National Baseball Hall of Fame by comparing him to the Hall of Famers at his position. The stated goal of JAWS is to maintain or improve the Hall of Fame's standards by electing players who are at least as good as the average Hall of Famer at those players' positions. \nA player's JAWS is calculated by averaging his career WAR with the total WAR from his seven-year peak -- that is, his seven most valuable seasons (consecutive or non-consecutive)"
+  },
+  {
+    "id": "jump",
+    "title": "Jump",
+    "summary": "Jump is a Statcast metric that shows which players have the fastest reactions and most direct routes in the outfield. It's defined as: \"How many feet did he cover in the right direction in the first three seconds after pitch release?\""
+  },
+  {
+    "id": "k",
+    "title": "K",
+    "summary": "A \"K\" is a strikeout. "
+  },
+  {
+    "id": "knuckle-curve",
+    "title": "Knuckle-curve",
+    "summary": "Some pitchers throw a regular curveball as their breaking pitch. Others throw a knuckle-curve. \nA knuckle-curve, sometimes called a spike curve, is a variation of a traditional curveball, where the pitch is generally gripped and thrown like a curveball but with one knuckle raised off the baseball"
+  },
+  {
+    "id": "knuckleball",
+    "title": "Knuckleball",
+    "summary": "A knuckleball is a very rare pitch, and the pitchers who throw it during games tend to use it almost exclusively. The goal of a knuckleball is to eliminate almost all of the spin on the baseball, causing it to flutter unpredictably on its way to the plate. \nAlthough knuckleballs come to the plate at a much lower velocity than the average pitch, they can be among the hardest pitches to hit because they move so erratically"
+  },
+  {
+    "id": "korean-posting-system",
+    "title": "Korean Posting System",
+    "summary": "Players from Korea's top league -- the Korea Baseball Organization (KBO) -- who do not have the requisite nine years of professional experience to gain international free agency can request to be \"posted\" for Major League clubs. When a KBO club posts a player, all 30 Major League clubs are allowed to negotiate with the player and his representative for a specific period of time.  During the 2020-2021 offseason, that window begins on Nov"
+  },
+  {
+    "id": "lat-strain",
+    "title": "Lat Strain",
+    "summary": "The latissimus dorsi is the broadest muscle of the back. It extends from the top of the hip to the lower six thoracic vertebrae in the mid-back and up to the top of the humerus -- the bone in the upper arm that forms the ball of the ball-and-socket shoulder joint -- at the front of the shoulder. \nLike all muscle strains, the lat strain is broken down into three grades"
+  },
+  {
+    "id": "late-inning-pressure-situations",
+    "title": "Late-inning Pressure Situation",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "launch-angle",
+    "title": "Launch Angle",
+    "summary": "Launch Angle measures the vertical angle, in degrees, at which the ball leaves a player's bat after being hit. A launch angle of zero degrees would represent a ball hit straight back off the bat, parallel to the ground, while positive launch angles represent batted balls hit higher into the air and negative launch angles represent batted balls hit down toward the ground. \nAs a general guideline, here are the launch angles that correspond to different types of contact:"
+  },
+  {
+    "id": "lead-distance",
+    "title": "Lead Distance",
+    "summary": "Lead Distance represents the distance between the base and the baserunner's center of mass as the pitcher makes his first movement -- either to home or to the base on a pickoff attempt. Lead Distance might be the most overlooked aspect of stealing bases.  Certain baserunners -- those who can react quickest to a pitcher's move -- take leads that are longer than an average player"
+  },
+  {
+    "id": "left-fielder",
+    "title": "Left Fielder",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "left-on-base",
+    "title": "Left On Base",
+    "summary": "Left on base can be viewed as both an individual statistic or as a team statistic. In an individual batter's case, it refers to how many men remain on base after that batter makes an out at the plate, as the batter has failed to do his job to score those runners -- or at least put himself in a position to score. \nIn a team's case or in an individual pitcher's case, it refers to the number of men who remain on base at the end of an inning"
+  },
+  {
+    "id": "leverage-index",
+    "title": "Leverage Index",
+    "summary": "Created by Tom Tango, Leverage Index measures the importance of a particular event by quantifying the extent to which win probability could change on said event, with 1. 0 representing a neutral situation. \nFor instance, if a team trailing by three runs had the bases loaded with two outs in the eighth inning, the ensuing plate appearance would register an LI above 1"
+  },
+  {
+    "id": "line-drive-rate",
+    "title": "Line-drive Rate",
+    "summary": "Line-drive rate represents the percentage of balls hit into the field of play that are characterized as line drives. Each ball that is hit into the field of play is characterized as a line drive, a fly ball, a ground ball or a pop-up.  Line-drive rate can be used as a metric to evaluate both hitters and pitchers"
+  },
+  {
+    "id": "lisfranc-injury",
+    "title": "Lisfranc Injury",
+    "summary": "The Lisfranc joint complex, named for the French surgeon who first described it in the 1800s, includes the five metatarsal bones along with the tendons and ligaments that connect the mid-foot to the forefoot and form the arch at the top of the foot. Ligaments and tendons in this area can be sprained, and the bones can be fractured.  Lisfranc injuries can be the result of a trauma, such as a collision, or they can be caused indirectly by a sudden rotational force in the mid-foot"
+  },
+  {
+    "id": "loss",
+    "title": "Loss",
+    "summary": "A pitcher receives a loss when a run that is charged to him proves to be the go-ahead run in the game, giving the opposing team a lead it never gives up. Losses are almost always paired with wins when used to evaluate a pitcher, creating a separate pitching term known as win-loss record. \nWin-loss record took on a greater importance in the past for a different reason"
+  },
+  {
+    "id": "maddux",
+    "title": "Maddux",
+    "summary": "A Maddux describes a start in which a pitcher tosses a complete-game shutout on fewer than 100 pitches. Named after Hall of Famer Greg Maddux, the term was coined by baseball writer Jason Lukehart. \nSince 1988, the first year accurate pitch-count data is available, Maddux ranks first in the Majors with 13 such starts during the regular season"
+  },
+  {
+    "id": "magic-number",
+    "title": "Magic Number",
+    "summary": "In baseball, the phrase \"magic number\" is used to determine how close a team is to making the playoffs or winning the division. It becomes prominent every year in September as teams begin closing in on clinching. \nA team's magic number represents the combination of wins needed by that team and losses by its closest competitor to clinch a given goal"
+  },
+  {
+    "id": "major-league-baseball-logo",
+    "title": "Major League Baseball Logo",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "manager",
+    "title": "Manager",
+    "summary": "The manager is the head coach of a baseball team, responsible for making strategic decisions during games, setting lineups, managing the pitching staff, and overseeing the overall direction of the team. They work with coaches to develop players and implement team strategies while reporting to the front office."
+  },
+  {
+    "id": "manager-challenge",
+    "title": "Manager Challenge",
+    "summary": "Each club receives two manager challenges to start each All-Star Game and postseason game and one manager challenge to start every other game. All reviews are conducted at the Replay Command Center, which is located at Major League Baseball Advanced Media headquarters in New York, by replay officials -- full-time Major League umpires who work shifts at the Replay Command Center in addition to their on-field work.  Replay officials review all calls subject to replay review and decide whether to change the call on the field, confirm the call on the field or let stand the call on the field due to the lack of clear and convincing evidence"
+  },
+  {
+    "id": "marcel-the-monkey-forecasting-system",
+    "title": "Marcel the Monkey Forecasting System",
+    "summary": "Marcel is a system of player projections developed by statistician Tom Tango. It is one of the most basic systems of player projection available.  In fact, Tango himself describes Marcel as \"the most basic forecasting system you can have, that uses as little intelligence as possible"
+  },
+  {
+    "id": "mendoza-line",
+    "title": "Mendoza Line",
+    "summary": "The \"Mendoza Line\" is a. 200 batting average."
+  },
+  {
+    "id": "minor-league-options",
+    "title": "Minor League Options",
+    "summary": "Players on a 40-man roster are given three Minor League \"options. \" An option allows that player to be sent to the Minor Leagues (\"optioned\") without first being subjected to waivers.  Players who are optioned to the Minors are removed from a team's active 26-man roster but remain on the 40-man roster"
+  },
+  {
+    "id": "mound-visit",
+    "title": "Mound Visit",
+    "summary": "The members of the coaching staff (including the manager) can make one mound visit per pitcher per inning without needing to remove the pitcher from the game. If the same pitcher is visited twice in one inning, the pitcher must be removed from the contest.  These mound visits are limited to 30 seconds, starting when the manager or coach has exited the dugout and been granted time by the umpire"
+  },
+  {
+    "id": "mutual-option",
+    "title": "Mutual Option",
+    "summary": "A mutual option is an optional year at the end of a contract. In order for the optional year to become guaranteed, both parties must agree to exercise the option. \nMutual options are very rarely exercised"
+  },
+  {
+    "id": "neighborhood-play",
+    "title": "Neighborhood Play",
+    "summary": "The \"neighborhood play\" is a colloquial term used to describe the leeway granted to middle infielders with regards to touching second base while in the process of turning a ground-ball double play. Though it is not explicitly mentioned in the rulebook, middle infielders were long able to record an out on the double-play pivot simply by being in the proximity -- or neighborhood -- of the second-base bag.  The maneuver had been permitted for safety purposes, as it allowed the pivot man to get out of the way of the oncoming baserunner as quickly as possible"
+  },
+  {
+    "id": "no-trade-clause",
+    "title": "No-trade Clause",
+    "summary": "A no-trade clause is a contractual clause that allows players to veto trades to certain teams. No-trade clauses are often worked into contract extensions and free-agent contracts as a perk for the players signing such deals. \nSome contracts include partial no-trade clauses, which allow a player to block trades to a specified list of teams"
+  },
+  {
+    "id": "non-guaranteed-contract",
+    "title": "Non-guaranteed Contract",
+    "summary": "Players who are on Minor League or split contracts are not fully guaranteed their salaries. A player on a split or Minor League contract will earn the prorated portion of his Major League salary for time spent on the Major League roster.  Clubs can also sign players to non-guaranteed contracts but still place them on the 40-man roster"
+  },
+  {
+    "id": "non-roster-invite",
+    "title": "Non-roster Invite",
+    "summary": "A non-roster invite is a player invited to participate in a team's Major League spring training despite not being on the 40-man roster. These are often minor league players, veteran free agents, or players trying to return from injury who are attempting to earn a spot on the Major League roster."
+  },
+  {
+    "id": "non-tendered",
+    "title": "Non-tendered",
+    "summary": "When a club \"non-tenders\" a player, it declines to give that player a contract for the upcoming season, thereby immediately making him a free agent. Players on the 40-man roster with fewer than six years of Major League service time must be tendered contracts each offseason by a set deadline -- typically a date in early December -- or non-tendered and released to the free-agent pool. \nIn many instances, a club will non-tender a player because it feels the raise he will receive in arbitration would be greater than his on-field value"
+  },
+  {
+    "id": "number-of-pitches",
+    "title": "Number of Pitches",
+    "summary": "A pitcher's total number of pitches is determined by all the pitches he throws in live game action, including strikes, unintentional balls and intentional balls. The number of pitches thrown by a pitcher is a very important number in any baseball game.  It's often used to determine when a pitcher might begin to get tired"
+  },
+  {
+    "id": "oblique-strain",
+    "title": "Oblique Strain",
+    "summary": "The oblique muscles lie alongside the rectus abdominis muscles -- the ones that make up the \"six pack\" -- and are responsible for core control and rotation. The internal oblique sits under the external oblique and is the most commonly injured abdominal or core muscle in baseball because it is the most activated core muscle during hitting and throwing. \nLike all muscle strains, the oblique strain is broken down into three grades"
+  },
+  {
+    "id": "obstruction",
+    "title": "Obstruction",
+    "summary": "Obstruction describes an act by a fielder, who is not in possession of the ball or in the process of fielding it, that impedes the baserunner's progress. If a play is being made on the obstructed baserunner, the ball is ruled dead and the umpire can place all runners on the base he determines they would have reached without the obstruction.  If no play is being made on the obstructed runner, the umpire will allow the play to progress until its natural conclusion and then impose any penalties he sees fit to nullify the act of obstruction"
+  },
+  {
+    "id": "official-scorer",
+    "title": "Official Scorer",
+    "summary": "The official scorer is the person appointed to observe from the press box and record the outcome of everything that happens during a game, and to make judgment calls that affect the official record of said game. The official scorer files a report after each game for documentation purposes. \nThe most common judgment call an official scorer makes is whether a batter reached base on a hit or an error"
+  },
+  {
+    "id": "oliver",
+    "title": "Oliver",
+    "summary": "Oliver is a system of player projections developed by Brian Cartwright and used by The Hardball Times. For projecting returning Major League players, it uses a somewhat basic formula: Three years of player data with the most recent years weighted heavier, while also factoring age and regression to the mean. \nIn that way, Oliver is not unlike the Marcel projection system, which is known to be one of the most basic projection models"
+  },
+  {
+    "id": "on-base-percentage",
+    "title": "On-base Percentage",
+    "summary": "OBP refers to how frequently a batter reaches base per plate appearance. Times on base include hits, walks and hit-by-pitches, but do not include errors, times reached on a fielder's choice or a dropped third strike.  (Separately, sacrifice bunts are removed from the equation entirely, because it is rarely a hitter's decision to sacrifice himself, but rather a manager's choice as part of an in-game strategy"
+  },
+  {
+    "id": "on-base-plus-slugging",
+    "title": "On-base Plus Slugging",
+    "summary": "OPS adds on-base percentage and slugging percentage to get one number that unites the two. It's meant to combine how well a hitter can reach base, with how well he can hit for average and for power. \nIt can also be used in evaluating pitchers; when used in that context, it is referred to as OPS against"
+  },
+  {
+    "id": "on-base-plus-slugging-plus",
+    "title": "On-base Plus Slugging Plus",
+    "summary": "OPS+ takes a player's on-base plus slugging percentage and normalizes the number across the entire league. It accounts for external factors like ballparks.  It then adjusts so a score of 100 is league average, and 150 is 50 percent better than the league average"
+  },
+  {
+    "id": "opener",
+    "title": "Opener",
+    "summary": "An \"opener\" is a pitcher -- normally a reliever -- who starts a game for purposes of matching up against the top of the opponent's lineup in the first inning, which has traditionally been the highest-scoring inning, before being relieved by a pitcher who would otherwise function as a starter. This allows for a team to counter its opponent's first three batters with the pitcher it feels has the best chance for success against them. \nThe second pitcher (often called the headliner) usually pitches the bulk of the game, potentially relieved in the later innings due to high-leverage situations or high pitch count"
+  },
+  {
+    "id": "ordinary-effort",
+    "title": "Ordinary Effort",
+    "summary": "Ordinary effort refers to the effort that a fielder of average skill at a specific position should exhibit on a play, with due consideration given to the conditions of the playing field and the weather. Umpires must use that standard when calling infield fly plays, and the official scorer uses it to judge what constitutes an error, a wild pitch, a passed ball and a sacrifice."
+  },
+  {
+    "id": "out",
+    "title": "Out",
+    "summary": "One of baseball's most basic principles, an out is recorded when a player at bat or a baserunner is retired by the team in the field. Outs are generally recorded via a strikeout, a groundout, a popout or a flyout, but MLB's official rulebook chronicles other ways -- including interfering with a fielder -- by which an offensive player can be put out. \nFor every out that is recorded by the defensive team, a putout is given to a fielder and a third of an inning pitched is awarded to the pitcher"
+  },
+  {
+    "id": "outfield-assist",
+    "title": "Outfield Assist",
+    "summary": "An outfielder records an assist when he throws the ball into the infield and an out is recorded as a result. Outfield assists are one of the most commonly referenced types of assists. \nOutfield assists often result from throws directly to a base, without the help of an infielder"
+  },
+  {
+    "id": "outright-waivers",
+    "title": "Outright Waivers",
+    "summary": "When a player is placed on outright waivers, the other 29 Major League clubs have the opportunity to claim him. The claiming club assumes responsibility for the remaining money owed to the claimed player, who is placed on his new club's 40-man roster.  \nClaiming priority is based on reverse winning percentage"
+  },
+  {
+    "id": "outs-above-average",
+    "title": "Outs Above Average",
+    "summary": "Outs Above Average (OAA) is a range-based metric of skill that shows how many outs a player has saved. Prior to 2020, OAA was an outfield-only metric.  But it has been expanded to include infielders"
+  },
+  {
+    "id": "pace-of-play",
+    "title": "Pace of Play",
+    "summary": "A number of changes have been implemented to improve the pace of play since the 2014 season. In 2015, timers were installed in Major League stadiums to measure the break time between innings and pitching changes.  MLB lowered the time between innings to 2 minutes for local broadcasts and nationally televised games in 2019"
+  },
+  {
+    "id": "painting-the-black",
+    "title": "Painting the Black",
+    "summary": "A pitcher is said to be \"painting the black\" when he throws a pitch that barely catches the outside or inside corner of the plate for a strike. "
+  },
+  {
+    "id": "partner-leagues",
+    "title": "Partner Leagues",
+    "summary": "The American Association, Atlantic League, Frontier League and Pioneer League are professional baseball leagues that have been designated as Partner Leagues of Major League Baseball. These leagues collaborate with MLB on various initiatives while providing organized baseball to communities throughout the United States and Canada, and also expanding the geographic reach of the game.  The leagues provide development opportunities for young players throughout the country and for veteran players who seek a second chance to reach the Major Leagues"
+  },
+  {
+    "id": "passed-ball",
+    "title": "Passed Ball",
+    "summary": "A catcher is given a passed ball if he cannot hold onto a pitch that -- in the official scorer's judgment -- he should have, and as a result at least one runner moves up on the bases. Passed balls have commonality with wild pitches, as both allow a runner to advance on his own without a stolen base.  However, there is a key difference: A passed ball is deemed to be the catcher's fault, while a wild pitch is deemed to be the fault of the pitcher"
+  },
+  {
+    "id": "perceived-velocity",
+    "title": "Perceived Velocity",
+    "summary": "Perceived Velocity is an attempt to quantify how fast a pitch appears to a hitter, by factoring the Velocity of the pitch and the release point of the pitcher. It takes Velocity one step further -- because a 95 mph fastball will reach a hitter faster if the pitcher releases the ball seven feet in front of the rubber instead of six. \nTo attain Perceived Velocity, the average Major League \"Extension\" must first be obtained"
+  },
+  {
+    "id": "pickle",
+    "title": "Pickle",
+    "summary": "A \"pickle\" is a rundown. "
+  },
+  {
+    "id": "pickoff",
+    "title": "Pickoff",
+    "summary": "A pickoff occurs between pitches when a pitcher throws a ball to a fielder, who eventually puts out or assists in retiring an opposing baserunner. An illegal pickoff attempt results in a balk. \nWhen a pitcher throws to a base between pitches in an attempt to get an out or keep a runner close to the base, it's known as a pickoff attempt"
+  },
+  {
+    "id": "pitch-movement",
+    "title": "Pitch Movement",
+    "summary": "The movement of a pitch is defined in inches, both in raw numbers and (more importantly) as a measurement against average. It is displayed separately for horizontal break and vertical drop. \nAs opposed to other available pitch movement numbers that remove gravity, Statcast's pitch movement numbers are displayed with gravity, in an attempt to better align with the real-world eye test, as pitches are of course affected by gravity"
+  },
+  {
+    "id": "pitch-tempo",
+    "title": "Pitch Tempo",
+    "summary": "Pitch tempo refers to how much time a pitcher takes between pitches. The Pitch Tempo leaderboard on Baseball Savant shows which MLB pitchers work the fastest, and the slowest. \nStatcast's pitch tempo metric is defined as the median time between pitches -- in other words, a pitcher's time from one pitch release to the next pitch release"
+  },
+  {
+    "id": "pitch-timer",
+    "title": "Pitch Timer",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "pitches-per-inning-pitched",
+    "title": "Pitches Per Inning Pitched",
+    "summary": "Pitches per inning pitched is a tool used to evaluate how efficient a pitcher is at getting his outs -- or how many pitches he typically needs to use to do his job. Calculating the number is easy enough.  It's found by dividing a pitcher's total number of pitches thrown by his total number of innings pitched"
+  },
+  {
+    "id": "pitches-per-plate-appearance",
+    "title": "Pitches Per Plate Appearance",
+    "summary": "P/PA is a simple stat that quantifies how many pitches are thrown per plate appearance. It can be used for both hitters and pitchers, although it is more frequently referred to when assessing hitters. \nA player can be a very good hitter if his P/PA is below average, but hitters with high P/PA marks can be useful because they tend to wear out opposing pitchers"
+  },
+  {
+    "id": "pitches-per-start",
+    "title": "Pitches Per Start",
+    "summary": "Pitches per start tells us how many pitches a starting pitcher throws, on average, in his starts. It can be a useful tool for evaluating pitchers in many ways -- particularly while he's pitching.  P/GS gives the viewer an indication of just how much a starting pitcher might have left in the tank"
+  },
+  {
+    "id": "pitching-coach",
+    "title": "Pitching Coach",
+    "summary": "The pitching coach is responsible for developing and maintaining the performance of the team's pitching staff. They work on mechanics, pitch selection, game strategy, and monitor pitcher workload. During games, they make mound visits to counsel pitchers and help determine when pitching changes are needed."
+  },
+  {
+    "id": "plantar-fasciitis",
+    "title": "Plantar Fasciitis",
+    "summary": "The plantar fascia is a thick, web-like band of ligament that runs along the sole of the foot, from the bottom of the heel to the base of the toes. It keeps the arch of the foot from flattening completely when the foot is bearing weight, thus providing cushioning and shock absorption.  The plantar fascia also allows you to point your toes"
+  },
+  {
+    "id": "plate-appearance",
+    "title": "Plate Appearance",
+    "summary": "A plate appearance refers to a batter's turn at the plate. Each completed turn batting is one plate appearance.  Plate appearances can often be confused with at-bats"
+  },
+  {
+    "id": "plate-appearances-per-strikeout",
+    "title": "Plate Appearances Per Strikeout",
+    "summary": "Plate appearances per strikeout is a basic ratio determined by dividing a player's total plate appearances by his number of strikeouts. Hitters who don't strike out very much will have high PA/SO marks."
+  },
+  {
+    "id": "player-empirical-comparison-and-optimization-test-algorithm",
+    "title": "Player Empirical Comparison and Optimization Test Algorithm",
+    "summary": "Also a \"backronym\" for former Major Leaguer Bill Pecota, PECOTA is Baseball Prospectus' system for projecting player performance. The acronym stands for \"Player Empirical Comparison and Optimization Test Algorithm. \" It was developed by Nate Silver in 2003, and Silver ran the projections - which were owned by Baseball Prospectus -- from '03-09, before ceding full responsibility to Baseball Prospectus itself"
+  },
+  {
+    "id": "player-option",
+    "title": "Player Option",
+    "summary": "A player option is an optional year at the end of a contract that can be applied at the player's discretion. In such cases, the player has the right to exercise his option and lock in that optional salary as a guaranteed sum or reject the option in favor of testing free agency."
+  },
+  {
+    "id": "player-to-be-named-later",
+    "title": "Player to Be Named Later",
+    "summary": "When clubs consent to include a player to be named later (often abbreviated PTBNL) in a trade, they agree to decide upon or announce the final player involved in that trade at a later date. Using a PTBNL can be especially advantageous after the non-waiver Trade Deadline, as players that would otherwise be required to first clear waivers can be included in the trade as a PTBNL -- provided they are not on the 25-man roster -- and officially sent to their new club once waiver clearance is no longer mandatory for a trade. \nIn other instances, the club sending the PTBNL away will provide the acquiring club with a list of players from which to select the PTBNL"
+  },
+  {
+    "id": "pop-time",
+    "title": "Pop Time",
+    "summary": "On steal or pickoff attempts by a catcher, Pop Time represents the time elapsed from the moment the pitch hits the catcher's mitt to the moment the intended fielder is projected to receive his throw at the center of the base. When a throw's flight path ends in front of or beyond the base's midpoint, Statcast accounts for the thrown ball's speed and projects how long the throw would have taken to reach the center of the intended base. \nPop Time is a combination of a catcher's footwork (getting into throwing position), Exchange (glove to release), and Arm Strength (velocity of throw)"
+  },
+  {
+    "id": "pop-up-rate",
+    "title": "Pop-up Rate",
+    "summary": "Pop-up rate represents the percentage of balls hit into the field of play that are characterized as pop-ups. Each ball that is hit into the field of play is characterized as a line drive, a fly ball, a ground ball or a pop-up.  (A fly ball is a fly to the outfield, while a pop-up is hit to the infield"
+  },
+  {
+    "id": "postseason-roster-rules-eligibility",
+    "title": "Postseason Roster Rules & Eligibility",
+    "summary": "In a typical season, any player who is on the 40-man roster or 60-day injured list as of 11:59 p. m.  ET on Aug"
+  },
+  {
+    "id": "postseason-share",
+    "title": "Postseason Share",
+    "summary": "Each postseason team receives a share of the money earned from playoff gate receipts. The World Series champion receives the highest percentage of the pool, followed by the World Series runner-up, and so on. \nThe players' pool is formed from 50 percent of the gate receipts from the Wild Card Games; 60 percent of the gate receipts from the first three games of the Division Series; 60 percent of the gate receipts from the first four games of the League Championship Series; and 60 percent of the gate receipts from the first four games of the World Series"
+  },
+  {
+    "id": "projected-home-run-distance",
+    "title": "Projected Home Run Distance",
+    "summary": "Projected Home Run Distance represents the distance a home run ball would travel if unhindered by obstructions such as stadium seats or walls. This metric is determined by finding the parabolic arc of the baseball and projecting the remainder of its flight path. \nProjected Home Run Distance is a pivotal tool when comparing individual home runs"
+  },
+  {
+    "id": "protested-game",
+    "title": "Protested Game",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "putaway-percentage",
+    "title": "Putaway Percentage",
+    "summary": "Putaway Percentage (PutAway%) is the rate of two-strike pitches that result in a strikeout. When examined on a pitch-type basis, this can help discern what offering a pitcher uses to finish off hitters, and his effectiveness in doing so.  This puts a number to the common baseball phrase of \"putaway pitch,\" providing a more statistically based assessment of the concept"
+  },
+  {
+    "id": "putout",
+    "title": "Putout",
+    "summary": "A fielder is credited with a putout when he is the fielder who physically records the act of completing an out -- whether it be by stepping on the base for a forceout, tagging a runner, catching a batted ball, or catching a third strike. A fielder can also receive a putout when he is the fielder deemed by the official scorer to be the closest to a runner called out for interference. \nCatchers -- who record putouts by catching pitches that result in strikeouts -- and first basemen -- who record putouts by catching throws on ground-ball outs -- generally amass the highest putout totals"
+  },
+  {
+    "id": "pythagorean-winning-percentage",
+    "title": "Pythagorean Winning Percentage",
+    "summary": "Pythagorean winning percentage is a formula developed by renowned statistician Bill James. The concept strives to determine the number of games that a team *should* have won -- based its total number of runs scored versus its number of runs allowed -- in an effort to better forecast that team's future outlook. \nThe initial formula for pythagorean winning percentage was as follows: (runs scored ^ 2) / [(runs scored ^ 2) + (runs allowed ^ 2)] That formula proved more predictive than basic winning percentage when trying to predict a team's future performance, although in the years since pythagorean winning percentage was popularized, other analysts have attempted to find an even more accurate formula"
+  },
+  {
+    "id": "qualifying-offer",
+    "title": "Qualifying Offer",
+    "summary": "The qualifying offer is a competitive balance measure that was implemented as part of the 2012-16 Collective Bargaining Agreement and restructured under the 2017-21 Collective Bargaining Agreement. (Under the terms of the 2022-26 Collective Bargaining Agreement, MLB and the MLB Players Association had the opportunity to agree on the implementation of an International Draft by July 25, 2022, which would have eliminated the qualifying offer system starting with the 2022-23 offseason.  The two sides did not agree by the deadline, though, meaning the system will remain in place until the end of the current Collective Bargaining Agreement"
+  },
+  {
+    "id": "quality-start",
+    "title": "Quality Start",
+    "summary": "A starting pitcher records a quality start when he pitches at least six innings and allows three earned runs or fewer. A starting pitcher has two jobs: to prevent runs and get outs.  The quality start statistic helps to quantify which pitchers did a \"quality\" job in those two departments"
+  },
+  {
+    "id": "range-factor",
+    "title": "Range Factor",
+    "summary": "Range Factor is determined by dividing the sum of a fielder's putouts and assists by his total number of defensive games played. More recently, Range Factor per nine innings has evolved as the more prevalent statistic because it addresses the discrepancies between a player who plays one inning in a given game and a player who plays the full game. \nOf course, circumstances for fielders can vary greatly"
+  },
+  {
+    "id": "rate-stats-qualifiers",
+    "title": "Rate Stats Qualifiers",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "rate-stats-qualifiers",
+    "title": "Rate Stats Qualifiers",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "reached-on-error",
+    "title": "Reached On Error",
+    "summary": "A batter receives a reached on error when he reaches base because of a defensive error -- meaning he wouldn't have otherwise reached. Reaching base on an error does not count as a hit, nor does it count as a time on base for purposes of on-base percentage.  But there is still significant debate as to whether ROEs are undervalued in the statistical world, as certain players have a tendency to reach base via error more than others"
+  },
+  {
+    "id": "regulation-game",
+    "title": "Regulation Game",
+    "summary": "A game is considered a regulation game -- also known as an \"official game\" -- once the visiting team has made 15 outs (five innings) and the home team is leading, or once the home team has made 15 outs regardless of score. Prior to the 2020 season, if a game was terminated early due to weather before becoming official, the results up to the point of the termination did not count and the game was started over at a later date.  But as part of MLB's health and safety protocols during the COVID-19 pandemic, all games cut short due to weather before becoming official were resumed at a later date, rather than started over from scratch, during the 2020 campaign"
+  },
+  {
+    "id": "release-waivers",
+    "title": "Release Waivers",
+    "summary": "Before a club can formally release a player, that player must first be passed through unconditional release waivers. All 29 other clubs in the Majors have the opportunity to claim the player and add him to their 40-man rosters.  A player that is claimed on release waivers has the option of rejecting that claim and instead exploring the free-agent market"
+  },
+  {
+    "id": "relief-pitcher",
+    "title": "Relief Pitcher",
+    "summary": "A relief pitcher is a pitcher who enters the game after the starting pitcher is removed. They typically pitch fewer innings but may appear in more games than starters. Relief pitchers often specialize in specific roles like closer, setup man, or long reliever, and may be used in different situations based on the game situation and their particular strengths."
+  },
+  {
+    "id": "relief-win",
+    "title": "Relief Win",
+    "summary": "A relief win is defined as any win by a pitcher who was not the starting pitcher. Relievers can earn relief wins in two different ways -- one far more common than the other.  First, if a reliever is in the game at the time his team takes the lead for good, he is credited with the victory"
+  },
+  {
+    "id": "replay-review",
+    "title": "Replay Review",
+    "summary": "Replay review in Major League Baseball is designed to provide timely review of certain disputed calls and is initiated by a manager challenge or by the umpire crew chief. All reviews are conducted at the Replay Command Center, which is located at Major League Baseball Advanced Media headquarters in New York, by replay officials -- full-time Major League umpires who work shifts at the Replay Command Center in addition to their on-field shifts.  Replay officials review all calls subject to replay review and decide whether to change the call on the field, confirm the call on the field or let stand the call on the field due to the lack of clear and convincing evidence"
+  },
+  {
+    "id": "retention-bonus",
+    "title": "Retention Bonus (Article XX(B) Free Agents)",
+    "summary": "If a club signs an Article XX(B) free agent to a Minor League contract between a period after the conclusion of the World Series and 10 days before the start of the next season, it must decide by noon ET five days before Opening Day whether it will add the player to its 26-man roster or MLB injured list at the outset of the season. If the club does not agree in writing to add the player to its Opening Day 26-man roster or MLB injured list, it must either grant the player his immediate unconditional release or agree to pay the player a retention bonus of $100,000 (to be paid on or before April 15 of the upcoming season). \nPlayers paid the retention bonus can request to be granted their unconditional release on June 1 if they are not added to the 26-man roster or MLB injured list by then"
+  },
+  {
+    "id": "right-fielder",
+    "title": "Right Fielder",
+    "summary": "The right fielder is the outfielder who plays on the right side of the outfield. They typically have a strong throwing arm since they need to make long throws to third base. Right fielders are often power hitters offensively, as the position has traditionally been seen as less demanding defensively than center field."
+  },
+  {
+    "id": "rookie-eligibility",
+    "title": "Rookie Eligibility",
+    "summary": "A player shall be considered a rookie unless he has exceeded any of the following thresholds in a previous season (or seasons):\n\u2022 130 at-bats or 50 innings pitched in the Major Leagues. \u2022 45 total days on an active Major League roster during the Championship Season (excluding time on the Injured List). \nA player must have rookie eligibility to be considered for any MLB rookie awards -- such as the American League or National League Rookie of the Year Award -- or appear on any MLB Pipeline prospect lists"
+  },
+  {
+    "id": "rule-4-draft",
+    "title": "Rule 4 Draft",
+    "summary": "The Rule 4 Draft is the official term for the First-Year Player Draft, an amateur draft held annually. Players must be a resident of the United States (U. S"
+  },
+  {
+    "id": "rule-5-draft",
+    "title": "Rule 5 Draft",
+    "summary": "Held each December, the Rule 5 Draft allows clubs without a full 40-man roster to select certain non-40-man roster players from other clubs. Clubs draft in reverse order of the standings from the previous season.  Players signed at age 18 or younger need to be added to their club's 40-Man roster within five seasons or they become eligible for the Rule 5 Draft"
+  },
+  {
+    "id": "run",
+    "title": "Run",
+    "summary": "A player is awarded a run if he crosses the plate to score his team a run. When tallying runs scored, the way in which a player reached base is not considered.  If a player reaches base by an error or a fielder's choice, as long as he comes around to score, he is still credited with a run"
+  },
+  {
+    "id": "run-differential",
+    "title": "Run Differential",
+    "summary": "A team's run differential is determined by subtracting the total number of runs (both earned and unearned) it has allowed from the number of runs it has scored. "
+  },
+  {
+    "id": "run-support-per-nine-innings",
+    "title": "Run Support Per Nine Innings",
+    "summary": "Run support per nine innings measures how many runs an offense scores for a certain pitcher while that pitcher is in the game. That number is then set over a nine-inning timeframe.  So the stat essentially answers the question, \"How many runs of support does a pitcher receive per nine innings?\"\nIn no way is RS/9 something a pitcher can control"
+  },
+  {
+    "id": "runs-allowed-per-nine-innings-pitched",
+    "title": "Runs Allowed Per Nine Innings Pitched",
+    "summary": "Runs allowed per nine innings pitched -- the title says it all. It's basically ERA with the \"E\" removed. \nFor example, in 1972, Nolan Ryan allowed 80 runs in 284 innings, giving him a 2"
+  },
+  {
+    "id": "runs-batted-in",
+    "title": "Runs Batted In",
+    "summary": "A batter is credited with an RBI in most cases where the result of his plate appearance is a run being scored. There are a few exceptions, however.  A player does not receive an RBI when the run scores as a result of an error or ground into double play"
+  },
+  {
+    "id": "runs-created",
+    "title": "Runs Created",
+    "summary": "Runs Created estimates a player's offensive contribution in terms of total runs. It combines a player's ability to get on base with his ability to hit for extra bases.  Then it divides those two by the player's total opportunities"
+  },
+  {
+    "id": "sacrifice-bunt",
+    "title": "Sacrifice Bunt",
+    "summary": "A sacrifice bunt occurs when a player is successful in his attempt to advance a runner (or multiple runners) at least one base with a bunt. In this vein, the batter is sacrificing himself (giving up an out) in order to move another runner closer to scoring.  When a batter bunts with a runner on third base, it is called a squeeze play and, if successful, is still recorded as a sacrifice"
+  },
+  {
+    "id": "sacrifice-fly",
+    "title": "Sacrifice Fly",
+    "summary": "A sacrifice fly occurs when a batter hits a fly-ball out to the outfield or foul territory that allows a runner to score. The batter is given credit for an RBI.  (If the ball is dropped for an error but it is determined that the runner would have scored with a catch, then the batter is still credited with a sacrifice fly"
+  },
+  {
+    "id": "salary-arbitration",
+    "title": "Salary Arbitration",
+    "summary": "Players who have three or more years of Major League service but less than six years of Major League service become eligible for salary arbitration if they do not already have a contract for the next season. Players who have less than three but more than two years of service time can also become arbitration eligible if they meet certain criteria; these are known as \"Super Two\" players.  Players and clubs negotiate over salaries, primarily based on comparable players who have signed contracts in recent seasons"
+  },
+  {
+    "id": "save",
+    "title": "Save",
+    "summary": "A save is awarded to the relief pitcher who finishes a game for the winning team, under certain circumstances. A pitcher cannot receive a save and a win in the same game. \nA relief pitcher recording a save must preserve his team's lead while doing one of the following:"
+  },
+  {
+    "id": "save-opportunity",
+    "title": "Save Opportunity",
+    "summary": "A save opportunity occurs every time a relief pitcher either records a save or a blown save. For a save opportunity, a pitcher must be the final pitcher for his team (and not the winning pitcher) and do one of the following:"
+  },
+  {
+    "id": "save-percentage",
+    "title": "Save Percentage",
+    "summary": "Save percentage represents the percent of time a pitcher records a save when given a save opportunity. Obviously, then, save percentage is calculated by dividing a pitcher's total number of saves by his total number of save opportunities. \nSave percentage can be a useful tool for evaluating pitchers who are strictly closers"
+  },
+  {
+    "id": "scorekeeping",
+    "title": "Scorekeeping",
+    "summary": "Different fans have different methods of keeping a scorecard, and many use their own notations. But here's a simple method:"
+  },
+  {
+    "id": "scouting-grades",
+    "title": "Scouting Grades",
+    "summary": "Scouting grades have been a staple of MLB. com's prospect coverage for years, and they generally match how clubs grade players as well. \nPlayers are graded on a 20-80 scale: 20-30 is well below average, 40 is below average, 50 is average, 60 is above average and 70-80 is well above average"
+  },
+  {
+    "id": "screwball",
+    "title": "Screwball",
+    "summary": "A screwball is a breaking ball designed to move in the opposite direction of just about every other breaking pitch. It is one of the rarest pitches thrown in baseball, mostly because of the tax it can put on a pitcher's arm.  The movement on the screwball -- which travels toward the pitcher's arm side -- is caused by an extremely unorthodox throwing motion"
+  },
+  {
+    "id": "second-baseman",
+    "title": "Second Baseman",
+    "summary": "The second baseman is the infielder positioned between first and second base. They are responsible for fielding ground balls, turning double plays with the shortstop, and covering second base. Second basemen typically have quick hands, good range, and strong ability to turn the double play."
+  },
+  {
+    "id": "seeing-eye-single",
+    "title": "Seeing-eye Single",
+    "summary": "A \"seeing-eye single\" is a softly or moderately struck ground ball that goes between infielders for a base hit. "
+  },
+  {
+    "id": "service-time",
+    "title": "Service Time",
+    "summary": "Players receive Major League service time for each day spent on the 26-man roster or the Major League injured list. Important to players and clubs alike, service time is used to determine when players are eligible for arbitration as well as free agency. \nEach Major League regular season consists of 187 days (typically 183 days prior to 2018), and each day spent on the active roster or injured list earns a player one day of service time"
+  },
+  {
+    "id": "set-position",
+    "title": "Set Position",
+    "summary": "Pitchers are permitted to use two legal pitching deliveries -- the windup position and the set position -- and either position may be used at any time. A pitcher is considered to be in the set position when he puts his pivot foot against the pitching rubber, has both shoulders facing first (for lefty pitchers) or third (for righty pitchers) base to some degree and holds the ball with both hands in front of his body.  As a result of this configuration, a pitcher in the set position points his glove-hand shoulder toward the batter and his throwing shoulder toward center field"
+  },
+  {
+    "id": "shifts",
+    "title": "Shifts",
+    "summary": "Every infield defense alignment will fall into one of the following four categories:. "
+  },
+  {
+    "id": "shortstop",
+    "title": "Shortstop",
+    "summary": "The shortstop is the infielder positioned between second and third base. Often considered the most athletic infield position, shortstops need exceptional range, a strong throwing arm, and quick hands. They are central to the infield defense and involved in many double plays."
+  },
+  {
+    "id": "shutout",
+    "title": "Shutout",
+    "summary": "A starting pitcher is credited with a shutout when he pitches the entire game for a team and does not allow the opposition to score. By definition, any pitcher who throws a shutout is also awarded a win.  Because he recorded every out for his team and didn't allow a run, his team could only have won"
+  },
+  {
+    "id": "single",
+    "title": "Single",
+    "summary": "A single occurs when a batter hits the ball and reaches first base without the help of an intervening error or attempt to put out another baserunner. Singles are the most common type of hit in baseball, and they occur in many varieties.  If a batter beats out a bunt or an infield dribbler -- it's a single"
+  },
+  {
+    "id": "sinker",
+    "title": "Sinker",
+    "summary": "A sinker, also commonly referred to as a two-seam fastball, is a type of fastball that has either hard downward movement, strong arm-side movement or both, known for inducing ground balls. The sinker or two-seamer is generally one of a pitcher's fastest pitches, although it doesn't have quite the same velocity as a four-seam fastball.  The sinker is one of the most frequently thrown pitches in baseball, although its popularity has decreased in recent seasons"
+  },
+  {
+    "id": "skill-interactive-earned-run-average",
+    "title": "Skill-interactive Earned Run Average",
+    "summary": "SIERA quantifies a pitcher's performance by trying to eliminate factors the pitcher can't control by himself. But unlike a stat such as xFIP, SIERA considers balls in play and adjusts for the type of ball in play. \nFor example, if a pitcher has a high xFIP but has also induced a high proportion of grounders and pop-ups instead of line drives, his SIERA will be lower than his xFIP"
+  },
+  {
+    "id": "slash-line",
+    "title": "Slash Line",
+    "summary": "Slash line is a colloquial term used to represent a player's batting average, on-base percentage and slugging percentage. Those three stats are often referenced together in baseball media with forward slashes separating them, which is where the term slash line comes from. \nA slash line is presented with a player's batting average first, on-base percentage second and slugging percentage third (AVG/OBP/SLG)"
+  },
+  {
+    "id": "slide-rule",
+    "title": "Slide Rule",
+    "summary": "When sliding into a base in an attempt to break up a double play, a runner has to make a \"bona fide slide. \" Such is defined as the runner making contact with the ground before reaching the base, being able to reach the base with a hand or foot, being able to remain on the base at the completion of the slide (except at home plate) and not changing his path for the purpose of initiating contact with a fielder.  The slide rule prohibits runners from using a \"roll block\" or attempting to initiate contact with the fielder by elevating and kicking his leg above the fielder's knee, throwing his arm or his upper body or grabbing the fielder"
+  },
+  {
+    "id": "slider",
+    "title": "Slider",
+    "summary": "A slider is a breaking pitch that is thrown faster and generally with less overall movement than a curveball. It breaks sharply and at a greater velocity than most other breaking pitches.  The slider and the curveball are sometimes confused because they generally have the same purpose -- to deceive the hitter with spin and movement away from a pitcher's arm-side"
+  },
+  {
+    "id": "slugging-percentage",
+    "title": "Slugging Percentage",
+    "summary": "Slugging percentage represents the total number of bases a player records per at-bat. Unlike on-base percentage, slugging percentage deals only with hits and does not include walks and hit-by-pitches in its equation. \nSlugging percentage differs from batting average in that all hits are not valued equally"
+  },
+  {
+    "id": "slurve",
+    "title": "Slurve",
+    "summary": "A slurve is a breaking pitch that is a hybrid of a slider and a curveball. While a slider is thrown harder with tighter break, and a curveball is thrown slower with loopier break, a slurve is somewhere in between, relying on a combination of both horizontal and vertical movement.  \nWhile the average big league slider will be thrown with a velocity in the mid-80s, and the average curveball in the high 70s, a typical slurve will be in the low 80s"
+  },
+  {
+    "id": "southpaw",
+    "title": "Southpaw",
+    "summary": "A \"southpaw\" is a left-handed pitcher. "
+  },
+  {
+    "id": "spectator-interference",
+    "title": "Spectator Interference",
+    "summary": "In every case of spectator interference with a batted or thrown ball, the ball shall be declared dead and the baserunners can be placed where the umpire determines they would have been without the interference. When a spectator clearly prevents a fielder from catching a fly ball by reaching onto the field of play, the batter shall be ruled out.  But no interference is called if a spectator comes in contact with a batted or thrown ball without reaching onto the field of play -- even if a fielder might have caught the ball had the spectator not been there"
+  },
+  {
+    "id": "spin-rate",
+    "title": "Spin Rate",
+    "summary": "A pitcher's Spin Rate represents the rate of spin on a baseball after it is released. It is measured in revolutions per minute. \nThe amount of spin on a pitch changes its trajectory"
+  },
+  {
+    "id": "split-contract",
+    "title": "Split Contract",
+    "summary": "A split contract calls for a player to earn different salaries in the Majors Leagues and Minor Leagues. On player on a split contract would earn the pro-rated portion of his Major League salary for any time spent on the Major League roster.  That is determined by dividing his Major League salary by 183 (the number of days in the MLB regular season) and multiplying that number by the number of days spent on the Major League roster"
+  },
+  {
+    "id": "splitter",
+    "title": "Splitter",
+    "summary": "Splitters are often referred to as \"split-finger fastballs,\" but because of their break and lower velocity, they don't hold much in common with a typical fastball. As such, Statcast classifies splitters as an offspeed pitch. \nA splitter is thrown with the effort of a fastball, but it will drop sharply as it nears home plate"
+  },
+  {
+    "id": "sprint-speed",
+    "title": "Sprint Speed",
+    "summary": "Introduced during the 2017 season, Sprint Speed is a Statcast metric that aims to more precisely quantify speed by measuring how many feet per second a player runs in his fastest one-second window. In 2018, the metric was updated for hitters/runners to include the top home-to-first times as well as the previously qualified two-base runs, in an attempt to include more useful information and get to a meaningful number more quickly. \nCurrently, the metric includes \"qualified runs\" from these two categories:\n\u2022 Runs of two bases or more on non-homers, excluding runs from second base when an extra-base hit happens"
+  },
+  {
+    "id": "squared-up",
+    "title": "Squared-up Rate",
+    "summary": "A swing\u2019s squared-up rate tells us how much of the highest possible exit velocity available (based on the physics related to the swing speed and pitch speed) a batter was able to obtain \u2013 it is, at its simplest, how much exit velocity did you get as a share of how much exit velocity was possible based on your swing speed and the speed of the pitch. A swing that is 60% squared up, for example, tells you that the batter attained 60% of the maximum possible exit velocity available to him, again based on the speed of the swing and pitch. \nData observation has told us that it\u2019s only possible to attain that maximum possible exit velocity when a ball hits the sweet spot of the bat, approximately 4 to 9 inches from the head of the bat"
+  },
+  {
+    "id": "starting-pitcher",
+    "title": "Starting Pitcher",
+    "summary": "A starting pitcher is the pitcher who begins the game for their team. They typically pitch the majority of innings in a game and are expected to go deeper into games than relievers. Starting pitchers usually have a wider variety of pitches and better stamina than relief pitchers."
+  },
+  {
+    "id": "steamer",
+    "title": "Steamer",
+    "summary": "Steamer is a system of projections developed by Jared Cross -- a high school science teacher in Brooklyn -- and two of his former students, Dash Davidson and Peter Rosenbloom. It is currently used by Fangraphs as its primary projection system for individual players. \nAccording to Steamer's website, the projection system got its name because St"
+  },
+  {
+    "id": "stolen-base",
+    "title": "Stolen Base",
+    "summary": "A stolen base occurs when a baserunner advances by taking a base to which he isn't entitled. This generally occurs when a pitcher is throwing a pitch, but it can also occur while the pitcher still has the ball or is attempting a pickoff, or as the catcher is throwing the ball back to the pitcher. \nA stolen base is not automatically credited when a runner advances during one of the aforementioned scenarios; the official scorer must also determine that the runner had been in attempt of a steal"
+  },
+  {
+    "id": "stolen-base-percentage",
+    "title": "Stolen-base Percentage",
+    "summary": "Stolen-base percentage is determined by the number of steals for a player divided by his total number of attempts. SB% is an essential tool in evaluating base stealers, because the league leaders in stolen bases often get thrown out frequently, too.  In that vein, stolen bases are useful -- but only if a base stealer isn't at a high risk of getting thrown out"
+  },
+  {
+    "id": "strike-zone",
+    "title": "Strike Zone",
+    "summary": "The official strike zone is the area over home plate from the midpoint between a batter's shoulders and the top of the uniform pants -- when the batter is in his stance and prepared to swing at a pitched ball -- and a point just below the kneecap. In order to get a strike call, part of the ball must cross over part of home plate while in the aforementioned area. \nStrikes and balls are called by the home-plate umpire after every pitch has passed the batter, unless the batter makes contact with the baseball (in which case the pitch is automatically a strike)"
+  },
+  {
+    "id": "strikeout",
+    "title": "Strikeout",
+    "summary": "A strikeout occurs when a pitcher throws any combination of three swinging or looking strikes to a hitter. (A foul ball counts as a strike, but it cannot be the third and final strike of the at-bat.  A foul tip, which is caught by the catcher, is considered a third strike"
+  },
+  {
+    "id": "strikeout-rate",
+    "title": "Strikeout Rate",
+    "summary": "Strikeout rate represents the frequency with which a pitcher strikes out hitters, as determined by total strikeouts divided by total batters faced. The K rate leaderboards are generally made up of the game's best pitchers.  However, plenty of pitchers have succeeded with lower strikeout rates, generally because they are able to induce weak contact"
+  },
+  {
+    "id": "strikeout-to-walk-ratio",
+    "title": "Strikeout-to-walk Ratio",
+    "summary": "K/BB ratio tells us how many strikeouts a pitcher records for each walk he allows. The number is found simply by dividing a pitcher's total number of strikeouts by his total number of walks.  It's an essential tool for evaluating pitchers"
+  },
+  {
+    "id": "strikeouts-per-nine-innings",
+    "title": "Strikeouts Per Nine Innings",
+    "summary": "K/9 rate measures how many strikeouts a pitcher averages for every nine innings pitched. It is determined by dividing his strikeout total by his innings pitched total and multiplying the result by nine. \nBecause a strikeout is so straightforward -- with no chance of error or bad luck, like on a ball in play -- a pitcher's K/9 rate reveals a lot about his success"
+  },
+  {
+    "id": "substitutions",
+    "title": "Substitutions",
+    "summary": "Teams are permitted to substitute players any time the ball is dead. The manager must immediately notify the umpire of the switch and substitutes must bat in the replaced player's batting-order position.  Once removed, players are not permitted to return to the game in any capacity"
+  },
+  {
+    "id": "super-two",
+    "title": "Super Two",
+    "summary": "Players typically must accrue three years of Major League service time -- with one year of service time equaling 172 days on the 26-man roster or the Major League injured list -- to become eligible for salary arbitration. Super Two is a designation that allows a select group of players to become eligible for arbitration before reaching three years of service time. \nTo qualify for the Super Two designation, players must rank in the top 22 percent, in terms of service time, among those who have amassed between two and three years in the Majors"
+  },
+  {
+    "id": "suspended-game",
+    "title": "Suspended Game",
+    "summary": "A suspended game is a game that is stopped early and must be completed at a later date from the point of termination, though not all terminated games become suspended games. The most frequent cause of a suspended game is when a regulation game is terminated due to weather, and the game is either tied or in the midst of an inning in which the visiting team has taken the lead.  Other rarer causes for suspended games include a technical malfunction in the stadium that prevents the game from continuing"
+  },
+  {
+    "id": "sweeper",
+    "title": "Sweeper",
+    "summary": "A sweeper is a variant of a slider that has become popular in the Major Leagues over the last few seasons. The main characteristic of a sweeper is a large amount of horizontal movement, as opposed to a traditional slider, which has \"tighter\" break. \nA sweeper tends to be thrown slower than a traditional slider, which gives it more time to \"sweep\" across the strike zone"
+  },
+  {
+    "id": "sweet-spot",
+    "title": "Sweet Spot",
+    "summary": "Colloquially, a player who hits the ball solidly is said to have gotten the \"sweet spot\" of the bat on the ball. The sweet spot classification quantifies that as a batted-ball event with a launch angle ranging from 8 to 32 degrees. \nA player's sweet spot percentage -- or how often he produces a batted-ball event in the launch angle sweet-spot zone of 8-32 degrees -- is presented on Statcast leaderboards under SwSp%"
+  },
+  {
+    "id": "swing-length",
+    "title": "Swing Length",
+    "summary": "Swing length is a metric intended to identify if a batter has a short or long swing. It is calculated in terms of feet the bat traveled during the swing, specifically laid out like this: The total (sum) distance (in feet) traveled by the barrel of the bat in X/Y/Z space, from the start of bat tracking data (generally around 150 ms), up until impact point."
+  },
+  {
+    "id": "sword",
+    "title": "Swords",
+    "summary": "A \u201csword,\u201d as popularized by Rob \u201cthe Pitching Ninja\u201d Friedman, is \u201cwhen a pitcher fools a hitter so badly that he forces a non-competitive swing, one where a batter either regrets his choice or can\u2019t stop himself from taking a hack that looks so ugly it ends up going viral on social media,\u201d as we wrote when introducing the topic in 2024. "
+  },
+  {
+    "id": "szymborski-projection-system",
+    "title": "sZymborski Projection System",
+    "summary": "The sZymborski Projection System (ZiPS) is a baseball projection system created by Dan Szymborski that uses past performance and aging trends to forecast player statistics. It's known for providing detailed projections of player performance, including rate statistics, counting stats, and playing time estimates."
+  },
+  {
+    "id": "texas-leaguer",
+    "title": "Texas Leaguer",
+    "summary": "A \"Texas Leaguer\" is a bloop that falls between an outfielder and an infielder for a hit. "
+  },
+  {
+    "id": "the-hot-stove",
+    "title": "The Hot Stove",
+    "summary": "\"The Hot Stove\" refers to the Major League Baseball offseason, particularly the time around the Winter Meetings when free-agent signings and trades are most prevalent. "
+  },
+  {
+    "id": "third-baseman",
+    "title": "Third Baseman",
+    "summary": "The third baseman is the infielder positioned near third base, often called the 'hot corner' due to hard-hit balls. They need quick reflexes, a strong throwing arm to make the long throw to first base, and the ability to field both bunts and hard-hit grounders."
+  },
+  {
+    "id": "third-base-coach",
+    "title": "Third-base Coach",
+    "summary": "The third-base coach stands in foul territory near third base during their team's offensive innings. They assist baserunners by indicating whether to stop at third or attempt to score, relay signs from the manager to batters and runners, and help position runners taking their lead off third base."
+  },
+  {
+    "id": "thoracic-outlet-syndrome",
+    "title": "Thoracic Outlet Syndrome",
+    "summary": "The thoracic outlet lies at the lower part of the neck, beginning just above and behind the collarbone and extending into the upper arm and chest. Thoracic Outlet Syndrome results when the nerves and blood vessels in this area are compressed, resulting in pain, weakness, fatigue and numbness or tingling in the arm or hand, particularly with activities in which the arm is elevated. \nDuring surgery to correct Thoracic Outlet Syndrome, both the first rib -- the uppermost of the ribs, which is attached to the first thoracic vertebrae at the base of the neck, angles down and connects to the sternum just below the collarbone -- and the scalene muscles are removed to clear space for the nerves in the thoracic outlet"
+  },
+  {
+    "id": "three-true-outcomes",
+    "title": "Three True Outcomes",
+    "summary": "The \"three true outcomes\" in baseball are said to be a home run, a walk or a strikeout due to the fact that none of the three, with the rare exception of an inside-the-park home run or a strikeout with a dropped third strike, involve the defense beyond the pitcher or the catcher. The phrase, which was coined by baseball writer and historian Christina Kahrl, can also be used as an adjective, calling someone a \"three-true-outcomes player. \" Players with well above-average power, walk rates and strikeout tendencies often bear that description"
+  },
+  {
+    "id": "three-batter-minimum",
+    "title": "Three-batter Minimum",
+    "summary": "In an effort to reduce the number of pitching changes and, in turn, cut down the average time per game, MLB instituted a rule change that requires pitchers to either face a minimum of three batters in an appearance or pitch to the end of a half-inning, with exceptions for injuries and illnesses. If a pitcher faces one batter to end an inning, he may be removed, but if he is brought back for a second inning, he must still face two more batters for a total of three. \nPreviously, Rule 5"
+  },
+  {
+    "id": "baserunning",
+    "title": "Throwing Value",
+    "summary": "A Statcast metric designed to use data to evaluate the performance of baserunners and outfielders in taking or preventing extra bases. Based on inputs including runner speed, outfielder throwing arm, runner position on the base paths, and outfielder distance from both ball and bases, an estimated success probability can be created for each opportunity.  With that information available for each play, the player\u2019s actual success rate can be compared to the estimated rate and the cumulative metric can be created"
+  },
+  {
+    "id": "tommy-john-surgery",
+    "title": "Tommy John Surgery",
+    "summary": "Tommy John surgery is a procedure in which a partial or fully torn ulnar collateral ligament on the medial side of the elbow is replaced with a tendon from another part of a patient's body or from a cadaver. The procedure was first performed by Dr.  Frank Jobe on Dodgers pitcher Tommy John in September 1974"
+  },
+  {
+    "id": "tools-of-ignorance",
+    "title": "Tools of Ignorance",
+    "summary": "\"Tools of ignorance\" is a nickname for the catcher's equipment. "
+  },
+  {
+    "id": "tootblan",
+    "title": "TOOTBLAN",
+    "summary": "TOOTBLAN is an acronym that stands for Thrown Out on the Bases Like a Nincompoop. Essentially, the TOOTBLAN describes any non-force out a player makes on the bases, including outs made while attempting to take an extra base, outs on would-be sacrifice flies, pickoffs, double-offs, fielder\u2019s choice outs with an open base, batter and runner interference and getting hit by a batted ball. \nCoined by Cubs blogger Tony Jewell in 2008, the TOOTBLAN was invented to measure the impact poor baserunning has on a player\u2019s on-base percentage and offensive value"
+  },
+  {
+    "id": "total-bases",
+    "title": "Total Bases",
+    "summary": "Total bases refer to the number of bases gained by a batter through his hits. A batter records one total base for a single, two total bases for a double, three total bases for a triple and four total bases for a home run. \nTotal bases are used to determine a player's slugging percentage -- which is total bases divided by at-bats"
+  },
+  {
+    "id": "total-chances",
+    "title": "Total Chances",
+    "summary": "In theory, a defender's total chances represent the number of opportunities he has to record an out. The formula for total chances is: assists plus putouts plus errors. \nThe use of the statistic is almost exclusively limited to its role as the denominator for determining fielding percentage"
+  },
+  {
+    "id": "trade-deadline",
+    "title": "Trade Deadline",
+    "summary": "The Trade Deadline is the last point during the season at which players can be traded from one club to another. The 2024 Trade Deadline falls on July 30 at 6 p. m"
+  },
+  {
+    "id": "trade-waivers-aug-31-deadline",
+    "title": "Trade Waivers & Aug. 31 'Deadline'",
+    "summary": "Before 2019, players could be traded following the Trade Deadline (prior to the 2022-2026 collective bargaining agreement, the Trade Deadline almost always fell on July 31 at 4 p. m.  ET, but the Commissioner's Office now has the flexibility to set the Trade Deadline on a date between July 28 and Aug"
+  },
+  {
+    "id": "triple",
+    "title": "Triple",
+    "summary": "Often called \"the most exciting play in baseball,\" a triple occurs when a batter hits the ball into play and reaches third base without the help of an intervening error or attempt to put out another baserunner. Triples are almost exclusively hit by faster players because Major League defenses are usually able to get the ball back to the infield before a slower runner can attempt to take third base.  Also, triples are more likely to occur on balls hit to the right side of the field, because the throw from right field to third base is tougher than the throw coming from left field to third"
+  },
+  {
+    "id": "triple-play",
+    "title": "Triple Play",
+    "summary": "A triple play occurs when the defending team records three outs on a single defensive play. Triple plays are rare for several reasons.  First off, they can occur only when the batting team has at least two men on base with nobody out"
+  },
+  {
+    "id": "true-earned-run-average",
+    "title": "True Earned Run Average",
+    "summary": "True Earned Run Average, like FIP, attempts to quantify a pitcher's performance based on what he can control. But unlike FIP -- which factors only home runs, strikeouts, walks and HBPs -- tERA also accounts for batted-ball tendencies.  That means pitchers who record mostly ground balls and popups, as opposed to line drives and fly balls, are rewarded for inducing weaker contact"
+  },
+  {
+    "id": "two-way-players",
+    "title": "Two-way Players",
+    "summary": "MLB teams must designate every player on the active roster either as a pitcher or a position player and are limited to carrying 13 pitchers on the active roster (14 pitchers from Sept. 1 through the end of the regular season). \nThose designated as position players are unable to pitch unless it is extra innings or their team is ahead or trailing by more than six runs when they take the mound"
+  },
+  {
+    "id": "ultimate-zone-rating",
+    "title": "Ultimate Zone Rating",
+    "summary": "UZR quantifies a player's entire defensive performance by attempting to measure how many runs a defender saved. It takes into account errors, range, outfield arm and double-play ability.  It differs slightly from DRS (Defensive Runs Saved) in its formula, but the concept is the same"
+  },
+  {
+    "id": "umpire",
+    "title": "Umpire",
+    "summary": "Umpires are responsible for enforcing on-field rules and rendering decisions on judgment calls such as: Whether a batter or baserunner is safe or out, and whether a pitched baseball is a strike or a ball. A regular-season contest will have four umpires: one behind home plate and one stationed near each of the other three bases.  Each umpire makes \"out\" or \"safe\" decisions at his designated base, and the home-plate umpire is responsible for calling balls and strikes on each pitch that is thrown"
+  },
+  {
+    "id": "unearned-run",
+    "title": "Unearned Run",
+    "summary": "An unearned run is any run that scored because of an error or a passed ball. Oftentimes, it is the judgment of the official scorer as to whether a specific run would've scored without the defensive mishap. \nThe purpose of the unearned run is to distinguish which runs a pitcher is at fault for allowing"
+  },
+  {
+    "id": "velocity",
+    "title": "Velocity",
+    "summary": "Velocity, one of the most frequently used tools for evaluating pitchers, represents the maximum speed of a given pitch at any point from its release to the time it crosses home plate. Prior to the advent of Statcast, pitch tracking in every MLB stadium was performed by PITCHf/x.  One way this system differed from Statcast is that it reported the Velocity of each pitch when it was 50 feet from the back tip of home plate, rather than at the release point"
+  },
+  {
+    "id": "vesting-option",
+    "title": "Vesting Option",
+    "summary": "A vesting option is an optional year at the end of the contract that becomes guaranteed if the player reaches a certain performance incentive threshold. Vesting options are typically based on playing time incentives such as plate appearances, innings pitched, games started or games finished.  In most cases, a vesting option that fails to vest can still be exercised as a club option"
+  },
+  {
+    "id": "walk",
+    "title": "Walk",
+    "summary": "A walk (or base on balls) occurs when a pitcher throws four pitches out of the strike zone, none of which are swung at by the hitter. After refraining from swinging at four pitches out of the zone, the batter is awarded first base.  In the scorebook, a walk is denoted by the letters BB"
+  },
+  {
+    "id": "walk-rate",
+    "title": "Walk Rate",
+    "summary": "Walk rate represents the frequency with which a pitcher walks hitters, as determined by total walks divided by total batters faced. It's an important tool for assessing a pitcher's capabilities and perhaps the most important in judging a pitcher's tendency to walk batters. \nObviously, one of a pitcher's primary goals is to avoid putting hitters on base, and by walking hitters, he's doing just that"
+  },
+  {
+    "id": "walk-off",
+    "title": "Walk-off",
+    "summary": "A walk-off occurs when the home team takes the lead in the bottom of the ninth or extra innings. Because the visiting team will not get another turn at-bat, the game ends immediately, with the home team victorious. \nA walk-off can be recorded in many ways, including: a hit, an error, a walk with the bases loaded, a hit by pitch with the bases loaded, a sacrifice fly, an out (with less than two outs in the inning), a wild pitch, a passed ball and a balk"
+  },
+  {
+    "id": "walk-off",
+    "title": "Walk-off",
+    "summary": "Definition not available. "
+  },
+  {
+    "id": "walks-and-hits-per-inning-pitched",
+    "title": "Walks And Hits Per Inning Pitched",
+    "summary": "WHIP is one of the most commonly used statistics for evaluating a pitcher's performance. The statistic shows how well a pitcher has kept runners off the basepaths, one of his main goals.  The formula is simple enough -- it's the sum of a pitcher's walks and hits, divided by his total innings pitched"
+  },
+  {
+    "id": "walks-per-nine-innings",
+    "title": "Walks Per Nine Innings",
+    "summary": "Walks per nine innings tells us how many walks a given pitcher allows per nine innings pitched -- using the formula walks divided by innings times nine. Obviously, a pitcher's goal is to keep opposing batters off the bases -- and a walk does just the opposite of that.  If he allows a ball in play, he at least puts the outcome in the hands of his defense -- and luck"
+  },
+  {
+    "id": "warmup-pitches",
+    "title": "Warmup Pitches",
+    "summary": "When taking their position at the beginning of an inning or when relieving another pitcher, pitchers are permitted to throw as many warmup pitches as they want within the countdown parameters set forth by Major League Baseball. The time between innings is 2 minutes for both local broadcasts and nationally televised games in the regular season and 2 minutes, 55 seconds for postseason games.  The umpire's signal for the final warmup pitch comes at the 25-second mark and the pitcher must throw it before the clock hits 20"
+  },
+  {
+    "id": "weighted-on-base-average",
+    "title": "Weighted On-base Average",
+    "summary": "wOBA is a version of on-base percentage that accounts for how a player reached base -- instead of simply considering whether a player reached base. The value for each method of reaching base is determined by how much that event is worth in relation to projected runs scored (example: a double is worth more than a single). \nFor instance: In 2014, a home run was worth 2"
+  },
+  {
+    "id": "weighted-runs-above-average",
+    "title": "Weighted Runs Above Average",
+    "summary": "wRAA measures how many runs a hitter contributes, compared with an average player -- so a player with a 0 wRAA would be considered league average, offensively. It's calculated by finding the difference in the number of runs contributed between a player and the league average (which is determined by the league average wOBA). \nBecause wRAA uses wOBA to determine how many runs a player is worth, a player with an above-average wOBA will have an above-average wRAA"
+  },
+  {
+    "id": "weighted-runs-created-plus",
+    "title": "Weighted Runs Created Plus",
+    "summary": "wRC+ takes the statistic Runs Created and adjusts that number to account for important external factors -- like ballpark or era. It's adjusted, so a wRC+ of 100 is league average and 150 would be 50 percent above league average. \nFor example, a player who plays his home games at hitter-friendly Coors Field will have a lower wRC+ than a player who posts identical stats at pitcher-friendly Oakland Coliseum"
+  },
+  {
+    "id": "wild-pitch",
+    "title": "Wild Pitch",
+    "summary": "A pitcher is charged with a wild pitch when his pitch is so errant that the catcher is unable to control it and, as a result, baserunner(s) advance. (This is an important stipulation.  No matter how poor the pitch, a pitcher is only charged with a WP if at least one runner moves up a base, and he cannot be charged with a wild pitch if no one is on base -- unless it allows the batter to reach base on a third strike"
+  },
+  {
+    "id": "win",
+    "title": "Win",
+    "summary": "A pitcher receives a win when he is the pitcher of record when his team takes the lead for good -- with a couple rare exceptions. First, a starting pitcher must pitch at least five innings (in a traditional game of nine innings or longer) to qualify for the win.  If he does not, the official scorer awards the win to the most effective relief pitcher"
+  },
+  {
+    "id": "win-expectancy",
+    "title": "Win Expectancy",
+    "summary": "Win Expectancy (WE), otherwise known as Win Probability, indicates the chance a team has to win a particular game at a specific point in that game. Expressed as a percentage, Win Expectancy is calculated by comparing the current game situation -- with the score, inning, number of outs, men on base and run environment all considered -- to similar historical situations.  More specifically, the percentage is derived from the number of teams that faced a comparable situation in the past and went on to win the game"
+  },
+  {
+    "id": "win-probability-added",
+    "title": "Win Probability Added",
+    "summary": "WPA quantifies the percent change in a team's chances of winning from one event to the next. It does so by measuring the importance of a given plate appearance in the context of the game.  For instance: a homer in a one-run game is worth more than a homer in a blowout"
+  },
+  {
+    "id": "windup-position",
+    "title": "Windup Position",
+    "summary": "Pitchers are permitted to use two legal pitching deliveries -- the windup position and the set position -- and either position may be used at any time. A pitcher is considered to be in the windup position when he puts his pivot foot on the pitching rubber and has both shoulders facing the batter to some degree.  When starting his delivery from the windup position, a pitcher has the option to take a step back or to the side with his free foot"
+  },
+  {
+    "id": "winning-percentage",
+    "title": "Winning Percentage",
+    "summary": "A pitcher's winning percentage is calculated by dividing his total number of wins by his total number of decisions (wins plus losses). Pitchers who get the win or the loss are known as the \"pitchers of record\" in a game, and winning percentage indicates how frequently a pitcher wins when he is the pitcher of record."
+  },
+  {
+    "id": "wins-above-replacement",
+    "title": "Wins Above Replacement",
+    "summary": "WAR measures a player's value in all facets of the game by deciphering how many more wins he's worth than a replacement-level player at his same position (e. g. , a Minor League replacement or a readily available fill-in free agent)"
+  }
+]
