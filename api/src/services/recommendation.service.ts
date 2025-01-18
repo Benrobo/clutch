@@ -55,6 +55,10 @@ export interface HighlightItem {
     date: string;
     status: string;
   };
+  transcript: {
+    original: any;
+    translated: any;
+  };
 }
 
 export default class RecommendationService {
@@ -730,6 +734,10 @@ export default class RecommendationService {
         date: playback.highlight.game.date,
         status: playback.highlight.game.status,
       },
+      transcript: {
+        original: playback.transcript,
+        translated: playback.translated_transcript,
+      },
     }));
   }
 
@@ -803,6 +811,10 @@ export default class RecommendationService {
           date: highlight.game.date,
           status: highlight.game.status,
         },
+        transcript: {
+          original: playback?.transcript,
+          translated: playback?.translated_transcript,
+        },
       };
     });
   }
@@ -871,6 +883,10 @@ export default class RecommendationService {
             },
             date: highlight.game.date,
             status: highlight.game.status,
+          },
+          transcript: {
+            original: playback?.transcript,
+            translated: playback?.translated_transcript,
           },
         });
       }
