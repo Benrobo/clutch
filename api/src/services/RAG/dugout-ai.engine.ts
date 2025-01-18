@@ -44,9 +44,12 @@ export default class DugoutAIEngine {
 
           try {
             const parsedHint = JSON.parse(cleanedHint);
-            if (!parsedHint?.suggested_letters?.length || !parsedHint?.tip) {
-              throw new Error("Invalid hint format");
+
+            // Updated validation: Only check for `hint` and `tip`
+            if (!parsedHint?.hint || !parsedHint?.tip) {
+              throw new Error("Invalid hint format: Missing 'hint' or 'tip'");
             }
+
             return parsedHint;
           } catch (parseError: any) {
             console.error("Cleaned string:", cleanedHint);
