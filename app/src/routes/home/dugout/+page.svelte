@@ -20,12 +20,12 @@
 	import Quiz from '@/modules/dugout/components/Quiz/index.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { ArrowLeft, MoveLeft } from 'lucide-svelte';
+	import { MoveLeft } from 'lucide-svelte';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
+	import toast from 'svelte-french-toast';
 	dayjs.extend(relativeTime);
 
-	$: globalStore = useGlobalStore();
 	$: dugoutStore = useDugoutStore();
 
 	// Get game from query parameter
@@ -134,6 +134,8 @@
 	const handleGameClick = (game: any) => {
 		if (game.available) {
 			goto(`/home/dugout?game=${game.id}`);
+		} else {
+			toast.error('Game not available yet');
 		}
 	};
 
