@@ -241,6 +241,135 @@ export const contentModeratorPrompt = (props: ContentModeratorPromptProps) => {
   return prompt;
 };
 
+// export const fourPicOneWordHintPrompt = (props: {
+//   selectedLetters: string[];
+//   secretWord: string;
+// }) => {
+//   const { selectedLetters, secretWord } = props;
+
+//   const prompt = new LLMPromptBuilder()
+//     // Define global context
+//     .defineContext({
+//       gameType: "Word Puzzle",
+//       audience: "12-year-old kids",
+//       tone: "Friendly, fun, and encouraging",
+//     })
+
+//     // Add high-level instruction
+//     .addInstruction(
+//       "You give simple, fun hints for a word puzzle that feel like part of a guessing game. For multi-word answers, if the first word is correct, ONLY provide hints for the remaining word(s). Use easy words, avoid hard language, and never reveal the answer directly. Do not begin the hint with conversational language like 'Okay' or 'Let's start.' Focus on the hint. Avoid using markdown syntax or any special formatting like asterisks, backticks, or hashtags. Based on how difficult the word is to guess, sometimes provide a close hint on the word or better still provide the word itself.",
+//       "high"
+//     )
+
+//     // Add rules
+//     .addRule(
+//       "1. For multi-word answers, ALWAYS check if first word is correct first.\n" +
+//         "2. If first word is correct, ALL hints and suggestions must be about remaining word(s) only.\n" +
+//         "3. Use simple, fun language for kids.\n" +
+//         "4. Suggest letters based on the CURRENT target word length:\n" +
+//         "   - Long (10+): 6 letters.\n" +
+//         "   - Medium (5-9): 5 letters.\n" +
+//         "   - Short (1-4): 4 letters.\n" +
+//         "5. Highlight important words or phrases in the hint.\n" +
+//         "6. Never suggest moving a letter unless certain it's correct.\n" +
+//         "7. Avoid using markdown syntax or any special formatting like asterisks, backticks, or hashtags."
+//     )
+
+//     // Add context about the game state
+//     .addCustomBlock(
+//       "game_state",
+//       JSON.stringify({
+//         secretWord,
+//         selectedLetters: selectedLetters.join(""),
+//       })
+//     )
+
+//     // Add multi-word management block
+//     .addCustomBlock(
+//       "multi_word_management",
+//       `Multi-word Processing Steps:
+// 1. Word Separation
+//    - Split secret word on spaces: ${secretWord.split(" ")}
+//    - First word: ${secretWord.split(" ")[0]}
+//    - Remaining word(s): ${secretWord.split(" ").slice(1).join(" ")}
+
+// 2. First Word Validation
+//    - Compare selected letters against first word only
+//    - Mark as complete if all letters match in correct positions
+//    - Otherwise, continue providing hints for complete phrase
+
+// 3. Target Word Selection
+//    - If first word complete: focus ALL hints on remaining word(s)
+//    - If first word incomplete: treat as single compound target
+
+// 4. Letter Analysis for Current Target
+//    - When first word complete:
+//      * Only analyze letters needed for remaining word(s)
+//      * Ignore correctly placed letters from solved word
+//    - When first word incomplete:
+//      * Analyze all letters as one target
+
+// 5. Response Adjustment
+//    - Hints: Only about current target word(s)
+//    - Letters: Only suggest from current target
+//    - Tips: Only provide feedback about current target`
+//     )
+
+//     // Add analysis custom block
+//     .addCustomBlock(
+//       "analysis",
+//       `- Secret Word: ${secretWord.replace(/\s+/g, "").toUpperCase()}
+// - Compare each selected letter to see if it is:
+//   1. In the word and in the correct position
+//   2. In the word but misplaced
+//   3. Not in the word
+// - For multi-word answers:
+//   1. First check if first word is complete
+//   2. If complete, analyze ONLY remaining word(s)`
+//     )
+
+//     // Add detailed instructions for hint generation
+//     .addInstruction(
+//       "Step 1: If the secret word has spaces, check if the first word is already correct.\n" +
+//         "Step 2: If the first word is correct, provide a hint for the next word without any feedback on the first word.\n" +
+//         "Step 3: Analyze selectedLetters to mark them as correct, misplaced, or incorrect.\n" +
+//         "Step 4: Generate a fun hint for the current target word, using relatable examples.\n" +
+//         "Step 5: Suggest key letters (prefixes, repeated letters, etc.) for current target word only.\n" +
+//         "Step 6: Provide a tip on how to use the letters with feedback on selectedLetters.\n"
+//     )
+
+//     // Add response format
+//     .addCustomBlock(
+//       "response_format",
+//       `{
+//   "hint": "", // If first word solved, hint ONLY about remaining word(s). Give a simple and fun hint that a 12-year-old can understand.
+//   "highlight_words": [], // Highlight easy words or phrases in the hint.
+//   "suggested_letters": [], // Suggest letters based on the current target word length.
+//   "tip": "" // Give a simple tip on how to use the suggested letters. Include feedback on suggested_letters if needed, separated by \\n\\n.
+// }`
+//     )
+
+//     // Add tip examples
+//     .addCustomBlock(
+//       "tip_examples",
+//       `Example Tips for Multi-word Answers:
+// 1. When first word is solved:
+//    "Great work on SAVE! The second word is a math term - try using G and E near the end."
+//    "SAVE is correct! For the next word, look for a common ending like -AGE."
+//    "You've got SAVE! Now think about numbers and math - the letter T appears twice."
+
+// 2. When checking selected letters for remaining word:
+//    - If letter appears: "The E you tried is definitely in the second word!"
+//    - If letter misplaced: "T is in the second word, but try it in a different spot."
+//    - If multiple letters found: "Both E and T appear in the second word - keep going!"
+//    - If letter not in word: "Focus on forming a math term - try some different letters."`
+//     )
+
+//     // Compose the final prompt
+//     .compose();
+//   return prompt;
+// };
+
 export const fourPicOneWordHintPrompt = (props: {
   selectedLetters: string[];
   secretWord: string;
@@ -257,22 +386,21 @@ export const fourPicOneWordHintPrompt = (props: {
 
     // Add high-level instruction
     .addInstruction(
-      "You give simple, fun hints for a word puzzle that feel like part of a guessing game. For multi-word answers, if the first word is correct, ONLY provide hints for the remaining word(s). Use easy words, avoid hard language, and never reveal the answer directly. Do not begin the hint with conversational language like 'Okay' or 'Let's start.' Focus on the hint. Avoid using markdown syntax or any special formatting like asterisks, backticks, or hashtags.",
+      `You are helping solve a word puzzle. Provide step-by-step hints based on the level of guessed words:
+1. If the player has guessed the first word correctly, focus on the next word.
+2. If the player has guessed part of a word correctly, provide the next part of the word.
+3. For hard words, suggest the next few letters or syllables to guide the player.
+4. Never reveal the entire answer directly. Use simple, kid-friendly language. Avoid markdown or special formatting.`,
       "high"
     )
 
     // Add rules
     .addRule(
-      "1. For multi-word answers, ALWAYS check if first word is correct first.\n" +
-        "2. If first word is correct, ALL hints and suggestions must be about remaining word(s) only.\n" +
-        "3. Use simple, fun language for kids.\n" +
-        "4. Suggest letters based on the CURRENT target word length:\n" +
-        "   - Long (10+): 6 letters.\n" +
-        "   - Medium (5-9): 5 letters.\n" +
-        "   - Short (1-4): 4 letters.\n" +
-        "5. Highlight important words or phrases in the hint.\n" +
-        "6. Never suggest moving a letter unless certain it's correct.\n" +
-        "7. Avoid using markdown syntax or any special formatting like asterisks, backticks, or hashtags."
+      `1. Analyze the secret word and the selectedLetters to determine what has been guessed correctly.
+2. If the first word is fully guessed, focus ALL hints on the next word.
+3. If part of a word is guessed, provide the next few letters or syllables.
+4. For hard words, break the word into smaller parts (e.g., "pro-bab-ility").
+5. Never use markdown or special formatting.`
     )
 
     // Add context about the game state
@@ -284,89 +412,44 @@ export const fourPicOneWordHintPrompt = (props: {
       })
     )
 
-    // Add multi-word management block
-    .addCustomBlock(
-      "multi_word_management",
-      `Multi-word Processing Steps:
-1. Word Separation
-   - Split secret word on spaces: ${secretWord.split(" ")}
-   - First word: ${secretWord.split(" ")[0]}
-   - Remaining word(s): ${secretWord.split(" ").slice(1).join(" ")}
-
-2. First Word Validation
-   - Compare selected letters against first word only
-   - Mark as complete if all letters match in correct positions
-   - Otherwise, continue providing hints for complete phrase
-
-3. Target Word Selection
-   - If first word complete: focus ALL hints on remaining word(s)
-   - If first word incomplete: treat as single compound target
-
-4. Letter Analysis for Current Target
-   - When first word complete:
-     * Only analyze letters needed for remaining word(s)
-     * Ignore correctly placed letters from solved word
-   - When first word incomplete:
-     * Analyze all letters as one target
-
-5. Response Adjustment
-   - Hints: Only about current target word(s)
-   - Letters: Only suggest from current target
-   - Tips: Only provide feedback about current target`
-    )
-
-    // Add analysis custom block
-    .addCustomBlock(
-      "analysis",
-      `- Secret Word: ${secretWord.replace(/\s+/g, "").toUpperCase()}
-- Compare each selected letter to see if it is:
-  1. In the word and in the correct position
-  2. In the word but misplaced
-  3. Not in the word
-- For multi-word answers:
-  1. First check if first word is complete
-  2. If complete, analyze ONLY remaining word(s)`
-    )
-
-    // Add detailed instructions for hint generation
-    .addInstruction(
-      "Step 1: If the secret word has spaces, check if the first word is already correct.\n" +
-        "Step 2: If the first word is correct, provide a hint for the next word without any feedback on the first word.\n" +
-        "Step 3: Analyze selectedLetters to mark them as correct, misplaced, or incorrect.\n" +
-        "Step 4: Generate a fun hint for the current target word, using relatable examples.\n" +
-        "Step 5: Suggest key letters (prefixes, repeated letters, etc.) for current target word only.\n" +
-        "Step 6: Provide a tip on how to use the letters with feedback on selectedLetters."
-    )
-
     // Add response format
     .addCustomBlock(
       "response_format",
       `{
-  "hint": "", // If first word solved, hint ONLY about remaining word(s). Give a simple and fun hint that a 12-year-old can understand.
-  "highlight_words": [], // Highlight easy words or phrases in the hint.
-  "suggested_letters": [], // Suggest letters based on the current target word length.
-  "tip": "" // Give a simple tip on how to use the suggested letters. Include feedback on suggested_letters if needed, separated by \\n\\n.
+  "hint": "", // A step-by-step hint based on the level of guessed words.
+  "suggested_letters": [], // Suggest the next few letters to focus on.
+  "tip": "" // Provide a tip on how to use the suggested letters or the hint.
 }`
     )
 
-    // Add tip examples
+    // Add examples
     .addCustomBlock(
-      "tip_examples",
-      `Example Tips for Multi-word Answers:
-1. When first word is solved:
-   "Great work on SAVE! The second word is a math term - try using G and E near the end."
-   "SAVE is correct! For the next word, look for a common ending like -AGE."
-   "You've got SAVE! Now think about numbers and math - the letter T appears twice."
+      "examples",
+      `Example 1:
+- Secret Word: "win probability"
+- Guessed: "win"
+- Hint: "The next word starts with 'pro.'"
+- Suggested Letters: ["P", "R", "O"]
+- Tip: "Focus on the next word - it starts with 'PRO.'"
 
-2. When checking selected letters for remaining word:
-   - If letter appears: "The E you tried is definitely in the second word!"
-   - If letter misplaced: "T is in the second word, but try it in a different spot."
-   - If multiple letters found: "Both E and T appear in the second word - keep going!"
-   - If letter not in word: "Focus on forming a math term - try some different letters."`
+Example 2:
+- Secret Word: "slugging percentage"
+- Guessed: "slugging"
+- Hint: "The next word starts with 'per.'"
+- Suggested Letters: ["P", "E", "R"]
+- Tip: "The next word starts with 'PER' and is related to math."
+
+Example 3:
+- Secret Word: "apple pie"
+- Guessed: "apple"
+- Hint: "The next word starts with 'pi.'"
+- Suggested Letters: ["P", "I"]
+- Tip: "Think of a dessert that starts with 'PI.'"`
     )
 
     // Compose the final prompt
     .compose();
+
   return prompt;
 };
 
