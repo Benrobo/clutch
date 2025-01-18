@@ -762,7 +762,7 @@ export default class RecommendationService {
         gameId: highlight.game_id,
         createdAt: highlight.created_at,
         likes: playback?.likes ?? 0,
-        youLiked: playback?.liked_by.length > 0 ?? false,
+        youLiked: playback?.liked_by.length > 0,
         views: playback?.views ?? 0,
         thumbnail: {
           main: playback?.thumbnail ?? null,
