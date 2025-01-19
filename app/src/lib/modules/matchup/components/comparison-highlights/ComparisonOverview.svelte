@@ -15,7 +15,7 @@
 		>
 			Comparison Highlights
 		</span>
-		<h1 class="text-[4em] leading-none font-normal font-recoleta text-white-100">
+		<h1 class="text-[4em] leading-none font-normal font-garamond text-white-100">
 			Player Comparison Highlights
 		</h1>
 		<p class="text-sm font-light font-poppins text-white-200">
