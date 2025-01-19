@@ -17,9 +17,7 @@
 </script>
 
 <Flex className="w-full h-screen items-center justify-center px-10">
-	<div
-		class="w-full h-auto bg-dark-104 border-[1px] border-white-400/30 pt-10 py-10 rounded-xl flex flex-col items-center justify-center"
-	>
+	<div class="w-full h-auto pt-10 py-10 rounded-xl flex flex-col items-center justify-center">
 		<img
 			src={$authStore?.user?.avatar}
 			class="w-[150px] h-[150px] rounded-full"
