@@ -28,7 +28,7 @@
 	$: videoElement;
 	let containerRef: HTMLDivElement;
 	let observer: IntersectionObserver;
-	let muted = false;
+	let muted = true;
 	let isTranscriptAvailable = false;
 	let showVideoSettings: boolean;
 	let selectedSubtitleLanguage: keyof typeof SUPPORTED_PLAYBACK_SUBTITLE_LANGUAGES_MAP;
