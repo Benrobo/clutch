@@ -46,7 +46,7 @@
 		>
 			<div class="flex flex-row flex-center gap-2">
 				<Lightbulb size={20} class="text-white-100" />
-				<h1 class="text-white-100 text-xl font-recoleta font-normal">Spotlight</h1>
+				<h1 class="text-white-100 text-xl font-garamond font-normal">Spotlight</h1>
 			</div>
 		</Flex>
 
