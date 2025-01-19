@@ -24,7 +24,7 @@ export default class AuthController {
 
       if (!tokens || !tokens.id_token) {
         // redirect to client with error param
-        c.redirect(`${env.CLIENT_URL}/auth?error=google_auth_failed`);
+        c.redirect(`${env.CLIENT_URL}/?error=google_auth_failed`);
         console.log("Google Auth failed");
         return;
       }
@@ -37,7 +37,7 @@ export default class AuthController {
 
       if (!email) {
         // redirect to client with error param
-        c.redirect(`${env.CLIENT_URL}/auth?error=email_not_found`);
+        c.redirect(`${env.CLIENT_URL}/?error=email_not_found`);
         console.log("Email not found in Google Auth response");
         return;
       }
@@ -91,7 +91,7 @@ export default class AuthController {
       const msg = e.message || "Google Auth failed";
       // redirect to client with error param
       return c.redirect(
-        `${env.CLIENT_URL}/auth?error=google_auth_failed&msg=${msg}`
+        `${env.CLIENT_URL}/?error=google_auth_failed&msg=${msg}`
       );
     }
   }
