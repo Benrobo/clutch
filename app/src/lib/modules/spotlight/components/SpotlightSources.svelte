@@ -56,7 +56,7 @@
 	>
 		<Flex className="w-auto flex-row">
 			<Pickaxe size={18} class="stroke-white-200" />
-			<h1 class="text-white-200 font-recoleta font-normal text-md">Sources</h1>
+			<h1 class="text-white-200 font-garamond font-normal text-md">Sources</h1>
 		</Flex>
 
 		<button
