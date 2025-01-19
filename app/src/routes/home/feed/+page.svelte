@@ -406,7 +406,7 @@
 					</p>
 				</Flex>
 
-				<h1 class="text-dark-106/30 font-recoleta font-bold text-[2em]">Vs</h1>
+				<h1 class="text-dark-106/30 font-garamond font-bold text-[2em]">Vs</h1>
 
 				<Flex className={'flex-col items-center justify-center text-center'}>
 					<img
