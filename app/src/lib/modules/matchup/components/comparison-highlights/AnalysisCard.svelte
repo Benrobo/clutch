@@ -54,7 +54,7 @@
 					>
 						{stat.value}
 					</span>
-					<span class="text-[12px] md:text-md text-dark-100 font-recoleta leading-none">
+					<span class="text-[12px] md:text-md text-dark-100 font-garamond leading-none">
 						{stat.key}
 					</span>
 				</div>
