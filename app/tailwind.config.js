@@ -20,13 +20,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				recoleta: ['Recoleta', 'sans-serif'],
-				'recoleta-alt': ['Recoleta-Alt', 'sans-serif'],
 				poppins: ['Poppins', 'sans-serif'],
 				jetbrains: ['JetBrains Mono', 'monospace'],
 				brunoace: ['Bruno Ace', 'system-ui'],
 				montserrat: ['Montserrat Variable', 'sans-serif'],
-				'recoleta-bold': ['Recoleta-Bold', 'sans-serif'],
 				'bruceforever': ['BruceForever', 'sans-serif'],
 				'cyber': ['Cyber', 'sans-serif'],
 				'shiny': ['Shiny', 'sans-serif'],
