@@ -15,7 +15,7 @@
 		{#if sources && sources.length > 0}
 			<Flex className="w-full h-auto flex-row items-center">
 				<Pickaxe size={18} class="stroke-white-200" />
-				<h1 class="text-white-200 font-recoleta font-normal text-md">Sources</h1>
+				<h1 class="text-white-200 font-garamond font-normal text-md">Sources</h1>
 			</Flex>
 			<div
 				class="w-fit h-auto flex flex-row items-start justify-start gap-3 overflow-x-hidden mt-2 hideScrollBar2 whitespace-nowrap relative"
@@ -30,7 +30,7 @@
 							class="w-[20px] h-[20px] rounded-full bg-white-100"
 							alt="favicon"
 						/>
-						<h1 class="text-white-100 font-recoleta font-normal text-sm">{src?.description}</h1>
+						<h1 class="text-white-100 font-garamond font-normal text-sm">{src?.description}</h1>
 					</Flex>
 					<Flex className="w-auto h-auto flex-col items-end">
 						<img src={src?.image} class="w-[250px] rounded-md" alt="source" />
@@ -45,7 +45,7 @@
 								class="w-[17px] h-[17px] rounded-full bg-white-100"
 								alt="favicon"
 							/>
-							<h1 class="text-white-300 font-recoleta font-normal text-[12px]">
+							<h1 class="text-white-300 font-garamond font-normal text-[12px]">
 								{src?.domain}
 							</h1>
 						</Flex>
@@ -61,7 +61,7 @@
 			<span class="p-1 rounded-full bg-dark-106">
 				<Logo size={18} className="stroke-red-302 text-red-302" />
 			</span>
-			<h1 class="text-white-200 font-recoleta font-normal text-lg">Answer</h1>
+			<h1 class="text-white-200 font-garamond font-normal text-lg">Answer</h1>
 		</Flex>
 
 		<!-- answer content -->
