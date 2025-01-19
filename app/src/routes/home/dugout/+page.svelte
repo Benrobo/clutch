@@ -151,6 +151,11 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Clutch - Dugout</title>
+	<meta name="description" content="Enagage in fun activities baseball games." />
+</svelte:head>
+
 {#if !gameId}
 	<Flex
 		className="w-full h-screen relative flex flex-col items-start justify-start gap-4 overflow-hidden bg-dark-103"
