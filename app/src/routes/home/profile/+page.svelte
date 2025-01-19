@@ -16,6 +16,11 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Clutch - Profile</title>
+	<meta name="description" content="User profile" />
+</svelte:head>
+
 <Flex className="w-full h-screen items-center justify-center px-10">
 	<div class="w-full h-auto pt-10 py-10 rounded-xl flex flex-col items-center justify-center">
 		<img
