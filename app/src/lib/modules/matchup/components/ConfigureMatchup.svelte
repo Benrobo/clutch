@@ -37,7 +37,7 @@
 					}}
 				>
 					<img src={player?.profilePicture} alt={player?.fullName} class="w-5 h-5 rounded-full" />
-					<span class="text-white-100 text-sm font-semibold font-recoleta mr-1">
+					<span class="text-white-100 text-sm font-semibold font-garamond mr-1">
 						{player?.fullName}
 					</span>
 					<button
