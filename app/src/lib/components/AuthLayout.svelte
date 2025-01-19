@@ -22,17 +22,17 @@
 				isLoading: false
 			}));
 
-			const authPaths = ['/auth', '/app/auth'];
-			if (authPaths.includes($page.url.pathname)) {
+			const homePagePaths = ['/', '/app'];
+			if (homePagePaths.includes($page.url.pathname)) {
 				goto('/home/feed');
 			}
 		},
 		onError: async (error: any) => {
 			initialLoading = false;
 			const err = error?.response?.data as BaseResponse<null>;
-			const authPaths = ['/auth'];
+			const homePagePaths = ['/', '/app'];
 			if (
-				(!authPaths.includes($page.url.pathname) && err?.message === 'Unauthorized') ||
+				(!homePagePaths.includes($page.url.pathname) && err?.message === 'Unauthorized') ||
 				err?.message === 'INTERNAL SERVER ERROR'
 			) {
 				toast.error('Something went wrong.');
