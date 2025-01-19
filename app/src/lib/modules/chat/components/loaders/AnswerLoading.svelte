@@ -8,7 +8,7 @@
 		<span class="p-1 rounded-full bg-dark-106">
 			<Logo size={18} className="stroke-red-302 text-red-302" />
 		</span>
-		<h1 class="text-white-200 font-recoleta font-normal text-lg">Answer</h1>
+		<h1 class="text-white-200 font-garamond font-normal text-lg">Answer</h1>
 	</Flex>
 
 	<!-- answer content loader -->
