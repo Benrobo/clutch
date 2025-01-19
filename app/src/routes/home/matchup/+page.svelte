@@ -275,6 +275,11 @@
 	afterUpdate(() => {});
 </script>
 
+<svelte:head>
+	<title>Clutch - Matchup</title>
+	<meta name="description" content="Compare players stats" />
+</svelte:head>
+
 <div class="w-full h-screen mx-auto flex flex-col items-center justify-center bg-dark-103">
 	<div class="w-full h-full max-w-[678px] mx-auto relative">
 		<!-- header -->
