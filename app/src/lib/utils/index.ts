@@ -181,7 +181,7 @@ export const numberToCurrency = (num: number, currency?: string) => {
 
 export const logoutClient = async () => {
   await logout();
-  window.location.href = "/auth";
+  window.location.href = "/";
 };
 
 export const splitIntoParagraphs = (text: string): string[] => {
