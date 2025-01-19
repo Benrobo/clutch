@@ -1,0 +1,20 @@
+{
+	"id": "clutch-app",
+	"name": "Clutch",
+	"short_name": "Clutch",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "any",
+	"theme_color": "#222222",
+	"background_color": "#222222",
+	"dir": "ltr",
+	"lang": "en",
+	"icons": [
+		{
+			"src": "/favicon.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}
