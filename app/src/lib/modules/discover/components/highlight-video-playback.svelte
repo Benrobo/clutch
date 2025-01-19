@@ -238,7 +238,7 @@
 		>
 			{#if currentCaption && showCaption}
 				<span
-					class="text-md px-2 py-1 rounded-sm bg-dark-100/60 backdrop-blur-md text-center font-poppins"
+					class="text-sm px-2 py-1 rounded-sm bg-dark-100/60 backdrop-blur-md text-center font-poppins"
 				>
 					{currentCaption}
 				</span>
@@ -397,10 +397,14 @@
 				<!-- {highlight?.game?.home_team?.name} & {highlight?.game?.away_team?.name} -->
 				{highlight?.playback?.title}
 			</h1>
-			<span class="text-white-100 font-poppins font-normal text-xs">
-				{(highlight?.playback?.description ?? '')?.length > MAX_DESCRIPTION_LENGTH
-					? highlight?.playback?.description?.slice(0, MAX_DESCRIPTION_LENGTH) + '.......'
-					: highlight?.playback?.description}
+			<span
+				class={cn(
+					'text-white-100 font-poppins font-normal text-xs',
+					(highlight?.playback?.description ?? '')?.length > MAX_DESCRIPTION_LENGTH &&
+						'line-clamp-2'
+				)}
+			>
+				{highlight?.playback?.description}
 			</span>
 		</Flex>
 	</div>
