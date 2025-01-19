@@ -30,6 +30,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Clutch</title>
+	<meta name="description" content="Baseball Reimagined" />
+</svelte:head>
+
 <AuthLayout>
 	<Flex
 		className="w-full max-w-[678px] mx-auto h-screen flex-col items-start justify-between gap-0"
