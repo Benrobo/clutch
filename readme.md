@@ -1,6 +1,4 @@
-# Clutch
-
-## Baseball Re-imagined
+# Clutch (Baseball Re-imagined)
 
 [Read the full development journey here](journey.md)
 
