@@ -2,7 +2,7 @@
 
 ### (4-pics-one-word)
 
-Here's what I think the structure to look like:
+Here's what I think the structure should look like:
 
 ### Base Structure
 
