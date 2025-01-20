@@ -1,6 +1,6 @@
 # Clutch
 
-> Baseball Re-imagined
+## Baseball Re-imagined
 
 [Read the full development journey here](journey.md)
 
