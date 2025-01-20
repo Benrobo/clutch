@@ -9,6 +9,7 @@ import { htmlToMarkdown } from "../helpers/turndown.js";
 import { checkDurationConstraints } from "../lib/utils.js";
 import retry from "async-retry";
 import shortUUID from "short-uuid";
+import { IN_DEV } from "../config/env.js";
 
 const SCHEDULE_PROCESSING_DATES_KEY = "mlb-schedule-processing-dates";
 const mlbApi = new MLBAPIHelper({
@@ -21,11 +22,14 @@ export const generateGameHighlightsMetadata = inngestClient.createFunction(
   { id: "generate-game-highlights-metadata" },
   { event: "generate-game-highlights-metadata" },
   async () => {
-    console.log(`\n🔃 Starting MLB game highlights generation...`);
-    // await processMLBSchedule();
+    if (IN_DEV) {
+      console.log(`\n🔃 Starting MLB game highlights generation...`);
+      // await processMLBSchedule();
+    }
   }
 );
 
+// DEBUG
 // processMLBSchedule();
 
 async function getProcessingDates(): Promise<string[]> {
@@ -118,6 +122,12 @@ async function processMLBSchedule() {
 
           // Successfully processed - remove from processing list
           await removeProcessingDate(nextScheduleDate);
+
+          // trigger content source generation
+          await inngestClient.send({
+            name: "generate-content-source",
+            data: {},
+          });
         } catch (error) {
           // If there's an error, remove the date from processing list
           await removeProcessingDate(nextScheduleDate);
