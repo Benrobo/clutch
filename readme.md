@@ -12,31 +12,42 @@ Ever wished baseball was easier to follow and more fun to watch? Clutch brings y
 
 ### Smart Highlight Feed
 
+![image](tmp/screenshots/2.png)
+
 Think TikTok, but for baseball highlights. As you scroll through:
 
 - Videos play automatically and smoothly
 - Content is personalized based on your favorite teams
 - Watch highlights in multiple languages (English, Spanish, Japanese)
 - Each highlight has a bottom sheet (swipe up!) that shows:
-  - What actually happened in normal human words
-  - Key stats that matter for this play
-  - Baseball terms are highlighted - tap them for quick explanations
-  - Both teams' perspective on the play
-  - Similar plays you might like
+
+![image](tmp/screenshots/3.png)
+
+- What actually happened in normal human words
+- Key stats that matter for this play
+- Baseball terms are highlighted - tap them for quick explanations
+- Both teams' perspective on the play
 - Ask the AI anything about the highlight:
-  - Get answers with source citations
-  - Works in multiple languages
-  - Explains baseball concepts as they come up
+
+![image](tmp/screenshots/4.png)
+
+- Get answers with source citations
+- Works in multiple languages
+- Explains baseball concepts as they come up
 
 ### Player Matchups
 
-Want to compare players but hate drowning in numbers? We got you:
+![image](tmp/screenshots/6.png)
+![image](tmp/screenshots/5.png)
 
-- See how players match up based on what matters for their position
-- Visual comparisons that make sense
-- Historical context and trends
-- Daily featured player with performance breakdown
-- Everything explained in plain English
+Compare any two players head-to-head with insights that make sense:
+
+- Pick players by position (Catcher, Center Field, Pitcher, etc.)
+- Get instant probability analysis (like "Who's more likely to hit a home run?")
+- See clear visual comparisons with percentages
+- Stats explained in plain English with context
+- Player of the Day with performance highlights
+- One-click access to detailed player stats and history
 
 ### The Dugout (Baseball Learning Hub)
 
@@ -44,8 +55,12 @@ A collection of baseball-themed games to help you learn while having fun:
 
 **4 Pics 1 Baseball Term:**
 
+![image](tmp/screenshots/7.png)
+![image](tmp/screenshots/8.png)
+
 - Guess baseball terms from visual clues
 - Progress through 5 levels: Apprentice → Planetary → Stellar → Universe → Domain Master
+- Get helpful hints to guide you.
 - Perfect for learning baseball's unique language
 - More games coming soon!
 
@@ -59,6 +74,8 @@ Baseball has its own language, and we're here to translate:
 - System remembers which terms you know
 
 ### Spotlight (Enhanced Baseball Articles)
+
+![image](tmp/screenshots/9.png)
 
 Not your average news feed. We take MLB articles and make them better:
 
