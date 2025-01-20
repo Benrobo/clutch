@@ -1,5 +1,7 @@
 # Clutch (Baseball Re-imagined)
 
+![image](tmp/screenshots/1.png)
+
 [Read the full development journey here](journey.md)
 
 ## Overview
