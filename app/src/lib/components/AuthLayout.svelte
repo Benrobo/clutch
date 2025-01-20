@@ -22,6 +22,11 @@
 				isLoading: false
 			}));
 
+			if (!data?.data?.preferences) {
+				goto('/home/onboarding');
+				return;
+			}
+
 			const homePagePaths = ['/', '/app'];
 			if (homePagePaths.includes($page.url.pathname)) {
 				goto('/home/feed');
