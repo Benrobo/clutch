@@ -24,6 +24,7 @@
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import toast from 'svelte-french-toast';
+	import { USER_GAME_LEVELS } from '@/constant/dugout';
 	dayjs.extend(relativeTime);
 
 	$: dugoutStore = useDugoutStore();
@@ -33,6 +34,8 @@
 
 	let currentChallenge: FourPicOneWordChallenge | null = null;
 	$: currentChallenge = null;
+
+	$: showLevelDropdown = false;
 
 	$: userGameLevelSession = useLocalStorage<
 		{
@@ -195,12 +198,15 @@
 			</Flex>
 
 			<Flex
-				className="w-full h-auto flex-row items-end justify-between relative top-[4em] min-h-[20em] px-10"
+				className="w-full h-auto flex-row items-end justify-between relative top-[4em] min-h-[20em] px-5"
 			>
 				<!-- level up name -->
-				<Flex className="w-auto h-auto flex-row items-center justify-end">
+				<Flex className="w-auto h-auto flex-col items-center justify-end relative">
 					<button
-						class="px-1 pr-3 py-1 rounded-full flex gap-2 flex-center bg-white-100/10 border-[1px] border-white-400/30"
+						class="w-[140px] px-1 pr-3 py-1 rounded-full gap-2 flex items-center justify-start bg-white-100/10 border-[1px] border-white-400/30 backdrop-blur-md z-[1]"
+						on:click={() => {
+							showLevelDropdown = !showLevelDropdown;
+						}}
 					>
 						<span class="w-[30px] h-[30px] rounded-full bg-yellow-200/10 flex-center">
 							{#if userStats?.highest_level === 'apprentice'}
@@ -218,13 +224,53 @@
 							{capitalizeFirstLetter(userStats?.highest_level ?? '---')}
 						</span>
 					</button>
+
+					<div
+						class={cn(
+							'w-[130px] h-auto flex flex-col items-center justify-start gap-0 absolute left-[5px] top-10 -translate-y-2 bg-white-100/10 z-[0] rounded-b-[15px]',
+							showLevelDropdown
+								? 'pt-4 pb-1 h-auto max-h-[250px] overflow-y-scroll hideScrollBar2'
+								: 'h-[0px] overflow-hidden'
+						)}
+					>
+						{#each USER_GAME_LEVELS as level}
+							<div
+								class={cn(
+									'w-full h-full flex items-center justify-start px-2 py-2 gap-2',
+									userStats?.highest_level === level.level ? 'bg-white-100/20' : 'opacity-50'
+								)}
+							>
+								<span class="w-[25px] h-[25px] rounded-full flex items-start justify-start">
+									{#if level.level === 'apprentice'}
+										<span>💎</span>
+									{:else if level.level === 'planetary'}
+										<span>💠</span>
+									{:else if level.level === 'stellar'}
+										<span>🌟</span>
+									{:else}
+										<span>🌌</span>
+									{/if}
+								</span>
+								<span class="font-jetbrains text-xs text-white-200">
+									{capitalizeFirstLetter(level.level ?? '---')}
+								</span>
+								<!-- <span class="text-white-200 font-jetbrains text-xs">
+									{level.total_points}pt
+								</span> -->
+							</div>
+						{/each}
+					</div>
 				</Flex>
-				<Flex className="w-auto h-auto flex-col items-center justify-center -translate-y-[1em]">
-					<div class="w-[150px] h-[150px] p-3 rounded-full bg-white-100/10">
+				<Flex
+					className="w-auto h-auto flex-col items-center justify-center -translate-y-[1em] -translate-x-8"
+				>
+					<div
+						class="w-[130px] h-[130px] md:w-[150px] md:h-[150px] p-3 rounded-full bg-white-100/10"
+					>
 						<img src={$authStore?.user?.avatar} class="w-full h-full rounded-full" alt="" />
 					</div>
 					<span
-						class="text-[1.5em] font-brunoace font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-red-302"
+						class="text-[1.2em] font-brunoace font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-red-302"
 					>
 						{$authStore?.user?.name ?? '---'}
 					</span>
@@ -244,7 +290,7 @@
 		</Flex>
 
 		<!-- available playable games -->
-		<Flex className="w-full h-auto flex flex-col px-10 mt-10 z-[99]">
+		<Flex className="w-full h-auto flex flex-col px-10 mt-[6em] z-[99]">
 			<!-- header -->
 			<Flex className="w-full h-auto flex flex-col gap-1">
 				<h1 class="text-white-100 font-brunoace font-semibold text-lg">Dugout Games</h1>
