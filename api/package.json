@@ -12,7 +12,8 @@
     "scrape-glossary": "tsx src/scripts/scrape-glossary.ts",
     "scrape-glossary-terms": "tsx src/scripts/scrape-glossary-terms.ts",
     "generate-content-source": "tsx src/scripts/generate-content-source.ts",
-    "valid-markdown-content": "tsx src/scripts/valid-markdown-content.ts"
+    "valid-markdown-content": "tsx src/scripts/valid-markdown-content.ts",
+    "sync-highlights": "tsx src/scripts/sync-highlights-to-prod.ts"
   },
   "prisma": {
     "schema": "./src/prisma/schema.prisma"
