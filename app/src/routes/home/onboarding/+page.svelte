@@ -35,7 +35,7 @@
 			?.data as unknown as { hasPreference: boolean };
 
 		if (data.hasPreference) {
-			// goto('/home/feed');
+			goto('/home/feed');
 		}
 	}
 
