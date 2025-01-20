@@ -14,6 +14,7 @@ Think TikTok, but for baseball highlights. As you scroll through:
 
 - Videos play automatically and smoothly
 - Content is personalized based on your favorite teams
+- Watch highlights in multiple languages (English, Spanish, Japanese)
 - Each highlight has a bottom sheet (swipe up!) that shows:
   - What actually happened in normal human words
   - Key stats that matter for this play
