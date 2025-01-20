@@ -274,7 +274,10 @@
 						<!-- SERVER RELATED 👆 -->
 						<!-- disabled={$sendMessageMutation.isPending} -->
 
-						<button class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center">
+						<button
+							class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center disabled:opacity-50 disabled:cursor-not-allowed"
+							disabled={$processLastMsgMut?.isPending}
+						>
 							{#if $sendMessageMutation.isPending}
 								<Spinner size={'20'} />
 							{:else}
