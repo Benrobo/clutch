@@ -1,947 +1,143 @@
-Invalid value for argument `stats[0]`: Can not use `undefined` value within array. Use `null` or filter out `undefined` values.
-    at wn (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:1363)
-    at e.throwValidationError (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:10206)
-    at od (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:9323)
-    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8075)
-    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)
-    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)
-    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)
-    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)
-    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)
-    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439) {
-  clientVersion: '5.22.0'
-}
-🔃 Compare players stats job failed {
-  data: {
-    error: {
-      error: 'invalid status code: 500',
-      message: '\n' +
-        'Invalid `prisma.matchups.update()` invocation:\n' +
-        '\n' +
-        '{\n' +
-        '  where: {\n' +
-        '    id: "cm5zz5gx10006dhucgly6a1jg"\n' +
-        '  },\n' +
-        '  data: {\n' +
-        '    highlights: {\n' +
-        '      analysis: [\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to throw out a runner stealing a base?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '                ~~~~~~~~~\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 58,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 42,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        `          insight: "César Salazar demonstrates a higher likelihood of throwing out runners based on recent data indicating a stronger caught stealing rate. Kyle McCann's recent performance shows a decreasing trend in this area. Consequently, Salazar is projected to have a statistically better outcome in preventing stolen bases."\n` +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Which catcher is more likely to hit a home run in their next game?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 0\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".787"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 30,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 5\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".689"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 70,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "Kyle McCann demonstrates a higher probability of hitting a home run in the next game with a 70% likelihood, based on his accumulated 5 home runs this season, despite a recent trend of fewer extra-base hits. César Salazar, despite a superior .787 OPS, possesses a lower 30% likelihood due to zero home runs this season; however, his OPS is trending upward, potentially indicating future power output."\n' +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to drive in the winning run?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 8\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".320"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 60,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 15\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".236"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 40,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "While Kyle McCann has a higher RBI total, recent performance data indicates a downward trend, with a decreased batting average in his last five games. César Salazar, conversely, exhibits a robust batting average of .320 and an upward trend in recent at-bats. This suggests a higher probability of Salazar driving in the winning run given his current form, despite having fewer RBIs overall this season."\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      playerOfTheDay: {\n' +
-        '        id: "663967",\n' +
-        '        score: 178,\n' +
-        '        fullName: "César Salazar",\n' +
-        '        position: "Catcher",\n' +
-        `        insight: "César Salazar was chosen as Player of the Day due to his higher batting average of .320 compared to .236 of the other player and his .787 OPS which is significantly higher than the other player's .689."\n` +
-        '      }\n' +
-        '    },\n' +
-        '    player_position_stats: {\n' +
-        '      challenger: {\n' +
-        '        info: {\n' +
-        '          id: 668832,\n' +
-        '          name: "Kyle McCann",\n' +
-        '          team: {\n' +
-        '            name: "Athletics",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/133.svg",\n' +
-        '            id: 133\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668832/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Atlanta",\n' +
-        '          birthCountry: "USA",\n' +
-        `          height: "6' 2\\"",\n` +
-        '          weight: 217,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 27\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 54\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".236"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 5\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 15\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".689"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      },\n' +
-        '      opponent: {\n' +
-        '        info: {\n' +
-        '          id: 663967,\n' +
-        '          name: "César Salazar",\n' +
-        '          team: {\n' +
-        '            name: "Houston Astros",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/117.svg",\n' +
-        '            id: 117\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663967/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Hermosillo",\n' +
-        '          birthCountry: "Mexico",\n' +
-        `          height: "5' 8\\"",\n` +
-        '          weight: 198,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 28\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 12\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".320"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 0\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 8\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".787"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      }\n' +
-        '    },\n' +
-        '    error: null,\n' +
-        '    status: "COMPLETED"\n' +
-        '  }\n' +
-        '}\n' +
-        '\n' +
-        'Invalid value for argument `stats[0]`: Can not use `undefined` value within array. Use `null` or filter out `undefined` values.',
-      name: 'PrismaClientValidationError',
-      stack: 'PrismaClientValidationError: \n' +
-        'Invalid `prisma.matchups.update()` invocation:\n' +
-        '\n' +
-        '{\n' +
-        '  where: {\n' +
-        '    id: "cm5zz5gx10006dhucgly6a1jg"\n' +
-        '  },\n' +
-        '  data: {\n' +
-        '    highlights: {\n' +
-        '      analysis: [\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to throw out a runner stealing a base?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '                ~~~~~~~~~\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 58,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 42,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        `          insight: "César Salazar demonstrates a higher likelihood of throwing out runners based on recent data indicating a stronger caught stealing rate. Kyle McCann's recent performance shows a decreasing trend in this area. Consequently, Salazar is projected to have a statistically better outcome in preventing stolen bases."\n` +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Which catcher is more likely to hit a home run in their next game?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 0\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".787"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 30,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 5\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".689"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 70,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "Kyle McCann demonstrates a higher probability of hitting a home run in the next game with a 70% likelihood, based on his accumulated 5 home runs this season, despite a recent trend of fewer extra-base hits. César Salazar, despite a superior .787 OPS, possesses a lower 30% likelihood due to zero home runs this season; however, his OPS is trending upward, potentially indicating future power output."\n' +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to drive in the winning run?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 8\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".320"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 60,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 15\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".236"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 40,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "While Kyle McCann has a higher RBI total, recent performance data indicates a downward trend, with a decreased batting average in his last five games. César Salazar, conversely, exhibits a robust batting average of .320 and an upward trend in recent at-bats. This suggests a higher probability of Salazar driving in the winning run given his current form, despite having fewer RBIs overall this season."\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      playerOfTheDay: {\n' +
-        '        id: "663967",\n' +
-        '        score: 178,\n' +
-        '        fullName: "César Salazar",\n' +
-        '        position: "Catcher",\n' +
-        `        insight: "César Salazar was chosen as Player of the Day due to his higher batting average of .320 compared to .236 of the other player and his .787 OPS which is significantly higher than the other player's .689."\n` +
-        '      }\n' +
-        '    },\n' +
-        '    player_position_stats: {\n' +
-        '      challenger: {\n' +
-        '        info: {\n' +
-        '          id: 668832,\n' +
-        '          name: "Kyle McCann",\n' +
-        '          team: {\n' +
-        '            name: "Athletics",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/133.svg",\n' +
-        '            id: 133\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668832/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Atlanta",\n' +
-        '          birthCountry: "USA",\n' +
-        `          height: "6' 2\\"",\n` +
-        '          weight: 217,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 27\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 54\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".236"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 5\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 15\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".689"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      },\n' +
-        '      opponent: {\n' +
-        '        info: {\n' +
-        '          id: 663967,\n' +
-        '          name: "César Salazar",\n' +
-        '          team: {\n' +
-        '            name: "Houston Astros",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/117.svg",\n' +
-        '            id: 117\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663967/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Hermosillo",\n' +
-        '          birthCountry: "Mexico",\n' +
-        `          height: "5' 8\\"",\n` +
-        '          weight: 198,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 28\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 12\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".320"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 0\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 8\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".787"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      }\n' +
-        '    },\n' +
-        '    error: null,\n' +
-        '    status: "COMPLETED"\n' +
-        '  }\n' +
-        '}\n' +
-        '\n' +
-        'Invalid value for argument `stats[0]`: Can not use `undefined` value within array. Use `null` or filter out `undefined` values.\n' +
-        '    at wn (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:1363)\n' +
-        '    at e.throwValidationError (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:10206)\n' +
-        '    at od (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:9323)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8075)\n' +
-        '    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)\n' +
-        '    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)\n' +
-        '    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)'
-    },
-    event: {
-      data: [Object],
-      id: '01JHRQW8ZMF1MX0DF8K9TY9CY0',
-      name: 'compare-players-stats',
-      ts: 1737070879727,
-      user: {}
-    },
-    events: [ [Object] ],
-    function_id: 'clutch-api-compare-players-stats',
-    result: {
-      __serialized: true,
-      message: '\n' +
-        'Invalid `prisma.matchups.update()` invocation:\n' +
-        '\n' +
-        '{\n' +
-        '  where: {\n' +
-        '    id: "cm5zz5gx10006dhucgly6a1jg"\n' +
-        '  },\n' +
-        '  data: {\n' +
-        '    highlights: {\n' +
-        '      analysis: [\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to throw out a runner stealing a base?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '                ~~~~~~~~~\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 58,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 42,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        `          insight: "César Salazar demonstrates a higher likelihood of throwing out runners based on recent data indicating a stronger caught stealing rate. Kyle McCann's recent performance shows a decreasing trend in this area. Consequently, Salazar is projected to have a statistically better outcome in preventing stolen bases."\n` +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Which catcher is more likely to hit a home run in their next game?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 0\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".787"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 30,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 5\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".689"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 70,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "Kyle McCann demonstrates a higher probability of hitting a home run in the next game with a 70% likelihood, based on his accumulated 5 home runs this season, despite a recent trend of fewer extra-base hits. César Salazar, despite a superior .787 OPS, possesses a lower 30% likelihood due to zero home runs this season; however, his OPS is trending upward, potentially indicating future power output."\n' +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to drive in the winning run?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 8\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".320"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 60,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 15\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".236"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 40,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "While Kyle McCann has a higher RBI total, recent performance data indicates a downward trend, with a decreased batting average in his last five games. César Salazar, conversely, exhibits a robust batting average of .320 and an upward trend in recent at-bats. This suggests a higher probability of Salazar driving in the winning run given his current form, despite having fewer RBIs overall this season."\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      playerOfTheDay: {\n' +
-        '        id: "663967",\n' +
-        '        score: 178,\n' +
-        '        fullName: "César Salazar",\n' +
-        '        position: "Catcher",\n' +
-        `        insight: "César Salazar was chosen as Player of the Day due to his higher batting average of .320 compared to .236 of the other player and his .787 OPS which is significantly higher than the other player's .689."\n` +
-        '      }\n' +
-        '    },\n' +
-        '    player_position_stats: {\n' +
-        '      challenger: {\n' +
-        '        info: {\n' +
-        '          id: 668832,\n' +
-        '          name: "Kyle McCann",\n' +
-        '          team: {\n' +
-        '            name: "Athletics",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/133.svg",\n' +
-        '            id: 133\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668832/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Atlanta",\n' +
-        '          birthCountry: "USA",\n' +
-        `          height: "6' 2\\"",\n` +
-        '          weight: 217,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 27\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 54\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".236"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 5\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 15\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".689"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      },\n' +
-        '      opponent: {\n' +
-        '        info: {\n' +
-        '          id: 663967,\n' +
-        '          name: "César Salazar",\n' +
-        '          team: {\n' +
-        '            name: "Houston Astros",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/117.svg",\n' +
-        '            id: 117\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663967/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Hermosillo",\n' +
-        '          birthCountry: "Mexico",\n' +
-        `          height: "5' 8\\"",\n` +
-        '          weight: 198,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 28\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 12\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".320"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 0\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 8\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".787"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      }\n' +
-        '    },\n' +
-        '    error: null,\n' +
-        '    status: "COMPLETED"\n' +
-        '  }\n' +
-        '}\n' +
-        '\n' +
-        'Invalid value for argument `stats[0]`: Can not use `undefined` value within array. Use `null` or filter out `undefined` values.',
-      name: 'PrismaClientValidationError',
-      stack: 'PrismaClientValidationError: \n' +
-        'Invalid `prisma.matchups.update()` invocation:\n' +
-        '\n' +
-        '{\n' +
-        '  where: {\n' +
-        '    id: "cm5zz5gx10006dhucgly6a1jg"\n' +
-        '  },\n' +
-        '  data: {\n' +
-        '    highlights: {\n' +
-        '      analysis: [\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to throw out a runner stealing a base?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '                ~~~~~~~~~\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 58,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                undefined\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 42,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        `          insight: "César Salazar demonstrates a higher likelihood of throwing out runners based on recent data indicating a stronger caught stealing rate. Kyle McCann's recent performance shows a decreasing trend in this area. Consequently, Salazar is projected to have a statistically better outcome in preventing stolen bases."\n` +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Which catcher is more likely to hit a home run in their next game?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 0\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".787"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 30,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "homeRuns",\n' +
-        '                  value: 5\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "ops",\n' +
-        '                  value: ".689"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 70,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "Kyle McCann demonstrates a higher probability of hitting a home run in the next game with a 70% likelihood, based on his accumulated 5 home runs this season, despite a recent trend of fewer extra-base hits. César Salazar, despite a superior .787 OPS, possesses a lower 30% likelihood due to zero home runs this season; however, his OPS is trending upward, potentially indicating future power output."\n' +
-        '        },\n' +
-        '        {\n' +
-        '          title: "Who’s more likely to drive in the winning run?",\n' +
-        '          players: {\n' +
-        '            663967: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 8\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".320"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 60,\n' +
-        '                trending: "up"\n' +
-        '              }\n' +
-        '            },\n' +
-        '            668832: {\n' +
-        '              stats: [\n' +
-        '                {\n' +
-        '                  key: "rbi",\n' +
-        '                  value: 15\n' +
-        '                },\n' +
-        '                {\n' +
-        '                  key: "avg",\n' +
-        '                  value: ".236"\n' +
-        '                }\n' +
-        '              ],\n' +
-        '              visualization: {\n' +
-        '                percentage: 40,\n' +
-        '                trending: "down"\n' +
-        '              }\n' +
-        '            }\n' +
-        '          },\n' +
-        '          insight: "While Kyle McCann has a higher RBI total, recent performance data indicates a downward trend, with a decreased batting average in his last five games. César Salazar, conversely, exhibits a robust batting average of .320 and an upward trend in recent at-bats. This suggests a higher probability of Salazar driving in the winning run given his current form, despite having fewer RBIs overall this season."\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      playerOfTheDay: {\n' +
-        '        id: "663967",\n' +
-        '        score: 178,\n' +
-        '        fullName: "César Salazar",\n' +
-        '        position: "Catcher",\n' +
-        `        insight: "César Salazar was chosen as Player of the Day due to his higher batting average of .320 compared to .236 of the other player and his .787 OPS which is significantly higher than the other player's .689."\n` +
-        '      }\n' +
-        '    },\n' +
-        '    player_position_stats: {\n' +
-        '      challenger: {\n' +
-        '        info: {\n' +
-        '          id: 668832,\n' +
-        '          name: "Kyle McCann",\n' +
-        '          team: {\n' +
-        '            name: "Athletics",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/133.svg",\n' +
-        '            id: 133\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/668832/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Atlanta",\n' +
-        '          birthCountry: "USA",\n' +
-        `          height: "6' 2\\"",\n` +
-        '          weight: 217,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 27\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 54\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".236"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 5\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 15\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".689"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      },\n' +
-        '      opponent: {\n' +
-        '        info: {\n' +
-        '          id: 663967,\n' +
-        '          name: "César Salazar",\n' +
-        '          team: {\n' +
-        '            name: "Houston Astros",\n' +
-        '            logo: "https://www.mlbstatic.com/team-logos/117.svg",\n' +
-        '            id: 117\n' +
-        '          },\n' +
-        '          position: "C",\n' +
-        '          profilePicture: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/663967/headshot/silo/current",\n' +
-        '          batSide: {\n' +
-        '            code: "L",\n' +
-        '            description: "Left"\n' +
-        '          },\n' +
-        '          birthCity: "Hermosillo",\n' +
-        '          birthCountry: "Mexico",\n' +
-        `          height: "5' 8\\"",\n` +
-        '          weight: 198,\n' +
-        '          active: true,\n' +
-        '          verified: true,\n' +
-        '          gender: "M",\n' +
-        '          currentAge: 28\n' +
-        '        },\n' +
-        '        stats: [\n' +
-        '          {\n' +
-        '            key: "gamesPlayed",\n' +
-        '            value: 12\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "avg",\n' +
-        '            value: ".320"\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "homeRuns",\n' +
-        '            value: 0\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "rbi",\n' +
-        '            value: 8\n' +
-        '          },\n' +
-        '          {\n' +
-        '            key: "ops",\n' +
-        '            value: ".787"\n' +
-        '          }\n' +
-        '        ]\n' +
-        '      }\n' +
-        '    },\n' +
-        '    error: null,\n' +
-        '    status: "COMPLETED"\n' +
-        '  }\n' +
-        '}\n' +
-        '\n' +
-        'Invalid value for argument `stats[0]`: Can not use `undefined` value within array. Use `null` or filter out `undefined` values.\n' +
-        '    at wn (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:1363)\n' +
-        '    at e.throwValidationError (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:10206)\n' +
-        '    at od (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:9323)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8075)\n' +
-        '    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)\n' +
-        '    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)\n' +
-        '    at aa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8908)\n' +
-        '    at sa (/Users/benaiah/Documents/projects/clutch/api/node_modules/@prisma/client/runtime/library.js:29:8439)'
-    },
-    run_id: '01JHRQW96413ER1GYD75Y8S05B'
-  },
-  id: '01JHRQY3BD4VSS1S01TNDFDBHN',
-  name: 'inngest/function.failed',
-  ts: 1737070939501,
-  user: {}
-}
+Gemini 2025 competition idea
+
+
+⚾ "SluggerSidekick" – Your On-Screen Animated Baseball Companion 🎉
+Concept: An on-screen animated companion that makes watching baseball fun and educational for casual fans. Using Gemini's conversational AI and MLB live game data, SluggerSidekick appears as a cute, interactive character (like a mini mascot) on your screen, providing real-time explanations, stats, and game insights while keeping you entertained.
+
+Core Features 🧩
+1. Real-Time Play Insights 📊
+    * SluggerSidekick analyzes the game using MLB data and Gemini AI to explain complex plays and strategies in simple, friendly language.
+    * Example:
+        * SluggerSidekick pops up: “Whoa, did you see that bunt? That was to advance the runner to second—smart move!”
+2. Interactive Q&A with SluggerSidekick 💬
+    * Fans can click on their Sidekick and ask questions:
+        * “Why did he throw a curveball?”
+        * “What’s a double play?”
+        * The Sidekick responds conversationally, making learning fun and accessible.
+3. Game Highlights and Alerts 🚀
+    * The companion dynamically reacts to big moments with fun animations:
+        * Home run? It cheers and throws confetti. 🎉
+        * Fastest pitch? It whistles in awe. 💨
+    * Keeps fans updated with live stats like: “Fastest pitch so far—98.3 mph!” or “Batter’s got a 5-game hitting streak!”
+4. Dynamic Personality and Animation 🧸
+    * SluggerSidekick acts like your baseball buddy—excited, quirky, and full of energy.
+    * Animates emotions (happy, confused, cheering) based on in-game events:
+        * Sad if your team strikes out. 😢
+        * Celebrates when they score a run. 🥳
+5. Customizable Mascots 🎨
+    * Fans can pick their favorite MLB mascot or a fun, gamified character as their companion:
+        * Choose a mini version of team mascots like "Orbit" (Astros) or a custom critter like a baseball-themed robot.
+6. Engagement Quizzes and Predictions 🎯
+    * SluggerSidekick challenges you with in-game predictions:
+        * “Do you think the batter will hit a home run here?”
+        * Right answers earn points and unlock animations (gamification).
+
+How It Works ⚙️
+1. Real-Time MLB Data Integration:
+    * Connects to Statcast data and live game feeds to detect plays, pitches, and game-changing moments.
+2. Gemini Multimodal 🧠:
+    * Processes the live data and video context to explain "what happened" and "why it matters".
+3. On-Screen Companion Overlay:
+    * Appears as a draggable, animated character on the viewer’s screen (browser extension or app).
+4. AI-Powered Conversation:
+    * Fans interact directly with their Sidekick by asking questions or clicking prompts for instant game explanations.
+
+Why It’s Fun and Engaging 🎊
+* Adds Personality: The on-screen character brings joy, humor, and energy to watching baseball.
+* Simplifies Complex Plays: Helps casual fans learn baseball strategies without feeling overwhelmed.
+* Gamified Predictions: Makes watching more interactive with fun challenges and rewards.
+* Customizable & Relatable: Fans love mascots, and SluggerSidekick becomes their personal game buddy.
+
+Why You Can Build This in 1 Month 🚀
+1. Use Gemini AI to generate insights and conversational responses.
+2. Integrate real-time MLB data through APIs like Statcast.
+3. Use a lightweight animation framework (e.g., Lottie or Three.js) for the on-screen character.
+4. Build as a Chrome browser extension or desktop app overlay for MVP launch.
+
+Visual Example
+Imagine a cute baseball-themed robot, mini mascot, or animated critter that:
+* Pops up and says: “Whoa! That was a 99 mph slider—🔥🔥!”
+* Animates excitement with confetti when there’s a home run. 🎉
+* Responds when you ask: “What’s a sacrifice fly?”
+* Challenges you: “Think he’ll steal second? Tap yes or no!”
+
+Target Audience 🎯
+* Casual baseball fans who want to learn the game.
+* MLB enthusiasts looking for an interactive companion.
+* Kids and families who enjoy gamified experiences.
+
+Summary: SluggerSidekick transforms baseball viewing into an interactive, fun, and engaging experience. It combines the charm of animated AI companions with real-time game insights, making it doable within 1 month while aligning perfectly with the competition’s theme.
+
+What do you think? Ready to swing for the fences with this idea? ⚾💡
+
+
+Idea Summary: AI-Powered Video Companion
+
+Your app features an on-screen animated companion (like MetaPals) that interacts with the user while they watch any video on any platform. Here’s how it works:
+1. Continuous Monitoring (Streaming Concept): The app streams the user’s screen in the background while the video plays. However:
+    * It does not process everything in real-time to save on resources and API costs.
+    * It buffers the last few minutes of the screen content (e.g., 3–5 minutes of video).
+2. User Interaction (Right-Click Trigger): If the user wants to ask a question or get insights:
+    * They right-click on your animated companion.
+    * This action pauses the buffering process and sends the recent video chunk (up to 5 minutes) for processing.
+3. Gemini Analysis:
+    * Extracts transcripts and insights from the video (what’s happening, context, key events).
+    * Generates relevant explanations or answers to the user’s query.
+4. Interactive Feedback:
+    * The assistant pops up with insights or answers the user’s questions about what they just watched.
+    * It could also provide summaries, explain plays (in a sports game), or give context for specific video scenes.
+
+What Makes It Fun and Engaging?
+* On-Screen Character: The AI companion feels like an interactive guide rather than just a tool. It could be lively, animated, and playful.
+* Ask Anytime: Users can get insights on-demand without interruptions.
+* Cross-Platform: Works on any video platform—YouTube, Twitch, Facebook, or even local videos.
+* Sports-Specific Insights: For MLB™-focused videos, the assistant explains:
+    * Plays, strategies, and player performance.
+    * Predictions (e.g., “This player is likely to swing based on prior stats”).
+    * Stats (pitch speed, exit velocity, etc.)—automatically detected or inferred.
+
+Why This Approach?
+* It gives users control over when insights are delivered.
+* It’s highly engaging because of the companion's presence.
+* It’s practical for sports fans who may want:
+    * Quick explanations for complex strategies.
+    * Summaries if they pause mid-video.
+    * Context about players or games from highlights.
+
+Core Features
+1. Real-Time Buffering: Capture the last 3–5 minutes of video as a rolling buffer.
+2. User Trigger: Insights are processed only when the user interacts (right-clicks or clicks the assistant).
+3. On-Screen AI Companion: Fun, animated character that pops up with:
+    * Answers to questions.
+    * Highlights and context.
+    * Personalized summaries (player stats, play explanations, etc.).
+4. MLB-Specific Features:
+    * Stats extraction: Gemini can highlight metrics (e.g., “Pitch was 98 mph”).
+    * Play-by-play explanations: Context for tactics like stolen bases or bunts.
+    * Player comparisons: Insights based on historical data.
+
+User Flow
+1. User watches a baseball video on YouTube (or any platform).
+2. Your AI companion floats on-screen.
+3. When the user right-clicks or interacts with the companion:
+    * The app pauses buffering and processes the video segment.
+    * Gemini generates context or insights.
+4. The companion responds dynamically:
+    * “That was a 92 mph fastball—pretty average for this pitcher!”
+    * “The strategy behind this play was to advance the runner with a bunt.”
+    * “This player has a 70% chance of stealing a base—watch out for the next pitch!”
+
+Why It’s Feasible
+* Streaming the screen in chunks reduces overhead.
+* User interaction eliminates constant real-time processing.
+* Gemini can process video transcripts and keyframes quickly.
+   - waving hand to show a popup (when users ask questions)
+- running to the right edge of the screen, dragging a side panel to show more info (when a specific question is asked about the event)
+.etc
+
+
+
+
+- A TikTok style app which provides fans past video highlights, but the twist is, it shows fans what they want based on their team alongside provides a strategic insights towards the video where fan could get statistical data analysis based on the video, they could as well chat with the ai assistant for that specific video, also save the strategic for later. 
+       
+         I could write a video processing server which goes through all video highlights for each fan favorites and create a personalize highlights with AI. Users could selects their favorite players, and we give them first view short of that player in the generated shots.
