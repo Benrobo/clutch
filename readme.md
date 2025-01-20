@@ -21,6 +21,13 @@ Think TikTok, but for baseball highlights. As you scroll through:
 - Watch highlights in multiple languages (English, Spanish, Japanese)
 - Each highlight has a bottom sheet (swipe up!) that shows:
 
+### MLB Glossary Integration
+
+Baseball has its own language, and we're here to translate:
+
+- Terms like "RISP" or "ERA" are automatically highlighted in content
+- Tap any highlighted term to see a simple explanation in a popup
+
 ![image](tmp/screenshots/3.png)
 
 - What actually happened in normal human words
@@ -63,15 +70,6 @@ A collection of baseball-themed games to help you learn while having fun:
 - Get helpful hints to guide you.
 - Perfect for learning baseball's unique language
 - More games coming soon!
-
-### MLB Glossary Integration
-
-Baseball has its own language, and we're here to translate:
-
-- Terms like "RISP" or "ERA" are automatically highlighted in content
-- Tap any highlighted term to see a simple explanation in a popup
-- See real game examples of terms in action
-- System remembers which terms you know
 
 ### Spotlight (Enhanced Baseball Articles)
 
