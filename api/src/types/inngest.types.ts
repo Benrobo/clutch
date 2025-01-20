@@ -15,10 +15,13 @@ type ComparePlayersStatsEvent = BaseEvent & {
   };
 };
 
+type GenerateContentSourceEvent = BaseEvent & {};
+
 type Events = {
   "generate-game-highlights-metadata": GenerateGameHighlightsMetadata;
   "process-highlights-video": ProcessHighlightsVideoEvent;
   "compare-players-stats": ComparePlayersStatsEvent;
+  "generate-content-source": GenerateContentSourceEvent;
 };
 
 export const schemas = new EventSchemas().fromRecord<Events>();
