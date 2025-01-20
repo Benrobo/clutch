@@ -1,3 +1,4 @@
+import shortUUID from "short-uuid";
 import {
   GAME_LEVELS,
   GAME_PROGRESSION_CHALLENGES,
@@ -254,9 +255,24 @@ export default class DugoutService {
       code: "INVALID_GAME_STATE",
     };
 
-    const game = await prisma.dugout_game_progress.findFirst({
+    let game = await prisma.dugout_game_progress.findFirst({
       where: { dugout_game_id: gameId, user_id: userId },
     });
+
+    const userGameLevel = await prisma.users.findFirst({
+      where: { id: userId },
+      select: { dugout_game_progress: true },
+    });
+
+    const userRecentGame = userGameLevel?.dugout_game_progress.sort(
+      (a, b) => b.created_at.getTime() - a.created_at.getTime()
+    )[0];
+
+    if (!game && !userRecentGame?.level) {
+      // automatically join a game
+      const id = shortUUID.generate();
+      game = await this.joinGame(gameId, userId, id);
+    }
 
     if (!game) {
       result.error = "Game not found";
