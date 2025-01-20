@@ -21,6 +21,7 @@ import {
 } from "../scripts/video-processing/translation.js";
 import { sleep } from "../lib/utils.js";
 import generateVideoSummary from "../scripts/video-processing/generateVideoSummary.js";
+import { IN_DEV } from "../config/env.js";
 
 const HIGHLIGHTS_VIDEO_PROCESSING_KEY = "highlights-video-processing";
 const HIGHLIGHTS_VIDEO_FAILED_KEY = "highlights-video-failed";
@@ -35,7 +36,9 @@ export const processGameHighlightsVideo = inngestClient.createFunction(
     event: "process-highlights-video",
   },
   async ({ step }) => {
-    // processVideo();
+    if (IN_DEV) {
+      await processVideo();
+    }
   }
 );
 
