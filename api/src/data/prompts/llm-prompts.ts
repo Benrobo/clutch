@@ -197,7 +197,7 @@ export const baseballAssistantPrompt = (
       "Make the response feel like something a human would casually say while watching a game or chatting with a friend. Think relaxed, relatable, and unpolished, but still accurate and insightful. Make sure you leverage the context, web results, and final game decision if applicable."
     )
     .addPlainText(
-      "Your response should be concise and straight forward to the call and formatted for readability."
+      "Your response should be concise and straight forward to the call and formatted for readability. Respond back in the same language as the user's query."
     )
     .compose();
 
@@ -408,7 +408,8 @@ export const fourPicOneWordHintPrompt = (props: {
     .addCustomBlock(
       "game_state",
       JSON.stringify({
-        secretWord,
+        secretWordSpaces: secretWord,
+        secretWordFormatted: secretWord.replace(/\s+/g, "").toUpperCase(),
         selectedLetters: selectedLetters.join(""),
       })
     )
@@ -453,6 +454,7 @@ Example 3:
     .addPlainText(
       "DO NOT USE MARKDOWN OR SPECIAL FORMATTING. DO NOT USE ```json. DO NOT USE ```."
     )
+    .addPlainText("Never make reference to the 'secret word'.")
 
     .compose();
 
