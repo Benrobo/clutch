@@ -289,6 +289,11 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Clutch - Highlights</title>
+	<meta name="description" content="Personalized baseball highlights from past games" />
+</svelte:head>
+
 <div class="w-full h-full flex items-center justify-center">
 	<div class="w-full h-full max-w-[678px] relative">
 		<!-- Feed Type Selector -->
