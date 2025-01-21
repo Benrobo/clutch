@@ -113,10 +113,23 @@ async function migrateMLBData() {
 
     // Migrate highlights playbacks (depends on highlights)
     console.log("\n🔄 Migrating highlights playbacks...");
-    const playbacks = await localDb.highlights_playbacks.findMany();
+    const playbacks = await localDb.highlights_playbacks.findMany({
+      where: {
+        summary: {
+          not: null as any,
+        },
+        transcript: {
+          not: null as any,
+        },
+      },
+    });
+
+    console.log(`Found ${playbacks.length} highlights playbacks to migrate`);
     for (const playback of playbacks) {
       await productionDb.highlights_playbacks.upsert({
-        where: { id: playback.id },
+        where: {
+          id: playback.id,
+        },
         create: {
           id: playback.id,
           highlight_id: playback.highlight_id,
