@@ -6,7 +6,6 @@ const CACHE_NAME = 'clutch-v1';
 
 // Pre-cache critical assets
 const ASSETS_TO_CACHE = [
-  '/',
   '/favicon.png',
 
   // fonts
