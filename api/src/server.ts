@@ -67,7 +67,7 @@ app.on(
   })
 );
 
-const port = 4050;
+const port: number = process.env.PORT ? parseInt(process.env.PORT) : 4050;
 console.log(`Server is running on http://localhost:${port}`);
 
 serve({
