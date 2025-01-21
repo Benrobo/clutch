@@ -38,6 +38,7 @@
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-vercel": "5.5.2",
 		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/package": "^2.3.8",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/autosize": "^4.0.3",
 		"@types/canvas-confetti": "^1.9.0",
