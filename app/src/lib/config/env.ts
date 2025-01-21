@@ -1,12 +1,9 @@
 import { DEV } from "esm-env";
 
-// @ts-expect-error
-import { PUBLIC_API_URL } from '$env/static/public';
-
 const inDev: boolean = DEV;
 
 const env = {
-  apiUrl: PUBLIC_API_URL
+  apiUrl: DEV ? "http://localhost:4050" : "https://benlab.space/clutch-api"
 };
 
 export default env;
