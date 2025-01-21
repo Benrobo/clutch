@@ -18,7 +18,7 @@ export interface FeedParams {
 const SEEN_VIDEOS_EXPIRY = 60 * 60 * 24 * 7; // 7 days in seconds
 const SEEN_VIDEOS_KEY_PREFIX = "user:seen-videos:";
 const VIEW_PLAYBACKS_KEY_PREFIX = "user:view-playbacks:";
-const VIEW_PLAYBACKS_EXPIRY = 10 * 60; // 10 minutes
+const VIEW_PLAYBACKS_EXPIRY = 60 * 60 * 24 * 7; // 7 days
 
 export interface HighlightItem {
   id: string;
