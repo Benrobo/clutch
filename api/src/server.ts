@@ -26,13 +26,7 @@ app.get("/", (c) => {
 app.use(
   "*",
   cors({
-    origin: [
-      env.CLIENT_URL,
-      "http://192.168.151.59:5173",
-      "https://3ac1-2a09-bac5-4dd2-6d2-00-ae-1c.ngrok-free.app",
-      "http://192.168.151.59:4050",
-      "http://benlab.a.pinggy.link",
-    ],
+    origin: [env.CLIENT_URL, "http://benlab.a.pinggy.link"],
     exposeHeaders: ["Content-Length"],
     allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE"],
     credentials: true,
