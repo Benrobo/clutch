@@ -73,21 +73,6 @@ export default class GameService {
     });
   }
 
-  async findGameWithHighlights(id: number) {
-    return await prisma.games.findUnique({
-      where: { id },
-      include: {
-        home_team: true,
-        away_team: true,
-        highlights: {
-          include: {
-            saved_by: true,
-          },
-        },
-      },
-    });
-  }
-
   async getAllGameHighlightsPlayback() {
     return await prisma.highlights_playbacks.findMany({
       orderBy: {

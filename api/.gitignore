@@ -33,3 +33,5 @@ lerna-debug.log*
 /public/video-samples/*.mp4
 /src/scripts/logs
 /src/scripts/clips
+
+/dist

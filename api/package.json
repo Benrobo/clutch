@@ -2,6 +2,8 @@
   "name": "api",
   "type": "module",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
     "dev": "nodemon --exec \"clear && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/server.ts\"",
     "devOld": "nodemon --exec \"node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/server.ts\"",
     "vid:process": "tsx src/scripts/proces-video.ts",
