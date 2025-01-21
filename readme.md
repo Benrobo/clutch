@@ -4,6 +4,8 @@
 
 [Read the full development journey here](journey.md)
 
+> **Google Cloud X MLB 2025 Competition**
+
 ## Overview
 
 Ever wished baseball was easier to follow and more fun to watch? Clutch brings you the best moments from every MLB game in a format you'll love. Swipe through personalized highlights, get instant explanations of what's happening, and learn the game through interactive features. Whether you're a die-hard fan or just getting started, Clutch makes baseball more enjoyable for everyone.
