@@ -17,6 +17,8 @@
 	"files": [
 		"dist",
 		"dist/**/*",
+		"dist/index.js",
+		"dist/index.d.ts",
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
@@ -34,8 +36,8 @@
 		}
 	},
 	"peerDependencies": {
-		"svelte": "^5.0.0",
-		"@sveltejs/kit": "^2.0.0"
+		"@sveltejs/kit": "^2.0.0",
+		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -45,6 +47,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/autosize": "^4.0.3",
 		"@types/canvas-confetti": "^1.9.0",
+		"@types/node": "^22.10.7",
 		"@types/showdown": "^2.0.6",
 		"autoprefixer": "^10.4.20",
 		"postcss": "^8.4.47",
@@ -57,13 +60,13 @@
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
-		"@sveltejs/kit": "^2.0.0",
 		"@fontsource-variable/eb-garamond": "^5.1.2",
 		"@fontsource-variable/jetbrains-mono": "^5.1.0",
 		"@fontsource-variable/montserrat": "^5.1.0",
 		"@fontsource/bruno-ace": "^5.1.0",
 		"@fontsource/dela-gothic-one": "^5.1.1",
 		"@fontsource/poppins": "^5.1.0",
+		"@sveltejs/kit": "^2.0.0",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tanstack/svelte-query": "^5.56.2",
 		"add": "^2.0.6",
