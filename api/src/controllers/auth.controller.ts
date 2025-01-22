@@ -4,6 +4,7 @@ import { deleteCookie, setCookie } from "hono/cookie";
 import env from "../config/env.js";
 import shortUUID from "short-uuid";
 import GoogleAuth from "../lib/google.auth.js";
+import prisma from "../prisma/index.js";
 
 export default class AuthController {
   private userService: UserService;
