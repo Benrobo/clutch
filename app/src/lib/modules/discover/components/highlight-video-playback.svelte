@@ -61,7 +61,7 @@
 		videoTranscript = mapTranscript(highlight?.transcript!);
 	}
 
-	const MAX_DESCRIPTION_LENGTH = 50;
+	const MAX_DESCRIPTION_LENGTH = 100;
 	const DEBUG_MODE_VIDEO_URL = 'https://www.w3schools.com/html/mov_bbb.mp4';
 
 	async function handleVideoState() {
@@ -193,7 +193,7 @@
 <div bind:this={containerRef} data-id={highlight?.id} class="w-full h-full relative flex-center">
 	<div
 		class={cn(
-			'w-full relative flex-center',
+			'w-full h-full relative flex-center',
 			currentAspectRatio === '9:16'
 				? 'min-h-[100vh] aspect-[9/16] -translate-y-0'
 				: 'h-auto aspect-[16/9] mt-[10vh] -translate-y-[10em]',
@@ -210,7 +210,7 @@
 				)}
 				playsinline
 				preload="auto"
-				muted={false}
+				{muted}
 				loop={true}
 				width="640"
 				height="360"
@@ -387,7 +387,7 @@
 	<!-- playback metadata (description) -->
 	<div
 		class={cn(
-			'w-full h-auto max-h-[100px] px-4 py-6 z-[10] absolute bottom-[4.2em] sm:bottom-[4.2em] xs:bottom-[5em]',
+			'w-full h-auto max-h-[200px] px-4 py-6 z-[10] absolute bottom-[2em] sm:bottom-[2em] xs:bottom-[2em] flex flex-col items-end justify-end',
 			isSafariMobile && '-translate-y-[5em]'
 		)}
 	>
@@ -404,7 +404,9 @@
 						'line-clamp-2'
 				)}
 			>
-				{highlight?.playback?.description}
+				{(highlight?.playback?.description ?? '').length > MAX_DESCRIPTION_LENGTH
+					? (highlight?.playback?.description ?? '').slice(0, MAX_DESCRIPTION_LENGTH) + '...'
+					: highlight?.playback?.description}
 			</span>
 		</Flex>
 	</div>
