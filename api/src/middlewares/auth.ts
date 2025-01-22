@@ -1,13 +1,11 @@
-import { Context, Next } from "hono";
+import { Next } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { HttpException } from "../lib/exception.js";
-import UserService from "../services/user.service.js";
 import type { CustomContext } from "../types/index.js";
 import type { TokenInfo } from "google-auth-library";
 import GoogleAuth, { googleClient } from "../lib/google.auth.js";
 import retry from "async-retry";
-
-const userService = new UserService();
+import prisma from "../prisma/index.js";
 
 export function isAuthenticated(fn: Function) {
   return async (c: CustomContext, next: Next) => {

@@ -1,8 +1,4 @@
-import {
-  CreateGameInput,
-  CreatePlayersInput,
-  CreateTeamInput,
-} from "../types/game.types.js";
+import { CreateGameInput, CreateTeamInput } from "../types/game.types.js";
 import prisma from "../prisma/index.js";
 
 export default class GameService {

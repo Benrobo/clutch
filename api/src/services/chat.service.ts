@@ -1,5 +1,4 @@
 import prisma from "../prisma/index.js";
-import { HttpException } from "../lib/exception.js";
 import { $Enums } from "@prisma/client";
 
 export default class ChatService {
