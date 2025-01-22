@@ -282,19 +282,6 @@
 	</div>
 </div>
 
-<!-- {#if true}
-	<SuccessPopup
-		score={awardedPoints}
-		level={gameLevel}
-		secretWord={formattedSecretWord}
-		media={currentChallenge?.media}
-		gameId={slug}
-		{currentChallenge}
-		onClose={() => {
-			isSuccess = false;			
-		}}
-	/>
-{/if} -->
 {#if isSuccess}
 	<SuccessPopup
 		score={awardedPoints}

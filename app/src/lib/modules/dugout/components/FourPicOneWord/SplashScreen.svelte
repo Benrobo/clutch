@@ -1,14 +1,10 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
 	import ThreeDButton from '../ThreeDButton.svelte';
-	import { fade } from 'svelte/transition';
-	import { X } from 'lucide-svelte';
 	import Spinner from '@/components/Spinner.svelte';
 
-	// export let onHideSplashScreen: () => void = () => {};
 	export let loading: boolean = false;
 	export let onClick: () => void = () => {};
-	// export let leaveGame: () => void = () => {};
 </script>
 
 <div class="w-full h-screen bg-gradient-to-b from-[#5430B7] via-[#0063D8] to-[#00AAEF]">
