@@ -195,8 +195,8 @@
 			'w-full h-full relative flex-center',
 			currentAspectRatio === '9:16'
 				? 'min-h-[100vh] aspect-[9/16] -translate-y-0'
-				: 'h-auto aspect-[16/9] mt-[10vh] -translate-y-[10em]',
-			deviceInfo?.device?.type === 'smartphone' && '-translate-y-[10em]'
+				: 'h-auto aspect-[16/9]',
+			deviceInfo?.device?.type === 'smartphone' && '-translate-y-[2em]'
 		)}
 	>
 		<!-- show the video element when in view -->
