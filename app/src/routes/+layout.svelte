@@ -16,6 +16,7 @@
 	import '@fontsource-variable/eb-garamond';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { Toaster } from 'svelte-french-toast';
+	import TopLoader from '@/components/TopLoader.svelte';
 </script>
 
 <body class="m-0 h-screen w-screen p-0">
@@ -24,5 +25,6 @@
 			<slot />
 			<Toaster />
 		</QueryClientProvider>
+		<TopLoader color="#ff4741" />
 	</div>
 </body>

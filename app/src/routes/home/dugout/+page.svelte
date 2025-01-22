@@ -299,7 +299,7 @@
 			<!-- header -->
 			<Flex className="w-full h-auto flex flex-col gap-1">
 				<h1 class="text-white-100 font-brunoace font-semibold text-lg">Dugout Games</h1>
-				<p class="text-white-300 font-poppins font-light text-sm">
+				<p class="text-white-300 font-poppins font-light text-xs">
 					Hit a Home Run with Fun Games That Teach You Baseball Lingo!
 				</p>
 			</Flex>
