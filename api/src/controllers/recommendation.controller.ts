@@ -22,7 +22,8 @@ export default class RecommendationController {
   // Returns items 11-20 with nextCursor = "item20_id"
 
   async getFeedV2(c: Context) {
-    const userId = c.get("userId");
+    const user = c.get("user");
+    const userId = user?.id;
     const feed = c.req.query("feed") as "foryou" | "explore";
     const cursor = c.req.query("cursor") as string | undefined;
     const limit = parseInt((c.req.query("limit") as string) || "10");

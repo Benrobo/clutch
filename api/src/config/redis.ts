@@ -4,7 +4,9 @@ import env from "./env.js";
 const connString = env.REDIS_URL;
 
 const redis = new Redis(connString, {
-  maxRetriesPerRequest: null,
+  maxRetriesPerRequest: null, // Remove retry limit
+  enableTLSForSentinelMode: false, // Required for Upstash
+  tls: {}, // Change from boolean to empty object
 });
 
 redis.on("error", (err) => {

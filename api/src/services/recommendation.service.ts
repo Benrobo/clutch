@@ -135,6 +135,8 @@ export default class RecommendationService {
     const userPreferences = await this.getUserPreferences(userId);
     const seenVideos = await this.getSeenVideos(userId);
 
+    console.log({ seenVideos });
+
     // Get preferred playbacks based on user preferences
     const preferredPlaybacks = await prisma.highlights_playbacks.findMany({
       where: {
