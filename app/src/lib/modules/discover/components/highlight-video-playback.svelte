@@ -11,7 +11,6 @@
 	import type { RecommendationData } from '@/types/recommendation';
 	import { SUPPORTED_PLAYBACK_SUBTITLE_LANGUAGES_MAP } from '@/constant/recommendation';
 	import Divider from '@/components/Divider.svelte';
-	import { Value } from '@/components/ui/select';
 	import toast from 'svelte-french-toast';
 
 	export let highlight: RecommendationData | null = null;
@@ -360,21 +359,26 @@
 				<button
 					class={cn(
 						'w-[70px] h-[70px] rounded-full bg-white-100/30 flex-center backdrop-blurr-md enableBounceEffect transition ease-in-out duration-500',
-						$feedStore.videoPlaying ? 'opacity-0 duration-500' : 'opacity-100 duration-100',
-						$feedStore.videoPaused && 'opacity-100',
+						$feedStore.videoPlaying && !$feedStore.videoPaused ? 'opacity-0' : 'opacity-100',
 						'group-hover:opacity-100'
 					)}
 					on:click={() => {
 						if ($feedStore.videoPlaying) {
 							videoElement.pause();
+							feedStore.setVideoPaused(true);
+							feedStore.setVideoPlaying(false);
 						} else {
 							videoElement.play();
+							if (muted) {
+								muted = false;
+								videoElement.muted = false;
+							}
+							feedStore.setVideoPaused(false);
+							feedStore.setVideoPlaying(true);
 						}
-						feedStore.setVideoPaused(!$feedStore.videoPaused);
-						feedStore.setVideoPlaying(!$feedStore.videoPlaying);
 					}}
 				>
-					{#if $feedStore.videoPaused}
+					{#if !$feedStore.videoPlaying}
 						<Play size={35} class="stroke-white-100 fill-white-100" />
 					{:else}
 						<Pause size={35} class="stroke-white-100 fill-white-100" />
