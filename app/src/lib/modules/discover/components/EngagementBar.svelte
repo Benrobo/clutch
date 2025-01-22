@@ -60,7 +60,7 @@
 		{#each bars as bar}
 			<button
 				class={cn(
-					'p-1 px-3 enableBounceEffect rounded-lg bg-transparent text-white-100 text-sm text-center flex-center flex-col gap-3'
+					'p-1 px-3 enableBounceEffect rounded-lg bg-transparent text-brown-100 text-sm text-center flex-center flex-col gap-3'
 					// ['like', 'views'].includes(bar.id) && 'hover:bg-white-100/20 hover:backdrop-blur-sm'
 				)}
 				on:click={() => {
@@ -73,16 +73,16 @@
 					{#if bar.id === 'like'}
 						<Heart
 							size={25}
-							class={cn('fill-white-100', youLiked && 'fill-red-302 stroke-red-302')}
+							class={cn('fill-brown-100', youLiked && 'fill-red-302 stroke-red-302')}
 						/>
 						<span class="font-poppins text-xs mt-1">
 							{likesCount}
 						</span>
 					{:else if bar.id === 'views'}
-						<Telescope size={25} class="fill-white-100" />
+						<Telescope size={25} class="fill-brown-100" />
 						<span class="text-xs mt-1">{viewsCount}</span>
 					{:else if bar.id === 'insight'}
-						<Sparkles size={25} class="stroke-white-100" strokeWidth={1.5} />
+						<Sparkles size={25} class="stroke-brown-100" strokeWidth={1.5} />
 					{:else if bar.id === 'teams'}
 						<div class="flex flex-col -space-y-2 rtl:space-x-reverse gap-0">
 							{#if teams}
