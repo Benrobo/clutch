@@ -5,7 +5,6 @@ import type { TransitionConfig } from "svelte/transition";
 import type { AxiosResponse } from "axios";
 import type { BaseResponse } from "@/types";
 import zod from "zod";
-import env from "@/config/env";
 import { logout } from "@/http/requests";
 import { MLB_PLAYER_POSITIONS } from "@/constant/mlb";
 import type { SupportedTranslations, Transcript } from "@/types/recommendation";
@@ -307,3 +306,13 @@ export const mapTranscript: (transcript: Transcript) => {
     translation: translations
   }));
 } 
+
+export 	function getPWADisplayMode(): 'standalone' | 'twa' | 'browser' {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  if (document.referrer.startsWith('android-app://')) {
+    return 'twa';
+  } else if (isStandalone) {
+    return 'standalone';
+  }
+  return 'browser';
+}
