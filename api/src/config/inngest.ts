@@ -7,3 +7,5 @@ export const inngestClient = new Inngest({
   schemas,
   eventKey: env.INNGEST_EVENT_KEY,
 });
+
+inngestClient.setEventKey(env.INNGEST_EVENT_KEY);
