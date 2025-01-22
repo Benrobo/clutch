@@ -261,12 +261,14 @@
 						<input
 							id="chat-input"
 							type="text"
+							aria-label="Chat Input"
 							placeholder="Ask me anything about this highlight..."
 							class="w-full h-full py-3 bg-transparent text-white-200 font-garamond font-light text-md border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/50 disabled:cursor-not-allowed disabled:opacity-50"
 							bind:value={message}
 							on:keydown={async (e) => {
 								if (e.key === 'Enter') {
-									if (message.length === 0) return;
+									e.preventDefault();
+									if (message.trim().length === 0) return;
 									// $sendMessageMutation.mutate(message);
 									await sendMessageLocal(message);
 									message = '';
@@ -280,7 +282,7 @@
 							class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center disabled:opacity-50 disabled:cursor-not-allowed enableBounceEffect cursor-pointer"
 							disabled={$processLastMsgMut?.isPending}
 							on:click={async () => {
-								if (message.length === 0) return;
+								if (message.trim().length === 0) return;
 								// $sendMessageMutation.mutate(message);
 								await sendMessageLocal(message);
 								message = '';
