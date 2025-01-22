@@ -48,7 +48,7 @@
 	class="w-full h-screen flex-center absolute top-0 left-0 bg-gradient-to-b from-[#3f2e5e] via-[#23203c] to-[#61488f] flex-col"
 	transition:fly={{ y: -100, duration: 300 }}
 >
-	<div class="w-full h-auto flex-center relative flex-col">
+	<div class="w-full h-auto flex-center relative flex-col top-10">
 		<!-- radial blur -->
 		<div class="w-full absolute left-0 top-[1rem] flex-center">
 			<div class="w-[300px] h-[300px] bg-[#81b6ff] blur-[100px] rounded-full" />
@@ -63,7 +63,7 @@
 			<img src="/level-complete-ribbon.svg" alt="ribbon" class="w-[14em]" />
 		</Flex>
 		<div
-			class="w-full max-w-[400px] h-[350px] border-[3px] border-white/20 outline outline-[10px] outline-dark-100/30 rounded-lg relative"
+			class="w-full max-w-[300px] h-[260px] border-[3px] border-white/20 outline outline-[10px] outline-dark-100/30 rounded-lg relative"
 		>
 			<div class="w-full h-full grid grid-cols-2 gap-0">
 				{#each media as media, index}
@@ -88,8 +88,8 @@
 			<div class="w-full h-auto absolute bottom-0 translate-y-[2em] left-0 flex-center">
 				<p
 					class={cn(
-						'px-[4em] bg-gradient-to-b from-[#FF7063] via-[#FF686F] to-[#FF5887] rounded-t-xs p-4 border-t-[4px] border-t-[#FFAF8F] text-center rounded-full shadow-dark-100/70 shadow-lg ',
-						'text-xl font-medium'
+						'px-[4em] bg-gradient-to-b from-[#FF7063] via-[#FF686F] to-[#FF5887] rounded-t-xs p-3 border-t-[4px] border-t-[#FFAF8F] text-center rounded-full shadow-dark-100/70 shadow-lg ',
+						'text-md font-medium'
 					)}
 				>
 					<span class="px-4"> {secretWord.toUpperCase()} </span>
@@ -104,7 +104,7 @@
 	<ThreeDButton
 		colorType="orange"
 		className={cn(
-			'w-full h-[70px] max-w-[200px] flex items-center justify-between px-6 py-4 rounded-lg',
+			'w-full h-[70px] max-w-[200px] flex items-center justify-between px-6 py-4 rounded-lg z-[1]',
 			$markChallengeLevelComplete.isPending && 'animate-pulse pointer-events-none'
 		)}
 		disabled={$markChallengeLevelComplete.isPending}
