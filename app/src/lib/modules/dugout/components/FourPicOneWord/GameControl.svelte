@@ -5,7 +5,7 @@
 	import SuccessPopup from './SuccessPopup.svelte';
 	import { afterUpdate } from 'svelte';
 	import { Shuffle } from 'lucide-svelte';
-	import { dugoutStore, useDugoutStore } from '@/store/dugout.store';
+	import { dugoutStore } from '@/store/dugout.store';
 	import { USER_GAME_LEVELS_MAP_TOTAL_POINTS } from '@/constant/dugout';
 	import type { FourPicOneWordChallenge } from '@/types/dugout';
 	import Hint from './Hint.svelte';
@@ -219,7 +219,7 @@
 
 	<!-- keyboard -->
 	<div
-		class="w-full h-auto min-h-[250px] px-5 flex flex-col items-center justify-start bg-[#23203c] relative"
+		class="w-full h-auto min-h-[250px] px-1 flex flex-col items-center justify-start bg-[#23203c] relative"
 	>
 		<!-- (hints, shuffle) container -->
 		<Flex
@@ -267,7 +267,7 @@
 			{#each shuffledLetters as letterObj}
 				<button
 					class={cn(
-						'w-[60px] h-[60px] overflow-hidden font-poppins drop-shadow-md',
+						'w-[50px] h-[50px] overflow-hidden font-poppins drop-shadow-md',
 						isLetterDisabled(letterObj)
 							? 'bg-[#394781] text-[#262655] border-none outline-none' // Disabled state
 							: 'enableBounceEffect bg-gradient-to-b from-[#5C7DDF] to-[#565FCA] outline-none border-t-[5px] border-t-[#95D5FE]/80 text-white' // Enabled state

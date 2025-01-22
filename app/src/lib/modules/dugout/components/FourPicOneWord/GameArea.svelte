@@ -139,9 +139,9 @@
 		<!-- definition -->
 		<Flex className="w-full h-auto absolute bottom-0 left-0 px-10 -translate-y-0">
 			<div
-				class="w-full h-auto bg-gradient-to-b from-[#8C85F5] to-[#9472E9] rounded-t-xs p-4 border-t-[4px] border-t-[#EEDFF4]/30 text-center"
+				class="w-full h-auto bg-gradient-to-b from-[#8C85F5] to-[#9472E9] rounded-t-xs px-3 border-t-[4px] border-t-[#EEDFF4]/30 text-center"
 			>
-				<span class="text-white text-sm font-poppins font-semibold">
+				<span class="text-white text-xs font-poppins font-semibold">
 					<!-- A statistic measuring how a player's actions impact their team's chance of winning. -->
 					{currentChallenge?.definition}
 				</span>
