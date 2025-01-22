@@ -12,15 +12,19 @@
 	import { useGlobalStore } from '@/store/global.store';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import { getPWADisplayMode } from '@/utils';
+
+	let activeTab: string | null;
+	let displayMode: 'standalone' | 'twa' | 'browser';
 
 	$: pathname = derived(page, ($page) => $page.url.pathname);
 	$: slug = $pathname.split('/');
-	let activeTab: string | null;
 	$: activeTab = slug[slug.length - 1] ?? 'discover';
 
 	$: userDetails = $authStore?.user as User;
 
 	$: globalStore = useGlobalStore();
+	$: displayMode = getPWADisplayMode();
 
 	const tabs = [
 		{
@@ -76,7 +80,9 @@
 		}
 	}
 
-	afterUpdate(() => {});
+	afterUpdate(() => {
+		displayMode = getPWADisplayMode();
+	});
 </script>
 
 {#if $globalStore?.hideBottomNav}
@@ -85,11 +91,16 @@
 		transition:fly={{ y: 500, duration: 500, easing: quintOut }}
 	>
 		<div class="max-w-[678px] mx-auto">
-			<Flex className="w-full py-3 border-t-[1px] border-t-gray-100">
+			<Flex
+				className={cn(
+					'w-full py-3 border-t-[1px] border-t-gray-100 flex-row items-start justify-between',
+					(displayMode === 'standalone' || displayMode === 'twa') && 'py-6'
+				)}
+			>
 				{#each tabs as tab}
 					<button
 						class={cn(
-							'w-full transition-all flex flex-col items-center justify-center gap-1 text-white-100 enableBounceEffect',
+							'w-full transition-all flex flex-col items-center justify-center gap-1 text-brown-100 enableBounceEffect',
 							activeTab === tab.id && 'text-red-302'
 						)}
 						on:click={() => {
@@ -99,27 +110,27 @@
 						{#if tab.id === 'feed'}
 							<GalleryHorizontal
 								size={20}
-								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+								class={cn('stroke-brown-100', activeTab === tab.id && 'stroke-red-302')}
 							/>
 						{:else if tab.id === 'spotlight'}
 							<Lightbulb
 								size={20}
-								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+								class={cn('stroke-brown-100', activeTab === tab.id && 'stroke-red-302')}
 							/>
 						{:else if tab.id === 'activities'}
 							<BellRing
 								size={20}
-								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+								class={cn('stroke-brown-100', activeTab === tab.id && 'stroke-red-302')}
 							/>
 						{:else if tab.id === 'matchup'}
 							<Scale
 								size={20}
-								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+								class={cn('stroke-brown-100', activeTab === tab.id && 'stroke-red-302')}
 							/>
 						{:else if tab.id === 'dugout'}
 							<Gamepad_2
 								size={20}
-								class={cn('stroke-white-100', activeTab === tab.id && 'stroke-red-302')}
+								class={cn('stroke-brown-100', activeTab === tab.id && 'stroke-red-302')}
 							/>
 						{:else if tab.id === 'profile'}
 							<img
@@ -151,7 +162,4 @@
 {/if}
 
 <style>
-	nav {
-		padding-bottom: env(safe-area-inset-bottom);
-	}
 </style>
