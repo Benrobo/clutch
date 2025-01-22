@@ -11,6 +11,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import AuthLayout from '@/components/AuthLayout.svelte';
+    import PWAInstall from '@/components/PWAInstall.svelte';
 
 	const errorMap = {
 		email_not_found: 'Email not found',
@@ -36,6 +37,7 @@
 </svelte:head>
 
 <AuthLayout>
+    <PWAInstall />
 	<Flex
 		className="w-full max-w-[678px] mx-auto h-screen flex-col items-start justify-between gap-0"
 	>
