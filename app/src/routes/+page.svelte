@@ -60,7 +60,7 @@
 				>
 					Baseball Highlights, Reimagined
 				</h1>
-				<p class="text-white-200 font-poppins font-light text-xs mt-4">
+				<p class="text-white-200 font-poppins font-light text-xs mt-4 px-3">
 					Your game, your way. Log in to experience baseball like never before.
 				</p>
 			</Flex>
