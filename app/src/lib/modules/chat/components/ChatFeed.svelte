@@ -263,10 +263,8 @@
 							type="text"
 							placeholder="Ask me anything about this highlight..."
 							class="w-full h-full py-3 bg-transparent text-white-200 font-garamond font-light text-md border-none outline-none ring-0 focus:border-none focus:ring-0 placeholder:text-white-200/50 disabled:cursor-not-allowed disabled:opacity-50"
-							bind:this={inputElement}
 							bind:value={message}
 							on:keydown={async (e) => {
-								inputElement?.focus();
 								if (e.key === 'Enter') {
 									// $sendMessageMutation.mutate(message);
 									await sendMessageLocal(message);
@@ -282,7 +280,6 @@
 							disabled={$processLastMsgMut?.isPending}
 							on:click={async () => {
 								// $sendMessageMutation.mutate(message);
-								inputElement?.blur();
 								await sendMessageLocal(message);
 								message = '';
 							}}
