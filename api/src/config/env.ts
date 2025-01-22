@@ -37,6 +37,7 @@ const env = {
 
   // JINA-AI
   JINA_API_KEY: process.env.JINA_API_KEY!,
+  INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY!,
 };
 
 export default env;
