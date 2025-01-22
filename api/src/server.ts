@@ -26,7 +26,11 @@ app.get("/", (c) => {
 app.use(
   "*",
   cors({
-    origin: [env.CLIENT_URL, "http://benlab.a.pinggy.link"],
+    origin: [
+      env.CLIENT_URL,
+      "http://localhost:4173",
+      "http://benlab.a.pinggy.link",
+    ],
     exposeHeaders: ["Content-Length"],
     allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE"],
     credentials: true,

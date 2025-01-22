@@ -272,7 +272,6 @@
 									message = '';
 								}
 							}}
-							autofocus={true}
 						/>
 						<!-- SERVER RELATED 👆 -->
 						<!-- disabled={$sendMessageMutation.isPending} -->
