@@ -7,7 +7,7 @@ import { inngestClient } from "../config/inngest.js";
 import { JobStatus, JobType } from "@prisma/client";
 import { getPositionType } from "../lib/utils.js";
 import { MLBStatGroup } from "../types/mlb.types.js";
-import shortUUID from "short-uuid";
+import prisma from "../prisma/index.js";
 import retry from "async-retry";
 import redis from "../config/redis.js";
 
