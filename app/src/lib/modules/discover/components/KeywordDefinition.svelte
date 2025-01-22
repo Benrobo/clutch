@@ -25,7 +25,7 @@
 {#if showModal}
 	<Modal showBackdrop={false} show={showModal} {onClose} showCloseButton={false}>
 		<div
-			class="w-full h-full min-h-[200px] bg-brown-100 shadow-dark-100 shadow-2xl rounded-md relative"
+			class="w-full h-full min-h-[200px] bg-brown-100 shadow-2xl rounded-md relative scale-[.95]"
 		>
 			<button
 				class={cn(
