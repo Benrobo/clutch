@@ -7,7 +7,6 @@
 	import type { FourPicOneWordGameSession, FourPicOneWordChallenge } from '@/types/dugout';
 	import { getUserPointsByGameId } from '@/http/requests';
 	import { createQuery } from '@tanstack/svelte-query';
-	import { dugoutStore } from '@/store/dugout.store';
 	import { onMount } from 'svelte';
 	import toast from 'svelte-french-toast';
 
@@ -49,13 +48,13 @@
 >
 	<!-- header -->
 	<div
-		class="w-full h-auto min-h-[100px] flex justify-end items-end bg-gradient-to-b from-[#5B3A76] from-83% to-[#533971] border-b-[10px] border-b-[#3F2F5D]"
+		class="w-full h-auto min-h-[65px] flex justify-end items-end bg-gradient-to-b from-[#5B3A76] from-83% to-[#533971] border-b-[10px] border-b-[#3F2F5D]"
 	>
 		<Flex className="w-full h-full items-center justify-between px-5">
 			<Flex className="w-auto h-auto gap-2 items-center">
 				<ThreeDButton
 					colorType="hotpink"
-					className="w-[45px] h-[45px] flex-center rounded-full"
+					className="w-[35px] h-[35px] flex-center rounded-full"
 					onClick={leaveGame}
 				>
 					<X />
@@ -63,7 +62,7 @@
 
 				<ThreeDButton
 					colorType="pink"
-					className="w-[45px] h-[45px] flex-center rounded-full"
+					className="w-[35px] h-[35px] flex-center rounded-full"
 					onClick={() => {
 						toast.error('Coming Soon!!');
 					}}
@@ -87,19 +86,19 @@
 			</Flex>
 
 			<!-- level -->
-			<div class="w-auto h-auto text-white text-2xl font-poppins font-semibold">
+			<div class="w-auto h-auto text-white text-md font-poppins font-semibold">
 				{gameLevel}
 			</div>
 
 			<!-- score -->
 			<div class="w-auto min-w-[100px] h-auto flex flex-row items-center justify-center relative">
 				<ThreeDButton
-					className="w-[35px] h-[35px] flex-center rounded-full border-b-[1px] absolute left-0 -translate-x-4"
+					className="w-[30px] h-[30px] flex-center rounded-full border-b-[1px] absolute left-0 -translate-x-4"
 				>
 					<Star class="fill-[#9d390b] stroke-[#9d390b]" stroke-width={1.05} size={20} />
 				</ThreeDButton>
 				<div
-					class="w-full max-w-[20em] min-h-[35px] bg-[#3F2F5D] pl-10 border-[2px] border-[#7b5b96]/50 rounded-r-full flex items-center justify-end pr-6 text-yellow-102"
+					class="w-full max-w-[20em] min-h-[30px] bg-[#3F2F5D] pl-10 border-[2px] border-[#7b5b96]/50 rounded-r-full flex items-center justify-end pr-6 text-yellow-102"
 				>
 					<span class="text-white text-sm font-poppins font-semibold">
 						{$getGamePointsQuery?.isLoading ? '---' : gamePoints}
@@ -111,7 +110,7 @@
 
 	<!-- 4 img container -->
 	<div
-		class="w-full h-full max-h-[480px] pb-[2em] bg-[#19172a] flex flex-col items-center justify-center p-3 relative border-b-[2px] border-b-[#61488f]"
+		class="w-full h-full max-h-[350px] pb-[2em] bg-[#19172a] flex flex-col items-center justify-center p-3 relative border-b-[2px] border-b-[#61488f]"
 	>
 		<div class="w-full h-full grid grid-cols-2 gap-2">
 			{#if currentChallenge}
