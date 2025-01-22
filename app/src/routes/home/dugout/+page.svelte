@@ -169,7 +169,7 @@
 
 		<!-- header info -->
 		<Flex
-			className="w-full min-h-[40vh] flex flex-col items-center justify-center gap-2 relative z-[99]"
+			className="w-full min-h-[45vh] flex flex-col items-center justify-center gap-2 relative z-[99]"
 		>
 			<div class="w-full h-full absolute top-0 left-0">
 				<div
@@ -203,9 +203,9 @@
 			</Flex>
 
 			<Flex className="w-full h-auto flex-row items-end justify-between relative px-5">
-				<Flex className="w-auto h-auto flex-col items-center justify-center translate-y-[3em]">
+				<Flex className="w-auto h-auto flex-col items-center justify-center translate-y-[1.5em]">
 					<div
-						class="w-[130px] h-[130px] md:w-[150px] md:h-[150px] p-3 rounded-full bg-white-100/10"
+						class="w-[100px] h-[100px] md:w-[150px] md:h-[150px] p-3 rounded-full bg-white-100/10"
 					>
 						<img src={$authStore?.user?.avatar} class="w-full h-full rounded-full" alt="" />
 					</div>
@@ -295,7 +295,7 @@
 		</Flex>
 
 		<!-- available playable games -->
-		<Flex className="w-full h-auto flex flex-col px-10 z-[99]">
+		<Flex className="w-full h-full flex flex-col px-10 z-[99]">
 			<!-- header -->
 			<Flex className="w-full h-auto flex flex-col gap-1">
 				<h1 class="text-white-100 font-brunoace font-semibold text-lg">Dugout Games</h1>
