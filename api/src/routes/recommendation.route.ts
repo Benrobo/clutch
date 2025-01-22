@@ -8,15 +8,6 @@ const basePath = "/recommendations";
 const recommendationController = new RecommendationController();
 
 router.get(
-  `${basePath}/feed`,
-  useCatchErrors(
-    isAuthenticated(
-      recommendationController.getFeed.bind(recommendationController)
-    )
-  )
-);
-
-router.get(
   `${basePath}/feed/v2`,
   useCatchErrors(
     // isAuthenticated(

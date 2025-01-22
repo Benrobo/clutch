@@ -21,57 +21,6 @@ export default class RecommendationController {
   // GET /api/recommendations/feed?type=ForYou&limit=10&cursor=item10_id
   // Returns items 11-20 with nextCursor = "item20_id"
 
-  async getFeed(c: Context) {
-    try {
-      const user = c.get("user");
-      const { type = "foryou", cursor, limit = 10 } = c.req.query();
-
-      if (!["foryou", "explore"].includes(type.toLowerCase())) {
-        throw new HttpException("Invalid feed type", 400);
-      }
-
-      // Validate limit
-      const parsedLimit = Math.min(Number(limit), 20); // Cap at 20 items per request
-      if (isNaN(parsedLimit) || parsedLimit < 1) {
-        throw new HttpException("Invalid limit parameter", 400);
-      }
-
-      const recommendationService = new RecommendationService();
-      let highlights: HighlightItem[] = [];
-
-      if (type === "foryou") {
-        highlights = await recommendationService.getForYouFeed(user, {
-          // cursor,
-          limit: parsedLimit,
-        });
-      } else {
-        highlights = await recommendationService.getExploreFeed(user.id, {
-          // cursor,
-          limit: parsedLimit,
-        });
-      }
-
-      // Get the next cursor from the last item
-      // const nextCursor =
-      //   highlights.length > 0 ? highlights[highlights.length - 1].id : null;
-
-      // Check if we got a full page of results
-      const hasMore = highlights.length >= parsedLimit;
-
-      return sendResponse.success(c, null, 200, {
-        items: highlights,
-        // nextCursor,
-        hasMore,
-      });
-    } catch (error) {
-      console.log(error);
-      if (error instanceof HttpException) {
-        throw error;
-      }
-      throw new HttpException("Failed to fetch feed", 500);
-    }
-  }
-
   async getFeedV2(c: Context) {
     const userId = c.get("userId");
     const feed = c.req.query("feed") as "foryou" | "explore";
