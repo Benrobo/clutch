@@ -181,7 +181,7 @@
 			id="chat-feed"
 			class={cn(
 				'w-full max-w-[678px] mx-auto h-[98vh] bg-dark-107',
-				'transform transition-transform duration-500 ease-in-out fixed bottom-0 left-0 right-0 z-[999] rounded-t-[10px]',
+				'transform transition-transform duration-500 ease-in-out fixed bottom-0 left-0 right-0 z-[999999] rounded-t-[10px]',
 				'flex flex-col overflow-hidden drop-shadow-2xl'
 			)}
 		>
@@ -275,8 +275,13 @@
 						<!-- disabled={$sendMessageMutation.isPending} -->
 
 						<button
-							class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center disabled:opacity-50 disabled:cursor-not-allowed"
+							class="w-[38px] min-w-[38px] h-[38px] bg-gray-101 rounded-full flex-center disabled:opacity-50 disabled:cursor-not-allowed enableBounceEffect cursor-pointer"
 							disabled={$processLastMsgMut?.isPending}
+							on:click={async () => {
+								// $sendMessageMutation.mutate(message);
+								await sendMessageLocal(message);
+								message = '';
+							}}
 						>
 							{#if $sendMessageMutation.isPending}
 								<Spinner size={'20'} />
