@@ -1,9 +1,7 @@
 <script lang="ts">
 	import AuthLayout from '@/components/AuthLayout.svelte';
 	import BottomNavTab from '@/components/BottomNavTab.svelte';
-	import { useBrowser } from '$lib/hooks/useBrowser';
-	import { cn } from '$lib/utils';
-	import { afterUpdate, onMount } from 'svelte';
+	import { cn } from '@/utils';
 	import useDetectDevice from '@/hooks/useDetectDevice';
 
 	const deviceInfo = useDetectDevice();
