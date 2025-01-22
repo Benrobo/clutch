@@ -68,7 +68,7 @@ export default class AuthController {
 
         console.log(`User created: ${email}`);
 
-        return c.redirect(`${env.CLIENT_URL}/home/feed`);
+        return c.redirect(`${env.CLIENT_URL}/home/onboarding`);
       }
 
       // update
@@ -85,6 +85,20 @@ export default class AuthController {
       setCookie(c, "uId", user.id);
 
       console.log(`User logged in with email: ${email}`);
+
+      // check if user has preferences set
+      const preferences = await prisma.users.findUnique({
+        where: {
+          id: user.id,
+        },
+        select: {
+          preferences: true,
+        },
+      });
+
+      if (!preferences?.preferences) {
+        return c.redirect(`${env.CLIENT_URL}/home/onboarding`);
+      }
 
       return c.redirect(`${env.CLIENT_URL}/home/feed`);
     } catch (e: any) {
