@@ -266,6 +266,7 @@
 							bind:this={inputElement}
 							bind:value={message}
 							on:keydown={async (e) => {
+								inputElement?.focus();
 								if (e.key === 'Enter') {
 									// $sendMessageMutation.mutate(message);
 									await sendMessageLocal(message);
