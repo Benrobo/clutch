@@ -1,11 +1,8 @@
 import { storage } from "../config/firebase.js";
 import env from "../config/env.js";
-import { v4 as uuidv4 } from "uuid";
 import { createHash } from "crypto";
 import * as path from "path";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleAIFileManager } from "@google/generative-ai/server";
-import { readFile } from "fs/promises";
 
 interface GeminiFile {
   name: string;
@@ -17,10 +14,6 @@ interface GeminiFile {
 
 interface GeminiUploadResult {
   file: GeminiFile;
-}
-
-interface ListFilesResponse {
-  files: GeminiFile[];
 }
 
 export default class MediaService {

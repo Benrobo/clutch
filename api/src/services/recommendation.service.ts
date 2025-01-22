@@ -3,7 +3,6 @@ import prisma from "../prisma/index.js";
 import {
   users,
   highlights,
-  highlights_content,
   highlights_playbacks,
   VideoOrientation,
 } from "@prisma/client";
