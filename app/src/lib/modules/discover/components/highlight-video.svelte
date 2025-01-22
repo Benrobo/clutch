@@ -7,9 +7,9 @@
 	export let currentVideoId: string | null = null;
 </script>
 
-<div class="video-container w-full h-[100vh] relative">
+<div class="video-container w-full h-full relative">
 	<!-- thumbnail background -->
-	<div class="w-full h-full absolute inset-0 z-[1]">
+	<div class="w-full h-full absolute inset-0 z-[0]">
 		<img
 			src={hl?.thumbnail?.fallback}
 			alt={hl?.playback?.title}
@@ -18,7 +18,8 @@
 	</div>
 
 	<!-- main video section -->
-	<div class="absolute inset-0 z-[2] backdrop-blur-xl bg-dark-103/30">
+	<!-- <div class="absolute inset-0 z-[2] backdrop-blur-xl bg-dark-103/30"> -->
+	<div class="h-full inset-0 z-[2] backdrop-blur-xl bg-dark-103/30">
 		<HighlightVideoPlayback
 			highlight={hl}
 			onObServedDataId={(id) => {
@@ -31,7 +32,7 @@
 
 <style>
 	.video-container {
-		height: 100vh;
-		min-height: 100vh;
+		/* height: 100vh;
+		min-height: 100vh; */
 	}
 </style>
