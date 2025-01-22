@@ -120,7 +120,7 @@
 					>
 						<div class="w-full flex-center absolute top-1 left-1">
 							<span
-								class="px-3 py-2 rounded-sm text-white text-xs font-poppins font-semibold bg-dark-100/30 backdrop-blur-sm"
+								class="px-3 py-2 rounded-sm text-white text-xs font-poppins font-semibold bg-dark-100/10 backdrop-blur-sm"
 							>
 								{media.description}
 							</span>
