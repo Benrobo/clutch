@@ -172,18 +172,6 @@
 	onMount(() => {
 		scrollToBottom();
 		getLocalChatMessages();
-
-		if (document) {
-			document.getElementById('chat-input')?.addEventListener('keydown', async (e) => {
-				if (e.key === 'Enter') {
-					e.preventDefault();
-					if (message.trim().length === 0) return;
-					// $sendMessageMutation.mutate(message);
-					await sendMessageLocal(message);
-					message = '';
-				}
-			});
-		}
 	});
 </script>
 
