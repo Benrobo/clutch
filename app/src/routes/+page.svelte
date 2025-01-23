@@ -11,7 +11,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import AuthLayout from '@/components/AuthLayout.svelte';
-    import PWAInstall from '@/components/PWAInstall.svelte';
+	import PWAInstall from '@/components/PWAInstall.svelte';
 
 	const errorMap = {
 		email_not_found: 'Email not found',
@@ -37,7 +37,7 @@
 </svelte:head>
 
 <AuthLayout>
-    <PWAInstall />
+	<PWAInstall />
 	<Flex
 		className="w-full max-w-[678px] mx-auto h-screen flex-col items-start justify-between gap-0"
 	>
@@ -146,7 +146,7 @@
 			</a>
 
 			<span class="text-white-300 font-montserrat font-light text-xs mt-4">
-				Install the PWA to get the best experience
+				Add to homescreen for best experience
 			</span>
 
 			<br />

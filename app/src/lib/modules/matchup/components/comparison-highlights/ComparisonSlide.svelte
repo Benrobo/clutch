@@ -88,7 +88,7 @@
 			<MoveLeft size={30} strokeWidth={1.5} class="stroke-dark-100" />
 			<span class="text-xs text-dark-100 font-jetbrains">Back</span>
 		</button>
-		<h1 class="text-[2.5em] leading-none font-semibold font-garamond text-dark-100">
+		<h1 class="text-[2em] leading-none font-semibold font-garamond text-dark-100">
 			{analysis.title}
 		</h1>
 		<div class="w-full flex flex-col items-end justify-end text-end">
@@ -119,7 +119,7 @@
 		<Flex
 			className="w-full h-full min-h-[200px] flex-col justify-center gap-6 bg-dark-100-2 px-5 py-10"
 		>
-			<p class="text-[1.3em] sm:text-[1.5em] font-garamond text-white-100">
+			<p class="text-[1em] sm:text-[1.5em] font-garamond text-white-100">
 				{@html highlightedSight.highlight()}
 			</p>
 		</Flex>
