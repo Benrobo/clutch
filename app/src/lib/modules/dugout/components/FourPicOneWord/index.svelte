@@ -43,12 +43,12 @@
 	};
 
 	onMount(() => {
-		const storedJoinedGames = JSON.parse(localStorage.getItem('joined-games') || '[]');
-		joinedGames = storedJoinedGames;
-		if (storedJoinedGames?.includes(slug)) {
-			showSplashScreen = false;
-			showGameArea = true;
-		}
+		// const storedJoinedGames = JSON.parse(localStorage.getItem('joined-games') || '[]');
+		// joinedGames = storedJoinedGames;
+		// if (storedJoinedGames?.includes(slug)) {
+		// 	showSplashScreen = false;
+		// 	showGameArea = true;
+		// }
 	});
 </script>
 
