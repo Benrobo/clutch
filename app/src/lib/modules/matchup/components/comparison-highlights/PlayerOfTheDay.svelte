@@ -93,7 +93,7 @@
 			<img
 				src={player?.profilePicture}
 				alt=""
-				class="w-full h-full object-cover scale-[.90] translate-y-3"
+				class="w-[50px] h-[50px] object-cover scale-[.90] translate-y-3"
 			/>
 		</div>
 		<Flex className="w-full h-auto flex-col gap-0">
