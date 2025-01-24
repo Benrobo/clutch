@@ -55,26 +55,6 @@ export const toolOrchestratorPrompt = (props: ToolOrchestratorPromptProps) => {
         IMPORTANT: Not every user query will require a tool, analyze the query and the context provided CAREFULLY before deciding, THIS IS CRITICAL.
     `
     )
-    // .addRule(
-    //   `Decision-making process:
-    //   1. Analyze the user's query within the context of ${props.niche}.
-    //   2. If the query seems outside the scope of ${props.niche} or doesn't sound like a reasonable question, respond with null for both "tool" and "input_parameters".
-    //   3. If you can fully answer the query using your pre-trained knowledge or the provided context, respond with null for both "tool" and "input_parameters".
-    //   4. If a tool is necessary, choose the most appropriate tool and provide the required parameters as a comma-separated string in the format "key1=value1, key2=value2".
-    //   5. Ensure the keys and values match the tool's required parameters exactly. Avoid guessing or including extra keys.
-    // `
-    // )
-    // .addRule(
-    //   `Additional Decisions:
-    //   When processing a query, determine if the question is general or specific. If the query is subjective, speculative, or personal (e.g., asking for opinions, predictions, or hypothetical scenarios without explicit details), do not suggest any tool. If the query contains explicit details such as named entities (e.g., team names, player names), quantities, or clear questions that require data processing (e.g., "How many goals did X score?" or "Which team won the match?"), suggest an appropriate tool.
-
-    //   - For vague or speculative questions (e.g., "Who do you think will win?" or "What do you think happened?"), do not suggest any tool.
-    //   - For specific and actionable questions (e.g., "Which team won between X and Y?" or "How many goals did Player X score this season?"), suggest an appropriate tool with the necessary parameters.
-
-    //   The goal is to avoid suggesting tools for questions that are based on personal opinions or general speculations, while offering tool suggestions for clear, data-driven, and actionable queries.
-
-    //   `
-    // )
     .addRule(
       `
     Response format:
@@ -162,13 +142,6 @@ export const baseballAssistantPrompt = (
   const baseballPrompt = new LLMPromptBuilder()
     .addInstruction(
       `You’re a baseball fan who loves talking about the game. When answering questions, keep the tone casual, relatable, and conversational—like chatting with a friend who’s also passionate about baseball. If a user greets you with something like "hello," keep it short and friendly, with a slight nudge towards baseball topics. You’re not giving a formal response, but rather something that feels like a natural part of a conversation. You don’t need to be overly enthusiastic, just warm and approachable. For instance, a simple “Hey! What’s up?” or “Hey, how’s it going?” would work well. Avoid over-elaborating or diving straight into specific topics unless prompted. Avoid conversational fillers, casual phrases, or unnecessary words. Respond concisely and directly to the query or task. Do not include speculative or ambiguous language.`
-      // `You're a baseball fan who loves talking about the game.
-      // Respond to user queries in a casual, relatable, and conversational tone—like chatting with a fellow fan.
-      // For actionable queries (e.g., "how-to" or monetization), provide clear and practical advice first,
-      // using baseball lingo naturally. Add humor or anecdotes as a complement, not the main focus.`
-      // `You’re a passionate baseball fan who loves chatting about the game. Keep your tone casual, like talking to a friend over a beer at the ballpark. If someone greets you, keep it light, like “Hey! What’s up?” or “Yo, how’s it going?” Don’t overthink things—just respond naturally, like you would in a normal conversation. Avoid sounding too formal or too eager, and steer clear of over-explaining. You’re here to keep the conversation flowing, not give a lecture. Keep things short, sweet, and to the point. Don’t repeat the user's question verbatim, and always aim for a tone that’s warm, relatable, and down-to-earth.`
-      // `You're a casual baseball fan who's been following the sport for years. Think of yourself as someone hanging out at a sports bar, sharing thoughts about the game. When you talk, draw from personal experiences and opinions. You might say things like "You know what I've noticed..." or "From what I've seen..." to make it more personal. When responding, **do not restate the user's question or any part of it.** Your response should feel like you're naturally talking to a friend. Avoid repeating any part of the question, and instead, dive straight into your thoughts or observations related to the query.`
-      // `You're a casual baseball fan who's been following the sport for years. Think of yourself as someone hanging out at a sports bar, chatting with friends about the game. When responding, **don’t restate the user’s question** or repeat details unless it’s essential to the conversation. Keep your replies short, warm, and natural, like you're casually talking to someone who also enjoys the sport. Avoid over-explaining, and don't go into too much detail unless the conversation calls for it.`
     )
     .addPlainText(
       "When responding to queries, follow these updated guidelines:"
@@ -240,135 +213,6 @@ export const contentModeratorPrompt = (props: ContentModeratorPromptProps) => {
 
   return prompt;
 };
-
-// export const fourPicOneWordHintPrompt = (props: {
-//   selectedLetters: string[];
-//   secretWord: string;
-// }) => {
-//   const { selectedLetters, secretWord } = props;
-
-//   const prompt = new LLMPromptBuilder()
-//     // Define global context
-//     .defineContext({
-//       gameType: "Word Puzzle",
-//       audience: "12-year-old kids",
-//       tone: "Friendly, fun, and encouraging",
-//     })
-
-//     // Add high-level instruction
-//     .addInstruction(
-//       "You give simple, fun hints for a word puzzle that feel like part of a guessing game. For multi-word answers, if the first word is correct, ONLY provide hints for the remaining word(s). Use easy words, avoid hard language, and never reveal the answer directly. Do not begin the hint with conversational language like 'Okay' or 'Let's start.' Focus on the hint. Avoid using markdown syntax or any special formatting like asterisks, backticks, or hashtags. Based on how difficult the word is to guess, sometimes provide a close hint on the word or better still provide the word itself.",
-//       "high"
-//     )
-
-//     // Add rules
-//     .addRule(
-//       "1. For multi-word answers, ALWAYS check if first word is correct first.\n" +
-//         "2. If first word is correct, ALL hints and suggestions must be about remaining word(s) only.\n" +
-//         "3. Use simple, fun language for kids.\n" +
-//         "4. Suggest letters based on the CURRENT target word length:\n" +
-//         "   - Long (10+): 6 letters.\n" +
-//         "   - Medium (5-9): 5 letters.\n" +
-//         "   - Short (1-4): 4 letters.\n" +
-//         "5. Highlight important words or phrases in the hint.\n" +
-//         "6. Never suggest moving a letter unless certain it's correct.\n" +
-//         "7. Avoid using markdown syntax or any special formatting like asterisks, backticks, or hashtags."
-//     )
-
-//     // Add context about the game state
-//     .addCustomBlock(
-//       "game_state",
-//       JSON.stringify({
-//         secretWord,
-//         selectedLetters: selectedLetters.join(""),
-//       })
-//     )
-
-//     // Add multi-word management block
-//     .addCustomBlock(
-//       "multi_word_management",
-//       `Multi-word Processing Steps:
-// 1. Word Separation
-//    - Split secret word on spaces: ${secretWord.split(" ")}
-//    - First word: ${secretWord.split(" ")[0]}
-//    - Remaining word(s): ${secretWord.split(" ").slice(1).join(" ")}
-
-// 2. First Word Validation
-//    - Compare selected letters against first word only
-//    - Mark as complete if all letters match in correct positions
-//    - Otherwise, continue providing hints for complete phrase
-
-// 3. Target Word Selection
-//    - If first word complete: focus ALL hints on remaining word(s)
-//    - If first word incomplete: treat as single compound target
-
-// 4. Letter Analysis for Current Target
-//    - When first word complete:
-//      * Only analyze letters needed for remaining word(s)
-//      * Ignore correctly placed letters from solved word
-//    - When first word incomplete:
-//      * Analyze all letters as one target
-
-// 5. Response Adjustment
-//    - Hints: Only about current target word(s)
-//    - Letters: Only suggest from current target
-//    - Tips: Only provide feedback about current target`
-//     )
-
-//     // Add analysis custom block
-//     .addCustomBlock(
-//       "analysis",
-//       `- Secret Word: ${secretWord.replace(/\s+/g, "").toUpperCase()}
-// - Compare each selected letter to see if it is:
-//   1. In the word and in the correct position
-//   2. In the word but misplaced
-//   3. Not in the word
-// - For multi-word answers:
-//   1. First check if first word is complete
-//   2. If complete, analyze ONLY remaining word(s)`
-//     )
-
-//     // Add detailed instructions for hint generation
-//     .addInstruction(
-//       "Step 1: If the secret word has spaces, check if the first word is already correct.\n" +
-//         "Step 2: If the first word is correct, provide a hint for the next word without any feedback on the first word.\n" +
-//         "Step 3: Analyze selectedLetters to mark them as correct, misplaced, or incorrect.\n" +
-//         "Step 4: Generate a fun hint for the current target word, using relatable examples.\n" +
-//         "Step 5: Suggest key letters (prefixes, repeated letters, etc.) for current target word only.\n" +
-//         "Step 6: Provide a tip on how to use the letters with feedback on selectedLetters.\n"
-//     )
-
-//     // Add response format
-//     .addCustomBlock(
-//       "response_format",
-//       `{
-//   "hint": "", // If first word solved, hint ONLY about remaining word(s). Give a simple and fun hint that a 12-year-old can understand.
-//   "highlight_words": [], // Highlight easy words or phrases in the hint.
-//   "suggested_letters": [], // Suggest letters based on the current target word length.
-//   "tip": "" // Give a simple tip on how to use the suggested letters. Include feedback on suggested_letters if needed, separated by \\n\\n.
-// }`
-//     )
-
-//     // Add tip examples
-//     .addCustomBlock(
-//       "tip_examples",
-//       `Example Tips for Multi-word Answers:
-// 1. When first word is solved:
-//    "Great work on SAVE! The second word is a math term - try using G and E near the end."
-//    "SAVE is correct! For the next word, look for a common ending like -AGE."
-//    "You've got SAVE! Now think about numbers and math - the letter T appears twice."
-
-// 2. When checking selected letters for remaining word:
-//    - If letter appears: "The E you tried is definitely in the second word!"
-//    - If letter misplaced: "T is in the second word, but try it in a different spot."
-//    - If multiple letters found: "Both E and T appear in the second word - keep going!"
-//    - If letter not in word: "Focus on forming a math term - try some different letters."`
-//     )
-
-//     // Compose the final prompt
-//     .compose();
-//   return prompt;
-// };
 
 export const fourPicOneWordHintPrompt = (props: {
   selectedLetters: string[];

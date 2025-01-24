@@ -110,6 +110,7 @@
 	$: getRecommendationsQuery = createQuery({
 		queryKey: ['recommendations', activeFeed],
 		queryFn: async () => {
+			console.log('Fetching recommendations for:', activeFeed);
 			const resp = (await getRecommendationsV2({
 				type: activeFeed,
 				limit: MAX_RECOMMENDATIONS
@@ -119,7 +120,9 @@
 		enabled: true,
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
-		refetchOnMount: false
+		refetchOnMount: false,
+		staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+		gcTime: 1000 * 60 * 30 // Keep in cache for 30 minutes
 	});
 
 	$: loadMoreRecommendationsMut = createMutation({
