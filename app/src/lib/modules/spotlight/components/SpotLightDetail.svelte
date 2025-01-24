@@ -70,7 +70,7 @@
 		<!-- header details -->
 		<Flex className="w-full flex-row items-end justify-between px-4 py-2">
 			<Flex className="w-auto flex-col">
-				<h1 class="text-sm md:text-xl text-nowrap font-medium text-white-100 font-brunoace">
+				<h1 class="text-sm md:text-xl font-medium text-white-100 font-brunoace">
 					{capitalizeFirstLetter(spotlightData?.title)}
 				</h1>
 				<!-- <p class="text-xs font-normal text-white-300 font-poppins">
