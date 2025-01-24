@@ -94,7 +94,7 @@
 			<Flex
 				className={cn(
 					'w-full py-3 border-t-[1px] border-t-gray-100 flex-row items-start justify-between',
-					(displayMode === 'standalone' || displayMode === 'twa') && 'pb-6'
+					(displayMode === 'standalone' || displayMode === 'twa') && 'pb-[2em] pt-[1.2em]'
 				)}
 			>
 				{#each tabs as tab}
