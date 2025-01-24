@@ -88,7 +88,7 @@
 		class="w-full min-h-[150px] md:min-h-[200px] h-auto flex flex-row items-center justify-start gap-5 px-3 md:px-5 mt-[2em] md:mt-[5em]"
 	>
 		<div
-			class="min-w-[80px] h-[80px] md:min-w-[100px] md:h-[100px] bg-brown-101 rounded-full overflow-hidden"
+			class="min-w-[50px] h-[50px] md:min-w-[100px] md:h-[100px] bg-brown-101 rounded-full overflow-hidden"
 		>
 			<img
 				src={player?.profilePicture}
