@@ -23,9 +23,9 @@
 </div>
 
 <!-- splash action button -->
-<Flex className="w-full h-auto min-h-[40em] flex-center absolute bottom-0">
+<Flex className="w-full h-auto min-h-[40em] flex-center absolute bottom-0 translate-y-4">
 	<ThreeDButton
-		className="w-full max-w-[200px] h-auto py-4 px-4 rounded-lg flex-center"
+		className="w-full max-w-[200px] h-auto py-4 px-4 rounded-lg flex-center scale-[.85]"
 		onClick={() => {
 			onClick();
 		}}
