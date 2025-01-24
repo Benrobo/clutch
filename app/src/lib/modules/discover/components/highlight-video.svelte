@@ -5,6 +5,7 @@
 	export let hl: RecommendationData;
 	export let onObServedDataId: (id: string | null) => void = () => {};
 	export let currentVideoId: string | null = null;
+	export let updateLike: (playbackId: string) => void = () => {};
 </script>
 
 <div class="video-container w-full h-full relative">
@@ -26,6 +27,7 @@
 				onObServedDataId(id);
 			}}
 			{currentVideoId}
+			{updateLike}
 		/>
 	</div>
 </div>

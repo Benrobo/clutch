@@ -45,6 +45,7 @@
 		img: (string | null)[];
 	} | null = null;
 	export let onInsight: () => void = () => {};
+	export let toggleLike: () => void = () => {};
 </script>
 
 <div
@@ -66,6 +67,8 @@
 				on:click={() => {
 					if (bar.id === 'insight') {
 						onInsight();
+					} else if (bar.id === 'like') {
+						toggleLike();
 					}
 				}}
 			>
@@ -79,7 +82,7 @@
 							{likesCount}
 						</span>
 					{:else if bar.id === 'views'}
-						<Telescope size={25} class="fill-brown-100" />
+						<Eye size={25} class="stroke-brown-100" />
 						<span class="text-xs mt-1">{viewsCount}</span>
 					{:else if bar.id === 'insight'}
 						<Sparkles size={25} class="stroke-brown-100" strokeWidth={1.5} />

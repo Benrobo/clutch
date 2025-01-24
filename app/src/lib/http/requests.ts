@@ -176,3 +176,8 @@ export const getTeamPlayers = async (teamId: number) => {
   const res = await $axios.get(`/matchup/players/${teamId}`);
   return res.data;
 }
+
+export const toggleLike = async (playbackId: string) => {
+  const res = await $axios.put(`/highlights/${playbackId}/like`);
+  return res.data;
+}

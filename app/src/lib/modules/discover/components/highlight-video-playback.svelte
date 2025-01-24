@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Flex from '@/components/Flex.svelte';
 	import Spinner from '@/components/Spinner.svelte';
-	import { cn, getTeamLogoWithBg, mapTranscript } from '@/utils';
+	import { cn, extractAxiosResponseData, getTeamLogoWithBg, mapTranscript } from '@/utils';
 	import { Captions, CaptionsOff, Cog, Pause, Play, Volume2, VolumeX } from 'lucide-svelte';
 	import { onMount, onDestroy, afterUpdate } from 'svelte';
 	import EngagementBar from './EngagementBar.svelte';
@@ -12,6 +12,8 @@
 	import { SUPPORTED_PLAYBACK_SUBTITLE_LANGUAGES_MAP } from '@/constant/recommendation';
 	import Divider from '@/components/Divider.svelte';
 	import toast from 'svelte-french-toast';
+	import { createMutation } from '@tanstack/svelte-query';
+	import { toggleLike } from '@/http/requests';
 
 	export let highlight: RecommendationData | null = null;
 	export let onObServedDataId: (id: string | null) => void = () => {};
@@ -33,6 +35,7 @@
 	let selectedSubtitleLanguage: keyof typeof SUPPORTED_PLAYBACK_SUBTITLE_LANGUAGES_MAP;
 	let showCaption: boolean = false;
 	let lastTime = 0;
+	export let updateLike: (pbId: string) => void = () => {};
 
 	let videoTranscript:
 		| {
@@ -62,6 +65,25 @@
 
 	const MAX_DESCRIPTION_LENGTH = 100;
 	const DEBUG_MODE_VIDEO_URL = 'https://www.w3schools.com/html/mov_bbb.mp4';
+
+	$: toggleLikeMut = createMutation({
+		mutationFn: async (playbackId: string) => {
+			const data = await toggleLike(playbackId);
+			return data;
+		},
+		onSuccess: () => {
+			console.log('toggle like success!');
+		},
+		onError: (error: any) => {
+			console.log(error);
+			toast.error('Something went wrong.');
+		}
+	});
+
+	function handleLikeToggle() {
+		updateLike(highlight?.playback?.id!);
+		$toggleLikeMut.mutate(highlight?.playback?.id!);
+	}
 
 	async function handleVideoState() {
 		if (!videoElement || !$feedStore) return;
@@ -430,6 +452,9 @@
 		feedStore.toggleShowBottomSheet(true);
 		// if ($feedStore.videoPlaying) videoElement.pause();
 		videoElement.pause();
+	}}
+	toggleLike={() => {
+		handleLikeToggle();
 	}}
 />
 
