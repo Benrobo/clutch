@@ -6,7 +6,7 @@ const connString = env.REDIS_URL;
 const redis = new Redis(connString, {
   maxRetriesPerRequest: null, // Remove retry limit
   enableTLSForSentinelMode: env.NODE_ENV === "production" ? false : true, // Required for Upstash
-  ...(env?.NODE_ENV === "production" && { ttl: {} }),
+  ...(env?.NODE_ENV === "production" && { tls: {} }),
   // tls: {}, // Change from boolean to empty object
 });
 
