@@ -2,7 +2,7 @@
 	import { useBrowser } from '@/hooks/useBrowser';
 	import useDetectDevice from '@/hooks/useDetectDevice';
 	import { cn } from '@/utils';
-	import { Eye, Heart, Sparkles, Telescope, WandSparkles } from 'lucide-svelte';
+	import { Eye, Heart, Sparkles, Telescope } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 
 	const deviceInfo = useDetectDevice();
@@ -85,7 +85,7 @@
 						<Eye size={25} class="stroke-brown-100" />
 						<span class="text-xs mt-1">{viewsCount}</span>
 					{:else if bar.id === 'insight'}
-						<WandSparkles size={23} class="stroke-brown-100" strokeWidth={1.5} />
+						<Sparkles size={25} class="stroke-brown-100" strokeWidth={1.5} />
 					{:else if bar.id === 'teams'}
 						<div class="flex flex-col -space-y-2 rtl:space-x-reverse gap-0">
 							{#if teams}
