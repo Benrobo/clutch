@@ -39,7 +39,7 @@
 <AuthLayout>
 	<PWAInstall />
 	<Flex
-		className="w-full max-w-[678px] mx-auto h-screen flex-col items-start justify-between gap-0 overflow-y-auto"
+		className="w-full max-w-[678px] mx-auto h-screen flex-col items-start justify-between gap-0"
 	>
 		<Flex className="w-full h-auto absolute top-0 left-0 z-[1]">
 			<div class="w-full h-[450px] rounded-full bg-dark-106/30 blur-[100px]" />
@@ -153,3 +153,9 @@
 		</Flex>
 	</Flex>
 </AuthLayout>
+
+<style>
+	body {
+		overflow-y: auto;
+	}
+</style>
